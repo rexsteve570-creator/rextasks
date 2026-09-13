@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="RexTasks — Complete simple tasks, surveys and offers and earn rewards.">
+<title>RexTasks — Complete Tasks. Earn Rewards.</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --deep:#061A12;
+  --forest:#0D2E20;
+  --mid:#153F2B;
+  --green:#2E9A5E;
+  --bright:#3EBE79;
+  --text:#E4F0E8;
+  --soft:#9CBFA9;
+  --line:rgba(228,240,232,.09);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:'Manrope',sans-serif;
+  background:var(--forest);
+  color:var(--text);
+  line-height:1.5;
+}
+
+h1,h2,h3{
+  font-family:'Fraunces',serif;
+  font-weight:600;
+  letter-spacing:-.01em;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button{
+  font-family:inherit;
+}
+
+.wrap{
+  max-width:1120px;
+  margin:auto;
+  padding:0 24px;
+}
+
+/* NAV */
+
+nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(6,26,18,.94);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+
+nav .wrap{
+  height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-family:'Fraunces',serif;
+  font-size:1.3rem;
+  font-weight:700;
+}
+
+.crown{
+  width:23px;
+  height:23px;
+  color:var(--bright);
+}
+
+.nav-links{
+  display:flex;
+  gap:28px;
+  font-size:.9rem;
+  font-weight:700;
+}
+
+.nav-links a{
+  color:var(--soft);
+}
+
+.nav-links a:hover{
+  color:var(--text);
+}
+
+.nav-actions{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.nav-login{
+  font-size:.9rem;
+  font-weight:700;
+}
+
+.nav-cta,
+.btn-primary{
+  border:0;
+  background:var(--green);
+  color:var(--deep);
+  font-weight:800;
+  cursor:pointer;
+  border-radius:999px;
+}
+
+.nav-cta{
+  padding:11px 20px;
+}
+
+.btn-primary{
+  padding:15px 26px;
+  font-size:1rem;
+}
+
+.btn-primary:hover,
+.nav-cta:hover{
+  background:var(--bright);
+  transform:translateY(-1px);
+}
+
+@media(max-width:760px){
+  .nav-links{
+    display:none;
+  }
+}
+
+/* HERO */
+
+.hero{
+  background:
+    radial-gradient(circle at 15% 0%,#17472F 0%,transparent 42%),
+    var(--deep);
+  padding:86px 0 100px;
+  overflow:hidden;
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:60px;
+  align-items:center;
+}
+
+.eyebrow{
+  color:var(--bright);
+  font-weight:800;
+  font-size:.9rem;
+  margin-bottom:17px;
+}
+
+.hero h1{
+  font-size:clamp(2.6rem,6vw,4.2rem);
+  line-height:1.04;
+  margin-bottom:22px;
+}
+
+.hero h1 em{
+  color:var(--bright);
+  font-style:italic;
+}
+
+.hero-text{
+  color:var(--soft);
+  font-size:1.08rem;
+  max-width:540px;
+  margin-bottom:30px;
+}
+
+.hero-actions{
+  display:flex;
+  gap:15px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.btn-link{
+  color:var(--soft);
+  font-weight:700;
+  text-decoration:underline;
+  text-underline-offset:4px;
+}
+
+.hero-note{
+  color:var(--soft);
+  font-size:.82rem;
+  margin-top:15px;
+}
+
+/* PHONE */
+
+.phone-area{
+  display:flex;
+  justify-content:center;
+}
+
+.phone{
+  width:285px;
+  background:#020A06;
+  border:7px solid #263A30;
+  border-radius:38px;
+  padding:10px;
+  box-shadow:0 35px 80px rgba(0,0,0,.55);
+  transform:rotate(3deg);
+}
+
+.phone-screen{
+  background:var(--forest);
+  border-radius:27px;
+  overflow:hidden;
+  min-height:520px;
+}
+
+.phone-top{
+  height:55px;
+  padding:17px 16px 10px;
+  display:flex;
+  justify-content:space-between;
+  color:var(--soft);
+  font-size:.7rem;
+}
+
+.phone-brand{
+  color:var(--text);
+  font-weight:800;
+}
+
+.wallet{
+  margin:8px 14px 14px;
+  padding:20px;
+  border-radius:20px;
+  background:linear-gradient(145deg,#174C32,#0D3021);
+  border:1px solid rgba(62,190,121,.2);
+}
+
+.wallet-label{
+  color:var(--soft);
+  font-size:.72rem;
+}
+
+.wallet-amount{
+  font-family:'Fraunces',serif;
+  font-size:2rem;
+  color:var(--bright);
+  margin:4px 0 15px;
+}
+
+.wallet-button{
+  display:block;
+  width:100%;
+  padding:9px;
+  text-align:center;
+  border-radius:10px;
+  background:var(--green);
+  color:var(--deep);
+  font-size:.72rem;
+  font-weight:800;
+}
+
+.phone-title{
+  padding:10px 15px;
+  font-size:.85rem;
+  font-weight:800;
+}
+
+.phone-task{
+  margin:8px 14px;
+  padding:13px;
+  border-radius:13px;
+  background:var(--mid);
+  border:1px solid var(--line);
+}
+
+.task-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.task-name{
+  font-size:.78rem;
+  font-weight:800;
+}
+
+.task-reward{
+  color:var(--bright);
+  font-size:.76rem;
+  font-weight:800;
+}
+
+.task-meta{
+  color:var(--soft);
+  font-size:.65rem;
+  margin-top:5px;
+}
+
+@media(max-width:900px){
+  .hero-grid{
+    grid-template-columns:1fr;
+  }
+
+  .phone{
+    transform:rotate(2deg);
+  }
+}
+
+/* TRUST */
+
+.trust{
+  background:var(--deep);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  padding:30px 0;
+}
+
+.trust-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+}
+
+.trust-item{
+  text-align:center;
+}
+
+.trust-number{
+  font-family:'Fraunces',serif;
+  font-size:1.5rem;
+  font-weight:700;
+  color:var(--bright);
+}
+
+.trust-label{
+  color:var(--soft);
+  font-size:.78rem;
+}
+
+@media(max-width:600px){
+  .trust-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+/* SECTIONS */
+
+section{
+  padding:90px 0;
+}
+
+.section-head{
+  max-width:650px;
+  margin-bottom:50px;
+}
+
+.kicker{
+  color:var(--bright);
+  font-weight:800;
+  font-size:.9rem;
+  margin-bottom:10px;
+}
+
+.section-head h2{
+  font-size:clamp(2rem,4vw,2.7rem);
+  margin-bottom:13px;
+}
+
+.section-head p{
+  color:var(--soft);
+  font-size:1rem;
+}
+
+/* HOW */
+
+.steps{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:28px;
+}
+
+.step{
+  border-top:2px solid var(--green);
+  padding-top:18px;
+}
+
+.step-number{
+  font-family:'Fraunces',serif;
+  color:var(--bright);
+  font-size:1.6rem;
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+.step h3{
+  font-size:1.05rem;
+  margin-bottom:8px;
+}
+
+.step p{
+  color:var(--soft);
+  font-size:.88rem;
+}
+
+@media(max-width:850px){
+  .steps{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:560px){
+  .steps{
+    grid-template-columns:1fr;
+  }
+}
+
+/* EARN */
+
+.earn-section{
+  background:var(--deep);
+}
+
+.earn-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+}
+
+.earn-card{
+  background:var(--mid);
+  border:1px solid var(--line);
+  border-radius:17px;
+  padding:25px;
+}
+
+.icon{
+  width:43px;
+  height:43px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--green);
+  border-radius:11px;
+  margin-bottom:18px;
+}
+
+.icon svg{
+  width:21px;
+  height:21px;
+  color:var(--deep);
+}
+
+.earn-card h3{
+  font-size:1.05rem;
+  margin-bottom:8px;
+}
+
+.earn-card p{
+  color:var(--soft);
+  font-size:.88rem;
+}
+
+@media(max-width:850px){
+  .earn-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:560px){
+  .earn-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+/* PAYOUTS */
+
+.payouts{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:center;
+}
+
+.payout-list{
+  list-style:none;
+}
+
+.payout-list li{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  padding:18px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.payout-name{
+  font-weight:800;
+}
+
+.payout-detail{
+  color:var(--soft);
+  font-size:.82rem;
+  text-align:right;
+}
+
+.payout-visual{
+  background:var(--deep);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:38px;
+}
+
+.big{
+  font-family:'Fraunces',serif;
+  color:var(--bright);
+  font-size:3rem;
+}
+
+.payout-visual p{
+  color:var(--soft);
+  margin-top:10px;
+}
+
+@media(max-width:850px){
+  .payouts{
+    grid-template-columns:1fr;
+  }
+}
+
+/* REFERRAL */
+
+.referral{
+  background:var(--deep);
+}
+
+.referral-card{
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  gap:30px;
+  background:linear-gradient(135deg,#123D29,#0B281B);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:42px;
+}
+
+.referral-card h2{
+  font-size:2.1rem;
+  margin-bottom:10px;
+}
+
+.referral-card p{
+  color:var(--soft);
+  max-width:600px;
+}
+
+.referral-amount{
+  font-family:'Fraunces',serif;
+  font-size:2.8rem;
+  color:var(--bright);
+}
+
+@media(max-width:650px){
+  .referral-card{
+    grid-template-columns:1fr;
+    padding:30px;
+  }
+}
+
+/* FAQ */
+
+.faq-item{
+  border-bottom:1px solid var(--line);
+  padding:21px 0;
+}
+
+.faq-item summary{
+  list-style:none;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  font-weight:800;
+}
+
+.faq-item summary::-webkit-details-marker{
+  display:none;
+}
+
+.faq-item summary::after{
+  content:"+";
+  color:var(--bright);
+  font-size:1.3rem;
+}
+
+.faq-item[open] summary::after{
+  content:"−";
+}
+
+.faq-item p{
+  color:var(--soft);
+  margin-top:12px;
+  max-width:750px;
+}
+
+/* TELEGRAM */
+
+.telegram{
+  background:var(--deep);
+}
+
+.telegram-card{
+  text-align:center;
+  padding:55px 25px;
+  border:1px solid var(--line);
+  border-radius:24px;
+  background:var(--mid);
+}
+
+.telegram-card svg{
+  width:42px;
+  height:42px;
+  margin:0 auto 18px;
+  color:var(--bright);
+}
+
+.telegram-card h2{
+  font-size:2rem;
+  margin-bottom:10px;
+}
+
+.telegram-card p{
+  color:var(--soft);
+  max-width:580px;
+  margin:0 auto 25px;
+}
+
+/* FINAL CTA */
+
+.final{
+  padding:30px 0 90px;
+}
+
+.final-card{
+  background:var(--deep);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:60px 45px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:30px;
+}
+
+.final-card h2{
+  font-size:clamp(2rem,4vw,2.7rem);
+  max-width:520px;
+}
+
+@media(max-width:650px){
+  .final-card{
+    padding:40px 25px;
+    flex-direction:column;
+    align-items:flex-start;
+  }
+}
+
+/* FOOTER */
+
+footer{
+  border-top:1px solid var(--line);
+  padding:50px 0 35px;
+}
+
+.footer-top{
+  display:flex;
+  justify-content:space-between;
+  gap:25px;
+  flex-wrap:wrap;
+}
+
+.footer-links{
+  display:flex;
+  gap:25px;
+  flex-wrap:wrap;
+  color:var(--soft);
+  font-size:.85rem;
+}
+
+.footer-bottom{
+  color:var(--soft);
+  font-size:.75rem;
+  margin-top:25px;
+  max-width:800px;
+}
+
+/* ACCESSIBILITY */
+
+:focus-visible{
+  outline:3px solid var(--bright);
+  outline-offset:3px;
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{
+    scroll-behavior:auto;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+
+<nav>
+  <div class="wrap">
+
+    <a href="index.html" class="logo">
+      <svg class="crown" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M2 18h20l-1.5-9-5 4-3.5-7-3.5 7-5-4L2 18z"/>
+      </svg>
+      RexTasks
+    </a>
+
+    <div class="nav-links">
+      <a href="#how">How It Works</a>
+      <a href="#earn">Ways To Earn</a>
+      <a href="#payouts">Payouts</a>
+      <a href="#faq">FAQ</a>
+    </div>
+
+    <div class="nav-actions">
+      <a href="login.html" class="nav-login">Log in</a>
+      <a href="signup.html" class="nav-cta">Get Started</a>
+    </div>
+
+  </div>
+</nav>
+
+
+<!-- HERO -->
+
+<header class="hero">
+
+  <div class="wrap hero-grid">
+
+    <div>
+
+      <div class="eyebrow">
+        A simple way to earn online
+      </div>
+
+      <h1>
+        Complete tasks.<br>
+        Earn <em>real rewards.</em>
+      </h1>
+
+      <p class="hero-text">
+        RexTasks lets you earn by completing surveys, tasks, offers and daily activities. Choose available tasks, complete them, and build your balance.
+      </p>
+
+      <div class="hero-actions">
+        <a href="signup.html" class="btn-primary">
+          Create Free Account
+        </a>
+
+        <a href="#how" class="btn-link">
+          See how it works
+        </a>
+      </div>
+
+      <div class="hero-note">
+        No deposit required. Minimum withdrawal: $10.
+      </div>
+
+    </div>
+
+
+    <!-- PHONE PREVIEW -->
+
+    <div class="phone-area">
+
+      <div class="phone">
+
+        <div class="phone-screen">
+
+          <div class="phone-top">
+            <span class="phone-brand">RexTasks</span>
+            <span>Wallet</span>
+          </div>
+
+          <div class="wallet">
+
+            <div class="wallet-label">
+              Wallet Balance
+            </div>
+
+            <div class="wallet-amount">
+              $24.80
+            </div>
+
+            <a href="login.html" class="wallet-button">
+              Withdraw
+            </a>
+
+          </div>
+
+          <div class="phone-title">
+            Recent Earnings
+          </div>
+
+          <div class="phone-task">
+            <div class="task-top">
+              <span class="task-name">Opinion Survey</span>
+              <span class="task-reward">+$1.20</span>
+            </div>
+            <div class="task-meta">
+              Completed task
+            </div>
+          </div>
+
+          <div class="phone-task">
+            <div class="task-top">
+              <span class="task-name">App Offer</span>
+              <span class="task-reward">+$2.50</span>
+            </div>
+            <div class="task-meta">
+              Task completed
+            </div>
+          </div>
+
+          <div class="phone-task">
+            <div class="task-top">
+              <span class="task-name">Daily Check-in</span>
+              <span class="task-reward">+$0.30</span>
+            </div>
+            <div class="task-meta">
+              Daily reward
+            </div>
+          </div>
+
+          <div class="phone-title">
+            Available Tasks
+          </div>
+
+          <div class="phone-task">
+            <div class="task-top">
+              <span class="task-name">New Survey</span>
+              <span class="task-reward">$1.80</span>
+            </div>
+            <div class="task-meta">
+              Estimated completion time
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<!-- TRUST / BENEFITS -->
+
+<div class="trust">
+
+  <div class="wrap trust-grid">
+
+    <div class="trust-item">
+      <div class="trust-number">Free</div>
+      <div class="trust-label">to join</div>
+    </div>
+
+    <div class="trust-item">
+      <div class="trust-number">$10</div>
+      <div class="trust-label">minimum withdrawal</div>
+    </div>
+
+    <div class="trust-item">
+      <div class="trust-number">Global</div>
+      <div class="trust-label">task availability</div>
+    </div>
+
+    <div class="trust-item">
+      <div class="trust-number">No</div>
+      <div class="trust-label">deposit required</div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- HOW IT WORKS -->
+
+<section id="how">
+
+  <div class="wrap">
+
+    <div class="section-head">
+
+      <div class="kicker">
+        How it works
+      </div>
+
+      <h2>
+        Four simple steps to start earning.
+      </h2>
+
+      <p>
+        Create your account, find tasks available to you, complete them and request your payout when you reach the minimum.
+      </p>
+
+    </div>
+
+
+    <div class="steps">
+
+      <div class="step">
+
+        <div class="step-number">01</div>
+
+        <h3>Create an account</h3>
+
+        <p>
+          Sign up with your name, email, password and country. Your referral code can also be added during registration.
+        </p>
+
+      </div>
+
+
+      <div class="step">
+
+        <div class="step-number">02</div>
+
+        <h3>Choose a task</h3>
+
+        <p>
+          Browse tasks, surveys and offers available for your country and account.
+        </p>
+
+      </div>
+
+
+      <div class="step">
+
+        <div class="step-number">03</div>
+
+        <h3>Complete the task</h3>
+
+        <p>
+          Follow the task instructions and provide proof when required.
+        </p>
+
+      </div>
+
+
+      <div class="step">
+
+        <div class="step-number">04</div>
+
+        <h3>Withdraw</h3>
+
+        <p>
+          Once your balance reaches $10, submit a withdrawal request for admin review.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- WAYS TO EARN -->
+
+<section class="earn-section" id="earn">
+
+  <div class="wrap">
+
+    <div class="section-head">
+
+      <div class="kicker">
+        Ways to earn
+      </div>
+
+      <h2>
+        Choose the tasks that fit you.
+      </h2>
+
+      <p>
+        RexTasks can offer different earning opportunities depending on your country and the tasks currently available.
+      </p>
+
+    </div>
+
+
+    <div class="earn-grid">
+
+      <!-- SURVEYS -->
+
+      <div class="earn-card">
+
+        <div class="icon">
+
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16v16H4z"/>
+            <path d="M8 9h8M8 13h6M8 17h4"/>
+          </svg>
+
+        </div>
+
+        <h3>Surveys</h3>
+
+        <p>
+          Share your opinions through available research surveys and earn when your completed survey is verified.
+        </p>
+
+      </div>
+
+
+      <!-- TASKS -->
+
+      <div class="earn-card">
+
+        <div class="icon">
+
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 4h14v16H5z"/>
+            <path d="m8 12 2 2 5-5"/>
+          </svg>
+
+        </div>
+
+        <h3>Tasks & Offers</h3>
+
+        <p>
+          Complete available app, website and promotional offers according to their requirements.
+        </p>
+
+      </div>
+
+
+      <!-- DAILY -->
+
+      <div class="earn-card">
+
+        <div class="icon">
+
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="8"/>
+            <path d="M12 7v5l3 2"/>
+          </svg>
+
+        </div>
+
+        <h3>Daily Tasks</h3>
+
+        <p>
+          Return regularly for available daily activities and check-in rewards.
+        </p>
+
+      </div>
+
+
+      <!-- REFERRALS -->
+
+      <div class="earn-card">
+
+        <div class="icon">
+
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="8" r="3"/>
+            <circle cx="17" cy="10" r="2.5"/>
+            <path d="M3 19c0-3 2.5-5 6-5s6 2 6 5"/>
+            <path d="M15 15c3 0 5 1.5 5 4"/>
+          </svg>
+
+        </div>
+
+        <h3>Referral Rewards</h3>
+
+        <p>
+          Invite others using your referral link and receive the referral reward when the eligibility requirements are met.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PAYOUTS -->
+
+<section id="payouts">
+
+  <div class="wrap payouts">
+
+    <div>
+
+      <div class="section-head">
+
+        <div class="kicker">
+          Payouts
+        </div>
+
+        <h2>
+          Withdraw your earnings your way.
+        </h2>
+
+        <p>
+          RexTasks supports different withdrawal methods depending on your country.
+        </p>
+
+      </div>
+
+
+      <ul class="payout-list">
+
+        <li>
+          <span class="payout-name">
+            Crypto
+          </span>
+
+          <span class="payout-detail">
+            Available worldwide
+          </span>
+        </li>
+
+        <li>
+          <span class="payout-name">
+            Bank transfer
+          </span>
+
+          <span class="payout-detail">
+            Available to Nigerian users
+          </span>
+        </li>
+
+        <li>
+          <span class="payout-name">
+            Minimum withdrawal
+          </span>
+
+          <span class="payout-detail">
+            $10
+          </span>
+        </li>
+
+        <li>
+          <span class="payout-name">
+            Review
+          </span>
+
+          <span class="payout-detail">
+            Admin approval required
+          </span>
+        </li>
+
+      </ul>
+
+    </div>
+
+
+    <div class="payout-visual">
+
+      <div class="big">
+        $10
+      </div>
+
+      <p>
+        is the minimum balance required before you can submit a withdrawal request. Your request is reviewed before payment is processed.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- REFERRAL -->
+
+<section class="referral">
+
+  <div class="wrap">
+
+    <div class="referral-card">
+
+      <div>
+
+        <div class="kicker">
+          Referral program
+        </div>
+
+        <h2>
+          Invite friends. Earn together.
+        </h2>
+
+        <p>
+          Share your personal referral link with others. You receive a $0.10 referral reward when your referred user completes at least one eligible and verified task.
+        </p>
+
+      </div>
+
+      <div>
+
+        <div class="referral-amount">
+          $0.10
+        </div>
+
+        <a href="signup.html" class="btn-primary" style="display:inline-block;margin-top:12px;">
+          Get Started
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- FAQ -->
+
+<section id="faq">
+
+  <div class="wrap">
+
+    <div class="section-head">
+
+      <div class="kicker">
+        Questions
+      </div>
+
+      <h2>
+        Before you sign up.
+      </h2>
+
+    </div>
+
+
+    <details class="faq-item" open>
+
+      <summary>
+        Is RexTasks free to join?
+      </summary>
+
+      <p>
+        Yes. Creating an account and using the platform is free. RexTasks does not currently require users to make a deposit to participate.
+      </p>
+
+    </details>
+
+
+    <details class="faq-item">
+
+      <summary>
+        How do I earn money on RexTasks?
+      </summary>
+
+      <p>
+        You can earn by completing available surveys, tasks, offers and daily activities. The tasks available to you depend on your country and current task inventory.
+      </p>
+
+    </details>
+
+
+    <details class="faq-item">
+
+      <summary>
+        How much can I earn?
+      </summary>
+
+      <p>
+        Earnings depend on the tasks available to your account, the reward assigned to each task and how many eligible tasks you successfully complete. Earnings are not guaranteed.
+      </p>
+
+    </details>
+
+
+    <details class="faq-item">
+
+      <summary>
+        What is the minimum withdrawal?
+      </summary>
+
+      <p>
+        The minimum withdrawal amount is $10.
+      </p>
+
+    </details>
+
+
+    <details class="faq-item">
+
+      <summary>
+        Can I withdraw to my bank account?
+      </summary>
+
+      <p>
+        Bank transfer withdrawals are available to users in Nigeria. Users outside Nigeria can currently use cryptocurrency withdrawal options.
+      </p>
+
+    </details>
+
+
+    <details class="faq-item">
+
+      <summary>
+        Do I get paid immediately after completing a task?
+      </summary>
+
+      <p>
+        Not necessarily. Some tasks require verification. For manual tasks, submitted proof may be reviewed by the RexTasks team before the reward is added to your wallet.
+      </p>
+
+    </details>
+
+
+    <details class="faq-item">
+
+      <summary>
+        Is RexTasks available worldwide?
+      </summary>
+
+      <p>
+        RexTasks is designed for users worldwide. However, available tasks and offers can vary significantly depending on your country.
+      </p>
+
+    </details>
+
+
+    <details class="faq-item">
+
+      <summary>
+        How does the referral reward work?
+      </summary>
+
+      <p>
+        You can invite people using your referral link. The $0.10 referral reward becomes eligible when the referred user completes at least one eligible and verified task.
+      </p>
+
+    </details>
+
+
+    <details class="faq-item">
+
+      <summary>
+        Do I need to deposit money?
+      </summary>
+
+      <p>
+        No. RexTasks currently operates without user deposits.
+      </p>
+
+    </details>
+
+  </div>
+
+</section>
+
+
+<!-- TELEGRAM -->
+
+<section class="telegram">
+
+  <div class="wrap">
+
+    <div class="telegram-card">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="m21 4-3 16-6-5-3 3v-5L21 4Z"/>
+        <path d="m3 11 18-7"/>
+      </svg>
+
+      <h2>
+        Join the RexTasks community.
+      </h2>
+
+      <p>
+        Stay connected with RexTasks, receive platform updates and learn about new earning opportunities.
+      </p>
+
+      <a
+        href="https://t.me/rextasks"
+        target="_blank"
+        rel="noopener"
+        class="btn-primary"
+        style="display:inline-block;"
+      >
+        Join Telegram
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- FINAL CTA -->
+
+<section class="final">
+
+  <div class="wrap">
+
+    <div class="final-card">
+
+      <h2>
+        Your next task could be your first reward.
+      </h2>
+
+      <a href="signup.html" class="btn-primary">
+        Create Free Account
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+  <div class="wrap">
+
+    <div class="footer-top">
+
+      <a href="index.html" class="logo">
+
+        <svg class="crown" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M2 18h20l-1.5-9-5 4-3.5-7-3.5 7-5-4L2 18z"/>
+        </svg>
+
+        RexTasks
+
+      </a>
+
+
+      <div class="footer-links">
+
+        <a href="#how">How It Works</a>
+        <a href="#earn">Ways To Earn</a>
+        <a href="#payouts">Payouts</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://t.me/rextasks" target="_blank" rel="noopener">Telegram</a>
+
+      </div>
+
+    </div>
+
+
+    <p class="footer-bottom">
+      RexTasks is a rewards platform. Earnings depend on task availability, eligibility and successful completion. Rewards and task availability may vary by country. No earnings are guaranteed. Users must meet the legal age requirements applicable in their jurisdiction.
+    </p>
+
+  </div>
+
+</footer>
+
+</body>
+</html>
