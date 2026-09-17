@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account — RexTasks</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:#06120d;
+color:#fff;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:24px;
+}
+
+.container{
+width:100%;
+max-width:440px;
+}
+
+.logo{
+text-align:center;
+margin-bottom:28px;
+}
+
+.logo-mark{
+width:52px;
+height:52px;
+margin:auto;
+border-radius:16px;
+background:linear-gradient(135deg,#25d366,#0c8f45);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:25px;
+font-weight:800;
+box-shadow:0 10px 35px rgba(37,211,102,.18);
+}
+
+.logo h1{
+margin-top:12px;
+font-size:25px;
+}
+
+.logo p{
+color:#91a99b;
+font-size:14px;
+margin-top:6px;
+}
+
+.card{
+background:#0b1d15;
+border:1px solid #18392a;
+border-radius:24px;
+padding:28px 22px;
+box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+.card h2{
+font-size:24px;
+margin-bottom:7px;
+}
+
+.subtitle{
+color:#8fa69a;
+font-size:14px;
+margin-bottom:24px;
+}
+
+.form-group{
+margin-bottom:16px;
+}
+
+label{
+display:block;
+font-size:13px;
+font-weight:600;
+margin-bottom:7px;
+color:#dce9e2;
+}
+
+input,select{
+width:100%;
+height:50px;
+border-radius:12px;
+border:1px solid #254737;
+background:#07150f;
+color:#fff;
+padding:0 14px;
+font-size:14px;
+outline:none;
+}
+
+input:focus,select:focus{
+border-color:#25d366;
+box-shadow:0 0 0 3px rgba(37,211,102,.08);
+}
+
+input::placeholder{
+color:#63786d;
+}
+
+.terms{
+display:flex;
+gap:9px;
+align-items:flex-start;
+margin:18px 0;
+font-size:12px;
+color:#84998f;
+line-height:1.5;
+}
+
+.terms input{
+width:16px;
+height:16px;
+margin-top:2px;
+accent-color:#25d366;
+}
+
+.terms a{
+color:#25d366;
+text-decoration:none;
+}
+
+button{
+width:100%;
+height:52px;
+border:0;
+border-radius:13px;
+background:linear-gradient(135deg,#25d366,#18a957);
+color:#031009;
+font-size:15px;
+font-weight:800;
+cursor:pointer;
+}
+
+button:disabled{
+opacity:.6;
+cursor:not-allowed;
+}
+
+.message{
+display:none;
+padding:12px;
+border-radius:10px;
+margin-bottom:16px;
+font-size:13px;
+line-height:1.4;
+}
+
+.error{
+display:block;
+background:#351719;
+border:1px solid #713337;
+color:#ffb5b8;
+}
+
+.success{
+display:block;
+background:#0c3020;
+border:1px solid #1d6844;
+color:#9af0bd;
+}
+
+.login{
+text-align:center;
+margin-top:20px;
+font-size:13px;
+color:#82978d;
+}
+
+.login a{
+color:#25d366;
+font-weight:700;
+text-decoration:none;
+}
+
+.back{
+text-align:center;
+margin-top:18px;
+}
+
+.back a{
+color:#71867b;
+font-size:13px;
+text-decoration:none;
+}
+
+@media(max-width:480px){
+body{padding:16px}
+.card{padding:24px 18px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">
+<div class="logo-mark">R</div>
+<h1>RexTasks</h1>
+<p>Complete tasks. Earn real rewards.</p>
+</div>
+
+<div class="card">
+
+<h2>Create your account</h2>
+<p class="subtitle">
+Join RexTasks for free and start earning from available tasks, surveys and offers.
+</p>
+
+<div id="message" class="message"></div>
+
+<form id="signupForm">
+
+<div class="form-group">
+<label for="fullName">Full name</label>
+<input
+type="text"
+id="fullName"
+placeholder="Enter your full name"
+required>
+</div>
+
+<div class="form-group">
+<label for="email">Email address</label>
+<input
+type="email"
+id="email"
+placeholder="you@example.com"
+required>
+</div>
+
+<div class="form-group">
+<label for="password">Password</label>
+<input
+type="password"
+id="password"
+placeholder="Create a password"
+minlength="6"
+required>
+</div>
+
+<div class="form-group">
+<label for="country">Country</label>
+
+<select id="country" required>
+<option value="">Select your country</option>
+<option>Nigeria</option>
+<option>United States</option>
+<option>United Kingdom</option>
+<option>Canada</option>
+<option>Australia</option>
+<option>Germany</option>
+<option>France</option>
+<option>South Africa</option>
+<option>Ghana</option>
+<option>Kenya</option>
+<option>Other</option>
+</select>
+
+</div>
+
+<div class="form-group">
+<label for="referral">Referral code <span style="color:#71867b">(optional)</span></label>
+<input
+type="text"
+id="referral"
+placeholder="Enter referral code">
+</div>
+
+<label class="terms">
+<input type="checkbox" id="terms" required>
+<span>
+I agree to the
+<a href="#">Terms of Service</a>
+and
+<a href="#">Privacy Policy</a>.
+</span>
+</label>
+
+<button type="submit" id="signupBtn">
+Create Free Account
+</button>
+
+</form>
+
+<div class="login">
+Already have an account?
+<a href="login.html">Sign in</a>
+</div>
+
+<div class="back">
+<a href="index.html">← Back to RexTasks</a>
+</div>
+
+</div>
+
+</div>
+
+<script>
+const form = document.getElementById("signupForm");
+const message = document.getElementById("message");
+const button = document.getElementById("signupBtn");
+
+const referralInput = document.getElementById("referral");
+
+const params = new URLSearchParams(window.location.search);
+const referralCode = params.get("ref");
+
+if(referralCode){
+referralInput.value = referralCode;
+}
+
+form.addEventListener("submit", function(e){
+
+e.preventDefault();
+
+message.className = "message";
+message.style.display = "none";
+
+button.disabled = true;
+button.textContent = "Creating account...";
+
+/*
+ Supabase account creation will be connected
+ after the Supabase project credentials are added.
+*/
+
+setTimeout(function(){
+
+message.textContent =
+"Your signup form is ready. Supabase authentication will be connected next.";
+
+message.className = "message success";
+
+button.disabled = false;
+button.textContent = "Create Free Account";
+
+},700);
+
+});
+</script>
+
+</body>
+</html>
