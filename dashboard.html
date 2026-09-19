@@ -398,6 +398,53 @@ svg{
   font-size:.82rem;
 }
 
+/* ACTIVITY ROW */
+
+.activity-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:16px 18px;
+  border-bottom:1px solid var(--border);
+}
+
+.activity-row:last-child{
+  border-bottom:0;
+}
+
+.activity-icon{
+  width:40px;
+  height:40px;
+  border-radius:11px;
+  background:rgba(62,190,121,.1);
+  color:var(--bright);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.activity-info{
+  flex:1;
+  min-width:0;
+}
+
+.activity-name{
+  font-weight:800;
+  font-size:.8rem;
+}
+
+.activity-time{
+  color:var(--soft);
+  font-size:.68rem;
+  margin-top:2px;
+}
+
+.activity-amount{
+  color:var(--bright);
+  font-weight:800;
+  font-size:.82rem;
+}
+
 /* TELEGRAM */
 
 .community-card{
@@ -594,14 +641,18 @@ svg{
 <div class="loading-screen" id="loadingScreen">
 
   <div class="loading-logo">
+
     <svg viewBox="0 0 24 24" fill="none"
       stroke="currentColor"
       stroke-width="2.2"
       stroke-linecap="round"
       stroke-linejoin="round">
+
       <path d="M5 20V4h4.5l9.5 8-9.5 8H5z"/>
       <path d="M9.5 4v16"/>
+
     </svg>
+
   </div>
 
   <div class="loader"></div>
@@ -616,21 +667,26 @@ svg{
   <a href="dashboard.html" class="brand">
 
     <span class="brand-mark">
+
       <svg viewBox="0 0 24 24" fill="none"
         stroke="currentColor"
         stroke-width="2.2"
         stroke-linecap="round"
         stroke-linejoin="round">
+
         <path d="M5 20V4h4.5l9.5 8-9.5 8H5z"/>
         <path d="M9.5 4v16"/>
+
       </svg>
+
     </span>
 
     RexTasks
 
   </a>
 
-  <div class="top-actions">
+
+  <div>
 
     <button class="icon-btn" id="notificationBtn">
 
@@ -639,8 +695,10 @@ svg{
         stroke-width="1.8"
         stroke-linecap="round"
         stroke-linejoin="round">
+
         <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
         <path d="M10 21h4"/>
+
       </svg>
 
       <span class="notification-dot"></span>
@@ -686,8 +744,10 @@ svg{
         stroke-width="1.8"
         stroke-linecap="round"
         stroke-linejoin="round">
+
         <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/>
         <circle cx="12" cy="12" r="2.5"/>
+
       </svg>
 
     </button>
@@ -897,7 +957,8 @@ stroke-linecap="round" stroke-linejoin="round">
 <span class="quick-icon">
 <svg viewBox="0 0 24 24" fill="none"
 stroke="currentColor" stroke-width="1.8"
-stroke-linecap="round" stroke-linejoin="round">
+stroke-linecap="round"
+stroke-linejoin="round">
 <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
 <path d="M10 21h4"/>
 </svg>
@@ -930,15 +991,13 @@ View All
 <div id="activityList">
 
 <div class="activity-empty">
-Your completed tasks and earnings will appear here.
+No activity yet.
 </div>
 
 </div>
 
 </section>
 
-
-<!-- TELEGRAM -->
 
 <section class="community-card">
 
@@ -972,12 +1031,12 @@ Get updates, task announcements and important notices.
 
 
 <a
-  class="community-btn"
-  href="https://t.me/rextasks"
-  target="_blank"
-  rel="noopener noreferrer">
+class="community-btn"
+href="https://t.me/rextasks"
+target="_blank"
+rel="noopener noreferrer">
 
-  Join
+Join
 
 </a>
 
@@ -988,8 +1047,6 @@ Get updates, task announcements and important notices.
 </div>
 
 
-<!-- BOTTOM NAV -->
-
 <nav class="bottom-nav">
 
 <div class="bottom-nav-inner">
@@ -999,7 +1056,8 @@ Get updates, task announcements and important notices.
 
 <svg viewBox="0 0 24 24" fill="none"
 stroke="currentColor" stroke-width="1.8"
-stroke-linecap="round" stroke-linejoin="round">
+stroke-linecap="round"
+stroke-linejoin="round">
 <path d="M4 10.5L12 4l8 6.5V20H4z"/>
 <path d="M9 20v-6h6v6"/>
 </svg>
@@ -1080,7 +1138,9 @@ Profile
 
 <script>
 
-/* SUPABASE */
+/* =========================================================
+   SUPABASE
+========================================================= */
 
 const SUPABASE_URL =
 "https://cetsxdkoauucxwsbdktl.supabase.co";
@@ -1095,16 +1155,18 @@ window.supabase.createClient(
 );
 
 
-/* ELEMENTS */
+/* =========================================================
+   ELEMENTS
+========================================================= */
 
 const loadingScreen =
 document.getElementById("loadingScreen");
 
-const userEmail =
-document.getElementById("userEmail");
-
 const welcomeName =
 document.getElementById("welcomeName");
+
+const userEmail =
+document.getElementById("userEmail");
 
 const walletBalance =
 document.getElementById("walletBalance");
@@ -1121,8 +1183,28 @@ document.getElementById("pendingBalance");
 const balanceToggle =
 document.getElementById("balanceToggle");
 
+const activityList =
+document.getElementById("activityList");
 
-/* SESSION */
+
+/* =========================================================
+   FORMAT MONEY
+========================================================= */
+
+function money(value){
+
+  const number =
+    Number(value || 0);
+
+  return "$" +
+    number.toFixed(2);
+
+}
+
+
+/* =========================================================
+   SESSION
+========================================================= */
 
 async function checkSession(){
 
@@ -1134,219 +1216,511 @@ async function checkSession(){
     } =
     await supabaseClient.auth.getSession();
 
-    if(error || !data.session){
+    if(error){
+
+      console.error(error);
 
       window.location.href =
-      "login.html";
+        "login.html";
+
+      return;
+
+    }
+
+    if(!data.session){
+
+      window.location.href =
+        "login.html";
 
       return;
 
     }
 
     const user =
-    data.session.user;
+      data.session.user;
 
     displayUser(user);
 
-    await loadUserData(user);
+    await loadWallet(user.id);
+
+    await loadRecentActivity(user.id);
 
     loadingScreen.style.display =
-    "none";
+      "none";
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Dashboard error:",
+      error
+    );
 
     window.location.href =
-    "login.html";
+      "login.html";
 
   }
 
 }
 
 
-/* USER */
+/* =========================================================
+   DISPLAY USER
+========================================================= */
 
 function displayUser(user){
 
   userEmail.textContent =
-  user.email || "RexTasks member";
+    user.email || "RexTasks member";
 
   let name =
-  user.user_metadata?.full_name || "";
+    user.user_metadata?.full_name || "";
 
   if(!name && user.email){
 
     name =
-    user.email
-    .split("@")[0]
-    .replace(/[._-]/g," ");
+      user.email
+        .split("@")[0]
+        .replace(/[._-]/g," ");
 
     name =
-    name
-    .split(" ")
-    .map(word =>
-      word.charAt(0).toUpperCase() +
-      word.slice(1)
-    )
-    .join(" ");
+      name
+        .split(" ")
+        .map(word =>
+          word.charAt(0).toUpperCase() +
+          word.slice(1)
+        )
+        .join(" ");
 
   }
 
   welcomeName.textContent =
-  name || "RexTasks member";
+    name || "RexTasks member";
 
 }
 
 
-/* USER DATA */
+/* =========================================================
+   LOAD REAL WALLET
+========================================================= */
 
-async function loadUserData(user){
+async function loadWallet(userId){
 
-  /*
-    Real wallet values will be connected
-    from Supabase as we build the earning system.
-
-    For now the safe starting values are $0.00.
-  */
-
-  walletBalance.textContent =
-  "$0.00";
-
-  totalEarned.textContent =
-  "$0.00";
-
-  referralEarnings.textContent =
-  "$0.00";
-
-  pendingBalance.textContent =
-  "$0.00";
-
-}
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("wallets")
+    .select(
+      "balance,total_earned,referral_earnings"
+    )
+    .eq("user_id",userId)
+    .maybeSingle();
 
 
-/* BALANCE HIDE */
+  if(error){
 
-let balanceVisible = true;
+    console.error(
+      "Wallet error:",
+      error
+    );
 
-balanceToggle.addEventListener(
-"click",
-function(){
-
-  balanceVisible =
-  !balanceVisible;
-
-  const values = [
-    walletBalance,
-    totalEarned,
-    referralEarnings,
-    pendingBalance
-  ];
-
-  values.forEach(element => {
-
-    if(balanceVisible){
-
-      if(element === walletBalance)
-        element.textContent = "$0.00";
-
-      if(element === totalEarned)
-        element.textContent = "$0.00";
-
-      if(element === referralEarnings)
-        element.textContent = "$0.00";
-
-      if(element === pendingBalance)
-        element.textContent = "$0.00";
-
-    }else{
-
-      element.textContent =
-      "••••••";
-
-    }
-
-  });
-
-});
-
-
-/* PAGE BUTTONS */
-
-document
-.querySelectorAll("[data-page]")
-.forEach(button => {
-
-  button.addEventListener(
-  "click",
-  function(){
-
-    window.location.href =
-    this.dataset.page;
-
-  });
-
-});
-
-
-/* EARN */
-
-document
-.getElementById("earnNowBtn")
-.addEventListener(
-"click",
-function(){
-
-  window.location.href =
-  "tasks.html";
-
-});
-
-
-/* HISTORY */
-
-document
-.getElementById("viewHistory")
-.addEventListener(
-"click",
-function(){
-
-  window.location.href =
-  "history.html";
-
-});
-
-
-/* NOTIFICATIONS */
-
-document
-.getElementById("notificationBtn")
-.addEventListener(
-"click",
-function(){
-
-  window.location.href =
-  "notifications.html";
-
-});
-
-
-/* AUTH STATE */
-
-supabaseClient.auth.onAuthStateChange(
-function(event){
-
-  if(event === "SIGNED_OUT"){
-
-    window.location.href =
-    "login.html";
+    return;
 
   }
 
-});
+
+  if(data){
+
+    walletBalance.textContent =
+      money(data.balance);
+
+    totalEarned.textContent =
+      money(data.total_earned);
+
+    referralEarnings.textContent =
+      money(data.referral_earnings);
+
+  }
 
 
-/* START */
+  /* =========================================
+     PENDING TASK REWARDS
+  ========================================= */
+
+  const {
+    data: pending,
+    error: pendingError
+  } =
+  await supabaseClient
+    .from("task_submissions")
+    .select("user_reward")
+    .eq("user_id",userId)
+    .eq("status","pending");
+
+
+  if(pendingError){
+
+    console.error(
+      "Pending balance error:",
+      pendingError
+    );
+
+    pendingBalance.textContent =
+      "$0.00";
+
+    return;
+
+  }
+
+
+  let pendingTotal = 0;
+
+  if(pending){
+
+    pending.forEach(item => {
+
+      pendingTotal +=
+        Number(item.user_reward || 0);
+
+    });
+
+  }
+
+
+  pendingBalance.textContent =
+    money(pendingTotal);
+
+}
+
+
+/* =========================================================
+   RECENT ACTIVITY
+========================================================= */
+
+async function loadRecentActivity(userId){
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("task_submissions")
+    .select(
+      "id,payout,user_reward,status,created_at,tasks(title)"
+    )
+    .eq("user_id",userId)
+    .order(
+      "created_at",
+      {ascending:false}
+    )
+    .limit(5);
+
+
+  if(error){
+
+    console.error(
+      "Activity error:",
+      error
+    );
+
+    return;
+
+  }
+
+
+  if(!data || data.length === 0){
+
+    activityList.innerHTML = `
+      <div class="activity-empty">
+        No activity yet.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  activityList.innerHTML = "";
+
+
+  data.forEach(item => {
+
+    const title =
+      item.tasks?.title ||
+      "Task submission";
+
+    const amount =
+      Number(item.user_reward || 0);
+
+    const date =
+      new Date(item.created_at);
+
+    const formattedDate =
+      date.toLocaleDateString(
+        undefined,
+        {
+          day:"numeric",
+          month:"short",
+          year:"numeric"
+        }
+      );
+
+
+    let statusText =
+      item.status || "pending";
+
+    statusText =
+      statusText.charAt(0).toUpperCase() +
+      statusText.slice(1);
+
+
+    const row =
+      document.createElement("div");
+
+    row.className =
+      "activity-row";
+
+
+    row.innerHTML = `
+
+      <div class="activity-icon">
+
+        <svg viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round">
+
+          <path d="M5 4h14v16H5z"/>
+          <path d="M8 8h8"/>
+          <path d="M8 12h5"/>
+          <path d="M8 16h4"/>
+
+        </svg>
+
+      </div>
+
+
+      <div class="activity-info">
+
+        <div class="activity-name">
+          ${escapeHtml(title)}
+        </div>
+
+        <div class="activity-time">
+          ${statusText} • ${formattedDate}
+        </div>
+
+      </div>
+
+
+      <div class="activity-amount">
+        ${money(amount)}
+      </div>
+
+    `;
+
+
+    activityList.appendChild(row);
+
+  });
+
+}
+
+
+/* =========================================================
+   SECURITY
+========================================================= */
+
+function escapeHtml(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   BALANCE VISIBILITY
+========================================================= */
+
+let balanceVisible = true;
+
+let realBalance = "$0.00";
+let realTotalEarned = "$0.00";
+let realReferral = "$0.00";
+let realPending = "$0.00";
+
+
+function saveRealValues(){
+
+  realBalance =
+    walletBalance.textContent;
+
+  realTotalEarned =
+    totalEarned.textContent;
+
+  realReferral =
+    referralEarnings.textContent;
+
+  realPending =
+    pendingBalance.textContent;
+
+}
+
+
+const originalLoadWallet =
+loadWallet;
+
+
+/* =========================================================
+   EYE BUTTON
+========================================================= */
+
+balanceToggle.addEventListener(
+  "click",
+  function(){
+
+    if(balanceVisible){
+
+      saveRealValues();
+
+      walletBalance.textContent =
+        "••••••";
+
+      totalEarned.textContent =
+        "••••••";
+
+      referralEarnings.textContent =
+        "••••••";
+
+      pendingBalance.textContent =
+        "••••••";
+
+      balanceVisible = false;
+
+    }else{
+
+      walletBalance.textContent =
+        realBalance;
+
+      totalEarned.textContent =
+        realTotalEarned;
+
+      referralEarnings.textContent =
+        realReferral;
+
+      pendingBalance.textContent =
+        realPending;
+
+      balanceVisible = true;
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+document
+  .querySelectorAll("[data-page]")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      function(){
+
+        window.location.href =
+          this.dataset.page;
+
+      }
+    );
+
+  });
+
+
+/* =========================================================
+   EARN
+========================================================= */
+
+document
+  .getElementById("earnNowBtn")
+  .addEventListener(
+    "click",
+    function(){
+
+      window.location.href =
+        "tasks.html";
+
+    }
+  );
+
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+document
+  .getElementById("viewHistory")
+  .addEventListener(
+    "click",
+    function(){
+
+      window.location.href =
+        "history.html";
+
+    }
+  );
+
+
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+document
+  .getElementById("notificationBtn")
+  .addEventListener(
+    "click",
+    function(){
+
+      window.location.href =
+        "notifications.html";
+
+    }
+  );
+
+
+/* =========================================================
+   AUTH LISTENER
+========================================================= */
+
+supabaseClient.auth.onAuthStateChange(
+  function(event){
+
+    if(event === "SIGNED_OUT"){
+
+      window.location.href =
+        "login.html";
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   START
+========================================================= */
 
 checkSession();
 
