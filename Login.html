@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#061A12">
+
+<title>Log in — RexTasks</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --forest-deep:#061A12;
+  --forest:#0D2E20;
+  --forest-mid:#153F2B;
+  --forest-light:#1B4B35;
+  --green:#2E9A5E;
+  --green-bright:#3EBE79;
+  --ink:#E4F0E8;
+  --ink-soft:#9CBFA9;
+  --danger:#ef6b6b;
+  --warning:#e6bd65;
+  --white:#ffffff;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  min-height:100vh;
+  font-family:'Manrope',sans-serif;
+  background:
+    radial-gradient(circle at 20% 0%,rgba(46,154,94,.14),transparent 35%),
+    radial-gradient(circle at 100% 100%,rgba(62,190,121,.08),transparent 35%),
+    var(--forest-deep);
+  color:var(--ink);
+  line-height:1.5;
+}
+
+button,
+input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+svg{
+  display:block;
+}
+
+:focus-visible{
+  outline:3px solid var(--green-bright);
+  outline-offset:3px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.topbar{
+  width:100%;
+  padding:22px 20px;
+  border-bottom:1px solid rgba(228,240,232,.08);
+  background:rgba(6,26,18,.82);
+  backdrop-filter:blur(14px);
+}
+
+.topbar-inner{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family:'Fraunces',serif;
+  font-size:1.35rem;
+  font-weight:700;
+}
+
+.logo-mark{
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(145deg,var(--green-bright),var(--green));
+  color:var(--forest-deep);
+}
+
+.logo-mark svg{
+  width:21px;
+  height:21px;
+}
+
+.back-link{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:var(--ink-soft);
+  font-size:.9rem;
+  font-weight:700;
+}
+
+.back-link:hover{
+  color:var(--ink);
+}
+
+.back-link svg{
+  width:17px;
+  height:17px;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.page{
+  min-height:calc(100vh - 80px);
+  padding:55px 20px 70px;
+  display:flex;
+  justify-content:center;
+}
+
+.login-layout{
+  width:100%;
+  max-width:1040px;
+  display:grid;
+  grid-template-columns:1fr 450px;
+  gap:65px;
+  align-items:center;
+}
+
+/* =========================
+   LEFT SIDE
+========================= */
+
+.intro{
+  max-width:510px;
+}
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:var(--green-bright);
+  font-size:.85rem;
+  font-weight:800;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  margin-bottom:18px;
+}
+
+.eyebrow-line{
+  width:26px;
+  height:2px;
+  background:var(--green-bright);
+  border-radius:5px;
+}
+
+.intro h1{
+  font-family:'Fraunces',serif;
+  font-size:clamp(2.3rem,5vw,3.7rem);
+  line-height:1.05;
+  letter-spacing:-.025em;
+  margin-bottom:20px;
+}
+
+.intro h1 span{
+  color:var(--green-bright);
+  font-style:italic;
+}
+
+.intro-text{
+  color:var(--ink-soft);
+  font-size:1.02rem;
+  max-width:47ch;
+  margin-bottom:30px;
+}
+
+.benefits{
+  display:flex;
+  flex-direction:column;
+  gap:17px;
+}
+
+.benefit{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  color:var(--ink);
+  font-size:.92rem;
+  font-weight:600;
+}
+
+.benefit-icon{
+  width:35px;
+  height:35px;
+  border-radius:10px;
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(46,154,94,.14);
+  border:1px solid rgba(62,190,121,.18);
+  color:var(--green-bright);
+}
+
+.benefit-icon svg{
+  width:18px;
+  height:18px;
+}
+
+/* =========================
+   LOGIN CARD
+========================= */
+
+.login-card{
+  background:rgba(21,63,43,.82);
+  border:1px solid rgba(228,240,232,.1);
+  border-radius:24px;
+  padding:34px;
+  box-shadow:
+    0 35px 80px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.025);
+}
+
+.card-heading{
+  margin-bottom:26px;
+}
+
+.card-heading h2{
+  font-family:'Fraunces',serif;
+  font-size:2rem;
+  margin-bottom:7px;
+}
+
+.card-heading p{
+  color:var(--ink-soft);
+  font-size:.9rem;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-group{
+  margin-bottom:18px;
+}
+
+.form-label{
+  display:block;
+  color:var(--ink);
+  font-size:.84rem;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+.input-wrap{
+  position:relative;
+}
+
+.input-icon{
+  position:absolute;
+  left:14px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--ink-soft);
+  pointer-events:none;
+}
+
+.input-icon svg{
+  width:18px;
+  height:18px;
+}
+
+.form-input{
+  width:100%;
+  height:52px;
+  padding:0 45px 0 44px;
+  border-radius:12px;
+  border:1px solid rgba(228,240,232,.13);
+  background:var(--forest-deep);
+  color:var(--ink);
+  outline:none;
+  transition:.2s ease;
+}
+
+.form-input::placeholder{
+  color:#648373;
+}
+
+.form-input:focus{
+  border-color:var(--green);
+  box-shadow:0 0 0 3px rgba(46,154,94,.12);
+}
+
+.password-toggle{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  width:32px;
+  height:32px;
+  border:0;
+  background:transparent;
+  color:var(--ink-soft);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:7px;
+}
+
+.password-toggle:hover{
+  background:rgba(228,240,232,.06);
+  color:var(--ink);
+}
+
+.password-toggle svg{
+  width:18px;
+  height:18px;
+}
+
+/* =========================
+   LOGIN OPTIONS
+========================= */
+
+.form-options{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin:5px 0 21px;
+}
+
+.remember{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:var(--ink-soft);
+  font-size:.8rem;
+  cursor:pointer;
+}
+
+.remember input{
+  width:16px;
+  height:16px;
+  accent-color:var(--green);
+}
+
+.forgot{
+  color:var(--green-bright);
+  font-size:.8rem;
+  font-weight:700;
+}
+
+.forgot:hover{
+  text-decoration:underline;
+}
+
+/* =========================
+   SECURITY VERIFICATION
+========================= */
+
+.security-box{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:13px 14px;
+  margin-bottom:20px;
+  border:1px solid rgba(228,240,232,.11);
+  background:rgba(6,26,18,.55);
+  border-radius:12px;
+}
+
+.security-left{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.security-check{
+  width:20px;
+  height:20px;
+  accent-color:var(--green);
+  cursor:pointer;
+}
+
+.security-text{
+  font-size:.78rem;
+  color:var(--ink-soft);
+}
+
+.security-title{
+  display:block;
+  color:var(--ink);
+  font-weight:700;
+  margin-bottom:2px;
+}
+
+.security-badge{
+  width:30px;
+  height:30px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:8px;
+  color:var(--green-bright);
+  background:rgba(46,154,94,.1);
+}
+
+.security-badge svg{
+  width:17px;
+  height:17px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.login-button{
+  width:100%;
+  min-height:53px;
+  border:0;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--green-bright),var(--green));
+  color:var(--forest-deep);
+  font-size:.95rem;
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  transition:.2s ease;
+  box-shadow:0 10px 25px rgba(46,154,94,.16);
+}
+
+.login-button:hover{
+  transform:translateY(-1px);
+  box-shadow:0 13px 30px rgba(46,154,94,.24);
+}
+
+.login-button:disabled{
+  opacity:.65;
+  cursor:not-allowed;
+  transform:none;
+}
+
+.login-button svg{
+  width:18px;
+  height:18px;
+}
+
+/* =========================
+   LOADER
+========================= */
+
+.loader{
+  width:18px;
+  height:18px;
+  border:2px solid rgba(6,26,18,.3);
+  border-top-color:var(--forest-deep);
+  border-radius:50%;
+  animation:spin .7s linear infinite;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg);}
+}
+
+/* =========================
+   MESSAGE
+========================= */
+
+.form-message{
+  display:none;
+  padding:12px 13px;
+  margin-bottom:17px;
+  border-radius:10px;
+  font-size:.8rem;
+  font-weight:600;
+}
+
+.form-message.error{
+  display:block;
+  color:#ffb0b0;
+  background:rgba(190,60,60,.1);
+  border:1px solid rgba(239,107,107,.2);
+}
+
+.form-message.success{
+  display:block;
+  color:#9de5ba;
+  background:rgba(46,154,94,.1);
+  border:1px solid rgba(62,190,121,.2);
+}
+
+/* =========================
+   SIGNUP
+========================= */
+
+.signup-link{
+  text-align:center;
+  color:var(--ink-soft);
+  font-size:.84rem;
+  margin-top:22px;
+}
+
+.signup-link a{
+  color:var(--green-bright);
+  font-weight:800;
+}
+
+.signup-link a:hover{
+  text-decoration:underline;
+}
+
+/* =========================
+   POPUP
+========================= */
+
+.popup-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.68);
+  backdrop-filter:blur(6px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+  padding:20px;
+}
+
+.popup-overlay.show{
+  display:flex;
+}
+
+.success-popup{
+  width:100%;
+  max-width:390px;
+  background:var(--forest-mid);
+  border:1px solid rgba(62,190,121,.25);
+  border-radius:22px;
+  padding:32px 26px;
+  text-align:center;
+  box-shadow:0 30px 80px rgba(0,0,0,.5);
+  animation:popupIn .25s ease;
+}
+
+@keyframes popupIn{
+  from{
+    opacity:0;
+    transform:translateY(12px) scale(.97);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+.success-icon{
+  width:64px;
+  height:64px;
+  margin:0 auto 18px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--forest-deep);
+  background:var(--green-bright);
+}
+
+.success-icon svg{
+  width:32px;
+  height:32px;
+}
+
+.success-popup h3{
+  font-family:'Fraunces',serif;
+  font-size:1.65rem;
+  margin-bottom:8px;
+}
+
+.success-popup p{
+  color:var(--ink-soft);
+  font-size:.86rem;
+}
+
+.popup-loader{
+  width:22px;
+  height:22px;
+  border:2px solid rgba(62,190,121,.2);
+  border-top-color:var(--green-bright);
+  border-radius:50%;
+  margin:18px auto 0;
+  animation:spin .7s linear infinite;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+  text-align:center;
+  padding:0 20px 28px;
+  color:#658575;
+  font-size:.72rem;
+}
+
+@media(max-width:850px){
+
+  .login-layout{
+    grid-template-columns:1fr;
+    max-width:500px;
+    gap:35px;
+  }
+
+  .intro{
+    text-align:center;
+    max-width:none;
+  }
+
+  .intro-text{
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  .benefits{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    text-align:left;
+  }
+
+}
+
+@media(max-width:560px){
+
+  .topbar{
+    padding:17px 16px;
+  }
+
+  .logo{
+    font-size:1.15rem;
+  }
+
+  .logo-mark{
+    width:31px;
+    height:31px;
+  }
+
+  .back-link{
+    font-size:.78rem;
+  }
+
+  .page{
+    padding:35px 15px 50px;
+  }
+
+  .intro{
+    text-align:left;
+  }
+
+  .intro h1{
+    font-size:2.45rem;
+  }
+
+  .benefits{
+    grid-template-columns:1fr;
+  }
+
+  .login-card{
+    padding:24px 18px;
+    border-radius:19px;
+  }
+
+  .card-heading h2{
+    font-size:1.75rem;
+  }
+
+  .form-options{
+    align-items:flex-start;
+  }
+
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{
+    animation:none!important;
+    transition:none!important;
+    scroll-behavior:auto!important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     TOP BAR
+========================= -->
+
+<header class="topbar">
+  <div class="topbar-inner">
+
+    <a href="index.html" class="logo">
+
+      <span class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 19V5"/>
+          <path d="M5 5h9l-2 4 2 4H5"/>
+        </svg>
+      </span>
+
+      RexTasks
+
+    </a>
+
+    <a href="index.html" class="back-link">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5"/>
+        <path d="M12 19l-7-7 7-7"/>
+      </svg>
+
+      Back to home
+
+    </a>
+
+  </div>
+</header>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="page">
+
+  <div class="login-layout">
+
+
+    <!-- INTRO -->
+
+    <section class="intro">
+
+      <div class="eyebrow">
+        <span class="eyebrow-line"></span>
+        Welcome back
+      </div>
+
+      <h1>
+        Keep earning.<br>
+        Keep making <span>progress.</span>
+      </h1>
+
+      <p class="intro-text">
+        Sign in to your RexTasks account to continue completing available tasks,
+        track your earnings and manage your rewards.
+      </p>
+
+      <div class="benefits">
+
+        <div class="benefit">
+
+          <span class="benefit-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v20"/>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H7"/>
+            </svg>
+          </span>
+
+          Track your earnings
+        </div>
+
+
+        <div class="benefit">
+
+          <span class="benefit-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+          </span>
+
+          Secure account access
+        </div>
+
+
+        <div class="benefit">
+
+          <span class="benefit-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 12a8 8 0 1 1-2.34-5.66"/>
+              <path d="M20 4v6h-6"/>
+            </svg>
+          </span>
+
+          Pick up where you stopped
+        </div>
+
+
+        <div class="benefit">
+
+          <span class="benefit-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 7h-9"/>
+              <path d="M20 12h-9"/>
+              <path d="M20 17h-9"/>
+              <path d="M4 7h.01"/>
+              <path d="M4 12h.01"/>
+              <path d="M4 17h.01"/>
+            </svg>
+          </span>
+
+          View your task activity
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- LOGIN CARD -->
+
+    <section class="login-card">
+
+      <div class="card-heading">
+
+        <h2>Log in</h2>
+
+        <p>
+          Enter your account details to continue.
+        </p>
+
+      </div>
+
+
+      <div id="formMessage" class="form-message"></div>
+
+
+      <form id="loginForm" autocomplete="on">
+
+        <!-- EMAIL -->
+
+        <div class="form-group">
+
+          <label class="form-label" for="email">
+            Email address
+          </label>
+
+          <div class="input-wrap">
+
+            <span class="input-icon">
+
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="5" width="18" height="14" rx="2"/>
+                <path d="m3 7 9 6 9-6"/>
+              </svg>
+
+            </span>
+
+            <input
+              class="form-input"
+              id="email"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            >
+
+          </div>
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="form-group">
+
+          <label class="form-label" for="password">
+            Password
+          </label>
+
+          <div class="input-wrap">
+
+            <span class="input-icon">
+
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="10" rx="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+
+            </span>
+
+            <input
+              class="form-input"
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            >
+
+            <button
+              type="button"
+              class="password-toggle"
+              id="passwordToggle"
+              aria-label="Show password"
+            >
+
+              <svg id="eyeOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+
+              <svg id="eyeClosed" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3l18 18"/>
+                <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/>
+                <path d="M9.9 4.2A10.6 10.6 0 0 1 12 4c6.5 0 10 8 10 8a18 18 0 0 1-3.1 4.3"/>
+                <path d="M6.6 6.6C3.5 8.7 2 12 2 12s3.5 8 10 8a10 10 0 0 0 4-.8"/>
+              </svg>
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- OPTIONS -->
+
+        <div class="form-options">
+
+          <label class="remember">
+
+            <input
+              type="checkbox"
+              id="remember"
+            >
+
+            Remember me
+
+          </label>
+
+          <a
+            href="forgot-password.html"
+            class="forgot"
+          >
+            Forgot password?
+          </a>
+
+        </div>
+
+
+        <!-- SECURITY -->
+
+        <div class="security-box">
+
+          <div class="security-left">
+
+            <input
+              class="security-check"
+              type="checkbox"
+              id="humanCheck"
+              required
+            >
+
+            <div class="security-text">
+
+              <span class="security-title">
+                Security verification
+              </span>
+
+              Confirm that you are human
+
+            </div>
+
+          </div>
+
+          <span class="security-badge">
+
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+
+          </span>
+
+        </div>
+
+
+        <!-- HONEYPOT -->
+
+        <div
+          style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;"
+          aria-hidden="true"
+        >
+
+          <label for="website">
+            Website
+          </label>
+
+          <input
+            type="text"
+            id="website"
+            name="website"
+            tabindex="-1"
+            autocomplete="off"
+          >
+
+        </div>
+
+
+        <!-- LOGIN -->
+
+        <button
+          type="submit"
+          class="login-button"
+          id="loginButton"
+        >
+
+          <span id="buttonText">
+            Log in to RexTasks
+          </span>
+
+          <svg
+            id="buttonArrow"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M5 12h14"/>
+            <path d="m13 6 6 6-6 6"/>
+          </svg>
+
+        </button>
+
+      </form>
+
+
+      <div class="signup-link">
+
+        Don't have a RexTasks account?
+
+        <a href="signup.html">
+          Create an account
+        </a>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</main>
+
+
+<footer class="footer">
+  RexTasks is a rewards platform. Task availability and earnings may vary by region and offer.
+</footer>
+
+
+<!-- =========================
+     SUCCESS POPUP
+========================= -->
+
+<div
+  class="popup-overlay"
+  id="successPopup"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="successTitle"
+>
+
+  <div class="success-popup">
+
+    <div class="success-icon">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m5 12 4 4L19 6"/>
+      </svg>
+
+    </div>
+
+    <h3 id="successTitle">
+      Login successful
+    </h3>
+
+    <p>
+      Welcome back. Taking you to your RexTasks dashboard.
+    </p>
+
+    <div class="popup-loader"></div>
+
+  </div>
+
+</div>
+
+
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+/* =========================================================
+   SUPABASE CONFIGURATION
+========================================================= */
+
+const SUPABASE_URL =
+  "https://cetsxdkoauucxwsbdktl.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
+
+const { createClient } = supabase;
+
+const supabaseClient = createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const loginForm =
+  document.getElementById("loginForm");
+
+const emailInput =
+  document.getElementById("email");
+
+const passwordInput =
+  document.getElementById("password");
+
+const humanCheck =
+  document.getElementById("humanCheck");
+
+const websiteInput =
+  document.getElementById("website");
+
+const loginButton =
+  document.getElementById("loginButton");
+
+const buttonText =
+  document.getElementById("buttonText");
+
+const buttonArrow =
+  document.getElementById("buttonArrow");
+
+const formMessage =
+  document.getElementById("formMessage");
+
+const successPopup =
+  document.getElementById("successPopup");
+
+const passwordToggle =
+  document.getElementById("passwordToggle");
+
+const eyeOpen =
+  document.getElementById("eyeOpen");
+
+const eyeClosed =
+  document.getElementById("eyeClosed");
+
+
+/* =========================================================
+   PASSWORD SHOW / HIDE
+========================================================= */
+
+passwordToggle.addEventListener("click", function(){
+
+  const isPassword =
+    passwordInput.type === "password";
+
+  passwordInput.type =
+    isPassword ? "text" : "password";
+
+  eyeOpen.style.display =
+    isPassword ? "none" : "block";
+
+  eyeClosed.style.display =
+    isPassword ? "block" : "none";
+
+  passwordToggle.setAttribute(
+    "aria-label",
+    isPassword
+      ? "Hide password"
+      : "Show password"
+  );
+
+});
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+function showMessage(message, type){
+
+  formMessage.textContent = message;
+
+  formMessage.className =
+    "form-message " + type;
+
+}
+
+
+/* =========================================================
+   LOADING STATE
+========================================================= */
+
+function setLoading(loading){
+
+  loginButton.disabled = loading;
+
+  if(loading){
+
+    buttonText.textContent =
+      "Signing in...";
+
+    buttonArrow.style.display =
+      "none";
+
+    const loader =
+      document.createElement("span");
+
+    loader.className =
+      "loader";
+
+    loader.id =
+      "loginLoader";
+
+    loginButton.appendChild(loader);
+
+  }else{
+
+    buttonText.textContent =
+      "Log in to RexTasks";
+
+    buttonArrow.style.display =
+      "block";
+
+    const loader =
+      document.getElementById("loginLoader");
+
+    if(loader){
+      loader.remove();
+    }
+
+  }
+
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+loginForm.addEventListener(
+  "submit",
+  async function(event){
+
+    event.preventDefault();
+
+    showMessage("", "");
+
+    /*
+      Basic anti-bot honeypot.
+      Normal users will never see this field.
+    */
+
+    if(websiteInput.value.trim() !== ""){
+
+      showMessage(
+        "Unable to process this request.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if(!humanCheck.checked){
+
+      showMessage(
+        "Please complete the security verification.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    const email =
+      emailInput.value.trim();
+
+    const password =
+      passwordInput.value;
+
+
+    if(!email || !password){
+
+      showMessage(
+        "Please enter your email and password.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    setLoading(true);
+
+
+    try{
+
+      /*
+        Supabase email/password authentication.
+      */
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
+
+
+      if(error){
+
+        console.error(
+          "Supabase login error:",
+          error
+        );
+
+        let message =
+          "Unable to sign in. Please check your details and try again.";
+
+
+        if(
+          error.message &&
+          error.message.toLowerCase().includes("email not confirmed")
+        ){
+
+          message =
+            "Please confirm your email address before signing in.";
+
+        }
+
+
+        if(
+          error.message &&
+          error.message.toLowerCase().includes("invalid login credentials")
+        ){
+
+          message =
+            "The email or password is incorrect.";
+
+        }
+
+
+        showMessage(
+          message,
+          "error"
+        );
+
+        setLoading(false);
+
+        return;
+
+      }
+
+
+      if(!data.session){
+
+        showMessage(
+          "Login could not be completed. Please try again.",
+          "error"
+        );
+
+        setLoading(false);
+
+        return;
+
+      }
+
+
+      /*
+        Login successful.
+      */
+
+      showMessage(
+        "Login successful.",
+        "success"
+      );
+
+      successPopup.classList.add("show");
+
+
+      /*
+        Store the user's preferred session behavior.
+        Supabase itself manages the authenticated session.
+      */
+
+      if(
+        document.getElementById("remember").checked
+      ){
+
+        localStorage.setItem(
+          "rextasks_remember",
+          "true"
+        );
+
+      }else{
+
+        localStorage.removeItem(
+          "rextasks_remember"
+        );
+
+      }
+
+
+      /*
+        Give the success popup time to display,
+        then open the dashboard.
+      */
+
+      setTimeout(function(){
+
+        window.location.href =
+          "dashboard.html";
+
+      }, 1300);
+
+
+    }catch(error){
+
+      console.error(
+        "Unexpected login error:",
+        error
+      );
+
+      showMessage(
+        "Something went wrong. Please try again.",
+        "error"
+      );
+
+      setLoading(false);
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   CHECK EXISTING SESSION
+========================================================= */
+
+async function checkExistingSession(){
+
+  try{
+
+    const {
+      data
+    } =
+      await supabaseClient.auth.getSession();
+
+
+    if(
+      data &&
+      data.session
+    ){
+
+      /*
+        If already logged in,
+        send the user directly to dashboard.
+      */
+
+      window.location.href =
+        "dashboard.html";
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Session check error:",
+      error
+    );
+
+  }
+
+}
+
+
+/*
+  Run session check.
+*/
+
+checkExistingSession();
+
+</script>
+
+</body>
+</html>
