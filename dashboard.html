@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#061A12">
+
+<title>RexTasks — Dashboard</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+  --forest-deep:#061A12;
+  --forest:#0D2E20;
+  --forest-mid:#153F2B;
+  --forest-light:#1B4B34;
+  --green:#2E9A5E;
+  --green-bright:#3EBE79;
+  --green-soft:#86D7A6;
+
+  --ink:#E4F0E8;
+  --ink-soft:#9CBFA9;
+
+  --white:#ffffff;
+  --danger:#e05d5d;
+  --warning:#e6ad50;
+
+  --border:rgba(228,240,232,.09);
+  --shadow:0 18px 45px rgba(0,0,0,.28);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:'Manrope',sans-serif;
+  background:
+    radial-gradient(circle at 50% -10%,#153F2B 0%,#061A12 48%);
+  color:var(--ink);
+  min-height:100vh;
+  line-height:1.5;
+}
+
+button,
+input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+svg{
+  width:22px;
+  height:22px;
+  display:block;
+  flex-shrink:0;
+}
+
+.page{
+  width:100%;
+  max-width:1180px;
+  margin:auto;
+  padding-bottom:100px;
+}
+
+/* =========================
+   TOP BAR
+========================= */
+
+.topbar{
+  height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 20px;
+  border-bottom:1px solid var(--border);
+  background:rgba(6,26,18,.88);
+  backdrop-filter:blur(14px);
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:1.35rem;
+}
+
+.brand-mark{
+  width:34px;
+  height:34px;
+  border-radius:9px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(145deg,var(--green-bright),var(--green));
+  color:var(--forest-deep);
+}
+
+.brand-mark svg{
+  width:22px;
+  height:22px;
+}
+
+.top-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.icon-btn{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:var(--forest-mid);
+  color:var(--ink);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+
+.icon-btn:hover{
+  border-color:rgba(62,190,121,.4);
+}
+
+.notification-dot{
+  position:absolute;
+  top:7px;
+  right:7px;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--green-bright);
+  box-shadow:0 0 0 3px var(--forest-mid);
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+  padding:28px 20px 0;
+}
+
+/* =========================
+   WELCOME
+========================= */
+
+.welcome{
+  margin-bottom:24px;
+}
+
+.welcome-small{
+  color:var(--ink-soft);
+  font-size:.85rem;
+  margin-bottom:4px;
+}
+
+.welcome h1{
+  font-family:'Fraunces',serif;
+  font-size:clamp(1.7rem,5vw,2.25rem);
+  line-height:1.1;
+}
+
+.user-email{
+  color:var(--green-bright);
+  font-size:.82rem;
+  margin-top:6px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* =========================
+   BALANCE CARD
+========================= */
+
+.balance-card{
+  background:
+    linear-gradient(145deg,#153F2B,#0D2E20);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:24px;
+  box-shadow:var(--shadow);
+  margin-bottom:20px;
+  position:relative;
+  overflow:hidden;
+}
+
+.balance-card::after{
+  content:"";
+  position:absolute;
+  width:180px;
+  height:180px;
+  right:-70px;
+  top:-90px;
+  border-radius:50%;
+  background:rgba(62,190,121,.08);
+}
+
+.balance-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:relative;
+  z-index:2;
+}
+
+.balance-label{
+  color:var(--ink-soft);
+  font-size:.88rem;
+  font-weight:700;
+}
+
+.balance-eye{
+  background:none;
+  border:0;
+  color:var(--ink-soft);
+}
+
+.balance-amount{
+  font-family:'Fraunces',serif;
+  font-size:clamp(2.5rem,10vw,3.5rem);
+  color:var(--green-bright);
+  font-weight:700;
+  margin:4px 0 22px;
+  position:relative;
+  z-index:2;
+}
+
+.balance-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  border-top:1px solid var(--border);
+  padding-top:18px;
+  position:relative;
+  z-index:2;
+}
+
+.balance-stat{
+  padding-right:10px;
+}
+
+.balance-stat:not(:last-child){
+  border-right:1px solid var(--border);
+  margin-right:12px;
+}
+
+.balance-stat-label{
+  color:var(--ink-soft);
+  font-size:.73rem;
+  margin-bottom:4px;
+}
+
+.balance-stat-value{
+  font-weight:800;
+  font-size:.98rem;
+}
+
+/* =========================
+   EARN BANNER
+========================= */
+
+.earn-banner{
+  background:
+    radial-gradient(circle at 90% 20%,rgba(62,190,121,.25),transparent 35%),
+    linear-gradient(135deg,#214F37,#123923);
+  border-radius:20px;
+  padding:23px;
+  border:1px solid rgba(62,190,121,.16);
+  margin-bottom:22px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:18px;
+  overflow:hidden;
+}
+
+.earn-banner-content{
+  min-width:0;
+}
+
+.earn-kicker{
+  color:var(--green-bright);
+  font-size:.76rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-bottom:6px;
+}
+
+.earn-banner h2{
+  font-family:'Fraunces',serif;
+  font-size:1.45rem;
+  margin-bottom:5px;
+}
+
+.earn-banner p{
+  color:var(--ink-soft);
+  font-size:.82rem;
+  max-width:380px;
+}
+
+.earn-banner-icon{
+  width:70px;
+  height:70px;
+  border-radius:18px;
+  background:rgba(62,190,121,.12);
+  border:1px solid rgba(62,190,121,.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.earn-banner-icon svg{
+  width:38px;
+  height:38px;
+  color:var(--green-bright);
+}
+
+.primary-btn{
+  margin-top:15px;
+  background:var(--green);
+  color:var(--forest-deep);
+  border:0;
+  border-radius:999px;
+  padding:11px 18px;
+  font-size:.84rem;
+  font-weight:800;
+}
+
+.primary-btn:hover{
+  background:var(--green-bright);
+}
+
+/* =========================
+   QUICK ACTIONS
+========================= */
+
+.section-title{
+  font-family:'Fraunces',serif;
+  font-size:1.35rem;
+  margin-bottom:14px;
+}
+
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-bottom:25px;
+}
+
+.quick-card{
+  min-height:120px;
+  background:var(--forest-mid);
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:17px 13px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  transition:transform .15s,border-color .15s;
+}
+
+.quick-card:hover{
+  transform:translateY(-2px);
+  border-color:rgba(62,190,121,.35);
+}
+
+.quick-icon{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:9px;
+  background:rgba(62,190,121,.12);
+  color:var(--green-bright);
+}
+
+.quick-card:nth-child(2) .quick-icon{
+  color:#72A9FF;
+  background:rgba(114,169,255,.12);
+}
+
+.quick-card:nth-child(3) .quick-icon{
+  color:#E5AE58;
+  background:rgba(229,174,88,.12);
+}
+
+.quick-card:nth-child(4) .quick-icon{
+  color:#C09AFF;
+  background:rgba(192,154,255,.12);
+}
+
+.quick-card:nth-child(5) .quick-icon{
+  color:#62D2D2;
+  background:rgba(98,210,210,.12);
+}
+
+.quick-card:nth-child(6) .quick-icon{
+  color:#F07CA5;
+  background:rgba(240,124,165,.12);
+}
+
+.quick-title{
+  font-size:.82rem;
+  font-weight:800;
+}
+
+.quick-sub{
+  color:var(--ink-soft);
+  font-size:.68rem;
+  margin-top:2px;
+}
+
+/* =========================
+   ACTIVITY
+========================= */
+
+.activity-card{
+  background:var(--forest-mid);
+  border:1px solid var(--border);
+  border-radius:19px;
+  overflow:hidden;
+  margin-bottom:22px;
+}
+
+.activity-head{
+  padding:19px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid var(--border);
+}
+
+.activity-head h2{
+  font-family:'Fraunces',serif;
+  font-size:1.25rem;
+}
+
+.view-all{
+  color:var(--green-bright);
+  font-size:.78rem;
+  font-weight:800;
+  background:none;
+  border:0;
+}
+
+.activity-empty{
+  padding:35px 20px;
+  text-align:center;
+  color:var(--ink-soft);
+  font-size:.82rem;
+}
+
+.activity-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:16px 18px;
+  border-bottom:1px solid var(--border);
+}
+
+.activity-row:last-child{
+  border-bottom:0;
+}
+
+.activity-icon{
+  width:40px;
+  height:40px;
+  border-radius:11px;
+  background:rgba(62,190,121,.1);
+  color:var(--green-bright);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.activity-info{
+  flex:1;
+  min-width:0;
+}
+
+.activity-name{
+  font-weight:800;
+  font-size:.8rem;
+}
+
+.activity-time{
+  color:var(--ink-soft);
+  font-size:.68rem;
+  margin-top:2px;
+}
+
+.activity-amount{
+  color:var(--green-bright);
+  font-weight:800;
+  font-size:.82rem;
+}
+
+/* =========================
+   TELEGRAM
+========================= */
+
+.community-card{
+  background:var(--forest-mid);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:25px;
+}
+
+.community-icon{
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  background:#2389D7;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.community-icon svg{
+  width:27px;
+  height:27px;
+}
+
+.community-content{
+  flex:1;
+}
+
+.community-content h3{
+  font-size:.86rem;
+  margin-bottom:3px;
+}
+
+.community-content p{
+  color:var(--ink-soft);
+  font-size:.7rem;
+}
+
+.community-btn{
+  background:var(--green);
+  color:var(--forest-deep);
+  border:0;
+  border-radius:9px;
+  padding:9px 15px;
+  font-size:.75rem;
+  font-weight:800;
+}
+
+/* =========================
+   BOTTOM NAV
+========================= */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:100;
+  height:76px;
+  background:rgba(6,26,18,.96);
+  backdrop-filter:blur(16px);
+  border-top:1px solid var(--border);
+  display:flex;
+  justify-content:center;
+}
+
+.bottom-nav-inner{
+  width:100%;
+  max-width:700px;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+}
+
+.nav-item{
+  background:none;
+  border:0;
+  color:var(--ink-soft);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  font-size:.63rem;
+  font-weight:700;
+}
+
+.nav-item svg{
+  width:21px;
+  height:21px;
+}
+
+.nav-item.active{
+  color:var(--green-bright);
+}
+
+/* =========================
+   LOADING
+========================= */
+
+.loading-screen{
+  position:fixed;
+  inset:0;
+  background:var(--forest-deep);
+  z-index:999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:15px;
+}
+
+.loading-logo{
+  width:52px;
+  height:52px;
+  border-radius:15px;
+  background:linear-gradient(145deg,var(--green-bright),var(--green));
+  color:var(--forest-deep);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.loading-logo svg{
+  width:32px;
+  height:32px;
+}
+
+.loader{
+  width:24px;
+  height:24px;
+  border:3px solid rgba(62,190,121,.2);
+  border-top-color:var(--green-bright);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg);}
+}
+
+/* =========================
+   DESKTOP
+========================= */
+
+@media(min-width:760px){
+
+  .main{
+    padding:38px 32px 0;
+  }
+
+  .quick-grid{
+    grid-template-columns:repeat(6,1fr);
+  }
+
+  .balance-card{
+    padding:30px;
+  }
+
+  .bottom-nav{
+    left:50%;
+    right:auto;
+    transform:translateX(-50%);
+    width:min(700px,calc(100% - 30px));
+    bottom:15px;
+    border:1px solid var(--border);
+    border-radius:20px;
+    overflow:hidden;
+  }
+
+  .page{
+    padding-bottom:120px;
+  }
+}
+
+@media(max-width:420px){
+
+  .topbar{
+    padding:0 15px;
+  }
+
+  .main{
+    padding-left:15px;
+    padding-right:15px;
+  }
+
+  .balance-card{
+    padding:20px;
+  }
+
+  .balance-stat-label{
+    font-size:.67rem;
+  }
+
+  .balance-stat-value{
+    font-size:.9rem;
+  }
+
+  .earn-banner{
+    padding:19px;
+  }
+
+  .earn-banner-icon{
+    display:none;
+  }
+
+  .quick-grid{
+    gap:9px;
+  }
+
+  .quick-card{
+    min-height:112px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Loading -->
+<div class="loading-screen" id="loadingScreen">
+
+  <div class="loading-logo">
+
+    <svg viewBox="0 0 24 24" fill="none"
+         stroke="currentColor"
+         stroke-width="2.2"
+         stroke-linecap="round"
+         stroke-linejoin="round">
+      <path d="M5 20V4h4.5l9.5 8-9.5 8H5z"/>
+      <path d="M9.5 4v16"/>
+    </svg>
+
+  </div>
+
+  <div class="loader"></div>
+
+</div>
+
+
+<div class="page">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+
+    <a href="dashboard.html" class="brand">
+
+      <span class="brand-mark">
+
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor"
+             stroke-width="2.2"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+          <path d="M5 20V4h4.5l9.5 8-9.5 8H5z"/>
+          <path d="M9.5 4v16"/>
+        </svg>
+
+      </span>
+
+      RexTasks
+
+    </a>
+
+
+    <div class="top-actions">
+
+      <button
+        class="icon-btn"
+        id="notificationBtn"
+        aria-label="Notifications">
+
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor"
+             stroke-width="1.8"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+          <path d="M10 21h4"/>
+        </svg>
+
+        <span class="notification-dot"></span>
+
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <main class="main">
+
+    <!-- WELCOME -->
+    <section class="welcome">
+
+      <div class="welcome-small">
+        Welcome back
+      </div>
+
+      <h1 id="welcomeName">
+        RexTasks member
+      </h1>
+
+      <div
+        class="user-email"
+        id="userEmail">
+        Loading account...
+      </div>
+
+    </section>
+
+
+    <!-- BALANCE -->
+    <section class="balance-card">
+
+      <div class="balance-top">
+
+        <div class="balance-label">
+          Wallet Balance
+        </div>
+
+        <button
+          class="balance-eye"
+          id="balanceToggle"
+          aria-label="Hide balance">
+
+          <svg id="eyeIcon"
+               viewBox="0 0 24 24"
+               fill="none"
+               stroke="currentColor"
+               stroke-width="1.8"
+               stroke-linecap="round"
+               stroke-linejoin="round">
+
+            <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/>
+            <circle cx="12" cy="12" r="2.5"/>
+
+          </svg>
+
+        </button>
+
+      </div>
+
+
+      <div
+        class="balance-amount"
+        id="walletBalance">
+        $0.00
+      </div>
+
+
+      <div class="balance-stats">
+
+        <div class="balance-stat">
+
+          <div class="balance-stat-label">
+            Total Earned
+          </div>
+
+          <div
+            class="balance-stat-value"
+            id="totalEarned">
+            $0.00
+          </div>
+
+        </div>
+
+
+        <div class="balance-stat">
+
+          <div class="balance-stat-label">
+            Referral Earnings
+          </div>
+
+          <div
+            class="balance-stat-value"
+            id="referralEarnings">
+            $0.00
+          </div>
+
+        </div>
+
+
+        <div class="balance-stat">
+
+          <div class="balance-stat-label">
+            Pending Balance
+          </div>
+
+          <div
+            class="balance-stat-value"
+            id="pendingBalance">
+            $0.00
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- EARN BANNER -->
+    <section class="earn-banner">
+
+      <div class="earn-banner-content">
+
+        <div class="earn-kicker">
+          Available opportunities
+        </div>
+
+        <h2>
+          Earn more with RexTasks
+        </h2>
+
+        <p>
+          Complete available surveys, offers and tasks from your dashboard.
+        </p>
+
+        <button
+          class="primary-btn"
+          id="earnNowBtn">
+          View Available Tasks
+        </button>
+
+      </div>
+
+
+      <div class="earn-banner-icon">
+
+        <svg viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="1.7"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+
+          <rect x="5" y="3" width="14" height="18" rx="2"/>
+          <path d="M9 7h6"/>
+          <path d="M9 11h1"/>
+          <path d="M13 11h2"/>
+          <path d="M9 15h1"/>
+          <path d="M13 15h2"/>
+          <path d="M9 18h6"/>
+
+        </svg>
+
+      </div>
+
+    </section>
+
+
+    <!-- QUICK ACTIONS -->
+    <section>
+
+      <h2 class="section-title">
+        Quick access
+      </h2>
+
+
+      <div class="quick-grid">
+
+
+        <!-- Earn -->
+        <button class="quick-card" data-page="tasks.html">
+
+          <span class="quick-icon">
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+              <path d="M5 4h14v16H5z"/>
+              <path d="M8 8h8"/>
+              <path d="M8 12h5"/>
+              <path d="M8 16h4"/>
+
+            </svg>
+
+          </span>
+
+          <span class="quick-title">
+            Earn Tasks
+          </span>
+
+          <span class="quick-sub">
+            Start earning
+          </span>
+
+        </button>
+
+
+        <!-- Referrals -->
+        <button class="quick-card" data-page="referrals.html">
+
+          <span class="quick-icon">
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+              <circle cx="9" cy="8" r="3"/>
+              <circle cx="17" cy="10" r="2.5"/>
+              <path d="M3 19c0-3 2.5-5 6-5s6 2 6 5"/>
+              <path d="M15 15c3 0 5 1.5 6 4"/>
+
+            </svg>
+
+          </span>
+
+          <span class="quick-title">
+            Referrals
+          </span>
+
+          <span class="quick-sub">
+            Invite & earn
+          </span>
+
+        </button>
+
+
+        <!-- History -->
+        <button class="quick-card" data-page="history.html">
+
+          <span class="quick-icon">
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+              <path d="M4 5h16v14H4z"/>
+              <path d="M8 9h8"/>
+              <path d="M8 13h5"/>
+              <path d="M8 17h3"/>
+
+            </svg>
+
+          </span>
+
+          <span class="quick-title">
+            History
+          </span>
+
+          <span class="quick-sub">
+            Earnings history
+          </span>
+
+        </button>
+
+
+        <!-- Withdraw -->
+        <button class="quick-card" data-page="withdraw.html">
+
+          <span class="quick-icon">
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+              <rect x="3" y="6" width="18" height="13" rx="2"/>
+              <path d="M3 10h18"/>
+              <path d="M15 14h3"/>
+
+            </svg>
+
+          </span>
+
+          <span class="quick-title">
+            Withdraw
+          </span>
+
+          <span class="quick-sub">
+            Cash out
+          </span>
+
+        </button>
+
+
+        <!-- Profile -->
+        <button class="quick-card" data-page="profile.html">
+
+          <span class="quick-icon">
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+              <circle cx="12" cy="8" r="3"/>
+              <path d="M5 20c.8-4 3.1-6 7-6s6.2 2 7 6"/>
+
+            </svg>
+
+          </span>
+
+          <span class="quick-title">
+            Profile
+          </span>
+
+          <span class="quick-sub">
+            Account settings
+          </span>
+
+        </button>
+
+
+        <!-- Notifications -->
+        <button class="quick-card" data-page="notifications.html">
+
+          <span class="quick-icon">
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+              <path d="M10 21h4"/>
+
+            </svg>
+
+          </span>
+
+          <span class="quick-title">
+            Notifications
+          </span>
+
+          <span class="quick-sub">
+            Recent updates
+          </span>
+
+        </button>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- RECENT ACTIVITY -->
+    <section class="activity-card">
+
+      <div class="activity-head">
+
+        <h2>
+          Recent Activity
+        </h2>
+
+        <button
+          class="view-all"
+          id="viewHistory">
+          View All
+        </button>
+
+      </div>
+
+
+      <div id="activityList">
+
+        <div class="activity-empty">
+          Your completed tasks and earnings will appear here.
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- TELEGRAM -->
+    <section class="community-card">
+
+      <div class="community-icon">
+
+        <svg viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="1.8"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+
+          <path d="M21 4L3 11l7 2 2 7 9-16z"/>
+          <path d="M10 13l4-3"/>
+          
+        </svg>
+
+      </div>
+
+
+      <div class="community-content">
+
+        <h3>
+          Join the RexTasks community
+        </h3>
+
+        <p>
+          Get updates, task announcements and important notices.
+        </p>
+
+      </div>
+
+
+      <button
+        class="community-btn"
+        id="telegramBtn">
+        Join
+      </button>
+
+    </section>
+
+  </main>
+
+</div>
+
+
+<!-- BOTTOM NAV -->
+
+<nav class="bottom-nav">
+
+  <div class="bottom-nav-inner">
+
+
+    <button class="nav-item active" data-page="dashboard.html">
+
+      <svg viewBox="0 0 24 24"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="1.8"
+           stroke-linecap="round"
+           stroke-linejoin="round">
+
+        <path d="M4 10.5L12 4l8 6.5V20H4z"/>
+        <path d="M9 20v-6h6v6"/>
+
+      </svg>
+
+      Home
+
+    </button>
+
+
+    <button class="nav-item" data-page="tasks.html">
+
+      <svg viewBox="0 0 24 24"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="1.8"
+           stroke-linecap="round"
+           stroke-linejoin="round">
+
+        <rect x="5" y="3" width="14" height="18" rx="2"/>
+        <path d="M9 7h6"/>
+        <path d="M9 11h1"/>
+        <path d="M13 11h2"/>
+        <path d="M9 15h1"/>
+        <path d="M13 15h2"/>
+
+      </svg>
+
+      Earn
+
+    </button>
+
+
+    <button class="nav-item" data-page="wallet.html">
+
+      <svg viewBox="0 0 24 24"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="1.8"
+           stroke-linecap="round"
+           stroke-linejoin="round">
+
+        <rect x="3" y="6" width="18" height="13" rx="2"/>
+        <path d="M3 10h18"/>
+        <path d="M15 14h3"/>
+
+      </svg>
+
+      Wallet
+
+    </button>
+
+
+    <button class="nav-item" data-page="history.html">
+
+      <svg viewBox="0 0 24 24"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="1.8"
+           stroke-linecap="round"
+           stroke-linejoin="round">
+
+        <circle cx="12" cy="12" r="8"/>
+        <path d="M12 8v5l3 2"/>
+
+      </svg>
+
+      History
+
+    </button>
+
+
+    <button class="nav-item" data-page="profile.html">
+
+      <svg viewBox="0 0 24 24"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="1.8"
+           stroke-linecap="round"
+           stroke-linejoin="round">
+
+        <circle cx="12" cy="8" r="3"/>
+        <path d="M5 20c.8-4 3.1-6 7-6s6.2 2 7 6"/>
+
+      </svg>
+
+      Profile
+
+    </button>
+
+
+  </div>
+
+</nav>
+
+
+<script>
+
+/* =========================================================
+   SUPABASE CONFIGURATION
+========================================================= */
+
+const SUPABASE_URL =
+  "https://cetsxdkoauucxwsbdktl.supabase.co";
+
+const SUPABASE_ANON_KEY =
+  "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const loadingScreen =
+  document.getElementById("loadingScreen");
+
+const userEmail =
+  document.getElementById("userEmail");
+
+const welcomeName =
+  document.getElementById("welcomeName");
+
+const balanceToggle =
+  document.getElementById("balanceToggle");
+
+const walletBalance =
+  document.getElementById("walletBalance");
+
+const totalEarned =
+  document.getElementById("totalEarned");
+
+const referralEarnings =
+  document.getElementById("referralEarnings");
+
+const pendingBalance =
+  document.getElementById("pendingBalance");
+
+
+/* =========================================================
+   SESSION CHECK
+========================================================= */
+
+async function checkSession(){
+
+  try{
+
+    const {
+      data,
+      error
+    } = await supabaseClient.auth.getSession();
+
+    if(error){
+      console.error(error);
+      redirectToLogin();
+      return;
+    }
+
+    const session = data.session;
+
+    if(!session){
+
+      redirectToLogin();
+      return;
+
+    }
+
+    const user = session.user;
+
+    displayUser(user);
+
+    await loadUserData(user);
+
+    loadingScreen.style.display = "none";
+
+  }catch(error){
+
+    console.error(
+      "Dashboard error:",
+      error
+    );
+
+    redirectToLogin();
+
+  }
+
+}
+
+
+/* =========================================================
+   DISPLAY USER
+========================================================= */
+
+function displayUser(user){
+
+  const email =
+    user.email || "";
+
+  userEmail.textContent =
+    email || "RexTasks member";
+
+  let name =
+    user.user_metadata?.full_name ||
+    user.user_metadata?.name ||
+    "";
+
+  if(!name && email){
+
+    name =
+      email
+        .split("@")[0]
+        .replace(/[._-]/g," ");
+
+    name =
+      name
+        .split(" ")
+        .map(word =>
+          word.charAt(0).toUpperCase() +
+          word.slice(1)
+        )
+        .join(" ");
+
+  }
+
+  welcomeName.textContent =
+    name || "RexTasks member";
+
+}
+
+
+/* =========================================================
+   USER DATA
+========================================================= */
+
+async function loadUserData(user){
+
+  /*
+    IMPORTANT:
+
+    We are NOT inventing a database table here.
+
+    Your Supabase authentication is already working.
+
+    Once we create the RexTasks user/profile/earnings
+    tables, this function will load the real values:
+
+      wallet balance
+      total earned
+      referral earnings
+      pending balance
+      recent activity
+
+    For now the dashboard safely starts at $0.00.
+  */
+
+  walletBalance.textContent = "$0.00";
+  totalEarned.textContent = "$0.00";
+  referralEarnings.textContent = "$0.00";
+  pendingBalance.textContent = "$0.00";
+
+}
+
+
+/* =========================================================
+   REDIRECT
+========================================================= */
+
+function redirectToLogin(){
+
+  window.location.href =
+    "login.html";
+
+}
+
+
+/* =========================================================
+   BALANCE VISIBILITY
+========================================================= */
+
+let balanceVisible = true;
+
+balanceToggle.addEventListener(
+  "click",
+  function(){
+
+    balanceVisible =
+      !balanceVisible;
+
+    if(balanceVisible){
+
+      walletBalance.textContent =
+        "$0.00";
+
+      totalEarned.textContent =
+        "$0.00";
+
+      referralEarnings.textContent =
+        "$0.00";
+
+      pendingBalance.textContent =
+        "$0.00";
+
+    }else{
+
+      walletBalance.textContent =
+        "••••••";
+
+      totalEarned.textContent =
+        "••••••";
+
+      referralEarnings.textContent =
+        "••••••";
+
+      pendingBalance.textContent =
+        "••••••";
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   PAGE NAVIGATION
+========================================================= */
+
+document
+  .querySelectorAll("[data-page]")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      function(){
+
+        const page =
+          this.dataset.page;
+
+        if(page){
+          window.location.href =
+            page;
+        }
+
+      }
+    );
+
+  });
+
+
+/* =========================================================
+   EARN BUTTON
+========================================================= */
+
+document
+  .getElementById("earnNowBtn")
+  .addEventListener(
+    "click",
+    function(){
+
+      window.location.href =
+        "tasks.html";
+
+    }
+  );
+
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+document
+  .getElementById("viewHistory")
+  .addEventListener(
+    "click",
+    function(){
+
+      window.location.href =
+        "history.html";
+
+    }
+  );
+
+
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+document
+  .getElementById("notificationBtn")
+  .addEventListener(
+    "click",
+    function(){
+
+      window.location.href =
+        "notifications.html";
+
+    }
+  );
+
+
+/* =========================================================
+   TELEGRAM
+========================================================= */
+
+document
+  .getElementById("telegramBtn")
+  .addEventListener(
+    "click",
+    function(){
+
+      /*
+        Replace this later with the official
+        RexTasks Telegram channel URL.
+      */
+
+      window.open(
+        "https://t.me/",
+        "_blank"
+      );
+
+    }
+  );
+
+
+/* =========================================================
+   AUTH STATE
+========================================================= */
+
+supabaseClient.auth.onAuthStateChange(
+  function(event, session){
+
+    if(event === "SIGNED_OUT"){
+
+      redirectToLogin();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+checkSession();
+
+</script>
+
+</body>
+</html>
