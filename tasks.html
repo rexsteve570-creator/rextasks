@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RexTasks — Available Tasks</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+font-family:Arial,sans-serif;
+background:#07140f;
+color:#fff;
+min-height:100vh;
+}
+
+header{
+padding:18px 16px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+border-bottom:1px solid #17352a;
+background:#091b14;
+}
+
+.logo{
+font-size:22px;
+font-weight:800;
+color:#72e6a3;
+}
+
+.back{
+color:#9ee9bd;
+text-decoration:none;
+font-size:14px;
+}
+
+.container{
+max-width:700px;
+margin:auto;
+padding:24px 16px 40px;
+}
+
+h1{
+font-size:28px;
+margin-bottom:8px;
+}
+
+.subtitle{
+color:#9bb8aa;
+font-size:14px;
+margin-bottom:24px;
+}
+
+.task-list{
+display:grid;
+gap:15px;
+}
+
+.task{
+background:#0d2119;
+border:1px solid #1d4936;
+border-radius:18px;
+padding:18px;
+}
+
+.task-top{
+display:flex;
+justify-content:space-between;
+gap:15px;
+margin-bottom:10px;
+}
+
+.task-title{
+font-size:18px;
+font-weight:700;
+}
+
+.reward{
+color:#72e6a3;
+font-weight:800;
+white-space:nowrap;
+}
+
+.category{
+display:inline-block;
+font-size:11px;
+color:#9ee9bd;
+background:#123325;
+padding:6px 9px;
+border-radius:20px;
+margin-bottom:10px;
+}
+
+.description{
+color:#aac1b5;
+font-size:14px;
+line-height:1.6;
+margin-bottom:16px;
+}
+
+.task-footer{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+}
+
+.country{
+font-size:12px;
+color:#829f91;
+}
+
+.open-btn{
+border:0;
+background:#62d994;
+color:#06130d;
+font-weight:800;
+padding:11px 17px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.empty{
+text-align:center;
+padding:45px 20px;
+background:#0d2119;
+border:1px solid #1d4936;
+border-radius:18px;
+color:#9bb8aa;
+}
+
+.loading{
+text-align:center;
+padding:40px;
+color:#9bb8aa;
+}
+
+.error{
+background:#351717;
+border:1px solid #713131;
+color:#ffb1b1;
+padding:15px;
+border-radius:12px;
+font-size:14px;
+}
+
+@media(max-width:500px){
+h1{font-size:25px}
+
+.task-top{
+align-items:flex-start;
+}
+
+.open-btn{
+padding:10px 14px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">RexTasks</div>
+<a href="dashboard.html" class="back">← Dashboard</a>
+</header>
+
+<main class="container">
+
+<h1>Available Tasks</h1>
+
+<p class="subtitle">
+Complete available tasks and earn rewards.
+</p>
+
+<div id="taskList" class="loading">
+Loading tasks...
+</div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+"https://cetsxdkoauucxwsbdktl.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
+
+const supabaseClient =
+supabase.createClient(
+SUPABASE_URL,
+SUPABASE_PUBLISHABLE_KEY
+);
+
+const taskList =
+document.getElementById("taskList");
+
+
+async function loadTasks(){
+
+try{
+
+const {
+data:{
+user
+},
+error:sessionError
+} = await supabaseClient.auth.getUser();
+
+if(sessionError || !user){
+
+window.location.href="login.html";
+return;
+
+}
+
+
+const {
+data:profile,
+error:profileError
+} = await supabaseClient
+.from("profiles")
+.select("country")
+.eq("id",user.id)
+.maybeSingle();
+
+if(profileError){
+
+console.error(profileError);
+
+}
+
+
+const userCountry =
+profile?.country || "Worldwide";
+
+
+const {
+data:tasks,
+error
+} = await supabaseClient
+.from("tasks")
+.select("*")
+.eq("status","active")
+.order("created_at",{ascending:false});
+
+
+if(error){
+
+console.error(error);
+
+taskList.innerHTML =
+'<div class="error">Unable to load tasks right now.</div>';
+
+return;
+
+}
+
+
+const availableTasks =
+(tasks || []).filter(task => {
+
+const taskCountry =
+String(task.country || "Worldwide")
+.toLowerCase()
+.trim();
+
+const country =
+String(userCountry)
+.toLowerCase()
+.trim();
+
+return (
+taskCountry === "worldwide" ||
+taskCountry === country
+);
+
+});
+
+
+if(availableTasks.length === 0){
+
+taskList.innerHTML =
+'<div class="empty">No tasks are available for you right now. Please check again later.</div>';
+
+return;
+
+}
+
+
+taskList.innerHTML =
+availableTasks.map(task => `
+
+<div class="task">
+
+<div class="task-top">
+
+<div class="task-title">
+${escapeHtml(task.title)}
+</div>
+
+<div class="reward">
+$${Number(task.payout || 0).toFixed(2)}
+</div>
+
+</div>
+
+<div class="category">
+${escapeHtml(task.category || "Task")}
+</div>
+
+<div class="description">
+${escapeHtml(task.description || "Complete this task and submit your proof.")}
+</div>
+
+<div class="task-footer">
+
+<div class="country">
+${escapeHtml(task.country || "Worldwide")}
+</div>
+
+<button
+class="open-btn"
+onclick="openTask('${encodeURIComponent(task.task_url || "")}')">
+Open Task
+</button>
+
+</div>
+
+</div>
+
+`).join("");
+
+}catch(error){
+
+console.error(error);
+
+taskList.innerHTML =
+'<div class="error">Something went wrong while loading tasks.</div>';
+
+}
+
+}
+
+
+function openTask(url){
+
+const decoded =
+decodeURIComponent(url);
+
+if(!decoded){
+
+alert("This task does not have a task link yet.");
+return;
+
+}
+
+window.open(
+decoded,
+"_blank",
+"noopener,noreferrer"
+);
+
+}
+
+
+function escapeHtml(value){
+
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+loadTasks();
+
+</script>
+
+</body>
+</html>
