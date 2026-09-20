@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RexTasks — Available Tasks</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>RexTasks — Tasks</title>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -81,16 +81,7 @@ font-weight:700;
 color:#72e6a3;
 font-weight:800;
 white-space:nowrap;
-}
-
-.category{
-display:inline-block;
-font-size:11px;
-color:#9ee9bd;
-background:#123325;
-padding:6px 9px;
-border-radius:20px;
-margin-bottom:10px;
+font-size:18px;
 }
 
 .description{
@@ -164,7 +155,10 @@ padding:10px 14px;
 
 <header>
 <div class="logo">RexTasks</div>
-<a href="dashboard.html" class="back">← Dashboard</a>
+
+<a href="dashboard.html" class="back">
+← Dashboard
+</a>
 </header>
 
 <main class="container">
@@ -172,7 +166,7 @@ padding:10px 14px;
 <h1>Available Tasks</h1>
 
 <p class="subtitle">
-Complete available tasks and earn rewards.
+Complete tasks and earn rewards.
 </p>
 
 <div id="taskList" class="loading">
@@ -220,25 +214,21 @@ return;
 }
 
 
+/* GET USER COUNTRY */
+
 const {
-data:profile,
-error:profileError
+data:profile
 } = await supabaseClient
 .from("profiles")
 .select("country")
 .eq("id",user.id)
 .maybeSingle();
 
-if(profileError){
-
-console.error(profileError);
-
-}
-
-
 const userCountry =
 profile?.country || "Worldwide";
 
+
+/* GET ACTIVE TASKS */
 
 const {
 data:tasks,
@@ -262,6 +252,8 @@ return;
 }
 
 
+/* COUNTRY FILTER */
+
 const availableTasks =
 (tasks || []).filter(task => {
 
@@ -275,7 +267,7 @@ String(userCountry)
 .toLowerCase()
 .trim();
 
-return (
+return(
 taskCountry === "worldwide" ||
 taskCountry === country
 );
@@ -293,8 +285,30 @@ return;
 }
 
 
+/* DISPLAY TASKS */
+
 taskList.innerHTML =
-availableTasks.map(task => `
+availableTasks.map(task => {
+
+
+/*
+CPA PAYOUT IS PRIVATE.
+
+USER REWARD =
+CPA PAYOUT × USER REWARD %
+*/
+
+const cpaPayout =
+Number(task.payout || 0);
+
+const rewardPercent =
+Number(task.user_reward_percent || 0);
+
+const userReward =
+cpaPayout * rewardPercent / 100;
+
+
+return `
 
 <div class="task">
 
@@ -305,17 +319,16 @@ ${escapeHtml(task.title)}
 </div>
 
 <div class="reward">
-$${Number(task.payout || 0).toFixed(2)}
+Earn $${userReward.toFixed(2)}
 </div>
 
-</div>
-
-<div class="category">
-${escapeHtml(task.category || "Task")}
 </div>
 
 <div class="description">
-${escapeHtml(task.description || "Complete this task and submit your proof.")}
+${escapeHtml(
+task.description ||
+"Complete this task and submit your proof."
+)}
 </div>
 
 <div class="task-footer">
@@ -334,19 +347,14 @@ Open Task
 
 </div>
 
-`).join("");
+`;
 
-}catch(error){
-
-console.error(error);
-
-taskList.innerHTML =
-'<div class="error">Something went wrong while loading tasks.</div>';
+}).join("");
 
 }
 
-}
 
+/* OPEN TASK */
 
 function openTask(url){
 
@@ -356,6 +364,7 @@ decodeURIComponent(url);
 if(!decoded){
 
 alert("This task does not have a task link yet.");
+
 return;
 
 }
@@ -368,6 +377,8 @@ decoded,
 
 }
 
+
+/* SECURITY: ESCAPE HTML */
 
 function escapeHtml(value){
 
