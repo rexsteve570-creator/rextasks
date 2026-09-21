@@ -2,854 +2,455 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RexTasks — User Dashboard</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>RexTasks — Dashboard</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-:root{
-  --bg:#04100c;
-  --panel:#071a13;
-  --panel2:#0a2118;
-  --border:#124d38;
-  --green:#35e58b;
-  --green2:#18c878;
-  --text:#f5fff9;
-  --muted:#91b3a4;
-  --blue:#4f8cff;
-  --purple:#9c6cff;
-  --orange:#f5ad32;
-  --pink:#ec4e8b;
-}
+*{box-sizing:border-box}
 
 body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:
-    radial-gradient(circle at 50% -10%,#103c29 0%,#04100c 38%,#020907 100%);
-  color:var(--text);
-  min-height:100vh;
+margin:0;
+background:#f5faf7;
+color:#14251d;
+font-family:Arial,sans-serif;
 }
 
-button,
-a{
-  font-family:inherit;
+header{
+background:#073b29;
+color:white;
+padding:18px 16px 22px;
 }
-
-button{
-  cursor:pointer;
-}
-
-.app{
-  width:100%;
-  max-width:760px;
-  margin:auto;
-  padding-bottom:95px;
-}
-
-/* HEADER */
 
 .header{
-  padding:20px 18px 14px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
+max-width:760px;
+margin:auto;
+display:flex;
+align-items:center;
+justify-content:space-between;
 }
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
+.logo{
+font-size:22px;
+font-weight:800;
+color:#8ff0b8;
 }
 
-.logo-mark{
-  width:48px;
-  height:48px;
-  border-radius:14px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(145deg,#39f29a,#0ca85e);
-  color:#04100c;
-  font-size:31px;
-  font-weight:900;
-  box-shadow:0 0 25px rgba(53,229,139,.18);
+.profile{
+width:42px;
+height:42px;
+border-radius:50%;
+background:#c9f7da;
+color:#073b29;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:800;
 }
 
-.brand-text{
-  line-height:1.05;
+main{
+max-width:760px;
+margin:auto;
+padding:18px 15px 95px;
 }
-
-.brand-name{
-  font-size:24px;
-  font-weight:900;
-}
-
-.brand-name span{
-  color:var(--green);
-}
-
-.tagline{
-  color:#76a998;
-  font-size:11px;
-  margin-top:5px;
-}
-
-.header-right{
-  display:flex;
-  align-items:center;
-  gap:9px;
-}
-
-.notification{
-  width:43px;
-  height:43px;
-  border:1px solid var(--border);
-  background:var(--panel);
-  border-radius:14px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:white;
-  font-size:21px;
-  position:relative;
-}
-
-.notification-dot{
-  position:absolute;
-  width:9px;
-  height:9px;
-  background:#ff4e61;
-  border-radius:50%;
-  right:7px;
-  top:7px;
-}
-
-.profile-mini{
-  border:1px solid var(--border);
-  background:var(--panel);
-  border-radius:16px;
-  padding:7px 10px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.avatar{
-  width:34px;
-  height:34px;
-  border-radius:50%;
-  background:linear-gradient(145deg,#38e993,#0d8751);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#031009;
-  font-weight:900;
-}
-
-.profile-name{
-  max-width:85px;
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
-  font-size:13px;
-  font-weight:700;
-}
-
-.chevron{
-  color:#8fa99e;
-}
-
-/* WELCOME */
 
 .welcome{
-  margin:8px 14px 16px;
-  border:1px solid #087a50;
-  border-radius:20px;
-  padding:20px;
-  background:
-    radial-gradient(circle at 90% 40%,rgba(25,210,117,.2),transparent 30%),
-    linear-gradient(135deg,#08251a,#052016);
-  position:relative;
-  overflow:hidden;
+margin-bottom:18px;
 }
 
-.welcome h1{
-  font-size:24px;
-  line-height:1.25;
-  margin-bottom:7px;
+.welcome small{
+color:#6d8177;
 }
 
-.welcome p{
-  color:#9bc4b3;
-  font-size:14px;
-  line-height:1.5;
-  max-width:72%;
+.welcome h2{
+margin:5px 0 0;
+font-size:24px;
 }
 
-.wallet-art{
-  position:absolute;
-  right:18px;
-  bottom:15px;
-  font-size:62px;
-  opacity:.85;
+.wallet{
+background:#073b29;
+color:white;
+border-radius:22px;
+padding:22px;
+box-shadow:0 12px 30px rgba(7,59,41,.15);
 }
 
-/* STATS */
+.wallet-label{
+color:#a8cbb9;
+font-size:13px;
+}
+
+.balance{
+font-size:34px;
+font-weight:800;
+margin:8px 0 18px;
+}
+
+.wallet-row{
+display:flex;
+justify-content:space-between;
+gap:10px;
+}
+
+.wallet-item{
+background:rgba(255,255,255,.09);
+border-radius:14px;
+padding:11px;
+flex:1;
+}
+
+.wallet-item small{
+display:block;
+color:#a8cbb9;
+font-size:11px;
+}
+
+.wallet-item strong{
+display:block;
+margin-top:5px;
+font-size:15px;
+}
 
 .stats{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  padding:0 14px 18px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+margin:16px 0;
 }
 
 .stat{
-  min-height:120px;
-  border:1px solid var(--border);
-  border-radius:17px;
-  padding:16px;
-  background:linear-gradient(145deg,#081a13,#06130f);
+background:white;
+border:1px solid #dcebe2;
+border-radius:17px;
+padding:16px;
 }
 
 .stat-icon{
-  width:35px;
-  height:35px;
-  border-radius:11px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:19px;
-  margin-bottom:11px;
+width:38px;
+height:38px;
+border-radius:11px;
+background:#dcf8e7;
+color:#087044;
+display:flex;
+align-items:center;
+justify-content:center;
+margin-bottom:10px;
 }
 
-.stat:nth-child(1) .stat-icon{
-  background:rgba(31,221,132,.16);
-  color:#32eb91;
+.stat-icon svg{
+width:20px;
+height:20px;
 }
 
-.stat:nth-child(2) .stat-icon{
-  background:rgba(52,140,255,.17);
-  color:#62a7ff;
+.stat small{
+color:#72847b;
 }
 
-.stat:nth-child(3) .stat-icon{
-  background:rgba(159,101,255,.17);
-  color:#b38aff;
-}
-
-.stat:nth-child(4) .stat-icon{
-  background:rgba(245,173,50,.17);
-  color:#ffc15c;
-}
-
-.stat-label{
-  color:#8faea0;
-  font-size:12px;
-  margin-bottom:6px;
-}
-
-.stat-value{
-  font-size:23px;
-  font-weight:900;
-}
-
-/* SECTION */
-
-.section{
-  margin:0 14px 17px;
-  border:1px solid var(--border);
-  border-radius:20px;
-  background:linear-gradient(145deg,#071a13,#04130e);
-  overflow:hidden;
+.stat strong{
+display:block;
+font-size:20px;
+margin-top:5px;
 }
 
 .section-head{
-  padding:18px 17px 13px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin:25px 0 12px;
 }
 
-.section-title-wrap{
-  display:flex;
-  align-items:center;
-  gap:9px;
+.section-head h3{
+margin:0;
+font-size:18px;
 }
 
-.section-icon{
-  color:var(--green);
-  font-size:21px;
-}
-
-.section-title{
-  font-size:20px;
-  font-weight:900;
-}
-
-.view-all{
-  color:var(--green);
-  text-decoration:none;
-  font-size:13px;
-  font-weight:800;
-}
-
-/* TASKS */
-
-.task-list{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:11px;
-  padding:0 11px 13px;
+.section-head a{
+color:#087044;
+font-size:13px;
+font-weight:700;
+text-decoration:none;
 }
 
 .task{
-  border:1px solid #15523d;
-  border-radius:17px;
-  padding:14px;
-  background:#06150f;
-  min-width:0;
+background:white;
+border:1px solid #dcebe2;
+border-radius:18px;
+padding:16px;
+margin-bottom:11px;
 }
 
 .task-top{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:6px;
-  margin-bottom:10px;
+display:flex;
+gap:12px;
+align-items:center;
 }
 
-.task-type{
-  display:inline-flex;
-  align-items:center;
-  gap:5px;
-  font-size:10px;
-  font-weight:900;
-  padding:5px 8px;
-  border-radius:7px;
-  text-transform:uppercase;
+.task-icon{
+width:45px;
+height:45px;
+border-radius:13px;
+background:#e0f8e9;
+color:#087044;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-shrink:0;
 }
 
-.type-app{
-  color:#66aaff;
-  background:rgba(61,139,255,.18);
-}
-
-.type-survey{
-  color:#bd8cff;
-  background:rgba(157,93,255,.18);
-}
-
-.type-signup{
-  color:#ffc04e;
-  background:rgba(245,173,50,.18);
-}
-
-.type-offer{
-  color:#ff6ba5;
-  background:rgba(236,78,139,.18);
-}
-
-.type-default{
-  color:#5ee99a;
-  background:rgba(53,229,139,.15);
-}
-
-.task-menu{
-  color:#a5b8af;
-  background:none;
-  border:0;
-  font-size:20px;
-  line-height:1;
+.task-icon svg{
+width:22px;
+height:22px;
 }
 
 .task-title{
-  font-size:16px;
-  font-weight:900;
-  line-height:1.3;
-  min-height:42px;
-  margin-bottom:7px;
+font-weight:700;
+font-size:15px;
 }
 
-.task-description{
-  color:#8ea99d;
-  font-size:12px;
-  line-height:1.5;
-  min-height:54px;
-  margin-bottom:10px;
+.task-desc{
+font-size:12px;
+color:#75867d;
+margin-top:4px;
+line-height:1.4;
 }
 
-.task-reward-label{
-  color:#8ca99b;
-  font-size:11px;
-  margin-bottom:2px;
+.task-bottom{
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-top:15px;
 }
 
-.task-reward{
-  color:var(--green);
-  font-size:19px;
-  font-weight:900;
-  margin-bottom:11px;
+.reward{
+color:#087044;
+font-weight:800;
 }
 
-.start-task{
-  width:100%;
-  border:0;
-  border-radius:10px;
-  padding:11px 7px;
-  background:linear-gradient(135deg,#35e58b,#18c878);
-  color:#031009;
-  font-weight:900;
-  font-size:12px;
+.start{
+background:#0a7748;
+color:white;
+border:0;
+padding:10px 17px;
+border-radius:11px;
+font-weight:700;
+text-decoration:none;
+font-size:13px;
 }
 
-/* PROMO CARDS */
-
-.promo-grid{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:12px;
-  margin:0 14px 17px;
+.activity{
+background:white;
+border:1px solid #dcebe2;
+border-radius:18px;
+overflow:hidden;
 }
+
+.activity-row{
+padding:14px 15px;
+border-bottom:1px solid #edf3ef;
+display:flex;
+justify-content:space-between;
+gap:12px;
+}
+
+.activity-row:last-child{
+border-bottom:0;
+}
+
+.activity-title{
+font-size:13px;
+font-weight:700;
+}
+
+.activity-date{
+font-size:11px;
+color:#84958c;
+margin-top:4px;
+}
+
+.activity-right{
+text-align:right;
+font-size:13px;
+font-weight:800;
+}
+
+.approved{color:#087044}
+.pending{color:#c18a00}
+.denied{color:#c43d3d}
 
 .promo{
-  min-height:150px;
-  border-radius:20px;
-  padding:19px;
-  border:1px solid var(--border);
-  position:relative;
-  overflow:hidden;
-}
-
-.promo.checkin{
-  background:
-    radial-gradient(circle at 90% 50%,rgba(47,229,139,.22),transparent 32%),
-    linear-gradient(135deg,#082419,#06160f);
-}
-
-.promo.referral{
-  background:
-    radial-gradient(circle at 90% 50%,rgba(99,91,255,.24),transparent 34%),
-    linear-gradient(135deg,#0a122d,#080d1d);
-  border-color:#29368c;
-}
-
-.promo-icon{
-  font-size:42px;
-  margin-bottom:9px;
+margin-top:15px;
+background:#dff8e9;
+border:1px solid #c5edd4;
+border-radius:19px;
+padding:18px;
 }
 
 .promo h3{
-  font-size:18px;
-  margin-bottom:7px;
+margin:0 0 7px;
+font-size:17px;
+color:#073b29;
 }
 
 .promo p{
-  color:#91afa2;
-  font-size:13px;
-  line-height:1.5;
-  max-width:75%;
-  margin-bottom:13px;
+margin:0 0 14px;
+font-size:13px;
+line-height:1.5;
+color:#486457;
 }
 
-.promo-btn{
-  border:0;
-  border-radius:10px;
-  padding:11px 17px;
-  background:#25d979;
-  color:#031009;
-  font-weight:900;
-}
-
-.referral .promo-btn{
-  background:#4e72ff;
-  color:white;
-}
-
-/* LOADING */
-
-.loading{
-  padding:35px 20px;
-  text-align:center;
-  color:#88a89a;
-  font-size:14px;
+.promo a{
+display:inline-block;
+background:#073b29;
+color:white;
+padding:10px 16px;
+border-radius:11px;
+text-decoration:none;
+font-size:13px;
+font-weight:700;
 }
 
 .empty{
-  padding:30px 20px;
-  text-align:center;
-  color:#88a89a;
-  font-size:13px;
+padding:25px;
+text-align:center;
+color:#7b8d84;
+font-size:13px;
 }
 
-.error{
-  padding:20px;
-  color:#ffaaaa;
-  text-align:center;
-  font-size:13px;
+.loading{
+text-align:center;
+padding:40px;
+color:#72847b;
 }
 
-/* BOTTOM NAV */
-
-.bottom-nav{
-  position:fixed;
-  bottom:0;
-  left:50%;
-  transform:translateX(-50%);
-  width:100%;
-  max-width:760px;
-  padding:9px 8px 10px;
-  background:rgba(3,13,9,.97);
-  border-top:1px solid #164331;
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  z-index:100;
-  backdrop-filter:blur(12px);
+nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:white;
+border-top:1px solid #dcebe2;
+display:flex;
+justify-content:center;
+z-index:10;
 }
 
-.nav-item{
-  border:0;
-  background:none;
-  color:#829d91;
-  text-decoration:none;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:4px;
-  font-size:10px;
-  font-weight:700;
-  padding:4px 0;
+.nav-inner{
+width:100%;
+max-width:760px;
+display:flex;
+justify-content:space-around;
+padding:10px 5px;
+}
+
+nav a{
+text-decoration:none;
+color:#789087;
+font-size:11px;
+text-align:center;
+}
+
+nav a.active{
+color:#087044;
+font-weight:800;
 }
 
 .nav-icon{
-  font-size:20px;
+display:block;
+margin:auto auto 4px;
 }
 
-.nav-item.active{
-  color:var(--green);
+.nav-icon svg{
+width:20px;
+height:20px;
 }
 
-.nav-item.active .nav-icon{
-  filter:drop-shadow(0 0 8px rgba(53,229,139,.35));
+@media(min-width:600px){
+.stats{
+grid-template-columns:repeat(4,1fr);
 }
-
-/* RESPONSIVE */
-
-@media(max-width:430px){
-
-  .brand-name{
-    font-size:21px;
-  }
-
-  .tagline{
-    display:none;
-  }
-
-  .profile-name{
-    max-width:62px;
-  }
-
-  .welcome h1{
-    font-size:21px;
-  }
-
-  .wallet-art{
-    font-size:52px;
-  }
-
-  .stat{
-    min-height:112px;
-    padding:13px;
-  }
-
-  .stat-value{
-    font-size:20px;
-  }
-
-  .task{
-    padding:12px;
-  }
-
-  .task-title{
-    font-size:15px;
-  }
-}
-
-@media(min-width:650px){
-
-  .stats{
-    grid-template-columns:repeat(4,1fr);
-  }
-
-  .promo-grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .task-list{
-    grid-template-columns:repeat(4,1fr);
-  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<header>
+<div class="header">
 
-  <!-- HEADER -->
+<div class="logo">RexTasks</div>
 
-  <header class="header">
-
-    <div class="brand">
-
-      <div class="logo-mark">R</div>
-
-      <div class="brand-text">
-        <div class="brand-name">
-          Rex<span>Tasks</span>
-        </div>
-
-        <div class="tagline">
-          Simple Tasks. Real Rewards.
-        </div>
-      </div>
-
-    </div>
-
-
-    <div class="header-right">
-
-      <button class="notification" onclick="showMessage('No new notifications.')">
-        ♧
-        <span class="notification-dot"></span>
-      </button>
-
-      <div class="profile-mini">
-
-        <div class="avatar" id="avatar">
-          U
-        </div>
-
-        <div class="profile-name" id="headerName">
-          User
-        </div>
-
-        <span class="chevron">⌄</span>
-
-      </div>
-
-    </div>
-
-  </header>
-
-
-  <!-- WELCOME -->
-
-  <section class="welcome">
-
-    <h1 id="welcomeName">
-      Welcome back!
-    </h1>
-
-    <p>
-      Complete tasks, earn rewards and grow your balance!
-    </p>
-
-    <div class="wallet-art">
-      ◉
-    </div>
-
-  </section>
-
-
-  <!-- STATS -->
-
-  <section class="stats">
-
-    <div class="stat">
-
-      <div class="stat-icon">▣</div>
-
-      <div class="stat-label">
-        Wallet Balance
-      </div>
-
-      <div class="stat-value" id="walletBalance">
-        $0.00
-      </div>
-
-    </div>
-
-
-    <div class="stat">
-
-      <div class="stat-icon">◉</div>
-
-      <div class="stat-label">
-        Total Earned
-      </div>
-
-      <div class="stat-value" id="totalEarned">
-        $0.00
-      </div>
-
-    </div>
-
-
-    <div class="stat">
-
-      <div class="stat-icon">♧</div>
-
-      <div class="stat-label">
-        Referral Earnings
-      </div>
-
-      <div class="stat-value" id="referralEarnings">
-        $0.00
-      </div>
-
-    </div>
-
-
-    <div class="stat">
-
-      <div class="stat-icon">✓</div>
-
-      <div class="stat-label">
-        Tasks Completed
-      </div>
-
-      <div class="stat-value" id="tasksCompleted">
-        0
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- AVAILABLE TASKS -->
-
-  <section class="section">
-
-    <div class="section-head">
-
-      <div class="section-title-wrap">
-
-        <span class="section-icon">ϟ</span>
-
-        <span class="section-title">
-          Available Tasks
-        </span>
-
-      </div>
-
-      <a href="tasks.html" class="view-all">
-        View All →
-      </a>
-
-    </div>
-
-
-    <div id="taskList" class="task-list">
-
-      <div class="loading">
-        Loading tasks...
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- PROMOS -->
-
-  <section class="promo-grid">
-
-    <div class="promo checkin">
-
-      <div class="promo-icon">
-        ✓
-      </div>
-
-      <h3>
-        Daily Check-in
-      </h3>
-
-      <p>
-        Check in daily and earn bonus rewards. Come back tomorrow for more.
-      </p>
-
-      <button
-        class="promo-btn"
-        onclick="showMessage('Daily Check-in will be available soon.')">
-        Check-in Now
-      </button>
-
-    </div>
-
-
-    <div class="promo referral">
-
-      <div class="promo-icon">
-        ♧
-      </div>
-
-      <h3>
-        Invite & Earn
-      </h3>
-
-      <p>
-        Invite friends and earn rewards when they complete eligible tasks.
-      </p>
-
-      <button
-        class="promo-btn"
-        onclick="openReferrals()">
-        Invite Friends
-      </button>
-
-    </div>
-
-  </section>
-
+<div class="profile" id="profileLetter">
+R
 </div>
 
+</div>
+</header>
 
-<!-- BOTTOM NAV -->
+<main>
 
-<nav class="bottom-nav">
+<div id="page" class="loading">
+Loading dashboard...
+</div>
 
-  <a class="nav-item active" href="dashboard.html">
-    <span class="nav-icon">⌂</span>
-    <span>Home</span>
-  </a>
+</main>
 
-  <a class="nav-item" href="tasks.html">
-    <span class="nav-icon">▤</span>
-    <span>Earn</span>
-  </a>
 
-  <a class="nav-item" href="#" onclick="openReferrals();return false;">
-    <span class="nav-icon">♧</span>
-    <span>Refer</span>
-  </a>
+<nav>
+<div class="nav-inner">
 
-  <a class="nav-item" href="#" onclick="showMessage('Withdrawal section coming next.');return false;">
-    <span class="nav-icon">▣</span>
-    <span>Withdraw</span>
-  </a>
+<a class="active" href="dashboard.html">
+<span class="nav-icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M3 11l9-8 9 8"/>
+<path d="M5 10v10h14V10"/>
+</svg>
+</span>
+Home
+</a>
 
-  <a class="nav-item" href="#" onclick="showMessage('Profile section coming next.');return false;">
-    <span class="nav-icon">◯</span>
-    <span>Profile</span>
-  </a>
+<a href="tasks.html">
+<span class="nav-icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="4" y="4" width="16" height="16" rx="3"/>
+<path d="M8 9h8M8 13h8M8 17h5"/>
+</svg>
+</span>
+Earn
+</a>
 
+<a href="referrals.html">
+<span class="nav-icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="9" cy="8" r="3"/>
+<circle cx="17" cy="10" r="3"/>
+<path d="M3 20c0-3 2-5 6-5s6 2 6 5"/>
+<path d="M14 16c4 0 6 1.5 7 4"/>
+</svg>
+</span>
+Refer
+</a>
+
+<a href="withdraw.html">
+<span class="nav-icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="3" y="5" width="18" height="14" rx="3"/>
+<path d="M3 10h18"/>
+<path d="M16 15h2"/>
+</svg>
+</span>
+Withdraw
+</a>
+
+<a href="profile.html">
+<span class="nav-icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="12" cy="8" r="3"/>
+<path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>
+</svg>
+</span>
+Profile
+</a>
+
+</div>
 </nav>
 
 
@@ -857,609 +458,522 @@ button{
 
 <script>
 
-/* =========================================================
-   SUPABASE
-========================================================= */
-
 const SUPABASE_URL =
 "https://cetsxdkoauucxwsbdktl.supabase.co";
 
-const SUPABASE_PUBLISHABLE_KEY =
+const SUPABASE_KEY =
 "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
 
-const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
+const db=supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
 );
 
-
-/* =========================================================
-   ELEMENTS
-========================================================= */
-
-const walletBalance =
-document.getElementById("walletBalance");
-
-const totalEarned =
-document.getElementById("totalEarned");
-
-const referralEarnings =
-document.getElementById("referralEarnings");
-
-const tasksCompleted =
-document.getElementById("tasksCompleted");
-
-const taskList =
-document.getElementById("taskList");
-
-const welcomeName =
-document.getElementById("welcomeName");
-
-const headerName =
-document.getElementById("headerName");
-
-const avatar =
-document.getElementById("avatar");
+const page=document.getElementById("page");
 
 
-/* =========================================================
-   FORMAT MONEY
-========================================================= */
+async function start(){
 
-function money(value){
+const {
+data:{session},
+error
+}=await db.auth.getSession();
 
-  const number =
-    Number(value || 0);
 
-  return "$" + number.toFixed(2);
+if(error || !session){
+
+location.href="login.html";
+return;
 
 }
 
 
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
+const user=session.user;
+
+
+/* PROFILE */
+
+const {data:profile}=await db
+.from("profiles")
+.select("full_name,country")
+.eq("id",user.id)
+.maybeSingle();
+
+
+const name=
+profile?.full_name ||
+user.user_metadata?.full_name ||
+user.email?.split("@")[0] ||
+"User";
+
+
+document.getElementById("profileLetter")
+.textContent=name.charAt(0).toUpperCase();
+
+
+/* WALLET */
+
+const {data:wallet,walletError}=await db
+.from("wallets")
+.select(`
+balance,
+total_earned,
+referral_earnings
+`)
+.eq("user_id",user.id)
+.maybeSingle();
+
+
+/* APPROVED TASK COUNT */
+
+const {data:approved}=await db
+.from("task_submissions")
+.select("id")
+.eq("user_id",user.id)
+.eq("status","approved");
+
+
+const completed=
+approved?.length || 0;
+
+
+/* TASKS */
+
+const {data:tasks}=await db
+.from("tasks")
+.select(`
+id,
+title,
+description,
+payout,
+user_reward_percent,
+task_url,
+status
+`)
+.eq("status","active")
+.order("created_at",{ascending:false})
+.limit(4);
+
+
+/* RECENT ACTIVITY */
+
+const {data:activity}=await db
+.from("task_submissions")
+.select(`
+id,
+status,
+user_reward,
+created_at,
+tasks(title)
+`)
+.eq("user_id",user.id)
+.order("created_at",{ascending:false})
+.limit(5);
+
+
+/* RENDER */
+
+const balance=
+Number(wallet?.balance || 0);
+
+const total=
+Number(wallet?.total_earned || 0);
+
+const referral=
+Number(wallet?.referral_earnings || 0);
+
+
+let taskHTML="";
+
+if(!tasks || !tasks.length){
+
+taskHTML=
+`<div class="empty">No tasks available right now.</div>`;
+
+}else{
+
+tasks.forEach(task=>{
+
+const payout=
+Number(task.payout || 0);
+
+const percent=
+Number(task.user_reward_percent || 0);
+
+const reward=
+payout * percent / 100;
+
+
+taskHTML+=`
+
+<div class="task">
+
+<div class="task-top">
+
+<div class="task-icon">
+
+<svg viewBox="0 0 24 24"
+fill="none"
+stroke="currentColor"
+stroke-width="2">
+
+<path d="M4 5h16v14H4z"/>
+<path d="M8 9h8M8 13h5"/>
+
+</svg>
+
+</div>
+
+<div>
+
+<div class="task-title">
+${escapeHtml(task.title)}
+</div>
+
+<div class="task-desc">
+${escapeHtml(
+task.description || "Complete this task and submit your proof."
+)}
+</div>
+
+</div>
+
+</div>
+
+<div class="task-bottom">
+
+<div class="reward">
+Earn $${reward.toFixed(2)}
+</div>
+
+<a
+class="start"
+href="${escapeAttribute(
+task.task_url || "submit-task.html?task="+task.id
+)}"
+target="_blank"
+rel="noopener">
+Start
+</a>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+/* ACTIVITY */
+
+let activityHTML="";
+
+if(!activity || !activity.length){
+
+activityHTML=
+`<div class="empty">No activity yet.</div>`;
+
+}else{
+
+activity.forEach(row=>{
+
+const title=
+row.tasks?.title || "Task";
+
+const reward=
+Number(row.user_reward || 0);
+
+const status=
+String(row.status || "").toLowerCase();
+
+const date=
+new Date(row.created_at)
+.toLocaleDateString();
+
+
+activityHTML+=`
+
+<div class="activity-row">
+
+<div>
+
+<div class="activity-title">
+${escapeHtml(title)}
+</div>
+
+<div class="activity-date">
+${escapeHtml(date)}
+</div>
+
+</div>
+
+<div class="activity-right ${escapeAttribute(status)}">
+
+${
+status==="approved"
+? "+$"+reward.toFixed(2)
+: status.charAt(0).toUpperCase()+status.slice(1)
+}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+/* FINAL PAGE */
+
+page.className="";
+
+page.innerHTML=`
+
+<div class="welcome">
+
+<small>Welcome back</small>
+
+<h2>
+${escapeHtml(name)}
+</h2>
+
+</div>
+
+
+<div class="wallet">
+
+<div class="wallet-label">
+Wallet Balance
+</div>
+
+<div class="balance">
+$${balance.toFixed(2)}
+</div>
+
+<div class="wallet-row">
+
+<div class="wallet-item">
+
+<small>Total Earned</small>
+
+<strong>
+$${total.toFixed(2)}
+</strong>
+
+</div>
+
+<div class="wallet-item">
+
+<small>Referral Earnings</small>
+
+<strong>
+$${referral.toFixed(2)}
+</strong>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="stats">
+
+<div class="stat">
+
+<div class="stat-icon">
+
+<svg viewBox="0 0 24 24"
+fill="none"
+stroke="currentColor"
+stroke-width="2">
+
+<path d="M12 3v18"/>
+<path d="M17 7h-7a3 3 0 000 6h4a3 3 0 010 6H7"/>
+
+</svg>
+
+</div>
+
+<small>Balance</small>
+
+<strong>
+$${balance.toFixed(2)}
+</strong>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-icon">
+
+<svg viewBox="0 0 24 24"
+fill="none"
+stroke="currentColor"
+stroke-width="2">
+
+<path d="M5 12l4 4L19 6"/>
+
+</svg>
+
+</div>
+
+<small>Tasks Completed</small>
+
+<strong>
+${completed}
+</strong>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-icon">
+
+<svg viewBox="0 0 24 24"
+fill="none"
+stroke="currentColor"
+stroke-width="2">
+
+<circle cx="12" cy="8" r="3"/>
+<path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>
+
+</svg>
+
+</div>
+
+<small>Referrals</small>
+
+<strong>
+${referral > 0 ? "Active" : "0"}
+</strong>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-icon">
+
+<svg viewBox="0 0 24 24"
+fill="none"
+stroke="currentColor"
+stroke-width="2">
+
+<path d="M12 3v18"/>
+<path d="M6 8h8a3 3 0 010 6H9a3 3 0 000 6h9"/>
+
+</svg>
+
+</div>
+
+<small>Total Earned</small>
+
+<strong>
+$${total.toFixed(2)}
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="section-head">
+
+<h3>Available Tasks</h3>
+
+<a href="tasks.html">
+View All
+</a>
+
+</div>
+
+${taskHTML}
+
+
+<div class="section-head">
+
+<h3>Recent Activity</h3>
+
+<a href="history.html">
+View All
+</a>
+
+</div>
+
+<div class="activity">
+
+${activityHTML}
+
+</div>
+
+
+<div class="promo">
+
+<h3>Daily Check-in</h3>
+
+<p>
+Come back every day to check for new earning opportunities and available tasks.
+</p>
+
+<a href="tasks.html">
+View Tasks
+</a>
+
+</div>
+
+
+<div class="promo">
+
+<h3>Invite & Earn</h3>
+
+<p>
+Invite friends to RexTasks and earn $0.10 when your referred user completes an eligible verified task.
+</p>
+
+<a href="referrals.html">
+Invite Friends
+</a>
+
+</div>
+
+`;
+
+}
+
 
 function escapeHtml(value){
 
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 
 }
 
 
-/* =========================================================
-   GET USER
-========================================================= */
+function escapeAttribute(value){
 
-async function getCurrentUser(){
-
-  const {
-    data,
-    error
-  } =
-  await supabaseClient.auth.getUser();
-
-
-  if(error){
-
-    console.error(error);
-    return null;
-
-  }
-
-
-  return data?.user || null;
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/"/g,"&quot;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;");
 
 }
 
 
-/* =========================================================
-   LOAD PROFILE
-========================================================= */
-
-async function loadProfile(user){
-
-  let profile = null;
-
-
-  const result =
-    await supabaseClient
-      .from("profiles")
-      .select("*")
-      .eq("id",user.id)
-      .maybeSingle();
-
-
-  if(!result.error){
-
-    profile =
-      result.data;
-
-  }
-
-
-  const metadata =
-    user.user_metadata || {};
-
-
-  const fullName =
-    profile?.full_name ||
-    profile?.name ||
-    metadata.full_name ||
-    metadata.name ||
-    user.email?.split("@")[0] ||
-    "User";
-
-
-  welcomeName.textContent =
-    "Welcome back, " +
-    fullName +
-    "!";
-
-
-  headerName.textContent =
-    fullName;
-
-
-  avatar.textContent =
-    fullName
-      .trim()
-      .charAt(0)
-      .toUpperCase();
-
-
-  return profile;
-
-}
-
-
-/* =========================================================
-   LOAD WALLET
-========================================================= */
-
-async function loadWallet(user){
-
-  let wallet = null;
-
-
-  /*
-    First try the normal user_id relationship.
-  */
-
-  let result =
-    await supabaseClient
-      .from("wallets")
-      .select("*")
-      .eq("user_id",user.id)
-      .maybeSingle();
-
-
-  /*
-    If the table uses id as the user relationship,
-    try that instead.
-  */
-
-  if(result.error){
-
-    result =
-      await supabaseClient
-        .from("wallets")
-        .select("*")
-        .eq("id",user.id)
-        .maybeSingle();
-
-  }
-
-
-  if(result.error){
-
-    console.error(
-      "Wallet query:",
-      result.error
-    );
-
-    return;
-
-  }
-
-
-  wallet =
-    result.data;
-
-
-  if(!wallet){
-
-    return;
-
-  }
-
-
-  /*
-    Support common wallet column names.
-  */
-
-  const balance =
-    wallet.balance ??
-    wallet.wallet_balance ??
-    wallet.available_balance ??
-    wallet.amount ??
-    0;
-
-
-  const earned =
-    wallet.total_earned ??
-    wallet.totalEarned ??
-    wallet.earned ??
-    0;
-
-
-  const referrals =
-    wallet.referral_earnings ??
-    wallet.referral_balance ??
-    wallet.referrals_earned ??
-    0;
-
-
-  const completed =
-    wallet.tasks_completed ??
-    wallet.completed_tasks ??
-    wallet.task_count ??
-    0;
-
-
-  walletBalance.textContent =
-    money(balance);
-
-
-  totalEarned.textContent =
-    money(earned);
-
-
-  referralEarnings.textContent =
-    money(referrals);
-
-
-  tasksCompleted.textContent =
-    Number(completed || 0);
-
-}
-
-
-/* =========================================================
-   TASK TYPE
-========================================================= */
-
-function getTaskType(category,title){
-
-  const value =
-    (
-      category ||
-      title ||
-      ""
-    ).toLowerCase();
-
-
-  if(
-    value.includes("survey")
-  ){
-
-    return {
-      name:"Survey",
-      className:"type-survey",
-      icon:"▤"
-    };
-
-  }
-
-
-  if(
-    value.includes("app") ||
-    value.includes("install")
-  ){
-
-    return {
-      name:"App",
-      className:"type-app",
-      icon:"▣"
-    };
-
-  }
-
-
-  if(
-    value.includes("sign") ||
-    value.includes("register")
-  ){
-
-    return {
-      name:"Sign Up",
-      className:"type-signup",
-      icon:"●"
-    };
-
-  }
-
-
-  if(
-    value.includes("offer")
-  ){
-
-    return {
-      name:"Offer",
-      className:"type-offer",
-      icon:"◆"
-    };
-
-  }
-
-
-  return {
-    name:"Task",
-    className:"type-default",
-    icon:"✓"
-  };
-
-}
-
-
-/* =========================================================
-   LOAD TASKS
-========================================================= */
-
-async function loadTasks(){
-
-  taskList.innerHTML =
-    '<div class="loading">Loading tasks...</div>';
-
-
-  const {
-    data:tasks,
-    error
-  } =
-  await supabaseClient
-    .from("tasks")
-    .select("*")
-    .eq("status","active")
-    .order(
-      "created_at",
-      {
-        ascending:false
-      }
-    );
-
-
-  if(error){
-
-    console.error(
-      "Tasks error:",
-      error
-    );
-
-
-    taskList.innerHTML =
-      '<div class="error">Unable to load tasks right now.</div>';
-
-    return;
-
-  }
-
-
-  if(
-    !tasks ||
-    tasks.length === 0
-  ){
-
-    taskList.innerHTML =
-      '<div class="empty">No tasks are available right now.</div>';
-
-    return;
-
-  }
-
-
-  /*
-    Dashboard only shows the first 4.
-  */
-
-  const visibleTasks =
-    tasks.slice(0,4);
-
-
-  taskList.innerHTML = "";
-
-
-  visibleTasks.forEach(task => {
-
-    const payout =
-      Number(task.payout || 0);
-
-
-    const percent =
-      Number(
-        task.user_reward_percent || 0
-      );
-
-
-    /*
-      IMPORTANT:
-
-      payout = what RexTasks receives
-
-      user reward =
-      payout × user_reward_percent / 100
-    */
-
-    const userReward =
-      payout * percent / 100;
-
-
-    const type =
-      getTaskType(
-        task.category,
-        task.title
-      );
-
-
-    const card =
-      document.createElement("div");
-
-
-    card.className =
-      "task";
-
-
-    card.innerHTML = `
-
-      <div class="task-top">
-
-        <div class="task-type ${type.className}">
-          ${type.icon}
-          ${escapeHtml(type.name)}
-        </div>
-
-        <button
-          class="task-menu"
-          onclick="showMessage('Task options will be available soon.')">
-          ⋮
-        </button>
-
-      </div>
-
-
-      <div class="task-title">
-        ${escapeHtml(
-          task.title ||
-          "Available Task"
-        )}
-      </div>
-
-
-      <div class="task-description">
-        ${escapeHtml(
-          task.description ||
-          "Complete this task and earn your reward."
-        )}
-      </div>
-
-
-      <div class="task-reward-label">
-        Your reward
-      </div>
-
-
-      <div class="task-reward">
-        ${money(userReward)}
-      </div>
-
-
-      <button
-        class="start-task"
-        onclick="openTask('${encodeURIComponent(task.task_url || "")}')">
-        Start Task
-      </button>
-
-    `;
-
-
-    taskList.appendChild(card);
-
-  });
-
-}
-
-
-/* =========================================================
-   OPEN TASK
-========================================================= */
-
-function openTask(encodedUrl){
-
-  const url =
-    decodeURIComponent(
-      encodedUrl || ""
-    );
-
-
-  if(!url){
-
-    showMessage(
-      "This task does not have a link yet."
-    );
-
-    return;
-
-  }
-
-
-  window.open(
-    url,
-    "_blank",
-    "noopener,noreferrer"
-  );
-
-}
-
-
-/* =========================================================
-   REFERRALS
-========================================================= */
-
-function openReferrals(){
-
-  showMessage(
-    "Referral page will be connected next."
-  );
-
-}
-
-
-/* =========================================================
-   MESSAGE
-========================================================= */
-
-function showMessage(message){
-
-  alert(message);
-
-}
-
-
-/* =========================================================
-   INITIALIZE
-========================================================= */
-
-async function initializeDashboard(){
-
-  const user =
-    await getCurrentUser();
-
-
-  if(!user){
-
-    window.location.href =
-      "login.html";
-
-    return;
-
-  }
-
-
-  await loadProfile(user);
-
-  await loadWallet(user);
-
-  await loadTasks();
-
-}
-
-
-initializeDashboard();
+start();
 
 </script>
 
