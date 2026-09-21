@@ -4,109 +4,161 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>RexTasks — Task Submissions</title>
+
 <style>
 *{box-sizing:border-box}
+
 body{
- margin:0;
- background:#07140f;
- color:#edf8f1;
- font-family:Arial,sans-serif;
+margin:0;
+background:#07140f;
+color:#edf8f1;
+font-family:Arial,sans-serif;
 }
+
 header{
- padding:18px;
- background:#0b2118;
- border-bottom:1px solid #183c2c;
- position:sticky;
- top:0;
- z-index:5;
+padding:18px;
+background:#0b2118;
+border-bottom:1px solid #183c2c;
+position:sticky;
+top:0;
+z-index:5;
 }
-.logo{font-size:22px;font-weight:800;color:#69d59a}
-.sub{color:#8ca99a;font-size:13px;margin-top:4px}
-main{padding:16px;max-width:700px;margin:auto}
+
+.logo{
+font-size:22px;
+font-weight:800;
+color:#69d59a;
+}
+
+.sub{
+color:#8ca99a;
+font-size:13px;
+margin-top:4px;
+}
+
+main{
+padding:16px;
+max-width:700px;
+margin:auto;
+}
 
 .card{
- background:#0c2118;
- border:1px solid #183c2c;
- border-radius:18px;
- padding:16px;
- margin-bottom:14px;
+background:#0c2118;
+border:1px solid #183c2c;
+border-radius:18px;
+padding:16px;
+margin-bottom:14px;
 }
+
 .top{
- display:flex;
- justify-content:space-between;
- gap:12px;
+display:flex;
+justify-content:space-between;
+gap:12px;
 }
-.title{font-weight:700;font-size:16px}
-.user{font-size:12px;color:#8ca99a;margin-top:6px}
+
+.title{
+font-weight:700;
+font-size:16px;
+}
+
+.user{
+font-size:12px;
+color:#8ca99a;
+margin-top:6px;
+word-break:break-all;
+}
+
 .status{
- padding:6px 10px;
- border-radius:20px;
- background:#332d12;
- color:#f0d76a;
- font-size:11px;
- height:max-content;
+padding:6px 10px;
+border-radius:20px;
+background:#332d12;
+color:#f0d76a;
+font-size:11px;
+height:max-content;
 }
+
 .info{
- margin-top:14px;
- font-size:13px;
- color:#a9c1b3;
- line-height:1.6;
+margin-top:14px;
+font-size:13px;
+color:#a9c1b3;
+line-height:1.6;
 }
+
 .proof{
- margin-top:12px;
- background:#07140f;
- border:1px solid #183c2c;
- border-radius:12px;
- padding:12px;
- font-size:13px;
- line-height:1.5;
- color:#dcebe2;
- word-break:break-word;
+margin-top:12px;
+background:#07140f;
+border:1px solid #183c2c;
+border-radius:12px;
+padding:12px;
+font-size:13px;
+line-height:1.5;
+color:#dcebe2;
+word-break:break-word;
 }
+
 .reward{
- margin-top:12px;
- font-size:14px;
- color:#69d59a;
- font-weight:700;
+margin-top:12px;
+font-size:14px;
+color:#69d59a;
+font-weight:700;
 }
+
 .actions{
- display:flex;
- gap:10px;
- margin-top:14px;
+display:flex;
+gap:10px;
+margin-top:14px;
 }
+
 button{
- flex:1;
- border:0;
- border-radius:12px;
- padding:12px;
- font-weight:700;
- cursor:pointer;
+flex:1;
+border:0;
+border-radius:12px;
+padding:12px;
+font-weight:700;
+cursor:pointer;
 }
-.approve{background:#38b978;color:#04100a}
-.deny{background:#321719;color:#ff9b9b}
+
+.approve{
+background:#38b978;
+color:#04100a;
+}
+
+.deny{
+background:#321719;
+color:#ff9b9b;
+}
+
 .empty{
- text-align:center;
- color:#8ca99a;
- padding:40px 10px;
+text-align:center;
+color:#8ca99a;
+padding:40px 10px;
 }
-.loading{text-align:center;color:#8ca99a;padding:40px}
+
+.loading{
+text-align:center;
+color:#8ca99a;
+padding:40px;
+}
 </style>
 </head>
 
 <body>
 
 <header>
-  <div class="logo">RexTasks Admin</div>
-  <div class="sub">Task Submissions</div>
+<div class="logo">RexTasks Admin</div>
+<div class="sub">Task Submissions</div>
 </header>
 
 <main>
-  <div id="content" class="loading">Loading submissions...</div>
+<div id="content" class="loading">
+Loading submissions...
+</div>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+
 const SUPABASE_URL =
 "https://cetsxdkoauucxwsbdktl.supabase.co";
 
@@ -116,149 +168,277 @@ const SUPABASE_KEY =
 const {createClient}=supabase;
 
 const db=createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+SUPABASE_URL,
+SUPABASE_KEY
 );
 
 const content=document.getElementById("content");
 
+
+/* =====================================================
+   LOAD SUBMISSIONS
+===================================================== */
+
 async function loadSubmissions(){
 
-  const {data,error}=await db
-    .from("task_submissions")
-    .select(`
-      id,
-      proof,
-      status,
-      payout,
-      user_reward,
-      created_at,
-      task_id,
-      user_id,
-      tasks(title,payout,user_reward_percent)
-    `)
-    .order("created_at",{ascending:false});
+const {data,error}=await db
+.from("task_submissions")
+.select(`
+id,
+proof,
+status,
+payout,
+user_reward,
+created_at,
+task_id,
+user_id,
+tasks(title,payout,user_reward_percent)
+`)
+.order("created_at",{ascending:false});
 
-  if(error){
-    content.innerHTML=
-      `<div class="empty">Unable to load submissions.<br><br>${escapeHtml(error.message)}</div>`;
-    return;
-  }
 
-  if(!data || !data.length){
-    content.innerHTML=
-      `<div class="empty">No task submissions yet.</div>`;
-    return;
-  }
+if(error){
 
-  content.innerHTML="";
+content.innerHTML=`
+<div class="empty">
+Unable to load submissions.<br><br>
+${escapeHtml(error.message)}
+</div>
+`;
 
-  data.forEach(row=>{
-
-    const task=row.tasks || {};
-    const payout=Number(task.payout || 0);
-    const percent=Number(task.user_reward_percent || 0);
-    const reward=payout * percent / 100;
-
-    const date=new Date(row.created_at)
-      .toLocaleString();
-
-    const card=document.createElement("div");
-    card.className="card";
-
-    card.innerHTML=`
-      <div class="top">
-        <div>
-          <div class="title">
-            ${escapeHtml(task.title || "Task")}
-          </div>
-
-          <div class="user">
-            User ID: ${escapeHtml(row.user_id)}
-          </div>
-        </div>
-
-        <div class="status">
-          ${escapeHtml(row.status)}
-        </div>
-      </div>
-
-      <div class="info">
-        Submitted: ${escapeHtml(date)}
-      </div>
-
-      <div class="proof">
-        <strong>Proof:</strong><br>
-        ${escapeHtml(row.proof || "No proof provided")}
-      </div>
-
-      <div class="reward">
-        User reward: $${reward.toFixed(2)}
-      </div>
-
-      ${
-        row.status === "pending"
-        ? `
-        <div class="actions">
-          <button class="approve"
-            onclick="approveSubmission(${row.id},${reward})">
-            Approve
-          </button>
-
-          <button class="deny"
-            onclick="denySubmission(${row.id})">
-            Deny
-          </button>
-        </div>
-        `
-        : ""
-      }
-    `;
-
-    content.appendChild(card);
-  });
+return;
 }
+
+
+if(!data || !data.length){
+
+content.innerHTML=`
+<div class="empty">
+No task submissions yet.
+</div>
+`;
+
+return;
+}
+
+
+content.innerHTML="";
+
+
+data.forEach(row=>{
+
+const task=row.tasks || {};
+
+const payout=Number(task.payout || 0);
+
+const percent=
+Number(task.user_reward_percent || 0);
+
+const reward=
+payout * percent / 100;
+
+const date=
+new Date(row.created_at).toLocaleString();
+
+
+const card=
+document.createElement("div");
+
+card.className="card";
+
+
+card.innerHTML=`
+
+<div class="top">
+
+<div>
+
+<div class="title">
+${escapeHtml(task.title || "Task")}
+</div>
+
+<div class="user">
+User ID: ${escapeHtml(row.user_id)}
+</div>
+
+</div>
+
+<div class="status">
+${escapeHtml(row.status)}
+</div>
+
+</div>
+
+
+<div class="info">
+Submitted: ${escapeHtml(date)}
+</div>
+
+
+<div class="proof">
+
+<strong>Proof:</strong><br>
+
+${escapeHtml(
+row.proof || "No proof provided"
+)}
+
+</div>
+
+
+<div class="reward">
+
+User reward:
+$${reward.toFixed(2)}
+
+</div>
+
+
+${
+row.status === "pending"
+?
+`
+
+<div class="actions">
+
+<button
+class="approve"
+onclick="approveSubmission(${row.id},${reward})">
+Approve
+</button>
+
+<button
+class="deny"
+onclick="denySubmission(${row.id})">
+Deny
+</button>
+
+</div>
+
+`
+:
+""
+}
+
+`;
+
+
+content.appendChild(card);
+
+});
+
+}
+
+
+/* =====================================================
+   APPROVE SUBMISSION
+===================================================== */
 
 async function approveSubmission(id,reward){
 
-  if(!confirm(
-    "Approve this submission and credit $" +
-    reward.toFixed(2) +
-    " to the user?"
-  )) return;
+if(!confirm(
+"Approve this submission and credit $" +
+reward.toFixed(2) +
+" to the user's wallet?"
+)) return;
 
-  alert(
-    "The submission is ready for the secure approval system."
-  );
+
+const {data,error}=await db.rpc(
+"approve_task_submission",
+{
+submission_id:id
 }
+);
+
+
+if(error){
+
+alert(
+"Approval failed: " +
+error.message
+);
+
+return;
+}
+
+
+if(data && data.success){
+
+alert(
+"Approved successfully. $" +
+Number(data.reward).toFixed(2) +
+" credited to the user's wallet."
+);
+
+loadSubmissions();
+
+}
+
+}
+
+
+/* =====================================================
+   DENY SUBMISSION
+===================================================== */
 
 async function denySubmission(id){
 
-  if(!confirm("Deny this submission?")) return;
+if(!confirm(
+"Deny this submission?"
+)) return;
 
-  const {error}=await db
-    .from("task_submissions")
-    .update({status:"denied"})
-    .eq("id",id);
 
-  if(error){
-    alert("Could not deny submission.");
-    return;
-  }
+const {error}=await db
+.from("task_submissions")
+.update({
+status:"denied"
+})
+.eq("id",id);
 
-  loadSubmissions();
+
+if(error){
+
+alert(
+"Could not deny submission: " +
+error.message
+);
+
+return;
 }
 
-function escapeHtml(value){
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
 
 loadSubmissions();
+
+}
+
+
+/* =====================================================
+   SECURITY — ESCAPE TEXT
+===================================================== */
+
+function escapeHtml(value){
+
+return String(value)
+
+.replace(/&/g,"&amp;")
+
+.replace(/</g,"&lt;")
+
+.replace(/>/g,"&gt;")
+
+.replace(/"/g,"&quot;")
+
+.replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadSubmissions();
+
 </script>
 
 </body>
