@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>RexTasks Admin</title>
+
+<style>
+:root{
+  --green:#064d3b;
+  --green2:#0b6b50;
+  --light:#e8f5ef;
+  --bg:#f5f8f6;
+  --white:#fff;
+  --text:#17352c;
+  --muted:#718078;
+  --border:#dce8e2;
+  --danger:#c0392b;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+header{
+  background:var(--green);
+  color:white;
+  padding:18px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:800;
+}
+
+.admin{
+  font-size:13px;
+  opacity:.85;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
+
+h1{
+  margin:5px 0;
+  font-size:26px;
+}
+
+.subtitle{
+  color:var(--muted);
+  margin-bottom:20px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:18px;
+  box-shadow:0 5px 18px rgba(0,0,0,.04);
+}
+
+.label{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.value{
+  font-size:28px;
+  font-weight:800;
+  margin-top:8px;
+  color:var(--green);
+}
+
+.section{
+  margin-top:25px;
+}
+
+.section h2{
+  font-size:19px;
+}
+
+.actions{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.action{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+  text-decoration:none;
+  color:var(--text);
+  font-weight:700;
+}
+
+.action span{
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:400;
+  margin-top:5px;
+}
+
+.loading{
+  color:var(--muted);
+}
+
+.error{
+  color:var(--danger);
+}
+
+@media(min-width:700px){
+  .grid{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .actions{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">RexTasks Admin</div>
+  <div class="admin">Administrator</div>
+</header>
+
+<main class="container">
+
+  <h1>Admin Dashboard</h1>
+  <div class="subtitle">Manage your RexTasks platform.</div>
+
+  <div id="message" class="loading">Loading dashboard...</div>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="label">Total Users</div>
+      <div class="value" id="users">0</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Active Tasks</div>
+      <div class="value" id="tasks">0</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Pending Submissions</div>
+      <div class="value" id="submissions">0</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Pending Withdrawals</div>
+      <div class="value" id="withdrawals">0</div>
+    </div>
+
+  </div>
+
+  <section class="section">
+    <h2>Quick Management</h2>
+
+    <div class="actions">
+
+      <a class="action" href="admin-users.html">
+        Users
+        <span>View and manage users</span>
+      </a>
+
+      <a class="action" href="admin-tasks.html">
+        Tasks
+        <span>Create and manage manual tasks</span>
+      </a>
+
+      <a class="action" href="admin-submissions.html">
+        Task Submissions
+        <span>Approve or deny submitted proofs</span>
+      </a>
+
+      <a class="action" href="admin-withdrawals.html">
+        Withdrawals
+        <span>Review withdrawal requests</span>
+      </a>
+
+      <a class="action" href="admin-referrals.html">
+        Referrals
+        <span>View referral activity</span>
+      </a>
+
+      <a class="action" href="admin-reports.html">
+        Reports
+        <span>View platform statistics</span>
+      </a>
+
+    </div>
+  </section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL =
+"https://cetsxdkoauucxwsbdktl.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
+
+const db = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+async function loadAdmin(){
+
+  const message = document.getElementById("message");
+
+  try{
+
+    const {data:{user}} = await db.auth.getUser();
+
+    if(!user){
+      location.href="login.html";
+      return;
+    }
+
+    const {data:profile,error:profileError} =
+      await db
+      .from("profiles")
+      .select("role")
+      .eq("id",user.id)
+      .single();
+
+    if(profileError || !profile || profile.role !== "admin"){
+      message.innerHTML =
+        '<div class="error">Admin access required.</div>';
+      return;
+    }
+
+    const users = await db
+      .from("profiles")
+      .select("id",{count:"exact",head:true});
+
+    const tasks = await db
+      .from("tasks")
+      .select("id",{count:"exact",head:true})
+      .eq("status","active");
+
+    const submissions = await db
+      .from("task_submissions")
+      .select("id",{count:"exact",head:true})
+      .eq("status","pending");
+
+    const withdrawals = await db
+      .from("withdrawals")
+      .select("id",{count:"exact",head:true})
+      .eq("status","pending");
+
+    document.getElementById("users").textContent =
+      users.count || 0;
+
+    document.getElementById("tasks").textContent =
+      tasks.count || 0;
+
+    document.getElementById("submissions").textContent =
+      submissions.count || 0;
+
+    document.getElementById("withdrawals").textContent =
+      withdrawals.count || 0;
+
+    message.textContent="";
+
+  }catch(error){
+
+    console.error(error);
+
+    message.innerHTML =
+      '<div class="error">Unable to load admin dashboard.</div>';
+  }
+}
+
+loadAdmin();
+</script>
+
+</body>
+</html>
