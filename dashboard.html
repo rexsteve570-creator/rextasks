@@ -4,33 +4,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#ffffff">
+
 <title>RexTasks — Dashboard</title>
 
 <style>
 *{box-sizing:border-box}
 
 :root{
-  --bg:#f6faf8;
-  --card:#fff;
-  --text:#13251e;
+  --bg:#f5faf7;
+  --card:#ffffff;
+  --text:#15231d;
   --muted:#718078;
-  --border:#e2ece7;
+  --border:#e3ebe7;
   --green:#079447;
   --darkgreen:#063f2d;
   --lightgreen:#e9f8ef;
-  --shadow:0 4px 18px rgba(8,61,43,.07);
+  --danger:#d64545;
+  --shadow:0 4px 18px rgba(6,63,45,.07);
 }
 
 body.dark{
-  --bg:#06140e;
-  --card:#0c2118;
+  --bg:#06130d;
+  --card:#0b2117;
   --text:#effaf4;
   --muted:#91aa9e;
-  --border:#1b3b2d;
-  --green:#5ee59a;
+  --border:#1b3a2c;
+  --green:#59e696;
   --darkgreen:#052d20;
   --lightgreen:#123a29;
-  --shadow:0 5px 20px rgba(0,0,0,.25);
+  --shadow:0 5px 20px rgba(0,0,0,.28);
 }
 
 body{
@@ -45,6 +47,10 @@ button,a{
   font-family:inherit;
 }
 
+button{
+  -webkit-tap-highlight-color:transparent;
+}
+
 .app{
   max-width:760px;
   margin:auto;
@@ -52,33 +58,39 @@ button,a{
   padding-bottom:90px;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 
 header{
-  height:72px;
+  height:70px;
   background:var(--card);
   border-bottom:1px solid var(--border);
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 18px;
+  padding:0 14px;
   position:sticky;
   top:0;
-  z-index:20;
+  z-index:50;
 }
 
 .menu-btn,
 .icon-btn{
-  width:40px;
-  height:40px;
+  width:42px;
+  height:42px;
   border:0;
   background:transparent;
   color:var(--text);
   display:flex;
   align-items:center;
   justify-content:center;
-  cursor:pointer;
   border-radius:12px;
+  cursor:pointer;
+}
+
+.menu-btn:active,
+.icon-btn:active,
+.theme-btn:active{
+  transform:scale(.94);
 }
 
 .menu-btn svg,
@@ -90,26 +102,22 @@ header{
 .logo{
   display:flex;
   align-items:center;
-  gap:8px;
-  font-size:22px;
+  gap:7px;
+  font-size:21px;
   font-weight:800;
-  color:var(--text);
 }
 
 .logo-mark{
-  width:32px;
-  height:32px;
-  position:relative;
   color:var(--green);
-  font-size:37px;
-  line-height:27px;
+  font-size:36px;
+  line-height:28px;
   font-weight:900;
 }
 
 .header-right{
   display:flex;
   align-items:center;
-  gap:5px;
+  gap:3px;
 }
 
 .notification{
@@ -122,48 +130,47 @@ header{
   top:5px;
   width:8px;
   height:8px;
-  background:#08a84f;
-  border:2px solid var(--card);
   border-radius:50%;
+  background:#09a84f;
+  border:2px solid var(--card);
 }
 
-/* THEME */
+/* ================= THEME ================= */
 
 .theme-wrap{
   position:relative;
 }
 
 .theme-btn{
-  width:44px;
+  width:42px;
   height:40px;
   border:1px solid var(--border);
   background:var(--card);
   color:var(--green);
-  border-radius:13px;
+  border-radius:12px;
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:3px;
+  gap:1px;
   cursor:pointer;
 }
 
 .theme-btn svg{
-  width:19px;
-  height:19px;
+  width:18px;
+  height:18px;
 }
 
 .theme-menu{
   display:none;
   position:absolute;
   right:0;
-  top:47px;
+  top:46px;
   width:135px;
   background:var(--card);
   border:1px solid var(--border);
   border-radius:13px;
   padding:6px;
   box-shadow:var(--shadow);
-  z-index:50;
 }
 
 .theme-menu.show{
@@ -175,9 +182,9 @@ header{
   border:0;
   background:transparent;
   color:var(--text);
-  padding:10px;
-  border-radius:9px;
+  padding:11px;
   text-align:left;
+  border-radius:9px;
   cursor:pointer;
 }
 
@@ -185,7 +192,197 @@ header{
   background:var(--lightgreen);
 }
 
-/* CONTENT */
+/* ================= SIDE MENU ================= */
+
+.overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.42);
+  z-index:90;
+}
+
+.overlay.show{
+  display:block;
+}
+
+.side-menu{
+  position:fixed;
+  left:-290px;
+  top:0;
+  bottom:0;
+  width:275px;
+  background:var(--card);
+  z-index:100;
+  box-shadow:5px 0 25px rgba(0,0,0,.15);
+  transition:left .25s ease;
+  overflow-y:auto;
+}
+
+.side-menu.open{
+  left:0;
+}
+
+.side-head{
+  height:75px;
+  background:var(--darkgreen);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+}
+
+.side-logo{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:20px;
+  font-weight:800;
+}
+
+.side-close{
+  width:38px;
+  height:38px;
+  border:0;
+  background:rgba(255,255,255,.1);
+  color:white;
+  border-radius:10px;
+  font-size:24px;
+  cursor:pointer;
+}
+
+.side-user{
+  padding:18px;
+  border-bottom:1px solid var(--border);
+}
+
+.side-user strong{
+  display:block;
+  font-size:15px;
+}
+
+.side-user span{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:4px;
+}
+
+.side-links{
+  padding:10px;
+}
+
+.side-link{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:13px 12px;
+  border:0;
+  background:transparent;
+  color:var(--text);
+  text-decoration:none;
+  border-radius:11px;
+  font-size:13px;
+  cursor:pointer;
+  text-align:left;
+}
+
+.side-link:hover{
+  background:var(--lightgreen);
+  color:var(--green);
+}
+
+.side-link svg{
+  width:20px;
+  height:20px;
+}
+
+.logout{
+  color:var(--danger);
+}
+
+/* ================= NOTIFICATION POPUP ================= */
+
+.notification-panel{
+  display:none;
+  position:fixed;
+  top:66px;
+  right:12px;
+  width:min(330px,calc(100% - 24px));
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  z-index:80;
+  overflow:hidden;
+}
+
+.notification-panel.show{
+  display:block;
+}
+
+.notification-head{
+  padding:14px 15px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.notification-head strong{
+  font-size:14px;
+}
+
+.notification-head a{
+  color:var(--green);
+  font-size:11px;
+  font-weight:700;
+  text-decoration:none;
+}
+
+.notification-item{
+  display:flex;
+  gap:10px;
+  padding:13px 15px;
+  border-bottom:1px solid var(--border);
+}
+
+.notification-item:last-child{
+  border-bottom:0;
+}
+
+.notification-icon{
+  width:35px;
+  height:35px;
+  border-radius:10px;
+  background:var(--lightgreen);
+  color:var(--green);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+
+.notification-icon svg{
+  width:18px;
+  height:18px;
+}
+
+.notification-item strong{
+  display:block;
+  font-size:11px;
+}
+
+.notification-item span{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:4px;
+}
+
+/* ================= MAIN ================= */
 
 main{
   padding:16px;
@@ -206,7 +403,7 @@ main{
   font-size:13px;
 }
 
-/* WALLET */
+/* ================= WALLET ================= */
 
 .wallet{
   background:var(--card);
@@ -217,7 +414,7 @@ main{
 }
 
 .wallet-main{
-  padding:20px 20px 16px;
+  padding:20px;
   position:relative;
 }
 
@@ -238,7 +435,15 @@ main{
   position:absolute;
   right:17px;
   top:20px;
-  color:#77b99a;
+  width:30px;
+  height:30px;
+  border:0;
+  background:transparent;
+  color:#73b497;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .eye svg{
@@ -274,7 +479,7 @@ main{
   font-size:15px;
 }
 
-/* SURVEY BANNER */
+/* ================= SURVEY ================= */
 
 .survey-banner{
   margin-top:17px;
@@ -282,51 +487,39 @@ main{
   border-radius:17px;
   overflow:hidden;
   position:relative;
-  background:linear-gradient(120deg,#072f22,#078342);
+  background:linear-gradient(120deg,#063f2d,#079447);
   color:white;
   padding:22px 20px;
 }
 
-.survey-banner:after{
-  content:"";
-  position:absolute;
-  width:180px;
-  height:180px;
-  right:-55px;
-  top:-45px;
-  background:rgba(100,235,157,.15);
-  border-radius:50%;
-}
-
 .survey-banner h2{
-  position:relative;
-  z-index:2;
   margin:0;
   font-size:20px;
+  position:relative;
+  z-index:2;
 }
 
 .survey-banner p{
+  margin:8px 0 14px;
+  color:#d8f6e4;
+  font-size:12px;
   position:relative;
   z-index:2;
-  margin:8px 0 14px;
-  font-size:12px;
-  color:#d8f6e4;
 }
 
 .survey-button{
-  position:relative;
-  z-index:3;
   display:inline-flex;
   align-items:center;
-  gap:8px;
+  gap:7px;
   background:#13c663;
   color:white;
-  border:0;
-  border-radius:10px;
   padding:11px 16px;
+  border-radius:10px;
   font-size:12px;
   font-weight:800;
   text-decoration:none;
+  position:relative;
+  z-index:3;
 }
 
 .survey-art{
@@ -341,7 +534,7 @@ main{
 .clipboard{
   width:55px;
   height:68px;
-  background:#fff;
+  background:white;
   border-radius:7px;
   position:absolute;
   left:5px;
@@ -376,7 +569,7 @@ main{
   margin:4px 0 0 14px;
 }
 
-/* FEATURE GRID */
+/* ================= FEATURES ================= */
 
 .features{
   display:grid;
@@ -395,6 +588,11 @@ main{
   color:var(--text);
   text-align:center;
   box-shadow:var(--shadow);
+  transition:.15s;
+}
+
+.feature:active{
+  transform:scale(.97);
 }
 
 .feature-icon{
@@ -454,7 +652,7 @@ main{
   margin-top:5px;
 }
 
-/* SECTION */
+/* ================= SECTION ================= */
 
 .section{
   margin-top:21px;
@@ -479,7 +677,7 @@ main{
   font-weight:700;
 }
 
-/* ACTIVITY */
+/* ================= ACTIVITY ================= */
 
 .activity{
   background:var(--card);
@@ -540,7 +738,7 @@ main{
   white-space:nowrap;
 }
 
-/* TELEGRAM */
+/* ================= TELEGRAM ================= */
 
 .telegram{
   margin-top:15px;
@@ -598,7 +796,75 @@ main{
   font-weight:800;
 }
 
-/* BOTTOM NAV */
+/* ================= TASKS ================= */
+
+.task-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:11px;
+}
+
+.task-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:14px;
+  box-shadow:var(--shadow);
+}
+
+.task-icon{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  background:var(--lightgreen);
+  color:var(--green);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:9px;
+}
+
+.task-icon svg{
+  width:20px;
+  height:20px;
+}
+
+.task-title{
+  font-size:12px;
+  font-weight:800;
+  line-height:1.3;
+}
+
+.task-reward{
+  color:var(--green);
+  font-size:12px;
+  font-weight:800;
+  margin-top:7px;
+}
+
+.task-button{
+  display:block;
+  margin-top:11px;
+  background:var(--green);
+  color:white;
+  text-align:center;
+  padding:9px;
+  border-radius:8px;
+  text-decoration:none;
+  font-size:11px;
+  font-weight:800;
+}
+
+/* ================= EMPTY ================= */
+
+.empty{
+  text-align:center;
+  padding:25px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* ================= BOTTOM NAV ================= */
 
 .bottom-nav{
   position:fixed;
@@ -608,7 +874,7 @@ main{
   height:73px;
   background:var(--card);
   border-top:1px solid var(--border);
-  z-index:30;
+  z-index:40;
 }
 
 .nav-inner{
@@ -659,156 +925,333 @@ main{
   padding:45px 10px;
 }
 
-.empty{
+.error{
   text-align:center;
-  padding:25px;
-  color:var(--muted);
-  font-size:12px;
+  color:var(--danger);
+  padding:35px 10px;
 }
 
-/* DESKTOP */
-
-@media(min-width:700px){
-
-  .features{
-    gap:14px;
+@media(max-width:390px){
+  .wallet-stat{
+    padding-left:8px;
+    padding-right:8px;
   }
 
-  main{
-    padding:22px;
+  .wallet-stat small{
+    font-size:10px;
   }
 
+  .wallet-stat strong{
+    font-size:14px;
+  }
+
+  .survey-art{
+    right:10px;
+    transform:scale(.9);
+  }
 }
 </style>
 </head>
 
 <body>
 
+<!-- SIDE MENU OVERLAY -->
+<div class="overlay" id="overlay"></div>
+
+<!-- SIDE MENU -->
+<aside class="side-menu" id="sideMenu">
+
+  <div class="side-head">
+    <div class="side-logo">
+      <span style="color:#5ee696;font-size:30px;font-weight:900">R</span>
+      RexTasks
+    </div>
+
+    <button class="side-close" id="closeMenu">
+      ×
+    </button>
+  </div>
+
+  <div class="side-user">
+    <strong id="sideName">User</strong>
+    <span id="sideEmail">Loading...</span>
+  </div>
+
+  <div class="side-links">
+
+    <a class="side-link" href="dashboard.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m3 10 9-7 9 7"/>
+        <path d="M5 9v11h14V9"/>
+      </svg>
+      Dashboard
+    </a>
+
+    <a class="side-link" href="tasks.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="5" y="3" width="14" height="18" rx="2"/>
+        <path d="M8 8h8M8 12h8M8 16h5"/>
+      </svg>
+      Earn Tasks
+    </a>
+
+    <a class="side-link" href="referrals.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="9" cy="8" r="3"/>
+        <circle cx="17" cy="10" r="3"/>
+        <path d="M3 20c0-3 2-5 6-5s6 2 6 5"/>
+        <path d="M14 16c4 0 6 1.5 7 4"/>
+      </svg>
+      Referrals
+    </a>
+
+    <a class="side-link" href="withdraw.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="5" width="18" height="14" rx="3"/>
+        <path d="M3 10h18"/>
+        <path d="M16 15h2"/>
+      </svg>
+      Wallet / Withdraw
+    </a>
+
+    <a class="side-link" href="history.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 12a9 9 0 1 0 3-6.7"/>
+        <path d="M3 4v6h6"/>
+        <path d="M12 7v5l3 2"/>
+      </svg>
+      History
+    </a>
+
+    <a class="side-link" href="profile.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="8" r="3"/>
+        <path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>
+      </svg>
+      Profile
+    </a>
+
+    <a class="side-link" href="notifications.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+        <path d="M10 21h4"/>
+      </svg>
+      Notifications
+    </a>
+
+    <button class="side-link logout" id="logoutBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M10 17l5-5-5-5"/>
+        <path d="M15 12H3"/>
+        <path d="M21 3v18"/>
+      </svg>
+      Logout
+    </button>
+
+  </div>
+
+</aside>
+
+
 <div class="app">
 
 <header>
 
-<button class="menu-btn" aria-label="Menu">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<path d="M4 6h16M4 12h16M4 18h16"/>
-</svg>
-</button>
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 6h16M4 12h16M4 18h16"/>
+    </svg>
+  </button>
 
-<div class="logo">
-<div class="logo-mark">R</div>
-<span>RexTasks</span>
-</div>
 
-<div class="header-right">
+  <div class="logo">
+    <div class="logo-mark">R</div>
+    <span>RexTasks</span>
+  </div>
 
-<button class="icon-btn notification" aria-label="Notifications">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
-<path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-<path d="M10 21h4"/>
-</svg>
-<span class="notification-dot"></span>
-</button>
 
-<div class="theme-wrap">
+  <div class="header-right">
 
-<button class="theme-btn" id="themeBtn">
+    <button class="icon-btn notification" id="notificationBtn" aria-label="Notifications">
 
-<svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<circle cx="12" cy="12" r="4"/>
-<path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
-</svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+        <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+        <path d="M10 21h4"/>
+      </svg>
 
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<path d="m6 9 6 6 6-6"/>
-</svg>
+      <span class="notification-dot"></span>
 
-</button>
+    </button>
 
-<div class="theme-menu" id="themeMenu">
-<button class="theme-option" onclick="setTheme('light')">Light</button>
-<button class="theme-option" onclick="setTheme('dark')">Dark</button>
-<button class="theme-option" onclick="setTheme('system')">System</button>
-</div>
 
-</div>
+    <div class="theme-wrap">
 
-</div>
+      <button class="theme-btn" id="themeBtn">
+
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+        </svg>
+
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="m6 9 6 6 6-6"/>
+        </svg>
+
+      </button>
+
+
+      <div class="theme-menu" id="themeMenu">
+
+        <button class="theme-option" onclick="setTheme('light')">
+          Light
+        </button>
+
+        <button class="theme-option" onclick="setTheme('dark')">
+          Dark
+        </button>
+
+        <button class="theme-option" onclick="setTheme('system')">
+          System
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
 
 </header>
 
 
+<!-- NOTIFICATION PANEL -->
+
+<div class="notification-panel" id="notificationPanel">
+
+  <div class="notification-head">
+
+    <strong>Notifications</strong>
+
+    <a href="notifications.html">
+      View All
+    </a>
+
+  </div>
+
+
+  <div class="notification-item">
+
+    <div class="notification-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 6 9 17l-5-5"/>
+      </svg>
+    </div>
+
+    <div>
+      <strong>Welcome to RexTasks</strong>
+      <span>Start completing tasks to earn rewards.</span>
+    </div>
+
+  </div>
+
+
+  <div class="notification-item">
+
+    <div class="notification-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="4" y="4" width="16" height="16" rx="3"/>
+        <path d="M8 12h8"/>
+      </svg>
+    </div>
+
+    <div>
+      <strong>New tasks available</strong>
+      <span>Check the task section for available opportunities.</span>
+    </div>
+
+  </div>
+
+</div>
+
+
 <main>
 
-<div id="page" class="loading">
-Loading dashboard...
-</div>
+  <div id="page" class="loading">
+    Loading dashboard...
+  </div>
 
 </main>
 
 </div>
 
 
+<!-- BOTTOM NAV -->
+
 <nav class="bottom-nav">
 
-<div class="nav-inner">
+  <div class="nav-inner">
 
-<a class="nav-item active" href="dashboard.html">
+    <a class="nav-item active" href="dashboard.html">
 
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<path d="m3 10 9-7 9 7"/>
-<path d="M5 9v11h14V9"/>
-</svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m3 10 9-7 9 7"/>
+        <path d="M5 9v11h14V9"/>
+      </svg>
 
-Home
-</a>
+      Home
 
-
-<a class="nav-item" href="tasks.html">
-
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<rect x="5" y="3" width="14" height="18" rx="2"/>
-<path d="M8 8h8M8 12h8M8 16h5"/>
-</svg>
-
-Surveys
-</a>
+    </a>
 
 
-<a class="nav-item" href="withdraw.html">
+    <a class="nav-item" href="tasks.html">
 
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<rect x="3" y="5" width="18" height="14" rx="3"/>
-<path d="M3 10h18"/>
-<path d="M16 15h2"/>
-</svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="5" y="3" width="14" height="18" rx="2"/>
+        <path d="M8 8h8M8 12h8M8 16h5"/>
+      </svg>
 
-Wallet
-</a>
+      Surveys
 
-
-<a class="nav-item" href="history.html">
-
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<path d="M3 12a9 9 0 1 0 3-6.7"/>
-<path d="M3 4v6h6"/>
-<path d="M12 7v5l3 2"/>
-</svg>
-
-History
-</a>
+    </a>
 
 
-<a class="nav-item" href="profile.html">
+    <a class="nav-item" href="withdraw.html">
 
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<circle cx="12" cy="8" r="3"/>
-<path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>
-</svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="5" width="18" height="14" rx="3"/>
+        <path d="M3 10h18"/>
+        <path d="M16 15h2"/>
+      </svg>
 
-Profile
-</a>
+      Wallet
 
-</div>
+    </a>
+
+
+    <a class="nav-item" href="history.html">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 12a9 9 0 1 0 3-6.7"/>
+        <path d="M3 4v6h6"/>
+        <path d="M12 7v5l3 2"/>
+      </svg>
+
+      History
+
+    </a>
+
+
+    <a class="nav-item" href="profile.html">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="8" r="3"/>
+        <path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>
+      </svg>
+
+      Profile
+
+    </a>
+
+  </div>
 
 </nav>
 
@@ -828,14 +1271,32 @@ const SUPABASE_KEY =
 "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
 
 const db = supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
 
 /* =========================================================
-   THEME
+   ELEMENTS
 ========================================================= */
+
+const menuBtn =
+document.getElementById("menuBtn");
+
+const closeMenu =
+document.getElementById("closeMenu");
+
+const sideMenu =
+document.getElementById("sideMenu");
+
+const overlay =
+document.getElementById("overlay");
+
+const notificationBtn =
+document.getElementById("notificationBtn");
+
+const notificationPanel =
+document.getElementById("notificationPanel");
 
 const themeBtn =
 document.getElementById("themeBtn");
@@ -843,41 +1304,144 @@ document.getElementById("themeBtn");
 const themeMenu =
 document.getElementById("themeMenu");
 
-themeBtn.addEventListener("click",()=>{
-themeMenu.classList.toggle("show");
-});
+const logoutBtn =
+document.getElementById("logoutBtn");
+
+
+/* =========================================================
+   SIDE MENU
+========================================================= */
+
+function openSideMenu(){
+
+  sideMenu.classList.add("open");
+  overlay.classList.add("show");
+
+}
+
+function closeSideMenu(){
+
+  sideMenu.classList.remove("open");
+  overlay.classList.remove("show");
+
+}
+
+menuBtn.addEventListener(
+"click",
+openSideMenu
+);
+
+closeMenu.addEventListener(
+"click",
+closeSideMenu
+);
+
+overlay.addEventListener(
+"click",
+closeSideMenu
+);
+
+
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+notificationBtn.addEventListener(
+"click",
+function(e){
+
+  e.stopPropagation();
+
+  notificationPanel.classList.toggle("show");
+
+  themeMenu.classList.remove("show");
+
+}
+);
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+themeBtn.addEventListener(
+"click",
+function(e){
+
+  e.stopPropagation();
+
+  themeMenu.classList.toggle("show");
+
+  notificationPanel.classList.remove("show");
+
+}
+);
+
+
+document.addEventListener(
+"click",
+function(e){
+
+  if(
+    !themeMenu.contains(e.target) &&
+    e.target !== themeBtn
+  ){
+
+    themeMenu.classList.remove("show");
+
+  }
+
+  if(
+    !notificationPanel.contains(e.target) &&
+    e.target !== notificationBtn
+  ){
+
+    notificationPanel.classList.remove("show");
+
+  }
+
+}
+);
+
 
 function setTheme(theme){
 
-localStorage.setItem(
-"rextasks-theme",
-theme
-);
+  localStorage.setItem(
+    "rextasks-theme",
+    theme
+  );
 
-applyTheme(theme);
+  applyTheme(theme);
 
-themeMenu.classList.remove("show");
+  themeMenu.classList.remove("show");
+
 }
+
 
 function applyTheme(theme){
 
-let dark=false;
+  let dark=false;
 
-if(theme==="dark"){
-dark=true;
+  if(theme==="dark"){
+    dark=true;
+  }
+
+  if(theme==="system"){
+
+    dark =
+      window.matchMedia(
+        "(prefers-color-scheme:dark)"
+      ).matches;
+
+  }
+
+  document.body.classList.toggle(
+    "dark",
+    dark
+  );
+
 }
 
-if(theme==="system"){
-dark=window.matchMedia(
-"(prefers-color-scheme:dark)"
-).matches;
-}
-
-document.body.classList.toggle(
-"dark",
-dark
-);
-}
 
 const savedTheme =
 localStorage.getItem("rextasks-theme")
@@ -885,17 +1449,87 @@ localStorage.getItem("rextasks-theme")
 
 applyTheme(savedTheme);
 
+
 window.matchMedia(
 "(prefers-color-scheme:dark)"
 ).addEventListener(
 "change",
-()=>{
-if(
-(localStorage.getItem("rextasks-theme")||"system")
-==="system"
-){
-applyTheme("system");
+function(){
+
+  if(
+    (localStorage.getItem("rextasks-theme")||"system")
+    ==="system"
+  ){
+
+    applyTheme("system");
+
+  }
+
 }
+);
+
+
+/* =========================================================
+   WALLET EYE
+========================================================= */
+
+function toggleBalance(){
+
+  const balance =
+  document.getElementById("walletBalance");
+
+  const eyeOpen =
+  document.getElementById("eyeOpen");
+
+  const eyeClosed =
+  document.getElementById("eyeClosed");
+
+  const realValue =
+  balance.dataset.value || "$0.00";
+
+
+  if(balance.dataset.hidden==="true"){
+
+    balance.textContent =
+      realValue;
+
+    balance.dataset.hidden="false";
+
+    eyeOpen.style.display="block";
+    eyeClosed.style.display="none";
+
+  }else{
+
+    balance.textContent =
+      "••••••";
+
+    balance.dataset.hidden="true";
+
+    eyeOpen.style.display="none";
+    eyeClosed.style.display="block";
+
+  }
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+logoutBtn.addEventListener(
+"click",
+async function(){
+
+  const confirmed =
+    confirm("Are you sure you want to logout?");
+
+  if(!confirmed) return;
+
+  await db.auth.signOut();
+
+  location.href="login.html";
+
 }
 );
 
@@ -904,712 +1538,825 @@ applyTheme("system");
    LOAD DASHBOARD
 ========================================================= */
 
-const page =
-document.getElementById("page");
-
-
 async function loadDashboard(){
 
-const {
-data:{session},
-error:sessionError
-} = await db.auth.getSession();
+  const page =
+    document.getElementById("page");
 
 
-if(sessionError || !session){
+  try{
 
-location.href="login.html";
-return;
+    const {
+      data:{session},
+      error:sessionError
+    } =
+      await db.auth.getSession();
 
-}
 
+    if(
+      sessionError ||
+      !session
+    ){
 
-const user =
-session.user;
+      location.href="login.html";
+      return;
 
+    }
 
-/* PROFILE */
 
-const {data:profile} =
-await db
-.from("profiles")
-.select("full_name,country")
-.eq("id",user.id)
-.maybeSingle();
+    const user =
+      session.user;
 
 
-const fullName =
-profile?.full_name ||
-user.user_metadata?.full_name ||
-user.email?.split("@")[0] ||
-"User";
+    /* PROFILE */
 
+    const {
+      data:profile
+    } =
+      await db
+      .from("profiles")
+      .select("full_name,country")
+      .eq("id",user.id)
+      .maybeSingle();
 
-/* WALLET */
 
-const {data:wallet} =
-await db
-.from("wallets")
-.select(
-"balance,total_earned,referral_earnings"
-)
-.eq("user_id",user.id)
-.maybeSingle();
+    const fullName =
+      profile?.full_name ||
+      user.user_metadata?.full_name ||
+      user.email?.split("@")[0] ||
+      "User";
 
 
-/* APPROVED TASKS */
+    document.getElementById(
+      "sideName"
+    ).textContent=fullName;
 
-const {data:approved} =
-await db
-.from("task_submissions")
-.select("id")
-.eq("user_id",user.id)
-.eq("status","approved");
 
+    document.getElementById(
+      "sideEmail"
+    ).textContent=
+      user.email || "";
 
-const completed =
-approved?.length || 0;
 
+    /* WALLET */
 
-/* REFERRALS */
+    const {
+      data:wallet
+    } =
+      await db
+      .from("wallets")
+      .select(
+        "balance,total_earned,referral_earnings"
+      )
+      .eq("user_id",user.id)
+      .maybeSingle();
 
-const {data:referrals} =
-await db
-.from("referrals")
-.select("id")
-.eq("referrer_id",user.id);
 
+    const balance =
+      Number(wallet?.balance || 0);
 
-const referralCount =
-referrals?.length || 0;
+    const totalEarned =
+      Number(wallet?.total_earned || 0);
 
+    const referralEarnings =
+      Number(wallet?.referral_earnings || 0);
 
-/* TASKS */
 
-const {data:tasks} =
-await db
-.from("tasks")
-.select(`
-id,
-title,
-description,
-payout,
-user_reward_percent,
-task_url,
-status
-`)
-.eq("status","active")
-.order("created_at",{ascending:false})
-.limit(4);
+    /* APPROVED TASKS */
 
+    const {
+      data:approved
+    } =
+      await db
+      .from("task_submissions")
+      .select("id")
+      .eq("user_id",user.id)
+      .eq("status","approved");
 
-/* RECENT ACTIVITY */
 
-const {data:activity} =
-await db
-.from("task_submissions")
-.select(`
-id,
-status,
-user_reward,
-created_at,
-tasks(title)
-`)
-.eq("user_id",user.id)
-.order("created_at",{ascending:false})
-.limit(4);
+    const completed =
+      approved?.length || 0;
 
 
-/* VALUES */
+    /* REFERRALS */
 
-const balance =
-Number(wallet?.balance || 0);
+    const {
+      data:referrals
+    } =
+      await db
+      .from("referrals")
+      .select("id")
+      .eq("referrer_id",user.id);
 
-const totalEarned =
-Number(wallet?.total_earned || 0);
 
-const referralEarnings =
-Number(wallet?.referral_earnings || 0);
+    const referralCount =
+      referrals?.length || 0;
 
 
-/* TASKS */
+    /* TASKS */
 
-let taskCards="";
+    const {
+      data:tasks
+    } =
+      await db
+      .from("tasks")
+      .select(`
+        id,
+        title,
+        description,
+        payout,
+        user_reward_percent,
+        task_url,
+        status
+      `)
+      .eq("status","active")
+      .order("created_at",{ascending:false})
+      .limit(4);
 
-if(tasks && tasks.length){
 
-tasks.forEach(task=>{
+    /* ACTIVITY */
 
-const payout =
-Number(task.payout || 0);
+    const {
+      data:activity
+    } =
+      await db
+      .from("task_submissions")
+      .select(`
+        id,
+        status,
+        user_reward,
+        created_at,
+        tasks(title)
+      `)
+      .eq("user_id",user.id)
+      .order("created_at",{ascending:false})
+      .limit(4);
 
-const percentage =
-Number(task.user_reward_percent || 0);
 
-const reward =
-payout * percentage / 100;
+    /* ACTIVITY HTML */
 
+    let activityHTML="";
 
-taskCards += `
 
-<div class="feature" style="text-align:left;min-height:145px">
+    if(
+      activity &&
+      activity.length
+    ){
 
-<div class="feature-icon green"
-style="margin:0 0 9px">
+      activity.forEach(row=>{
 
-<svg viewBox="0 0 24 24"
-fill="none"
-stroke="currentColor"
-stroke-width="2">
+        const title =
+          row.tasks?.title ||
+          "Task";
 
-<rect x="4" y="4"
-width="16"
-height="16"
-rx="3"/>
 
-<path d="M8 9h8M8 13h6M8 17h4"/>
+        const status =
+          String(row.status || "")
+          .toLowerCase();
 
-</svg>
 
-</div>
+        const reward =
+          Number(row.user_reward || 0);
 
-<strong>
-${escapeHtml(task.title)}
-</strong>
 
-<span>
-Earn $${reward.toFixed(2)}
-</span>
+        const date =
+          new Date(
+            row.created_at
+          ).toLocaleDateString(
+            undefined,
+            {
+              month:"short",
+              day:"numeric",
+              year:"numeric"
+            }
+          );
 
-<a
-href="submit-task.html?task=${encodeURIComponent(task.id)}"
-style="
-display:block;
-margin-top:12px;
-background:#079447;
-color:white;
-padding:8px;
-border-radius:8px;
-text-align:center;
-text-decoration:none;
-font-size:11px;
-font-weight:700;
-">
-Start Task
-</a>
 
-</div>
+        let iconClass="green";
+        let amount="";
 
-`;
 
-});
+        if(status==="approved"){
 
-}
+          iconClass="green";
+          amount="+$"+reward.toFixed(2);
 
+        }else if(status==="pending"){
 
-/* ACTIVITY */
+          iconClass="orange";
+          amount="Pending";
 
-let activityHTML="";
+        }else{
 
-if(activity && activity.length){
+          iconClass="purple";
+          amount="Denied";
 
-activity.forEach(row=>{
+        }
 
-const title =
-row.tasks?.title ||
-"Task";
 
-const status =
-String(row.status || "")
-.toLowerCase();
+        activityHTML += `
 
-const reward =
-Number(row.user_reward || 0);
+          <div class="activity-row">
 
-const date =
-new Date(row.created_at)
-.toLocaleDateString(
-undefined,
-{
-month:"short",
-day:"numeric",
-year:"numeric"
-}
-);
+            <div class="activity-left">
 
+              <div class="activity-icon ${iconClass}">
 
-let iconClass="green";
-let amount="";
-let statusText="";
+                <svg viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2">
 
-if(status==="approved"){
+                  <path d="M6 3h9l3 3v15H6z"/>
+                  <path d="M14 3v4h4"/>
+                  <path d="m9 13 2 2 4-4"/>
 
-iconClass="green";
-amount="+$"+reward.toFixed(2);
+                </svg>
 
-}else if(status==="pending"){
+              </div>
 
-iconClass="orange";
-amount="Pending";
+              <div>
 
-}else{
+                <div class="activity-name">
+                  ${escapeHtml(title)}
+                </div>
 
-iconClass="purple";
-amount="Denied";
+                <div class="activity-date">
+                  ${escapeHtml(date)}
+                </div>
 
-}
+              </div>
 
+            </div>
 
-activityHTML += `
+            <div
+              class="activity-amount"
+              style="color:${
+                status==="approved"
+                ?"#079447"
+                :status==="pending"
+                ?"#c58b00"
+                :"#c74343"
+              }">
 
-<div class="activity-row">
+              ${escapeHtml(amount)}
 
-<div class="activity-left">
+            </div>
 
-<div class="activity-icon ${iconClass}">
+          </div>
 
-<svg viewBox="0 0 24 24"
-fill="none"
-stroke="currentColor"
-stroke-width="2">
+        `;
 
-<path d="M6 3h9l3 3v15H6z"/>
-<path d="M14 3v4h4"/>
-<path d="m9 13 2 2 4-4"/>
+      });
 
-</svg>
+    }else{
 
-</div>
+      activityHTML=`
+        <div class="empty">
+          No activity yet.
+        </div>
+      `;
 
-<div>
+    }
 
-<div class="activity-name">
-${escapeHtml(title)}
-</div>
 
-<div class="activity-date">
-${escapeHtml(date)}
-</div>
+    /* TASK HTML */
 
-</div>
+    let taskHTML="";
 
-</div>
 
-<div
-class="activity-amount"
-style="color:${
-status==="approved"
-?"#079447":
-status==="pending"
-?"#c58b00":
-"#c74343"
-}">
-${escapeHtml(amount)}
-</div>
+    if(
+      tasks &&
+      tasks.length
+    ){
 
-</div>
+      tasks.forEach(task=>{
 
-`;
+        const payout =
+          Number(task.payout || 0);
 
-});
+        const percentage =
+          Number(task.user_reward_percent || 0);
 
-}else{
+        const reward =
+          payout * percentage / 100;
 
-activityHTML=`
-<div class="empty">
-No activity yet.
-</div>
-`;
 
-}
+        taskHTML += `
 
+          <div class="task-card">
 
-/* PAGE */
+            <div class="task-icon">
 
-page.className="";
+              <svg viewBox="0 0 24 24"
+                   fill="none"
+                   stroke="currentColor"
+                   stroke-width="2">
 
-page.innerHTML=`
+                <rect x="4" y="4"
+                      width="16"
+                      height="16"
+                      rx="3"/>
 
-<div class="welcome">
+                <path d="M8 9h8"/>
+                <path d="M8 13h6"/>
+                <path d="M8 17h4"/>
 
-<h2>
-Welcome back, ${escapeHtml(fullName)}
-</h2>
+              </svg>
 
-<p>
-Let's complete some tasks and earn more!
-</p>
+            </div>
 
-</div>
+            <div class="task-title">
+              ${escapeHtml(task.title)}
+            </div>
 
+            <div class="task-reward">
+              Earn $${reward.toFixed(2)}
+            </div>
 
-<div class="wallet">
+            <a
+              class="task-button"
+              href="submit-task.html?task=${encodeURIComponent(task.id)}">
 
-<div class="wallet-main">
+              Start Task
 
-<div class="wallet-label">
-Wallet Balance
-</div>
+            </a>
 
-<div class="wallet-balance">
-$${balance.toFixed(2)}
-</div>
+          </div>
 
-<div class="eye">
+        `;
 
-<svg viewBox="0 0 24 24"
-fill="none"
-stroke="currentColor"
-stroke-width="2">
+      });
 
-<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/>
-<circle cx="12" cy="12" r="3"/>
+    }else{
 
-</svg>
+      taskHTML=`
 
-</div>
+        <div
+          class="empty"
+          style="
+          grid-column:1/-1;
+          background:var(--card);
+          border:1px solid var(--border);
+          border-radius:15px">
 
-</div>
+          No tasks available right now.
 
+        </div>
 
-<div class="wallet-stats">
+      `;
 
-<div class="wallet-stat">
+    }
 
-<small>Total Earned</small>
 
-<strong>
-$${totalEarned.toFixed(2)}
-</strong>
+    /* RENDER */
 
-</div>
+    page.className="";
 
-<div class="wallet-stat">
+    page.innerHTML=`
 
-<small>Referral Earnings</small>
+      <div class="welcome">
 
-<strong>
-$${referralEarnings.toFixed(2)}
-</strong>
+        <h2>
+          Welcome back, ${escapeHtml(fullName)}
+        </h2>
 
-</div>
+        <p>
+          Let's complete some tasks and earn more!
+        </p>
 
-<div class="wallet-stat">
+      </div>
 
-<small>Pending Balance</small>
 
-<strong>
-$0.00
-</strong>
+      <div class="wallet">
 
-</div>
+        <div class="wallet-main">
 
-</div>
+          <div class="wallet-label">
+            Wallet Balance
+          </div>
 
-</div>
+          <div
+            class="wallet-balance"
+            id="walletBalance"
+            data-value="$${balance.toFixed(2)}"
+            data-hidden="false">
 
+            $${balance.toFixed(2)}
 
-<div class="survey-banner">
+          </div>
 
-<h2>
-Complete Surveys
-</h2>
 
-<p>
-Earn money by sharing your opinion
-</p>
+          <button
+            class="eye"
+            onclick="toggleBalance()"
+            aria-label="Hide or show balance">
 
-<a
-class="survey-button"
-href="tasks.html">
+            <svg
+              id="eyeOpen"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2">
 
-Start Survey Now
+              <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/>
+              <circle cx="12" cy="12" r="3"/>
 
-<svg width="16"
-height="16"
-viewBox="0 0 24 24"
-fill="none"
-stroke="currentColor"
-stroke-width="2">
+            </svg>
 
-<path d="M5 12h14"/>
-<path d="m13 6 6 6-6 6"/>
 
-</svg>
+            <svg
+              id="eyeClosed"
+              style="display:none"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2">
 
-</a>
+              <path d="M3 3l18 18"/>
+              <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/>
+              <path d="M9.9 5.1A10.9 10.9 0 0 1 12 5c7 0 10 7 10 7a18 18 0 0 1-3.1 4.2"/>
+              <path d="M6.6 6.6C3.6 8.7 2 12 2 12s3.5 6 10 6c1.2 0 2.3-.2 3.3-.6"/>
 
+            </svg>
 
-<div class="survey-art">
+          </button>
 
-<div class="clipboard">
+        </div>
 
-<div class="clip"></div>
 
-<div class="check"></div>
-<div class="check"></div>
-<div class="check"></div>
+        <div class="wallet-stats">
 
-</div>
+          <div class="wallet-stat">
 
-</div>
+            <small>Total Earned</small>
 
-</div>
+            <strong>
+              $${totalEarned.toFixed(2)}
+            </strong>
 
+          </div>
 
-<div class="features">
 
-<a class="feature" href="tasks.html">
+          <div class="wallet-stat">
 
-<div class="feature-icon green">
+            <small>Referral Earnings</small>
 
-<svg viewBox="0 0 24 24"
-fill="none"
-stroke="currentColor"
-stroke-width="2">
+            <strong>
+              $${referralEarnings.toFixed(2)}
+            </strong>
 
-<rect x="4" y="4"
-width="16" height="16"
-rx="3"/>
+          </div>
 
-<path d="M8 9h8M8 13h5"/>
-<path d="m8 17 2 2 5-5"/>
 
-</svg>
+          <div class="wallet-stat">
 
-</div>
+            <small>Pending Balance</small>
 
-<strong>Earn Surveys</strong>
-<span>Start Earning</span>
+            <strong>
+              $0.00
+            </strong>
 
-</a>
+          </div>
 
+        </div>
 
-<a class="feature" href="referrals.html">
+      </div>
 
-<div class="feature-icon blue">
 
-<svg viewBox="0 0 24 24"
-fill="none"
-stroke="currentColor"
-stroke-width="2">
+      <!-- SURVEY BANNER -->
 
-<circle cx="9" cy="8" r="3"/>
-<circle cx="17" cy="10" r="3"/>
-<path d="M3 20c0-3 2-5 6-5s6 2 6 5"/>
-<path d="M14 16c4 0 6 1.5 7 4"/>
+      <div class="survey-banner">
 
-</svg>
+        <h2>
+          Complete Surveys
+        </h2>
 
-</div>
+        <p>
+          Earn money by sharing your opinion
+        </p>
 
-<strong>Referrals</strong>
-<span>Invite & Earn</span>
+        <a
+          class="survey-button"
+          href="tasks.html">
 
-</a>
+          Start Survey Now
 
+          <svg width="16"
+               height="16"
+               viewBox="0 0 24 24"
+               fill="none"
+               stroke="currentColor"
+               stroke-width="2">
 
-<a class="feature" href="history.html">
+            <path d="M5 12h14"/>
+            <path d="m13 6 6 6-6 6"/>
 
-<div class="feature-icon orange">
+          </svg>
 
-<svg viewBox="0 0 24 24"
-fill="none"
-stroke="currentColor"
-stroke-width="2">
+        </a>
 
-<circle cx="12" cy="12" r="8"/>
-<path d="M12 8v5l3 2"/>
 
-</svg>
+        <div class="survey-art">
 
-</div>
+          <div class="clipboard">
 
-<strong>History</strong>
-<span>Earnings History</span>
+            <div class="clip"></div>
 
-</a>
+            <div class="check"></div>
+            <div class="check"></div>
+            <div class="check"></div>
 
+          </div>
 
-<a class="feature" href="withdraw.html">
+        </div>
 
-<div class="feature-icon purple">
+      </div>
 
-<svg viewBox="0 0 24 24"
-fill="none"
-stroke="currentColor"
-stroke-width="2">
 
-<rect x="5" y="3"
-width="14" height="18"
-rx="2"/>
+      <!-- FEATURES -->
 
-<path d="M8 8h8M8 12h5"/>
-<path d="M8 16h4"/>
+      <div class="features">
 
-</svg>
 
-</div>
+        <a class="feature" href="tasks.html">
 
-<strong>Withdraw</strong>
-<span>Request Payout</span>
+          <div class="feature-icon green">
 
-</a>
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2">
 
+              <rect x="4" y="4"
+                    width="16"
+                    height="16"
+                    rx="3"/>
 
-<a class="feature" href="profile.html">
+              <path d="M8 9h8"/>
+              <path d="M8 13h5"/>
+              <path d="m8 17 2 2 5-5"/>
 
-<div class="feature-icon cyan">
+            </svg>
 
-<svg viewBox="0 0 24 24"
-fill="none"
-stroke="currentColor"
-stroke-width="2">
+          </div>
 
-<circle cx="12" cy="8" r="3"/>
-<path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>
+          <strong>Earn Surveys</strong>
+          <span>Start Earning</span>
 
-</svg>
+        </a>
 
-</div>
 
-<strong>Profile</strong>
-<span>Account Settings</span>
+        <a class="feature" href="referrals.html">
 
-</a>
+          <div class="feature-icon blue">
 
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2">
 
-<a class="feature" href="notifications.html">
+              <circle cx="9" cy="8" r="3"/>
+              <circle cx="17" cy="10" r="3"/>
+              <path d="M3 20c0-3 2-5 6-5s6 2 6 5"/>
+              <path d="M14 16c4 0 6 1.5 7 4"/>
 
-<div class="feature-icon pink">
+            </svg>
 
-<svg viewBox="0 0 24 24"
-fill="none"
-stroke="currentColor"
-stroke-width="2">
+          </div>
 
-<path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-<path d="M10 21h4"/>
+          <strong>Referrals</strong>
+          <span>${referralCount} Invite & Earn</span>
 
-</svg>
+        </a>
 
-</div>
 
-<strong>Notifications</strong>
-<span>Recent Updates</span>
+        <a class="feature" href="history.html">
 
-</a>
+          <div class="feature-icon orange">
 
-</div>
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2">
 
+              <circle cx="12" cy="12" r="8"/>
+              <path d="M12 8v5l3 2"/>
 
-<div class="section">
+            </svg>
 
-<div class="section-title">
+          </div>
 
-<h3>Recent Activity</h3>
+          <strong>History</strong>
+          <span>Earnings History</span>
 
-<a href="history.html">
-View All
-</a>
+        </a>
 
-</div>
 
+        <a class="feature" href="withdraw.html">
 
-<div class="activity">
+          <div class="feature-icon purple">
 
-${activityHTML}
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2">
 
-</div>
+              <rect x="5" y="3"
+                    width="14"
+                    height="18"
+                    rx="2"/>
 
-</div>
+              <path d="M8 8h8"/>
+              <path d="M8 12h5"/>
+              <path d="M8 16h4"/>
 
+            </svg>
 
-<div class="telegram">
+          </div>
 
-<div class="telegram-icon">
+          <strong>Withdraw</strong>
+          <span>Request Payout</span>
 
-<svg viewBox="0 0 24 24"
-fill="currentColor">
+        </a>
 
-<path d="M21.4 4.6 18.3 19c-.2 1- .8 1.2-1.6.8l-4.5-3.3-2.2 2.1c-.2.2-.4.4-.8.4l.3-4.6 8.4-7.6c.4-.3-.1-.5-.6-.2L7 13.2l-4.4-1.4c-1-.3-1-1 .2-1.5L20 4.1c.8-.3 1.6.2 1.4.5z"/>
 
-</svg>
+        <a class="feature" href="profile.html">
 
-</div>
+          <div class="feature-icon cyan">
 
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2">
 
-<div class="telegram-text">
+              <circle cx="12" cy="8" r="3"/>
+              <path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>
 
-<strong>
-Join our Telegram Channel
-</strong>
+            </svg>
 
-<span>
-Get updates, new surveys and payment proofs
-</span>
+          </div>
 
-</div>
+          <strong>Profile</strong>
+          <span>Account Settings</span>
 
+        </a>
 
-<a
-class="join"
-href="https://t.me/rextasks"
-target="_blank"
-rel="noopener">
-Join
-</a>
 
-</div>
+        <a class="feature" href="notifications.html">
 
+          <div class="feature-icon pink">
 
-<div class="section">
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2">
 
-<div class="section-title">
+              <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+              <path d="M10 21h4"/>
 
-<h3>
-Available Tasks
-</h3>
+            </svg>
 
-<a href="tasks.html">
-View All
-</a>
+          </div>
 
-</div>
+          <strong>Notifications</strong>
+          <span>Recent Updates</span>
 
-<div style="
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:11px;
-">
+        </a>
 
-${taskCards || `
-<div class="empty" style="grid-column:1/-1;background:var(--card);border:1px solid var(--border);border-radius:15px">
-No tasks available right now.
-</div>
-`}
+      </div>
 
-</div>
 
-</div>
+      <!-- RECENT ACTIVITY -->
 
-`;
+      <div class="section">
+
+        <div class="section-title">
+
+          <h3>
+            Recent Activity
+          </h3>
+
+          <a href="history.html">
+            View All
+          </a>
+
+        </div>
+
+
+        <div class="activity">
+
+          ${activityHTML}
+
+        </div>
+
+      </div>
+
+
+      <!-- TELEGRAM -->
+
+      <div class="telegram">
+
+        <div class="telegram-icon">
+
+          <svg viewBox="0 0 24 24"
+               fill="currentColor">
+
+            <path d="M21.4 4.6 18.3 19c-.2 1-.8 1.2-1.6.8l-4.5-3.3-2.2 2.1c-.2.2-.4.4-.8.4l.3-4.6 8.4-7.6c.4-.3-.1-.5-.6-.2L7 13.2l-4.4-1.4c-1-.3-1-1 .2-1.5L20 4.1c.8-.3 1.6.2 1.4.5z"/>
+
+          </svg>
+
+        </div>
+
+
+        <div class="telegram-text">
+
+          <strong>
+            Join our Telegram Channel
+          </strong>
+
+          <span>
+            Get updates, new surveys and payment proofs
+          </span>
+
+        </div>
+
+
+        <a
+          class="join"
+          href="https://t.me/rextasks"
+          target="_blank"
+          rel="noopener">
+
+          Join
+
+        </a>
+
+      </div>
+
+
+      <!-- AVAILABLE TASKS -->
+
+      <div class="section">
+
+        <div class="section-title">
+
+          <h3>
+            Available Tasks
+          </h3>
+
+          <a href="tasks.html">
+            View All
+          </a>
+
+        </div>
+
+
+        <div class="task-grid">
+
+          ${taskHTML}
+
+        </div>
+
+      </div>
+
+    `;
+
+  }catch(error){
+
+    console.error(error);
+
+    page.innerHTML=`
+
+      <div class="error">
+
+        Unable to load dashboard.
+
+        <br><br>
+
+        Please refresh the page.
+
+      </div>
+
+    `;
+
+  }
 
 }
 
 
 /* =========================================================
-   ESCAPE
+   ESCAPE HTML
 ========================================================= */
 
 function escapeHtml(value){
 
-return String(value)
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
 
