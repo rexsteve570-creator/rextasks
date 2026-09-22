@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>RexTasks Admin - Tasks</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+  --green:#073d2b;
+  --green2:#0b5b40;
+  --light:#e8f5ef;
+  --bg:#f5f8f6;
+  --card:#fff;
+  --text:#17352a;
+  --muted:#718078;
+  --border:#dfe8e3;
+  --danger:#c0392b;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+button,input,textarea,select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.header{
+  height:64px;
+  background:var(--green);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+
+.logo{
+  font-size:20px;
+  font-weight:800;
+}
+
+.menu-btn{
+  background:none;
+  border:0;
+  color:white;
+  font-size:25px;
+}
+
+.container{
+  padding:18px;
+  max-width:900px;
+  margin:auto;
+}
+
+.page-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+}
+
+.page-title h1{
+  margin:0;
+  font-size:24px;
+}
+
+.add-btn{
+  border:0;
+  background:var(--green2);
+  color:white;
+  padding:11px 15px;
+  border-radius:10px;
+  font-weight:700;
+}
+
+.form-card,
+.task-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:17px;
+  margin-bottom:15px;
+  box-shadow:0 5px 18px rgba(0,0,0,.04);
+}
+
+.form-card{
+  display:none;
+}
+
+.form-card.show{
+  display:block;
+}
+
+.form-card h2{
+  margin-top:0;
+  font-size:19px;
+}
+
+.field{
+  margin-bottom:13px;
+}
+
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+.field input,
+.field textarea,
+.field select{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px;
+  outline:none;
+  background:white;
+}
+
+.field textarea{
+  min-height:85px;
+  resize:vertical;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus{
+  border-color:var(--green2);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.reward-preview{
+  background:var(--light);
+  border-radius:10px;
+  padding:12px;
+  margin-bottom:14px;
+  font-weight:700;
+  color:var(--green);
+}
+
+.form-actions{
+  display:flex;
+  gap:10px;
+}
+
+.save-btn,
+.cancel-btn{
+  flex:1;
+  padding:12px;
+  border-radius:10px;
+  border:0;
+  font-weight:700;
+}
+
+.save-btn{
+  background:var(--green);
+  color:white;
+}
+
+.cancel-btn{
+  background:#edf1ef;
+  color:var(--text);
+}
+
+.task-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.task-title{
+  margin:0;
+  font-size:17px;
+}
+
+.status{
+  font-size:11px;
+  padding:5px 8px;
+  border-radius:20px;
+  font-weight:700;
+  white-space:nowrap;
+}
+
+.active{
+  background:#dff4e8;
+  color:#14703e;
+}
+
+.inactive{
+  background:#f1e5e3;
+  color:var(--danger);
+}
+
+.description{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+  margin:10px 0;
+}
+
+.task-info{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin:12px 0;
+}
+
+.info{
+  background:#f7faf8;
+  padding:10px;
+  border-radius:9px;
+}
+
+.info small{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.info strong{
+  display:block;
+  margin-top:3px;
+}
+
+.task-actions{
+  display:flex;
+  gap:8px;
+}
+
+.task-actions button{
+  flex:1;
+  border:0;
+  padding:10px;
+  border-radius:9px;
+  font-weight:700;
+}
+
+.edit{
+  background:var(--light);
+  color:var(--green);
+}
+
+.toggle{
+  background:#eef2f0;
+  color:var(--text);
+}
+
+.delete{
+  background:#fae9e7;
+  color:var(--danger);
+}
+
+.loading,
+.empty{
+  text-align:center;
+  padding:35px 10px;
+  color:var(--muted);
+}
+
+.message{
+  display:none;
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:14px;
+  font-size:13px;
+}
+
+.message.show{
+  display:block;
+}
+
+.success{
+  background:#dff4e8;
+  color:#146b3b;
+}
+
+.error{
+  background:#fae9e7;
+  color:#a83225;
+}
+
+.side-menu{
+  position:fixed;
+  top:0;
+  left:-280px;
+  width:270px;
+  height:100%;
+  background:white;
+  z-index:50;
+  box-shadow:5px 0 20px rgba(0,0,0,.15);
+  transition:.25s;
+  padding:20px;
+}
+
+.side-menu.open{
+  left:0;
+}
+
+.side-menu h2{
+  color:var(--green);
+}
+
+.side-menu a{
+  display:block;
+  text-decoration:none;
+  color:var(--text);
+  padding:13px 5px;
+  border-bottom:1px solid #edf1ef;
+}
+
+.overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.35);
+  z-index:40;
+}
+
+.overlay.show{
+  display:block;
+}
+
+@media(max-width:500px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .task-actions{
+    flex-wrap:wrap;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="side-menu" id="sideMenu">
+  <h2>RexTasks</h2>
+  <a href="admin-dashboard.html">Dashboard</a>
+  <a href="admin-tasks.html">Tasks</a>
+  <a href="admin-submissions.html">Submissions</a>
+  <a href="#">Withdrawals</a>
+  <a href="#">Users</a>
+  <a href="#">Settings</a>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<header class="header">
+  <button class="menu-btn" id="menuBtn">☰</button>
+  <div class="logo">RexTasks Admin</div>
+  <div></div>
+</header>
+
+<main class="container">
+
+  <div class="page-title">
+    <h1>Tasks</h1>
+    <button class="add-btn" id="addBtn">+ Add Task</button>
+  </div>
+
+  <div class="message" id="message"></div>
+
+  <section class="form-card" id="formCard">
+
+    <h2 id="formTitle">Add New Task</h2>
+
+    <input type="hidden" id="taskId">
+
+    <div class="field">
+      <label>Task Title</label>
+      <input id="title" placeholder="Example: Visit RexTasks website">
+    </div>
+
+    <div class="field">
+      <label>Description</label>
+      <textarea id="description" placeholder="Explain what the user needs to do"></textarea>
+    </div>
+
+    <div class="grid">
+
+      <div class="field">
+        <label>Category</label>
+        <select id="category">
+          <option>Manual Task</option>
+          <option>Survey</option>
+          <option>App Task</option>
+          <option>Offer</option>
+          <option>Sign Up</option>
+          <option>Daily Task</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Country</label>
+        <input id="country" value="Worldwide" placeholder="Worldwide or country">
+      </div>
+
+    </div>
+
+    <div class="field">
+      <label>Task Link</label>
+      <input id="taskUrl" type="url" placeholder="https://example.com">
+    </div>
+
+    <div class="grid">
+
+      <div class="field">
+        <label>CPA Payout ($)</label>
+        <input id="payout" type="number" step="0.01" min="0" placeholder="1.00">
+      </div>
+
+      <div class="field">
+        <label>User Reward (%)</label>
+        <select id="rewardPercent">
+          <option value="10">10%</option>
+          <option value="15">15%</option>
+          <option value="20" selected>20%</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="reward-preview">
+      User earns: <span id="rewardPreview">$0.00</span>
+    </div>
+
+    <div class="grid">
+
+      <div class="field">
+        <label>Maximum Completions</label>
+        <input id="maxCompletions" type="number" min="1" placeholder="Leave empty for unlimited">
+      </div>
+
+      <div class="field">
+        <label>Status</label>
+        <select id="status">
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="field">
+      <label>Proof Required</label>
+      <select id="proofRequired">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
+    </div>
+
+    <div class="form-actions">
+      <button class="cancel-btn" id="cancelBtn">Cancel</button>
+      <button class="save-btn" id="saveBtn">Save Task</button>
+    </div>
+
+  </section>
+
+  <section id="taskList">
+    <div class="loading">Loading tasks...</div>
+  </section>
+
+</main>
+
+<script>
+const SUPABASE_URL = "https://cetsxdkoauucxwsbdktl.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
+
+const { createClient } = supabase;
+const db = createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+const formCard = document.getElementById("formCard");
+const taskList = document.getElementById("taskList");
+const message = document.getElementById("message");
+
+let editingTask = null;
+
+function showMessage(text, type){
+  message.textContent = text;
+  message.className = "message show " + type;
+
+  setTimeout(()=>{
+    message.className = "message";
+  },3500);
+}
+
+async function checkAdmin(){
+
+  const { data:{session} } =
+    await db.auth.getSession();
+
+  if(!session){
+    location.href = "login.html";
+    return false;
+  }
+
+  const { data:profile } =
+    await db
+      .from("profiles")
+      .select("role")
+      .eq("id",session.user.id)
+      .single();
+
+  if(!profile || profile.role !== "admin"){
+    alert("Admin access required.");
+    location.href = "dashboard.html";
+    return false;
+  }
+
+  return true;
+}
+
+async function loadTasks(){
+
+  taskList.innerHTML =
+    '<div class="loading">Loading tasks...</div>';
+
+  const { data,error } =
+    await db
+      .from("tasks")
+      .select("*")
+      .order("created_at",{ascending:false});
+
+  if(error){
+    taskList.innerHTML =
+      '<div class="empty">Unable to load tasks.</div>';
+    console.error(error);
+    return;
+  }
+
+  if(!data || data.length === 0){
+    taskList.innerHTML =
+      '<div class="empty">No tasks created yet.</div>';
+    return;
+  }
+
+  taskList.innerHTML = data.map(task=>{
+
+    const reward =
+      Number(task.payout || 0) *
+      Number(task.user_reward_percent || 0) / 100;
+
+    return `
+      <div class="task-card">
+
+        <div class="task-top">
+          <h3 class="task-title">${escapeHtml(task.title)}</h3>
+
+          <span class="status ${task.status === "active" ? "active" : "inactive"}">
+            ${task.status}
+          </span>
+        </div>
+
+        <div class="description">
+          ${escapeHtml(task.description || "No description")}
+        </div>
+
+        <div class="task-info">
+
+          <div class="info">
+            <small>Country</small>
+            <strong>${escapeHtml(task.country || "Worldwide")}</strong>
+          </div>
+
+          <div class="info">
+            <small>Category</small>
+            <strong>${escapeHtml(task.category || "Task")}</strong>
+          </div>
+
+          <div class="info">
+            <small>CPA Payout</small>
+            <strong>$${Number(task.payout || 0).toFixed(2)}</strong>
+          </div>
+
+          <div class="info">
+            <small>User Earns</small>
+            <strong>$${reward.toFixed(2)}</strong>
+          </div>
+
+        </div>
+
+        <div class="task-actions">
+
+          <button class="edit"
+            onclick="editTask(${task.id})">
+            Edit
+          </button>
+
+          <button class="toggle"
+            onclick="toggleTask(${task.id}, '${task.status}')">
+            ${task.status === "active" ? "Deactivate" : "Activate"}
+          </button>
+
+          <button class="delete"
+            onclick="deleteTask(${task.id})">
+            Delete
+          </button>
+
+        </div>
+
+      </div>
+    `;
+  }).join("");
+}
+
+function escapeHtml(value){
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function openForm(){
+  formCard.classList.add("show");
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+function closeForm(){
+  formCard.classList.remove("show");
+  resetForm();
+}
+
+function resetForm(){
+
+  editingTask = null;
+
+  document.getElementById("formTitle").textContent =
+    "Add New Task";
+
+  document.getElementById("taskId").value = "";
+
+  document.getElementById("title").value = "";
+  document.getElementById("description").value = "";
+  document.getElementById("category").value = "Manual Task";
+  document.getElementById("country").value = "Worldwide";
+  document.getElementById("taskUrl").value = "";
+  document.getElementById("payout").value = "";
+  document.getElementById("rewardPercent").value = "20";
+  document.getElementById("maxCompletions").value = "";
+  document.getElementById("status").value = "active";
+  document.getElementById("proofRequired").value = "true";
+
+  updateRewardPreview();
+}
+
+function updateRewardPreview(){
+
+  const payout =
+    Number(document.getElementById("payout").value || 0);
+
+  const percent =
+    Number(document.getElementById("rewardPercent").value || 0);
+
+  const reward = payout * percent / 100;
+
+  document.getElementById("rewardPreview").textContent =
+    "$" + reward.toFixed(2);
+}
+
+async function editTask(id){
+
+  const { data,error } =
+    await db
+      .from("tasks")
+      .select("*")
+      .eq("id",id)
+      .single();
+
+  if(error || !data){
+    showMessage("Unable to load task.","error");
+    return;
+  }
+
+  editingTask = data;
+
+  document.getElementById("formTitle").textContent =
+    "Edit Task";
+
+  document.getElementById("taskId").value = data.id;
+
+  document.getElementById("title").value =
+    data.title || "";
+
+  document.getElementById("description").value =
+    data.description || "";
+
+  document.getElementById("category").value =
+    data.category || "Manual Task";
+
+  document.getElementById("country").value =
+    data.country || "Worldwide";
+
+  document.getElementById("taskUrl").value =
+    data.task_url || "";
+
+  document.getElementById("payout").value =
+    data.payout || "";
+
+  document.getElementById("rewardPercent").value =
+    data.user_reward_percent || "20";
+
+  document.getElementById("maxCompletions").value =
+    data.max_completions || "";
+
+  document.getElementById("status").value =
+    data.status || "active";
+
+  document.getElementById("proofRequired").value =
+    String(data.proof_required);
+
+  updateRewardPreview();
+  openForm();
+}
+
+async function saveTask(){
+
+  const title =
+    document.getElementById("title").value.trim();
+
+  const description =
+    document.getElementById("description").value.trim();
+
+  const category =
+    document.getElementById("category").value;
+
+  const country =
+    document.getElementById("country").value.trim() ||
+    "Worldwide";
+
+  const taskUrl =
+    document.getElementById("taskUrl").value.trim();
+
+  const payout =
+    Number(document.getElementById("payout").value || 0);
+
+  const rewardPercent =
+    Number(document.getElementById("rewardPercent").value);
+
+  const maxValue =
+    document.getElementById("maxCompletions").value;
+
+  const maxCompletions =
+    maxValue ? Number(maxValue) : null;
+
+  const status =
+    document.getElementById("status").value;
+
+  const proofRequired =
+    document.getElementById("proofRequired").value === "true";
+
+  if(!title){
+    showMessage("Enter a task title.","error");
+    return;
+  }
+
+  if(payout <= 0){
+    showMessage("Enter a valid CPA payout.","error");
+    return;
+  }
+
+  const payload = {
+    title,
+    description,
+    category,
+    country,
+    payout,
+    user_reward_percent:rewardPercent,
+    task_url:taskUrl || null,
+    proof_required:proofRequired,
+    max_completions:maxCompletions,
+    status
+  };
+
+  const saveBtn =
+    document.getElementById("saveBtn");
+
+  saveBtn.disabled = true;
+  saveBtn.textContent = "Saving...";
+
+  let result;
+
+  if(editingTask){
+
+    result =
+      await db
+        .from("tasks")
+        .update(payload)
+        .eq("id",editingTask.id);
+
+  }else{
+
+    result =
+      await db
+        .from("tasks")
+        .insert(payload);
+
+  }
+
+  saveBtn.disabled = false;
+  saveBtn.textContent = "Save Task";
+
+  if(result.error){
+
+    console.error(result.error);
+
+    showMessage(
+      "Could not save task. Admin database permissions may need to be enabled.",
+      "error"
+    );
+
+    return;
+  }
+
+  showMessage(
+    editingTask ? "Task updated successfully." : "Task created successfully.",
+    "success"
+  );
+
+  closeForm();
+  loadTasks();
+}
+
+async function toggleTask(id,currentStatus){
+
+  const newStatus =
+    currentStatus === "active"
+      ? "inactive"
+      : "active";
+
+  const { error } =
+    await db
+      .from("tasks")
+      .update({
+        status:newStatus
+      })
+      .eq("id",id);
+
+  if(error){
+    console.error(error);
+    showMessage(
+      "Unable to change task status. Admin permissions may need to be enabled.",
+      "error"
+    );
+    return;
+  }
+
+  showMessage(
+    newStatus === "active"
+      ? "Task activated."
+      : "Task deactivated.",
+    "success"
+  );
+
+  loadTasks();
+}
+
+async function deleteTask(id){
+
+  if(!confirm("Delete this task? This cannot be undone.")){
+    return;
+  }
+
+  const { error } =
+    await db
+      .from("tasks")
+      .delete()
+      .eq("id",id);
+
+  if(error){
+    console.error(error);
+    showMessage(
+      "Unable to delete task. Admin permissions may need to be enabled.",
+      "error"
+    );
+    return;
+  }
+
+  showMessage("Task deleted.","success");
+
+  loadTasks();
+}
+
+document.getElementById("addBtn")
+  .addEventListener("click",()=>{
+    resetForm();
+    openForm();
+  });
+
+document.getElementById("cancelBtn")
+  .addEventListener("click",closeForm);
+
+document.getElementById("saveBtn")
+  .addEventListener("click",saveTask);
+
+document.getElementById("payout")
+  .addEventListener("input",updateRewardPreview);
+
+document.getElementById("rewardPercent")
+  .addEventListener("change",updateRewardPreview);
+
+document.getElementById("menuBtn")
+  .addEventListener("click",()=>{
+    document.getElementById("sideMenu")
+      .classList.add("open");
+
+    document.getElementById("overlay")
+      .classList.add("show");
+  });
+
+document.getElementById("overlay")
+  .addEventListener("click",()=>{
+    document.getElementById("sideMenu")
+      .classList.remove("open");
+
+    document.getElementById("overlay")
+      .classList.remove("show");
+  });
+
+(async()=>{
+
+  const allowed = await checkAdmin();
+
+  if(allowed){
+    loadTasks();
+  }
+
+})();
+</script>
+
+</body>
+</html>
