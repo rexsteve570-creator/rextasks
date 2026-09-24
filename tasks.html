@@ -3,44 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RexTasks — Available Tasks</title>
+<title>RexTasks - Surveys</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-:root{
-  --bg:#031612;
-  --bg2:#061f19;
-  --card:#06251e;
-  --border:#0b5d4b;
-  --green:#35e6a5;
-  --green2:#19c98b;
-  --white:#f4fffb;
-  --muted:#a8c3bc;
-  --shadow:0 15px 45px rgba(0,0,0,.28);
-}
-
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
 }
 
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:linear-gradient(180deg,#02110e,#031b16 45%,#02120f);
-  color:var(--white);
-  min-height:100vh;
+:root{
+  --bg:#03150f;
+  --card:#08251c;
+  --card2:#0a2b21;
+  --border:#123d30;
+  --green:#35e69d;
+  --green2:#20c982;
+  --white:#f4faf7;
+  --muted:#8ea79e;
 }
 
-button,
-a{
-  -webkit-tap-highlight-color:transparent;
+body{
+  background:var(--bg);
+  color:var(--white);
+  font-family:Arial,Helvetica,sans-serif;
+  min-height:100vh;
+  padding-bottom:88px;
 }
+
+/* HEADER */
 
 .header{
-  height:76px;
-  border-bottom:1px solid rgba(53,230,165,.18);
+  height:78px;
+  background:#061d15;
+  border-bottom:1px solid #12372c;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -48,274 +46,314 @@ a{
   position:sticky;
   top:0;
   z-index:20;
-  background:rgba(2,17,14,.94);
-  backdrop-filter:blur(14px);
+}
+
+.menu{
+  width:38px;
+  height:38px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+}
+
+.menu svg{
+  width:29px;
+  height:29px;
 }
 
 .logo{
-  font-size:29px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-size:25px;
   font-weight:800;
-  letter-spacing:-1.5px;
+  margin-right:auto;
+  margin-left:25px;
 }
 
-.logo span{
+.logo-r{
   color:var(--green);
+  font-size:43px;
+  line-height:1;
+  font-weight:900;
+}
+
+.logo-text{
+  color:#f3f8f6;
 }
 
 .header-right{
   display:flex;
   align-items:center;
-  gap:14px;
+  gap:13px;
 }
 
-.balance{
-  border:1px solid #087a60;
-  color:var(--green);
-  border-radius:30px;
-  padding:10px 16px;
-  font-size:16px;
-  font-weight:800;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.balance svg{
-  width:21px;
-  height:21px;
-}
-
-.menu-btn{
-  border:0;
-  background:none;
-  color:white;
+.notification{
+  position:relative;
   width:40px;
   height:40px;
-  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.menu-btn svg{
-  width:32px;
-  height:32px;
+.notification svg{
+  width:28px;
+  height:28px;
 }
+
+.notification-dot{
+  position:absolute;
+  width:7px;
+  height:7px;
+  background:#1fd184;
+  border-radius:50%;
+  top:5px;
+  right:6px;
+}
+
+.theme{
+  width:58px;
+  height:45px;
+  border:1px solid #153f32;
+  border-radius:15px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--green);
+}
+
+.theme svg{
+  width:22px;
+}
+
+/* PAGE */
 
 .container{
-  width:min(1100px,100%);
+  padding:28px 18px 30px;
+  max-width:1000px;
   margin:auto;
-  padding:34px 18px 110px;
 }
 
-.page-title{
-  font-size:39px;
-  line-height:1.05;
+.title{
+  font-size:34px;
+  line-height:1.1;
   font-weight:800;
-  letter-spacing:-1.4px;
-  margin-bottom:10px;
+  margin-bottom:8px;
 }
 
-.page-subtitle{
+.subtitle{
   color:var(--muted);
-  font-size:17px;
-  line-height:1.5;
-  margin-bottom:27px;
+  font-size:16px;
+  margin-bottom:25px;
 }
 
 /* LOCATION */
 
 .location-box{
-  border:1px solid #087a60;
-  background:rgba(5,45,35,.58);
-  border-radius:22px;
-  padding:17px 18px;
+  background:#062219;
+  border:1px solid #154638;
+  border-radius:18px;
+  padding:17px;
+  margin-bottom:25px;
+  min-height:68px;
   display:flex;
   align-items:center;
-  gap:14px;
-  margin-bottom:30px;
+  gap:13px;
 }
 
 .location-icon{
-  width:42px;
-  height:42px;
+  width:38px;
+  height:38px;
+  color:var(--green);
   flex:none;
-  color:var(--green);
 }
 
-.location-title{
-  font-size:16px;
+.location-content{
+  font-size:15px;
+}
+
+.location-status{
+  color:#b6cbc4;
+  line-height:1.5;
+}
+
+.country{
+  color:var(--green);
   font-weight:800;
-  margin-bottom:5px;
 }
 
-.location-text{
-  color:var(--muted);
-  font-size:14px;
+/* LOADING */
+
+.loading{
+  display:flex;
+  align-items:center;
+  gap:9px;
 }
 
-.location-text strong{
-  color:var(--green);
+.spinner{
+  width:19px;
+  height:19px;
+  border:2px solid #245647;
+  border-top-color:var(--green);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
 }
 
-/* TASK GRID */
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+/* TASKS */
 
 .task-grid{
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:22px;
+  grid-template-columns:1fr;
+  gap:17px;
 }
 
 .task-card{
-  background:linear-gradient(145deg,rgba(5,39,31,.94),rgba(3,28,23,.96));
-  border:1px solid rgba(23,139,110,.6);
-  border-radius:26px;
-  padding:22px;
-  box-shadow:var(--shadow);
+  background:linear-gradient(
+    145deg,
+    #09291f,
+    #061e17
+  );
+  border:1px solid #16483a;
+  border-radius:22px;
+  padding:19px;
+  min-height:350px;
   display:flex;
   flex-direction:column;
-  min-height:390px;
-  transition:.2s ease;
-}
-
-.task-card:hover{
-  transform:translateY(-3px);
-  border-color:var(--green2);
 }
 
 .task-top{
   display:flex;
-  align-items:flex-start;
   justify-content:space-between;
+  align-items:flex-start;
+}
+
+.task-category{
+  display:flex;
+  align-items:center;
   gap:10px;
 }
 
-.task-left{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
 .task-icon{
-  width:62px;
-  height:62px;
-  border-radius:18px;
+  width:58px;
+  height:58px;
+  border-radius:17px;
   display:flex;
   align-items:center;
   justify-content:center;
   color:white;
-  flex:none;
 }
 
 .task-icon svg{
-  width:32px;
-  height:32px;
-}
-
-/* CATEGORY COLORS */
-
-.icon-app{
-  background:linear-gradient(135deg,#12a984,#0d705e);
-}
-
-.icon-survey{
-  background:linear-gradient(135deg,#4d8cff,#315db9);
-}
-
-.icon-signup{
-  background:linear-gradient(135deg,#f3a42b,#c66d08);
-}
-
-.icon-offer{
-  background:linear-gradient(135deg,#9556f1,#6130ae);
-}
-
-.icon-daily{
-  background:linear-gradient(135deg,#19c98b,#087b5d);
-}
-
-.icon-task{
-  background:linear-gradient(135deg,#18b8b0,#087b78);
-}
-
-.icon-referral{
-  background:linear-gradient(135deg,#db4ca8,#8d2870);
-}
-
-.category{
-  padding:8px 13px;
-  border-radius:30px;
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:.5px;
-  white-space:nowrap;
-}
-
-.cat-app{
-  background:rgba(19,201,154,.22);
-  color:#55edbd;
-}
-
-.cat-survey{
-  background:rgba(69,132,255,.25);
-  color:#8ab2ff;
-}
-
-.cat-signup{
-  background:rgba(244,160,34,.22);
-  color:#ffbb5b;
-}
-
-.cat-offer{
-  background:rgba(139,76,239,.25);
-  color:#c09aff;
-}
-
-.cat-daily{
-  background:rgba(31,211,145,.22);
-  color:#55edbd;
-}
-
-.cat-task{
-  background:rgba(24,184,176,.22);
-  color:#61e6e0;
-}
-
-.cat-referral{
-  background:rgba(219,76,168,.22);
-  color:#ef8bd0;
-}
-
-.more-btn{
   width:30px;
-  height:40px;
-  border:0;
-  background:none;
-  color:#dcebe7;
-  cursor:pointer;
-  flex:none;
+  height:30px;
 }
 
-.more-btn svg{
-  width:25px;
-  height:25px;
+.app{
+  background:#119d78;
+}
+
+.survey{
+  background:#3978d8;
+}
+
+.signup{
+  background:#dc8b18;
+}
+
+.offer{
+  background:#7d48d2;
+}
+
+.daily{
+  background:#159e72;
+}
+
+.task{
+  background:#168d9b;
+}
+
+.referral{
+  background:#bc3c92;
+}
+
+.badge{
+  border-radius:30px;
+  padding:8px 12px;
+  font-size:11px;
+  font-weight:800;
+  margin-top:9px;
+}
+
+.badge-app{
+  background:#0e6e59;
+  color:#b8ffe7;
+}
+
+.badge-survey{
+  background:#214d8e;
+  color:#c9ddff;
+}
+
+.badge-signup{
+  background:#87520e;
+  color:#ffe0a4;
+}
+
+.badge-offer{
+  background:#56309a;
+  color:#e2cfff;
+}
+
+.badge-daily{
+  background:#12694f;
+  color:#b9ffe5;
+}
+
+.badge-task{
+  background:#145e68;
+  color:#b7f4f6;
+}
+
+.badge-referral{
+  background:#74275b;
+  color:#ffc9ec;
+}
+
+.more{
+  color:#dce9e5;
+  width:28px;
+  height:35px;
+}
+
+.more svg{
+  width:23px;
 }
 
 .task-title{
-  font-size:25px;
+  font-size:22px;
   line-height:1.25;
-  margin-top:25px;
+  margin-top:23px;
   font-weight:800;
-  letter-spacing:-.5px;
 }
 
 .task-description{
-  color:var(--muted);
-  font-size:16px;
+  color:#9db5ae;
+  font-size:15px;
   line-height:1.55;
-  margin-top:12px;
+  margin-top:11px;
 }
 
 .task-bottom{
   margin-top:auto;
-  padding-top:25px;
+  padding-top:23px;
 }
 
 .reward{
@@ -323,99 +361,74 @@ a{
   align-items:center;
   gap:10px;
   color:var(--green);
-  font-size:27px;
+  font-size:25px;
   font-weight:900;
-  margin-bottom:20px;
+  margin-bottom:18px;
 }
 
-.reward-icon{
-  width:39px;
-  height:39px;
+.money{
+  width:38px;
+  height:38px;
   border-radius:50%;
   background:var(--green);
-  color:#032019;
+  color:#052017;
   display:flex;
   align-items:center;
   justify-content:center;
+  font-size:22px;
+  font-weight:900;
 }
 
-.reward-icon svg{
-  width:21px;
-  height:21px;
-}
-
-.start-btn{
+.start{
   width:100%;
-  border:0;
-  border-radius:15px;
+  border:none;
+  border-radius:14px;
   padding:16px;
-  background:linear-gradient(135deg,#39e8a7,#20d394);
-  color:#022117;
+  background:linear-gradient(
+    135deg,
+    #32e29b,
+    #18c981
+  );
+  color:#032017;
   font-size:17px;
   font-weight:900;
-  cursor:pointer;
-  transition:.2s ease;
 }
 
-.start-btn:hover{
-  transform:translateY(-1px);
-  filter:brightness(1.05);
-}
+/* EMPTY */
 
-.start-btn:active{
-  transform:scale(.98);
-}
-
-/* EMPTY / LOADING */
-
-.message{
+.empty{
   text-align:center;
-  padding:60px 20px;
+  padding:55px 20px;
   color:var(--muted);
-  font-size:16px;
-}
-
-.loader{
-  width:35px;
-  height:35px;
-  border:3px solid rgba(53,230,165,.2);
-  border-top-color:var(--green);
-  border-radius:50%;
-  animation:spin .8s linear infinite;
-  margin:0 auto 15px;
-}
-
-@keyframes spin{
-  to{transform:rotate(360deg)}
+  line-height:1.6;
 }
 
 /* BOTTOM NAV */
 
 .bottom-nav{
   position:fixed;
-  bottom:0;
   left:0;
   right:0;
-  height:76px;
-  background:rgba(2,20,16,.97);
-  border-top:1px solid rgba(53,230,165,.18);
+  bottom:0;
+  height:82px;
+  background:#061d15;
+  border-top:1px solid #12372c;
   display:flex;
-  justify-content:space-around;
   align-items:center;
+  justify-content:space-around;
   z-index:30;
-  backdrop-filter:blur(15px);
 }
 
 .nav-item{
   text-decoration:none;
-  color:#8ea9a2;
+  color:#7e968f;
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:5px;
-  font-size:12px;
+  font-size:11px;
   font-weight:700;
-  min-width:70px;
+  min-width:58px;
 }
 
 .nav-item svg{
@@ -427,103 +440,52 @@ a{
   color:var(--green);
 }
 
-.nav-active-line{
+.nav-line{
   position:absolute;
-  bottom:0;
-  width:85px;
-  height:4px;
-  border-radius:10px 10px 0 0;
+  bottom:10px;
+  width:32px;
+  height:3px;
+  border-radius:5px;
   background:var(--green);
 }
 
-/* TABLET / DESKTOP */
+/* DESKTOP */
 
-@media(min-width:800px){
-  .container{
-    padding-top:50px;
-  }
-
-  .page-title{
-    font-size:48px;
-  }
+@media(min-width:700px){
 
   .task-grid{
-    grid-template-columns:repeat(3,minmax(0,1fr));
+    grid-template-columns:repeat(2,1fr);
   }
 
-  .task-card{
-    min-height:380px;
+  .container{
+    padding-top:42px;
   }
+
+  .title{
+    font-size:42px;
+  }
+
 }
 
-/* MOBILE */
+/* SMALL PHONES */
 
-@media(max-width:650px){
-  .header{
-    height:68px;
-    padding:0 14px;
-  }
+@media(max-width:380px){
 
   .logo{
-    font-size:25px;
+    margin-left:12px;
+    font-size:22px;
   }
 
-  .balance{
-    padding:8px 12px;
-    font-size:14px;
+  .logo-r{
+    font-size:37px;
   }
 
-  .balance svg{
-    width:18px;
-    height:18px;
+  .theme{
+    display:none;
   }
 
-  .menu-btn{
-    width:34px;
-  }
-
-  .menu-btn svg{
-    width:29px;
-  }
-
-  .container{
-    padding:29px 14px 100px;
-  }
-
-  .page-title{
-    font-size:34px;
-  }
-
-  .page-subtitle{
-    font-size:15px;
-  }
-
-  .location-box{
-    border-radius:18px;
-    padding:15px;
-  }
-
-  .task-grid{
-    grid-template-columns:1fr;
-    gap:17px;
-  }
-
-  .task-card{
-    min-height:355px;
-    padding:20px;
-    border-radius:23px;
-  }
-
-  .task-title{
-    font-size:23px;
-  }
-
-  .task-description{
-    font-size:15px;
-  }
-
-  .reward{
-    font-size:25px;
+  .title{
+    font-size:30px;
   }
 }
 </style>
@@ -533,28 +495,53 @@ a{
 
 <header class="header">
 
-  <a href="dashboard.html" style="text-decoration:none;color:white;">
+  <a href="dashboard.html" class="menu">
+    <svg viewBox="0 0 24 24"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="2.3">
+      <path d="M4 6h16"/>
+      <path d="M4 12h16"/>
+      <path d="M4 18h16"/>
+    </svg>
+  </a>
+
+  <a href="dashboard.html"
+     style="text-decoration:none;">
     <div class="logo">
-      <span>Rex</span>Tasks
+      <span class="logo-r">R</span>
+      <span class="logo-text">RexTasks</span>
     </div>
   </a>
 
   <div class="header-right">
 
-    <div class="balance">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="3" y="5" width="18" height="14" rx="3"/>
-        <path d="M16 9h5v6h-5a3 3 0 0 1 0-6Z"/>
-        <circle cx="16" cy="12" r="1"/>
+    <div class="notification">
+      <svg viewBox="0 0 24 24"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="2">
+        <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+        <path d="M10 21h4"/>
       </svg>
-      <span id="balance">$0.00</span>
+
+      <span class="notification-dot"></span>
     </div>
 
-    <button class="menu-btn" onclick="goDashboard()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
-        <path d="M4 6h16M4 12h16M4 18h16"/>
+    <div class="theme">
+      <svg viewBox="0 0 24 24"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="2">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2"/>
+        <path d="M12 20v2"/>
+        <path d="m4.93 4.93 1.42 1.42"/>
+        <path d="m17.65 17.65 1.42 1.42"/>
+        <path d="M2 12h2"/>
+        <path d="M20 12h2"/>
       </svg>
-    </button>
+    </div>
 
   </div>
 
@@ -563,222 +550,205 @@ a{
 
 <main class="container">
 
-  <h1 class="page-title">Available Tasks</h1>
+  <h1 class="title">Available Tasks</h1>
 
-  <p class="page-subtitle">
+  <p class="subtitle">
     Complete tasks and earn rewards.
   </p>
 
 
+  <!-- COUNTRY DETECTION -->
+
   <div class="location-box">
 
-    <svg class="location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <svg class="location-icon"
+         viewBox="0 0 24 24"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="2">
+
       <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/>
-      <circle cx="12" cy="10" r="2.5"/>
+
+      <circle cx="12"
+              cy="10"
+              r="2.5"/>
+
     </svg>
 
-    <div>
-      <div class="location-title">
-        Tasks are automatically matched to your location.
+
+    <div class="location-content"
+         id="locationContent">
+
+      <div class="loading">
+
+        <span class="spinner"></span>
+
+        <span>
+          Detecting your location...
+        </span>
+
       </div>
 
-      <div class="location-text">
-        Your location:
-        <strong id="countryName">Detecting...</strong>
-      </div>
     </div>
 
   </div>
 
 
-  <section id="taskGrid" class="task-grid">
+  <!-- REAL TASKS ONLY -->
 
-    <div class="message" style="grid-column:1/-1;">
-      <div class="loader"></div>
-      Loading tasks...
-    </div>
-
-  </section>
+  <section
+    id="taskGrid"
+    class="task-grid"
+  ></section>
 
 </main>
 
 
+<!-- BOTTOM NAVIGATION -->
+
 <nav class="bottom-nav">
 
-  <a class="nav-item" href="dashboard.html">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10Z"/>
+  <a href="dashboard.html"
+     class="nav-item">
+
+    <svg viewBox="0 0 24 24"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="2">
+
+      <path d="m3 10 9-7 9 7"/>
+      <path d="M5 9v11h14V9"/>
+      <path d="M9 20v-6h6v6"/>
+
     </svg>
+
     <span>Home</span>
+
   </a>
 
 
-  <a class="nav-item active" href="tasks.html">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <rect x="5" y="3" width="14" height="18" rx="2"/>
-      <path d="M9 7h6M9 11h6M9 15h3"/>
-      <path d="m15 15 1 1 2-2"/>
+  <a href="tasks.html"
+     class="nav-item active">
+
+    <svg viewBox="0 0 24 24"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="2">
+
+      <rect x="5"
+            y="3"
+            width="14"
+            height="18"
+            rx="2"/>
+
+      <path d="M9 7h6"/>
+      <path d="M9 11h6"/>
+      <path d="M9 15h3"/>
+
     </svg>
-    <span>Earn Tasks</span>
+
+    <span>Surveys</span>
+
+    <span class="nav-line"></span>
+
   </a>
 
 
-  <a class="nav-item" href="referrals.html">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="9" cy="8" r="3"/>
-      <circle cx="17" cy="9" r="2.5"/>
-      <path d="M3 20c0-3.2 2.6-5 6-5s6 1.8 6 5"/>
-      <path d="M15 15c3 0 5 1.6 5 4"/>
-    </svg>
-    <span>Refer</span>
-  </a>
+  <a href="wallet.html"
+     class="nav-item">
 
+    <svg viewBox="0 0 24 24"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="2">
 
-  <a class="nav-item" href="withdraw.html">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <rect x="3" y="5" width="18" height="14" rx="3"/>
+      <rect x="3"
+            y="5"
+            width="18"
+            height="14"
+            rx="3"/>
+
       <path d="M16 9h5v6h-5a3 3 0 0 1 0-6Z"/>
-      <circle cx="16" cy="12" r="1"/>
+
+      <circle cx="16"
+              cy="12"
+              r="1"/>
+
     </svg>
-    <span>Withdraw</span>
+
+    <span>Wallet</span>
+
   </a>
 
-  <div class="nav-active-line"></div>
+
+  <a href="history.html"
+     class="nav-item">
+
+    <svg viewBox="0 0 24 24"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="2">
+
+      <circle cx="12"
+              cy="12"
+              r="9"/>
+
+      <path d="M12 7v5l3 2"/>
+
+    </svg>
+
+    <span>History</span>
+
+  </a>
+
+
+  <a href="profile.html"
+     class="nav-item">
+
+    <svg viewBox="0 0 24 24"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="2">
+
+      <circle cx="12"
+              cy="8"
+              r="3"/>
+
+      <path d="M5 20c0-4 3-6 7-6s7 2 7 6"/>
+
+    </svg>
+
+    <span>Profile</span>
+
+  </a>
 
 </nav>
 
 
 <script>
 
+/* =========================
+   SUPABASE
+========================= */
+
 const SUPABASE_URL =
 "https://cetsxdkoauucxwsbdktl.supabase.co";
 
-const SUPABASE_PUBLISHABLE_KEY =
+const SUPABASE_KEY =
 "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
 
 const supabaseClient =
 supabase.createClient(
   SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
+  SUPABASE_KEY
 );
 
 
 /* =========================
-   ICONS
+   SESSION
 ========================= */
 
-function getTaskIcon(category){
-
-  const c = String(category || "").toLowerCase();
-
-  if(c.includes("survey")){
-    return {
-      type:"survey",
-      icon:`
-        <svg viewBox="0 0 24 24" fill="none"
-        stroke="currentColor" stroke-width="2">
-          <rect x="5" y="3" width="14" height="18" rx="2"/>
-          <path d="M9 7h6M9 11h6M9 15h3"/>
-          <path d="m14 15 1.5 1.5L18 14"/>
-        </svg>
-      `
-    };
-  }
-
-  if(c.includes("sign") || c.includes("signup") || c.includes("register")){
-    return {
-      type:"signup",
-      icon:`
-        <svg viewBox="0 0 24 24" fill="none"
-        stroke="currentColor" stroke-width="2">
-          <circle cx="9" cy="8" r="3"/>
-          <path d="M3 20c0-3.5 2.5-6 6-6s6 2.5 6 6"/>
-          <path d="M18 12v6M15 15h6"/>
-        </svg>
-      `
-    };
-  }
-
-  if(c.includes("offer")){
-    return {
-      type:"offer",
-      icon:`
-        <svg viewBox="0 0 24 24" fill="none"
-        stroke="currentColor" stroke-width="2">
-          <path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6"/>
-          <path d="M3 7h18v5H3z"/>
-          <path d="M12 7v13"/>
-          <path d="M8 7c-2 0-3-1-3-2s1-2 2-2c2 0 5 4 5 4"/>
-          <path d="M16 7c2 0 3-1 3-2s-1-2-2-2c-2 0-5 4-5 4"/>
-        </svg>
-      `
-    };
-  }
-
-  if(c.includes("daily")){
-    return {
-      type:"daily",
-      icon:`
-        <svg viewBox="0 0 24 24" fill="none"
-        stroke="currentColor" stroke-width="2">
-          <rect x="4" y="5" width="16" height="15" rx="2"/>
-          <path d="M8 3v4M16 3v4M4 9h16"/>
-          <path d="M8 13h2M12 13h2M16 13h1M8 16h2M12 16h2"/>
-        </svg>
-      `
-    };
-  }
-
-  if(c.includes("referral")){
-    return {
-      type:"referral",
-      icon:`
-        <svg viewBox="0 0 24 24" fill="none"
-        stroke="currentColor" stroke-width="2">
-          <circle cx="9" cy="8" r="3"/>
-          <circle cx="17" cy="9" r="2.5"/>
-          <path d="M3 20c0-3.2 2.6-5 6-5s6 1.8 6 5"/>
-          <path d="M15 15c3 0 5 1.6 5 4"/>
-        </svg>
-      `
-    };
-  }
-
-  if(c.includes("app") || c.includes("install")){
-    return {
-      type:"app",
-      icon:`
-        <svg viewBox="0 0 24 24" fill="none"
-        stroke="currentColor" stroke-width="2">
-          <rect x="6" y="3" width="12" height="18" rx="2"/>
-          <path d="M9 6h6M10 18h4"/>
-          <circle cx="12" cy="15" r="1"/>
-        </svg>
-      `
-    };
-  }
-
-  return {
-    type:"task",
-    icon:`
-      <svg viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" stroke-width="2">
-        <path d="M9 5h6"/>
-        <path d="M9 3h6v4H9z"/>
-        <path d="M6 5H5a2 2 0 0 0-2 2v13h16a2 2 0 0 0 2-2v-1"/>
-        <path d="M8 11h4M8 15h3"/>
-        <path d="m15 15 2 2 4-5"/>
-      </svg>
-    `
-  };
-}
-
-
-/* =========================
-   LOAD SESSION
-========================= */
-
-async function getUser(){
+async function checkSession(){
 
   const {
     data,
@@ -799,63 +769,107 @@ async function getUser(){
 
 
 /* =========================
-   LOAD BALANCE
-========================= */
-
-async function loadBalance(user){
-
-  const {
-    data
-  } =
-  await supabaseClient
-  .from("wallets")
-  .select("balance")
-  .eq("user_id",user.id)
-  .maybeSingle();
-
-  if(data){
-
-    document.getElementById("balance")
-      .textContent =
-      "$" +
-      Number(data.balance || 0)
-      .toFixed(2);
-
-  }
-}
-
-
-/* =========================
-   DETECT COUNTRY
+   COUNTRY DETECTION
 ========================= */
 
 async function detectCountry(){
 
-  const response =
-    await fetch(
-      "https://ipapi.co/json/"
-    );
+  /* FIRST SERVICE */
 
-  if(!response.ok){
+  try{
 
-    throw new Error(
-      "Country detection failed"
+    const response =
+      await fetch(
+        "https://ipapi.co/json/",
+        {
+          cache:"no-store"
+        }
+      );
+
+    if(response.ok){
+
+      const data =
+        await response.json();
+
+      if(data && data.country_name){
+
+        return data.country_name.trim();
+
+      }
+
+    }
+
+  }catch(error){
+
+    console.log(
+      "Primary location service failed."
     );
 
   }
 
-  const data =
-    await response.json();
 
-  if(!data.country_name){
+  /* FALLBACK SERVICE */
 
-    throw new Error(
-      "Country unavailable"
+  try{
+
+    const response =
+      await fetch(
+        "https://ipwho.is/",
+        {
+          cache:"no-store"
+        }
+      );
+
+    if(response.ok){
+
+      const data =
+        await response.json();
+
+      if(
+        data &&
+        data.success &&
+        data.country
+      ){
+
+        return data.country.trim();
+
+      }
+
+    }
+
+  }catch(error){
+
+    console.log(
+      "Fallback location service failed."
     );
 
   }
 
-  return data.country_name.trim();
+
+  throw new Error(
+    "Unable to detect country."
+  );
+}
+
+
+/* =========================
+   SHOW COUNTRY
+========================= */
+
+function showCountry(country){
+
+  document.getElementById(
+    "locationContent"
+  ).innerHTML = `
+
+    <div class="location-status">
+      Your location:
+      <span class="country">
+        ${escapeHTML(country)}
+      </span>
+    </div>
+
+  `;
 
 }
 
@@ -864,240 +878,214 @@ async function detectCountry(){
    LOAD TASKS
 ========================= */
 
-async function loadTasks(){
+async function loadTasks(country){
 
   const grid =
-    document.getElementById("taskGrid");
-
-  try{
-
-    const country =
-      await detectCountry();
-
     document.getElementById(
-      "countryName"
-    ).textContent =
-      country;
-
-
-    const {
-      data:tasks,
-      error
-    } =
-    await supabaseClient
-      .from("tasks")
-      .select(`
-        id,
-        title,
-        description,
-        category,
-        country,
-        payout,
-        user_reward_percent,
-        task_url,
-        proof_required,
-        max_completions,
-        status,
-        created_at
-      `)
-      .eq("status","active")
-      .order(
-        "created_at",
-        {ascending:false}
-      );
-
-
-    if(error){
-
-      throw error;
-
-    }
-
-
-    const available =
-      (tasks || []).filter(task => {
-
-        const target =
-          String(
-            task.country || "Worldwide"
-          )
-          .trim()
-          .toLowerCase();
-
-        const detected =
-          String(country)
-          .trim()
-          .toLowerCase();
-
-        return (
-          target === "worldwide" ||
-          target === detected
-        );
-
-      });
-
-
-    grid.innerHTML = "";
-
-
-    if(!available.length){
-
-      grid.innerHTML = `
-        <div class="message"
-             style="grid-column:1/-1;">
-          No tasks are available for your
-          location right now.
-        </div>
-      `;
-
-      return;
-
-    }
-
-
-    available.forEach(task => {
-
-      const reward =
-        Number(task.payout || 0) *
-        Number(
-          task.user_reward_percent || 0
-        ) /
-        100;
-
-
-      const iconData =
-        getTaskIcon(task.category);
-
-
-      const categoryText =
-        formatCategory(
-          task.category
-        );
-
-
-      const card =
-        document.createElement("article");
-
-      card.className =
-        "task-card";
-
-
-      card.innerHTML = `
-
-        <div class="task-top">
-
-          <div class="task-left">
-
-            <div class="
-              task-icon
-              icon-${iconData.type}
-            ">
-              ${iconData.icon}
-            </div>
-
-            <div class="
-              category
-              cat-${iconData.type}
-            ">
-              ${escapeHTML(categoryText)}
-            </div>
-
-          </div>
-
-
-          <button
-            class="more-btn"
-            onclick="showTaskInfo()"
-            aria-label="Task options"
-          >
-
-            <svg viewBox="0 0 24 24"
-                 fill="currentColor">
-
-              <circle cx="12" cy="5" r="1.6"/>
-              <circle cx="12" cy="12" r="1.6"/>
-              <circle cx="12" cy="19" r="1.6"/>
-
-            </svg>
-
-          </button>
-
-        </div>
-
-
-        <h2 class="task-title">
-          ${escapeHTML(task.title)}
-        </h2>
-
-
-        <p class="task-description">
-          ${escapeHTML(
-            task.description ||
-            "Complete this task and submit proof when required."
-          )}
-        </p>
-
-
-        <div class="task-bottom">
-
-          <div class="reward">
-
-            <div class="reward-icon">
-
-              <svg viewBox="0 0 24 24"
-                   fill="none"
-                   stroke="currentColor"
-                   stroke-width="2.4">
-
-                <path d="M12 3v18"/>
-                <path d="M17 7.5c0-2-2-3-5-3s-5 1-5 3 2 3 5 3 5 1 5 3-2 3-5 3-5-1-5-3"/>
-
-              </svg>
-
-            </div>
-
-            $${reward.toFixed(2)}
-
-          </div>
-
-
-          <button
-            class="start-btn"
-            onclick="startTask(
-              ${Number(task.id)},
-              ${JSON.stringify(task.task_url || "")},
-              ${task.proof_required ? "true" : "false"}
-            )"
-          >
-            Start Task
-          </button>
-
-        </div>
-
-      `;
-
-
-      grid.appendChild(card);
-
-    });
-
-  }catch(error){
+      "taskGrid"
+    );
+
+
+  const {
+    data:tasks,
+    error
+  } =
+  await supabaseClient
+    .from("tasks")
+    .select(`
+      id,
+      title,
+      description,
+      category,
+      country,
+      payout,
+      user_reward_percent,
+      task_url,
+      proof_required,
+      max_completions,
+      status,
+      created_at
+    `)
+    .eq(
+      "status",
+      "active"
+    )
+    .order(
+      "created_at",
+      {
+        ascending:false
+      }
+    );
+
+
+  if(error){
 
     console.error(error);
 
-    grid.innerHTML = `
+    showEmpty(
+      "Tasks could not be loaded right now."
+    );
 
-      <div class="message"
-           style="grid-column:1/-1;">
+    return;
 
-        We couldn't load tasks right now.
-        Please refresh and try again.
+  }
+
+
+  const detected =
+    country
+      .trim()
+      .toLowerCase();
+
+
+  const available =
+    (tasks || []).filter(task => {
+
+      const target =
+        String(
+          task.country ||
+          "Worldwide"
+        )
+        .trim()
+        .toLowerCase();
+
+
+      return (
+        target === "worldwide" ||
+        target === detected
+      );
+
+    });
+
+
+  if(!available.length){
+
+    showEmpty(
+      "No tasks are available for your location right now."
+    );
+
+    return;
+
+  }
+
+
+  grid.innerHTML = "";
+
+
+  available.forEach(task => {
+
+    const reward =
+      Number(task.payout || 0) *
+      Number(
+        task.user_reward_percent || 0
+      ) /
+      100;
+
+
+    const category =
+      getCategory(
+        task.category
+      );
+
+
+    const card =
+      document.createElement(
+        "article"
+      );
+
+    card.className =
+      "task-card";
+
+
+    card.innerHTML = `
+
+      <div class="task-top">
+
+        <div class="task-category">
+
+          <div class="
+            task-icon
+            ${category.iconClass}
+          ">
+
+            ${category.icon}
+
+          </div>
+
+          <div class="
+            badge
+            ${category.badgeClass}
+          ">
+
+            ${category.label}
+
+          </div>
+
+        </div>
+
+
+        <div class="more">
+
+          <svg viewBox="0 0 24 24"
+               fill="currentColor">
+
+            <circle cx="12"
+                    cy="5"
+                    r="1.6"/>
+
+            <circle cx="12"
+                    cy="12"
+                    r="1.6"/>
+
+            <circle cx="12"
+                    cy="19"
+                    r="1.6"/>
+
+          </svg>
+
+        </div>
+
+      </div>
+
+
+      <h2 class="task-title">
+        ${escapeHTML(task.title)}
+      </h2>
+
+
+      <p class="task-description">
+        ${escapeHTML(
+          task.description ||
+          "Complete this task and earn your reward."
+        )}
+      </p>
+
+
+      <div class="task-bottom">
+
+        <div class="reward">
+
+          <span class="money">$</span>
+
+          $${reward.toFixed(2)}
+
+        </div>
+
+
+        <button
+          class="start"
+          onclick="startTask(${Number(task.id)})"
+        >
+          Start Task
+        </button>
 
       </div>
 
     `;
 
-  }
+
+    grid.appendChild(card);
+
+  });
 
 }
 
@@ -1106,101 +1094,263 @@ async function loadTasks(){
    START TASK
 ========================= */
 
-function startTask(
-  taskId,
-  taskUrl,
-  proofRequired
-){
+function startTask(taskId){
 
-  if(taskUrl){
-
-    window.open(
-      taskUrl,
-      "_blank"
-    );
-
-  }
-
-  /*
-    We keep the task ID ready for
-    the next proof-submission step.
-  */
+  window.location.href =
+    "submit-task.html?task=" +
+    encodeURIComponent(taskId);
 
 }
 
 
 /* =========================
-   CATEGORY FORMAT
+   EMPTY STATE
 ========================= */
 
-function formatCategory(category){
+function showEmpty(message){
+
+  document.getElementById(
+    "taskGrid"
+  ).innerHTML = `
+
+    <div class="empty">
+
+      ${escapeHTML(message)}
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================
+   CATEGORY
+========================= */
+
+function getCategory(value){
 
   const c =
-    String(category || "")
-    .trim()
+    String(value || "")
     .toLowerCase();
 
-  if(c.includes("survey"))
-    return "SURVEY";
+
+  if(c.includes("survey")){
+
+    return {
+      label:"SURVEY",
+      iconClass:"survey",
+      badgeClass:"badge-survey",
+      icon:`
+        <svg viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2">
+
+          <rect x="5"
+                y="3"
+                width="14"
+                height="18"
+                rx="2"/>
+
+          <path d="M9 7h6"/>
+          <path d="M9 11h6"/>
+          <path d="M9 15h3"/>
+
+        </svg>
+      `
+    };
+
+  }
+
 
   if(
     c.includes("sign") ||
     c.includes("signup") ||
     c.includes("register")
-  )
-    return "SIGN UP";
+  ){
 
-  if(c.includes("offer"))
-    return "OFFER";
+    return {
+      label:"SIGN UP",
+      iconClass:"signup",
+      badgeClass:"badge-signup",
+      icon:`
+        <svg viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2">
 
-  if(c.includes("daily"))
-    return "DAILY";
+          <circle cx="9"
+                  cy="8"
+                  r="3"/>
 
-  if(c.includes("referral"))
-    return "REFERRAL";
+          <path d="M3 20c0-3.5 2.5-6 6-6s6 2.5 6 6"/>
+
+          <path d="M18 12v6"/>
+          <path d="M15 15h6"/>
+
+        </svg>
+      `
+    };
+
+  }
+
+
+  if(c.includes("offer")){
+
+    return {
+      label:"OFFER",
+      iconClass:"offer",
+      badgeClass:"badge-offer",
+      icon:`
+        <svg viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2">
+
+          <path d="M3 8h18v5H3z"/>
+          <path d="M12 8v12"/>
+          <path d="M5 13v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/>
+
+        </svg>
+      `
+    };
+
+  }
+
+
+  if(c.includes("daily")){
+
+    return {
+      label:"DAILY",
+      iconClass:"daily",
+      badgeClass:"badge-daily",
+      icon:`
+        <svg viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2">
+
+          <rect x="4"
+                y="5"
+                width="16"
+                height="15"
+                rx="2"/>
+
+          <path d="M8 3v4"/>
+          <path d="M16 3v4"/>
+          <path d="M4 9h16"/>
+
+        </svg>
+      `
+    };
+
+  }
+
+
+  if(c.includes("referral")){
+
+    return {
+      label:"REFERRAL",
+      iconClass:"referral",
+      badgeClass:"badge-referral",
+      icon:`
+        <svg viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2">
+
+          <circle cx="9"
+                  cy="8"
+                  r="3"/>
+
+          <circle cx="17"
+                  cy="9"
+                  r="2.5"/>
+
+          <path d="M3 20c0-3.2 2.6-5 6-5s6 1.8 6 5"/>
+
+          <path d="M15 15c3 0 5 1.6 5 4"/>
+
+        </svg>
+      `
+    };
+
+  }
+
 
   if(
     c.includes("app") ||
     c.includes("install")
-  )
-    return "APP";
+  ){
 
-  return "TASK";
+    return {
+      label:"APP",
+      iconClass:"app",
+      badgeClass:"badge-app",
+      icon:`
+        <svg viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2">
+
+          <rect x="6"
+                y="3"
+                width="12"
+                height="18"
+                rx="2"/>
+
+          <path d="M9 6h6"/>
+          <path d="M10 18h4"/>
+
+        </svg>
+      `
+    };
+
+  }
+
+
+  return {
+    label:"TASK",
+    iconClass:"task",
+    badgeClass:"badge-task",
+    icon:`
+      <svg viewBox="0 0 24 24"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="2">
+
+        <rect x="5"
+              y="3"
+              width="14"
+              height="18"
+              rx="2"/>
+
+        <path d="M9 8h6"/>
+        <path d="M9 12h6"/>
+        <path d="M9 16h3"/>
+
+      </svg>
+    `
+  };
+
 }
 
 
 /* =========================
-   SAFE HTML
+   SECURITY
 ========================= */
 
 function escapeHTML(value){
 
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================
-   MENU
-========================= */
-
-function goDashboard(){
-
-  window.location.href =
-    "dashboard.html";
-
-}
-
-function showTaskInfo(){
-
-  alert(
-    "Task details are shown on the task card. Complete the task using Start Task."
-  );
+  return String(
+    value ?? ""
+  )
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
 
 }
 
@@ -1212,13 +1362,50 @@ function showTaskInfo(){
 (async function(){
 
   const user =
-    await getUser();
+    await checkSession();
 
-  if(!user) return;
+  if(!user){
+    return;
+  }
 
-  await loadBalance(user);
 
-  await loadTasks();
+  try{
+
+    const country =
+      await detectCountry();
+
+
+    showCountry(country);
+
+
+    await loadTasks(country);
+
+
+  }catch(error){
+
+    console.error(
+      "Country detection error:",
+      error
+    );
+
+
+    document.getElementById(
+      "locationContent"
+    ).innerHTML = `
+
+      <div class="location-status">
+        Unable to detect your country.
+        Please refresh and try again.
+      </div>
+
+    `;
+
+
+    showEmpty(
+      "Tasks cannot be loaded until your location is detected."
+    );
+
+  }
 
 })();
 
