@@ -1,885 +1,975 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#03150f">
-<title>TallyBuck — Tasks</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071c14">
+<title>TallyBuck — Tasks</title>
+
+<style>
+:root{
+  --bg:#06140f;
+  --bg2:#0a2118;
+  --card:#0d281e;
+  --card2:#102f24;
+  --border:rgba(117,255,184,.12);
+  --text:#f3fff8;
+  --muted:#91a99d;
+  --green:#55e68c;
+  --green2:#24c96b;
+  --danger:#ff6f7d;
+  --shadow:0 18px 45px rgba(0,0,0,.28);
+}
+
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
 }
 
-:root{
-  --bg:#03150f;
-  --header:#061d15;
-  --card:#08251c;
-  --card2:#0a2b21;
-  --border:#123d30;
-  --green:#35e69d;
-  --green2:#20c982;
-  --white:#f4faf7;
-  --muted:#8ea79e;
-  --danger:#e56a6a;
-}
-
 body{
-  background:var(--bg);
-  color:var(--white);
-  font-family:Arial,Helvetica,sans-serif;
   min-height:100vh;
+  background:
+    radial-gradient(circle at 50% -10%,rgba(52,214,119,.13),transparent 38%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   padding-bottom:88px;
 }
 
-/* HEADER */
+button,
+a{
+  font:inherit;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+/* =========================
+   HEADER
+========================= */
 
 .header{
-  height:78px;
-  background:var(--header);
-  border-bottom:1px solid #12372c;
-  display:flex;
-  align-items:center;
-  padding:0 18px;
   position:sticky;
   top:0;
-  z-index:20;
+  z-index:50;
+  backdrop-filter:blur(18px);
+  background:rgba(6,20,15,.88);
+  border-bottom:1px solid var(--border);
 }
 
-.header-menu{
+.header-inner{
+  width:min(100%,720px);
+  margin:auto;
+  min-height:70px;
+  padding:0 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.brand-mark{
   width:38px;
   height:38px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:white;
-  text-decoration:none;
-  flex-shrink:0;
+  border-radius:12px;
+  background:linear-gradient(145deg,#65f39b,#20bd64);
+  display:grid;
+  place-items:center;
+  color:#062113;
+  box-shadow:0 8px 25px rgba(38,214,111,.2);
 }
 
-.header-menu svg{
-  width:27px;
-  height:27px;
+.brand-mark svg{
+  width:21px;
+  height:21px;
 }
 
-.logo-link{
-  text-decoration:none;
-  margin-left:18px;
-}
-
-.logo{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  font-size:23px;
+.brand-name{
+  font-size:18px;
   font-weight:800;
+  letter-spacing:-.4px;
 }
 
-.logo-mark{
-  color:var(--green);
-  font-size:39px;
-  line-height:1;
-  font-weight:900;
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
 
-.logo-text{
-  color:#f3f8f6;
+.icon-btn{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  color:var(--muted);
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--border);
 }
 
-.header-right{
-  margin-left:auto;
+.icon-btn svg{
+  width:19px;
+  height:19px;
+}
+
+/* =========================
+   PAGE
+========================= */
+
+.container{
+  width:min(100%,720px);
+  margin:auto;
+  padding:25px 16px 20px;
+}
+
+.page-title{
+  font-size:28px;
+  font-weight:850;
+  letter-spacing:-.9px;
+}
+
+.page-subtitle{
+  color:var(--muted);
+  margin-top:6px;
+  font-size:14px;
+  line-height:1.5;
+}
+
+/* =========================
+   LOCATION
+========================= */
+
+.location-card{
+  margin-top:20px;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:linear-gradient(145deg,rgba(26,73,51,.55),rgba(10,36,26,.8));
   display:flex;
   align-items:center;
   gap:12px;
 }
 
-.notification{
-  position:relative;
-  width:40px;
-  height:40px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:white;
-  text-decoration:none;
-}
-
-.notification svg{
-  width:25px;
-  height:25px;
-}
-
-.notification-dot{
-  position:absolute;
-  width:7px;
-  height:7px;
-  background:#1fd184;
-  border-radius:50%;
-  top:5px;
-  right:5px;
-}
-
-/* PAGE */
-
-.container{
-  padding:28px 18px 30px;
-  max-width:1000px;
-  margin:auto;
-}
-
-.title{
-  font-size:34px;
-  line-height:1.1;
-  font-weight:800;
-  margin-bottom:8px;
-}
-
-.subtitle{
-  color:var(--muted);
-  font-size:15px;
-  line-height:1.5;
-  margin-bottom:25px;
-}
-
-/* LOCATION */
-
-.location-box{
-  background:#062219;
-  border:1px solid #154638;
-  border-radius:18px;
-  padding:16px;
-  margin-bottom:25px;
-  min-height:68px;
-  display:flex;
-  align-items:center;
-  gap:13px;
-}
-
 .location-icon{
   width:38px;
   height:38px;
+  flex:0 0 38px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background:rgba(85,230,140,.1);
   color:var(--green);
-  flex:none;
 }
 
-.location-content{
-  font-size:14px;
+.location-icon svg{
+  width:19px;
+  height:19px;
+}
+
+.location-text{
   min-width:0;
 }
 
-.location-status{
-  color:#b6cbc4;
-  line-height:1.5;
-}
-
-.country{
-  color:var(--green);
-  font-weight:800;
-}
-
-/* LOADING */
-
-.loading{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:9px;
+.location-label{
   color:var(--muted);
-  padding:50px 10px;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.7px;
 }
 
-.location-box .loading{
-  justify-content:flex-start;
-  padding:0;
+.location-country{
+  margin-top:2px;
+  font-weight:700;
+  font-size:14px;
 }
 
-.spinner{
-  width:19px;
-  height:19px;
-  border:2px solid #245647;
-  border-top-color:var(--green);
-  border-radius:50%;
-  animation:spin .8s linear infinite;
-  flex-shrink:0;
+/* =========================
+   FILTERS
+========================= */
+
+.filters{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:20px 0 4px;
+  scrollbar-width:none;
 }
 
-@keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
+.filters::-webkit-scrollbar{
+  display:none;
 }
 
-/* TASKS */
+.filter{
+  white-space:nowrap;
+  padding:9px 14px;
+  border-radius:999px;
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--border);
+  color:var(--muted);
+  font-size:12px;
+  font-weight:700;
+}
 
-.task-grid{
+.filter.active{
+  color:#062113;
+  background:var(--green);
+  border-color:var(--green);
+}
+
+/* =========================
+   TASK LIST
+========================= */
+
+.task-list{
+  margin-top:14px;
   display:grid;
-  grid-template-columns:1fr;
-  gap:17px;
+  gap:12px;
 }
 
 .task-card{
-  background:linear-gradient(
-    145deg,
-    #09291f,
-    #061e17
-  );
-  border:1px solid #16483a;
-  border-radius:22px;
-  padding:19px;
-  min-height:350px;
-  display:flex;
-  flex-direction:column;
-  box-shadow:0 7px 25px rgba(0,0,0,.12);
+  position:relative;
+  overflow:hidden;
+  padding:16px;
+  border-radius:20px;
+  background:
+    linear-gradient(145deg,rgba(18,53,39,.96),rgba(9,30,22,.98));
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+}
+
+.task-card::before{
+  content:"";
+  position:absolute;
+  width:130px;
+  height:130px;
+  right:-70px;
+  top:-70px;
+  background:rgba(85,230,140,.08);
+  border-radius:50%;
 }
 
 .task-top{
   display:flex;
-  justify-content:space-between;
   align-items:flex-start;
-}
-
-.task-category{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  min-width:0;
+  gap:12px;
 }
 
 .task-icon{
-  width:58px;
-  height:58px;
-  border-radius:17px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:white;
-  flex-shrink:0;
+  width:46px;
+  height:46px;
+  flex:0 0 46px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  background:rgba(85,230,140,.1);
+  color:var(--green);
 }
 
 .task-icon svg{
-  width:30px;
-  height:30px;
-}
-
-.icon-app{
-  background:#119d78;
-}
-
-.icon-task{
-  background:#168d9b;
-}
-
-.icon-signup{
-  background:#dc8b18;
-}
-
-.icon-offer{
-  background:#7d48d2;
-}
-
-.icon-daily{
-  background:#159e72;
-}
-
-.icon-referral{
-  background:#bc3c92;
-}
-
-.badge{
-  border-radius:30px;
-  padding:8px 12px;
-  font-size:10px;
-  font-weight:800;
-  white-space:nowrap;
-}
-
-.badge-app{
-  background:#0e6e59;
-  color:#b8ffe7;
-}
-
-.badge-task{
-  background:#145e68;
-  color:#b7f4f6;
-}
-
-.badge-signup{
-  background:#87520e;
-  color:#ffe0a4;
-}
-
-.badge-offer{
-  background:#56309a;
-  color:#e2cfff;
-}
-
-.badge-daily{
-  background:#12694f;
-  color:#b9ffe5;
-}
-
-.badge-referral{
-  background:#74275b;
-  color:#ffc9ec;
-}
-
-.task-more{
-  color:#91aaa1;
-  width:28px;
-  height:35px;
-  flex-shrink:0;
-}
-
-.task-more svg{
   width:23px;
+  height:23px;
+}
+
+.task-main{
+  min-width:0;
+  flex:1;
 }
 
 .task-title{
-  font-size:21px;
-  line-height:1.25;
-  margin-top:23px;
+  font-size:15px;
+  line-height:1.35;
   font-weight:800;
+  padding-right:5px;
 }
 
 .task-description{
-  color:#9db5ae;
-  font-size:14px;
-  line-height:1.55;
-  margin-top:11px;
+  margin-top:5px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
 }
 
-.task-bottom{
-  margin-top:auto;
-  padding-top:23px;
+.task-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:12px;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:6px 9px;
+  border-radius:8px;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.06);
+  color:var(--muted);
+  font-size:10px;
+  font-weight:700;
+}
+
+.badge svg{
+  width:12px;
+  height:12px;
+}
+
+.reward-box{
+  margin-top:15px;
+  padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.07);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.reward-label{
+  color:var(--muted);
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.7px;
 }
 
 .reward{
-  display:flex;
-  align-items:center;
-  gap:10px;
+  margin-top:3px;
+  font-size:19px;
+  font-weight:850;
   color:var(--green);
-  font-size:24px;
-  font-weight:900;
-  margin-bottom:18px;
 }
 
-.money{
-  width:38px;
-  height:38px;
-  border-radius:50%;
+.start-btn{
+  min-width:105px;
+  padding:11px 15px;
+  border-radius:11px;
+  color:#052012;
   background:var(--green);
-  color:#052017;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:21px;
-  font-weight:900;
+  font-size:12px;
+  font-weight:800;
+  transition:.2s ease;
 }
 
-.start{
-  width:100%;
-  border:none;
-  border-radius:14px;
-  padding:16px;
-  background:linear-gradient(
-    135deg,
-    #32e29b,
-    #18c981
-  );
-  color:#032017;
-  font-size:16px;
-  font-weight:900;
-  cursor:pointer;
+.start-btn:active{
+  transform:scale(.97);
 }
 
-.start:active{
-  transform:scale(.98);
+.start-btn:hover{
+  background:#70f5a6;
 }
 
-.start:disabled{
-  opacity:.55;
-  cursor:not-allowed;
+/* Category icons */
+.category-survey .task-icon{
+  color:#62c7ff;
+  background:rgba(98,199,255,.1);
 }
 
-/* EMPTY */
+.category-signup .task-icon{
+  color:#c69cff;
+  background:rgba(198,156,255,.1);
+}
 
-.empty{
-  grid-column:1/-1;
+.category-offer .task-icon{
+  color:#ffca67;
+  background:rgba(255,202,103,.1);
+}
+
+.category-daily .task-icon{
+  color:#55e68c;
+  background:rgba(85,230,140,.1);
+}
+
+.category-referral .task-icon{
+  color:#ff8fc0;
+  background:rgba(255,143,192,.1);
+}
+
+.category-app .task-icon{
+  color:#76a8ff;
+  background:rgba(118,168,255,.1);
+}
+
+/* =========================
+   STATES
+========================= */
+
+.state{
+  margin-top:18px;
+  padding:35px 18px;
   text-align:center;
-  padding:55px 20px;
+  border:1px dashed rgba(255,255,255,.1);
+  border-radius:20px;
+  background:rgba(255,255,255,.02);
+}
+
+.state-icon{
+  width:50px;
+  height:50px;
+  margin:0 auto 12px;
+  display:grid;
+  place-items:center;
+  border-radius:15px;
+  color:var(--green);
+  background:rgba(85,230,140,.08);
+}
+
+.state-icon svg{
+  width:23px;
+  height:23px;
+}
+
+.state-title{
+  font-weight:800;
+  font-size:15px;
+}
+
+.state-text{
+  margin-top:6px;
   color:var(--muted);
-  line-height:1.6;
-  background:#061e17;
-  border:1px solid var(--border);
-  border-radius:18px;
+  font-size:12px;
+  line-height:1.5;
 }
 
-/* ERROR */
-
-.error{
-  grid-column:1/-1;
-  text-align:center;
-  padding:45px 20px;
-  color:var(--danger);
-  line-height:1.6;
-  background:#1d0b0b;
-  border:1px solid #4b2020;
-  border-radius:18px;
+.retry-btn{
+  margin-top:15px;
+  padding:10px 16px;
+  border-radius:10px;
+  color:#062113;
+  background:var(--green);
+  font-size:12px;
+  font-weight:800;
 }
 
-/* BOTTOM NAV */
+/* =========================
+   BOTTOM NAV
+========================= */
 
 .bottom-nav{
   position:fixed;
+  z-index:60;
   left:0;
   right:0;
   bottom:0;
-  height:82px;
-  background:#061d15;
-  border-top:1px solid #12372c;
-  display:flex;
-  align-items:center;
-  justify-content:space-around;
-  z-index:30;
+  height:74px;
+  background:rgba(5,18,13,.96);
+  backdrop-filter:blur(18px);
+  border-top:1px solid var(--border);
+}
+
+.nav-inner{
+  width:min(100%,720px);
+  height:100%;
+  margin:auto;
+  padding:0 8px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
 }
 
 .nav-item{
-  text-decoration:none;
-  color:#7e968f;
   display:flex;
   flex-direction:column;
   align-items:center;
+  justify-content:center;
   gap:5px;
-  font-size:11px;
+  color:#71877c;
+  font-size:10px;
   font-weight:700;
-  min-width:58px;
-  position:relative;
 }
 
 .nav-item svg{
-  width:25px;
-  height:25px;
+  width:20px;
+  height:20px;
 }
 
 .nav-item.active{
   color:var(--green);
 }
 
-.nav-line{
-  position:absolute;
-  bottom:-13px;
-  width:32px;
-  height:3px;
-  border-radius:5px;
-  background:var(--green);
+/* =========================
+   LIGHT THEME
+========================= */
+
+body.light{
+  --bg:#f3f8f5;
+  --bg2:#ffffff;
+  --card:#ffffff;
+  --card2:#f7fbf8;
+  --border:rgba(7,43,27,.1);
+  --text:#092217;
+  --muted:#61766b;
+  --shadow:0 15px 35px rgba(15,60,39,.08);
 }
 
-/* DESKTOP */
+body.light .header{
+  background:rgba(243,248,245,.9);
+}
+
+body.light .bottom-nav{
+  background:rgba(255,255,255,.96);
+}
+
+body.light .task-card{
+  background:#fff;
+}
+
+body.light .icon-btn,
+body.light .filter{
+  background:rgba(7,43,27,.035);
+}
+
+/* =========================
+   DESKTOP
+========================= */
 
 @media(min-width:700px){
-
-  .task-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
   .container{
-    padding-top:42px;
+    padding-top:34px;
   }
 
-  .title{
-    font-size:42px;
-  }
-}
-
-/* SMALL PHONES */
-
-@media(max-width:380px){
-
-  .logo{
-    font-size:21px;
+  .task-list{
+    grid-template-columns:1fr 1fr;
   }
 
-  .logo-mark{
-    font-size:35px;
-  }
-
-  .logo-link{
-    margin-left:10px;
-  }
-
-  .title{
-    font-size:30px;
-  }
-
-  .header-right{
-    gap:5px;
-  }
-
-  .task-card{
-    padding:16px;
-  }
-
-  .task-title{
-    font-size:19px;
+  .page-title{
+    font-size:32px;
   }
 }
-</style></head><body><header class="header"><a
-href="dashboard.html"
-class="header-menu"
-aria-label="Dashboard"
+</style>
+</head>
 
-«»
+<body>
 
-<svg
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2.3"
->
-  <path d="M4 6h16"/>
-  <path d="M4 12h16"/>
-  <path d="M4 18h16"/>
-</svg>
+<header class="header">
+  <div class="header-inner">
 
-  </a><a
-href="dashboard.html"
-class="logo-link"
+    <a href="dashboard.html" class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 8.5h12"/>
+          <path d="M7.5 8.5V6.8A2.8 2.8 0 0 1 10.3 4h3.4a2.8 2.8 0 0 1 2.8 2.8v1.7"/>
+          <rect x="4" y="8.5" width="16" height="11.5" rx="2.5"/>
+          <path d="M9 13h6"/>
+        </svg>
+      </div>
+      <span class="brand-name">TallyBuck</span>
+    </a>
 
-«»
+    <div class="header-actions">
 
-<div class="logo">
-  <span class="logo-mark">T</span>
-  <span class="logo-text">TallyBuck</span>
-</div>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2"/>
+          <path d="M12 20v2"/>
+          <path d="m4.93 4.93 1.41 1.41"/>
+          <path d="m17.66 17.66 1.41 1.41"/>
+          <path d="M2 12h2"/>
+          <path d="M20 12h2"/>
+          <path d="m6.34 17.66-1.41 1.41"/>
+          <path d="m19.07 4.93-1.41 1.41"/>
+        </svg>
+      </button>
 
-  </a>  <div class="header-right"><a
-  href="notifications.html"
-  class="notification"
-  aria-label="Notifications"
->
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-  >
-    <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-    <path d="M10 21h4"/>
-  </svg>
-
-  <span class="notification-dot"></span>
-</a>
-
-  </div></header><main class="container">  <h1 class="title">
-    Available Tasks
-  </h1>  <p class="subtitle">
-    Complete eligible tasks and earn rewards.
-  </p>  <div class="location-box"><svg
-  class="location-icon"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
->
-  <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/>
-  <circle cx="12" cy="10" r="2.5"/>
-</svg>
-
-<div
-  class="location-content"
-  id="locationContent"
->
-  <div class="loading">
-    <span class="spinner"></span>
-    <span>Detecting your location...</span>
+    </div>
   </div>
-</div>
-
-  </div>  <section
-    id="taskGrid"
-    class="task-grid"
-  ></section></main><nav class="bottom-nav"><a
-href="dashboard.html"
-class="nav-item"
-
-«»
-
-<svg
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
->
-  <path d="m3 10 9-7 9 7"/>
-  <path d="M5 9v11h14V9"/>
-  <path d="M9 20v-6h6v6"/>
-</svg>
-
-<span>Home</span>
-
-  </a><a
-href="tasks.html"
-class="nav-item active"
-
-«»
-
-<svg
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
->
-  <rect
-    x="5"
-    y="3"
-    width="14"
-    height="18"
-    rx="2"
-  />
-  <path d="M9 7h6"/>
-  <path d="M9 11h6"/>
-  <path d="M9 15h3"/>
-</svg>
-
-<span>Tasks</span>
-
-<span class="nav-line"></span>
-
-  </a><a
-href="withdraw.html"
-class="nav-item"
-
-«»
-
-<svg
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
->
-  <rect
-    x="3"
-    y="5"
-    width="18"
-    height="14"
-    rx="3"
-  />
-  <path d="M16 9h5v6h-5a3 3 0 0 1 0-6Z"/>
-  <circle cx="16" cy="12" r="1"/>
-</svg>
-
-<span>Wallet</span>
-
-  </a><a
-href="history.html"
-class="nav-item"
-
-«»
-
-<svg
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
->
-  <circle
-    cx="12"
-    cy="12"
-    r="9"
-  />
-  <path d="M12 7v5l3 2"/>
-</svg>
-
-<span>History</span>
-
-  </a><a
-href="profile.html"
-class="nav-item"
-
-«»
-
-<svg
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
->
-  <circle
-    cx="12"
-    cy="8"
-    r="3"
-  />
-  <path d="M5 20c0-4 3-6 7-6s7 2 7 6"/>
-</svg>
-
-<span>Profile</span>
-
-  </a></nav><script>
-
-/* =========================================================
-   SUPABASE
-========================================================= */
-
-const SUPABASE_URL =
-  "https://cetsxdkoauucxwsbdktl.supabase.co";
-
-const SUPABASE_KEY =
-  "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
-
-const supabaseClient =
-  supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+</header>
 
 
-/* =========================================================
-   SESSION
-========================================================= */
+<main class="container">
 
-async function checkSession(){
+  <h1 class="page-title">Available Tasks</h1>
+  <p class="page-subtitle">
+    Complete eligible tasks and earn rewards directly to your TallyBuck balance.
+  </p>
 
-  const {
-    data,
-    error
-  } =
-    await supabaseClient.auth.getSession();
 
-  if(
-    error ||
-    !data.session
-  ){
+  <div class="location-card">
 
-    window.location.href =
-      "login.html";
+    <div class="location-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/>
+        <circle cx="12" cy="10" r="2.5"/>
+      </svg>
+    </div>
 
-    return null;
+    <div class="location-text">
+      <div class="location-label">Available in</div>
+      <div class="location-country" id="countryText">Detecting your location...</div>
+    </div>
+
+  </div>
+
+
+  <div class="filters" id="filters">
+    <button class="filter active" data-filter="all" type="button">All</button>
+    <button class="filter" data-filter="survey" type="button">Surveys</button>
+    <button class="filter" data-filter="offer" type="button">Offers</button>
+    <button class="filter" data-filter="signup" type="button">Sign Up</button>
+    <button class="filter" data-filter="daily" type="button">Daily</button>
+  </div>
+
+
+  <section id="content">
+
+    <div class="state" id="loadingState">
+
+      <div class="state-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2v4"/>
+          <path d="M12 18v4"/>
+          <path d="m4.93 4.93 2.83 2.83"/>
+          <path d="m16.24 16.24 2.83 2.83"/>
+          <path d="M2 12h4"/>
+          <path d="M18 12h4"/>
+          <path d="m4.93 19.07 2.83-2.83"/>
+          <path d="m16.24 7.76 2.83-2.83"/>
+        </svg>
+      </div>
+
+      <div class="state-title">Loading available tasks</div>
+      <div class="state-text">Checking tasks available for your location.</div>
+
+    </div>
+
+    <div class="task-list" id="taskList" style="display:none;"></div>
+
+    <div class="state" id="emptyState" style="display:none;">
+
+      <div class="state-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="4" y="4" width="16" height="16" rx="3"/>
+          <path d="M8 9h8"/>
+          <path d="M8 13h5"/>
+          <path d="M8 17h3"/>
+        </svg>
+      </div>
+
+      <div class="state-title">No tasks available</div>
+      <div class="state-text">
+        There are currently no eligible tasks for your location. Check again later.
+      </div>
+
+      <button class="retry-btn" id="retryBtn" type="button">Refresh Tasks</button>
+
+    </div>
+
+    <div class="state" id="errorState" style="display:none;">
+
+      <div class="state-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 8v5"/>
+          <path d="M12 16h.01"/>
+        </svg>
+      </div>
+
+      <div class="state-title">Unable to load tasks</div>
+      <div class="state-text" id="errorText">
+        Please try again.
+      </div>
+
+      <button class="retry-btn" id="errorRetryBtn" type="button">Try Again</button>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<nav class="bottom-nav">
+
+  <div class="nav-inner">
+
+    <a class="nav-item" href="dashboard.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m3 10 9-7 9 7"/>
+        <path d="M5 9v11h14V9"/>
+        <path d="M9 20v-6h6v6"/>
+      </svg>
+      <span>Home</span>
+    </a>
+
+    <a class="nav-item active" href="tasks.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="3" width="16" height="18" rx="3"/>
+        <path d="M8 8h8"/>
+        <path d="M8 12h8"/>
+        <path d="M8 16h5"/>
+      </svg>
+      <span>Tasks</span>
+    </a>
+
+    <a class="nav-item" href="wallet.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 7h15a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h13"/>
+        <path d="M16 13h5"/>
+        <circle cx="16" cy="13" r="1"/>
+      </svg>
+      <span>Wallet</span>
+    </a>
+
+    <a class="nav-item" href="profile.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 21a8 8 0 0 1 16 0"/>
+      </svg>
+      <span>Profile</span>
+    </a>
+
+  </div>
+
+</nav>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://cetsxdkoauucxwsbdktl.supabase.co";
+const SUPABASE_KEY = "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+let currentUser = null;
+let detectedCountry = null;
+let allTasks = [];
+let activeFilter = "all";
+
+
+/* =========================
+   SVG ICONS
+========================= */
+
+function iconForCategory(category){
+
+  const value = String(category || "").toLowerCase();
+
+  if(value.includes("survey")){
+    return `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 3h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/>
+        <path d="M8 8h8"/>
+        <path d="M8 12h8"/>
+        <path d="M8 16h5"/>
+      </svg>
+    `;
   }
 
-  return data.session.user;
+  if(value.includes("signup") || value.includes("sign up")){
+    return `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="8" r="4"/>
+        <path d="M3 21a6 6 0 0 1 12 0"/>
+        <path d="M19 8v6"/>
+        <path d="M16 11h6"/>
+      </svg>
+    `;
+  }
+
+  if(value.includes("offer")){
+    return `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-7"/>
+        <path d="M4 12h16"/>
+        <path d="M12 21V7"/>
+        <path d="M12 7H8.5A2.5 2.5 0 1 1 11 4.5L12 7Z"/>
+        <path d="M12 7h3.5A2.5 2.5 0 1 0 13 4.5L12 7Z"/>
+      </svg>
+    `;
+  }
+
+  if(value.includes("daily")){
+    return `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="17" rx="2"/>
+        <path d="M16 2v4"/>
+        <path d="M8 2v4"/>
+        <path d="M3 10h18"/>
+        <path d="m9 15 2 2 4-4"/>
+      </svg>
+    `;
+  }
+
+  if(value.includes("referral")){
+    return `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M3 21a6 6 0 0 1 12 0"/>
+        <path d="M16 8h5"/>
+        <path d="M18.5 5.5 21 8l-2.5 2.5"/>
+      </svg>
+    `;
+  }
+
+  if(value.includes("app")){
+    return `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="7" y="2" width="10" height="20" rx="3"/>
+        <path d="M10 5h4"/>
+        <path d="M11 18h2"/>
+      </svg>
+    `;
+  }
+
+  return `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3 4 7v6c0 4.5 3.4 7.2 8 8 4.6-.8 8-3.5 8-8V7l-8-4Z"/>
+      <path d="m9 12 2 2 4-4"/>
+    </svg>
+  `;
 }
 
 
-/* =========================================================
-   COUNTRY DETECTION
-========================================================= */
+/* =========================
+   CATEGORY
+========================= */
+
+function getCategoryClass(category){
+
+  const value = String(category || "").toLowerCase();
+
+  if(value.includes("survey")) return "category-survey";
+  if(value.includes("signup") || value.includes("sign up")) return "category-signup";
+  if(value.includes("offer")) return "category-offer";
+  if(value.includes("daily")) return "category-daily";
+  if(value.includes("referral")) return "category-referral";
+  if(value.includes("app")) return "category-app";
+
+  return "category-general";
+}
+
+
+/* =========================
+   COUNTRY
+========================= */
 
 async function detectCountry(){
 
   try{
 
-    const response =
-      await fetch(
-        "https://ipapi.co/json/",
-        {
-          cache:"no-store"
-        }
-      );
+    const response = await fetch(
+      "https://ipapi.co/json/",
+      {cache:"no-store"}
+    );
 
-    if(response.ok){
+    if(!response.ok){
+      throw new Error("Location request failed");
+    }
 
-      const data =
-        await response.json();
+    const data = await response.json();
 
-      if(
-        data &&
-        data.country_name
-      ){
+    if(data && data.country_code){
+      detectedCountry = String(data.country_code).toUpperCase();
 
-        return data.country_name.trim();
+      document.getElementById("countryText").textContent =
+        data.country_name || detectedCountry;
 
-      }
-
+      return;
     }
 
   }catch(error){
-
-    console.log(
-      "Primary location service failed."
-    );
-
+    console.warn("Primary location service failed:", error);
   }
 
 
   try{
 
-    const response =
-      await fetch(
-        "https://ipwho.is/",
-        {
-          cache:"no-store"
-        }
-      );
+    const response = await fetch(
+      "https://ipwho.is/",
+      {cache:"no-store"}
+    );
 
-    if(response.ok){
+    if(!response.ok){
+      throw new Error("Fallback location request failed");
+    }
 
-      const data =
-        await response.json();
+    const data = await response.json();
 
-      if(
-        data &&
-        data.success &&
-        data.country
-      ){
+    if(data && data.success && data.country_code){
 
-        return data.country.trim();
+      detectedCountry =
+        String(data.country_code).toUpperCase();
 
-      }
+      document.getElementById("countryText").textContent =
+        data.country || detectedCountry;
 
+      return;
     }
 
   }catch(error){
-
-    console.log(
-      "Fallback location service failed."
-    );
-
+    console.warn("Fallback location service failed:", error);
   }
 
-  throw new Error(
-    "Unable to detect country."
-  );
+
+  detectedCountry = null;
+
+  document.getElementById("countryText").textContent =
+    "Worldwide tasks";
 }
 
 
-/* =========================================================
-   SHOW COUNTRY
-========================================================= */
+/* =========================
+   LOAD USER
+========================= */
 
-function showCountry(country){
-
-  document.getElementById(
-    "locationContent"
-  ).innerHTML = `
-
-    <div class="location-status">
-      Available opportunities for:
-      <span class="country">
-        ${escapeHTML(country)}
-      </span>
-    </div>
-
-  `;
-
-}
-
-
-/* =========================================================
-   LOAD TASKS
-========================================================= */
-
-async function loadTasks(country){
-
-  const grid =
-    document.getElementById(
-      "taskGrid"
-    );
-
+async function loadUser(){
 
   const {
-    data:tasks,
+    data,
     error
-  } =
-    await supabaseClient
+  } = await db.auth.getSession();
+
+  if(error){
+    throw error;
+  }
+
+  currentUser = data.session?.user || null;
+
+  if(!currentUser){
+    window.location.href = "login.html";
+    return false;
+  }
+
+  return true;
+}
+
+
+/* =========================
+   LOAD TASKS
+========================= */
+
+async function loadTasks(){
+
+  showLoading();
+
+  try{
+
+    const {
+      data,
+      error
+    } = await db
       .from("tasks")
       .select(`
         id,
@@ -891,652 +981,387 @@ async function loadTasks(country){
         user_reward_percent,
         task_url,
         proof_required,
-        max_completions,
-        status,
-        created_at
+        status
       `)
-      .eq(
-        "status",
-        "active"
-      )
-      .order(
-        "created_at",
-        {
-          ascending:false
-        }
-      );
+      .eq("status","active")
+      .order("created_at",{ascending:false});
 
+    if(error){
+      throw error;
+    }
 
-  if(error){
+    allTasks = Array.isArray(data) ? data : [];
 
-    console.error(
-      "Task query error:",
-      error
-    );
+    renderTasks();
+
+  }catch(error){
+
+    console.error("Task loading error:",error);
 
     showError(
-      "Tasks could not be loaded right now."
+      "We couldn't load the available tasks. Please try again."
     );
-
-    return;
-
   }
-
-
-  const detected =
-    String(country)
-      .trim()
-      .toLowerCase();
-
-
-  const available =
-    (tasks || []).filter(task => {
-
-      const target =
-        String(
-          task.country ||
-          "Worldwide"
-        )
-        .trim()
-        .toLowerCase();
-
-
-      return (
-        target === "worldwide" ||
-        target === detected
-      );
-
-    });
-
-
-  if(!available.length){
-
-    showEmpty(
-      "No tasks are available for your location right now."
-    );
-
-    return;
-
-  }
-
-
-  grid.innerHTML = "";
-
-
-  available.forEach(task => {
-
-    const payout =
-      Number(
-        task.payout || 0
-      );
-
-
-    const percentage =
-      Number(
-        task.user_reward_percent || 0
-      );
-
-
-    const reward =
-      payout *
-      percentage /
-      100;
-
-
-    const category =
-      getCategory(
-        task.category
-      );
-
-
-    const card =
-      document.createElement(
-        "article"
-      );
-
-
-    card.className =
-      "task-card";
-
-
-    card.innerHTML = `
-
-      <div class="task-top">
-
-        <div class="task-category">
-
-          <div class="
-            task-icon
-            ${category.iconClass}
-          ">
-
-            ${category.icon}
-
-          </div>
-
-          <div class="
-            badge
-            ${category.badgeClass}
-          ">
-
-            ${category.label}
-
-          </div>
-
-        </div>
-
-
-        <div class="task-more">
-
-          <svg
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <circle
-              cx="12"
-              cy="5"
-              r="1.6"
-            />
-
-            <circle
-              cx="12"
-              cy="12"
-              r="1.6"
-            />
-
-            <circle
-              cx="12"
-              cy="19"
-              r="1.6"
-            />
-          </svg>
-
-        </div>
-
-      </div>
-
-
-      <h2 class="task-title">
-        ${escapeHTML(task.title)}
-      </h2>
-
-
-      <p class="task-description">
-        ${escapeHTML(
-          task.description ||
-          "Complete this task and earn your reward."
-        )}
-      </p>
-
-
-      <div class="task-bottom">
-
-        <div class="reward">
-
-          <span class="money">
-            $
-          </span>
-
-          $${reward.toFixed(2)}
-
-        </div>
-
-
-        <button
-          class="start"
-          data-task-id="${Number(task.id)}"
-        >
-          Start Task
-        </button>
-
-      </div>
-
-    `;
-
-
-    const startButton =
-      card.querySelector(
-        ".start"
-      );
-
-
-    startButton.addEventListener(
-      "click",
-      function(){
-
-        startTask(
-          Number(task.id),
-          task.task_url
-        );
-
-      }
-    );
-
-
-    grid.appendChild(card);
-
-  });
-
 }
 
 
-/* =========================================================
-   START TASK
-========================================================= */
+/* =========================
+   FILTER TASKS
+========================= */
 
-function startTask(
-  taskId,
-  taskUrl
-){
+function getVisibleTasks(){
+
+  let tasks = allTasks.filter(task => {
+
+    const country =
+      String(task.country || "Worldwide")
+      .trim()
+      .toUpperCase();
+
+    if(
+      country !== "WORLDWIDE" &&
+      detectedCountry &&
+      country !== detectedCountry
+    ){
+      return false;
+    }
+
+    if(
+      country !== "WORLDWIDE" &&
+      !detectedCountry
+    ){
+      return false;
+    }
+
+    return true;
+  });
+
+
+  if(activeFilter !== "all"){
+
+    tasks = tasks.filter(task => {
+
+      const category =
+        String(task.category || "").toLowerCase();
+
+      if(activeFilter === "survey")
+        return category.includes("survey");
+
+      if(activeFilter === "offer")
+        return category.includes("offer");
+
+      if(activeFilter === "signup")
+        return (
+          category.includes("signup") ||
+          category.includes("sign up")
+        );
+
+      if(activeFilter === "daily")
+        return category.includes("daily");
+
+      return true;
+    });
+  }
+
+  return tasks;
+}
+
+
+/* =========================
+   RENDER TASKS
+========================= */
+
+function renderTasks(){
+
+  const list =
+    document.getElementById("taskList");
+
+  const visibleTasks =
+    getVisibleTasks();
+
+  if(!visibleTasks.length){
+
+    list.innerHTML = "";
+
+    document.getElementById("loadingState").style.display = "none";
+    document.getElementById("errorState").style.display = "none";
+    document.getElementById("taskList").style.display = "none";
+    document.getElementById("emptyState").style.display = "block";
+
+    return;
+  }
+
+
+  list.innerHTML = visibleTasks.map(task => {
+
+    const payout =
+      Number(task.payout || 0);
+
+    const percentage =
+      Number(task.user_reward_percent || 0);
+
+    const reward =
+      Math.round((payout * percentage / 100) * 100) / 100;
+
+    const category =
+      task.category || "Task";
+
+    const categoryClass =
+      getCategoryClass(category);
+
+    const description =
+      task.description ||
+      "Complete this task according to the instructions.";
+
+    const country =
+      task.country || "Worldwide";
+
+    return `
+      <article class="task-card ${categoryClass}">
+
+        <div class="task-top">
+
+          <div class="task-icon">
+            ${iconForCategory(category)}
+          </div>
+
+          <div class="task-main">
+
+            <div class="task-title">
+              ${escapeHtml(task.title || "Available Task")}
+            </div>
+
+            <div class="task-description">
+              ${escapeHtml(description)}
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="task-meta">
+
+          <span class="badge">
+            ${escapeHtml(category)}
+          </span>
+
+          <span class="badge">
+
+            <svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M12 21s8-6 8-11a8 8 0 1 0-16 0c0 5 8 11 8 11Z"/>
+              <circle cx="12" cy="10" r="2.5"/>
+            </svg>
+
+            ${escapeHtml(country)}
+          </span>
+
+          ${
+            task.proof_required
+            ? `
+              <span class="badge">
+                Proof required
+              </span>
+            `
+            : ""
+          }
+
+        </div>
+
+
+        <div class="reward-box">
+
+          <div>
+            <div class="reward-label">Your reward</div>
+            <div class="reward">$${reward.toFixed(2)}</div>
+          </div>
+
+          <button
+            class="start-btn"
+            type="button"
+            onclick="startTask(${Number(task.id)})">
+            Start Task
+          </button>
+
+        </div>
+
+      </article>
+    `;
+
+  }).join("");
+
+
+  document.getElementById("loadingState").style.display = "none";
+  document.getElementById("errorState").style.display = "none";
+  document.getElementById("emptyState").style.display = "none";
+  document.getElementById("taskList").style.display = "grid";
+}
+
+
+/* =========================
+   START TASK
+========================= */
+
+function startTask(taskId){
 
   if(!taskId){
     return;
   }
 
-
-  /*
-    For now all tasks continue through the existing
-    submission flow.
-
-    CPA/offerwall automatic tracking will be connected
-    later through the secure backend/postback system.
-  */
-
   window.location.href =
     "submit-task.html?task=" +
     encodeURIComponent(taskId);
-
 }
 
 
-/* =========================================================
-   EMPTY STATE
-========================================================= */
+/* =========================
+   ESCAPE HTML
+========================= */
 
-function showEmpty(message){
+function escapeHtml(value){
 
-  document.getElementById(
-    "taskGrid"
-  ).innerHTML = `
-
-    <div class="empty">
-
-      ${escapeHTML(message)}
-
-    </div>
-
-  `;
-
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 }
 
 
-/* =========================================================
-   ERROR STATE
-========================================================= */
+/* =========================
+   STATES
+========================= */
+
+function showLoading(){
+
+  document.getElementById("loadingState").style.display = "block";
+  document.getElementById("taskList").style.display = "none";
+  document.getElementById("emptyState").style.display = "none";
+  document.getElementById("errorState").style.display = "none";
+}
+
 
 function showError(message){
 
-  document.getElementById(
-    "taskGrid"
-  ).innerHTML = `
+  document.getElementById("loadingState").style.display = "none";
+  document.getElementById("taskList").style.display = "none";
+  document.getElementById("emptyState").style.display = "none";
+  document.getElementById("errorState").style.display = "block";
 
-    <div class="error">
-
-      ${escapeHTML(message)}
-
-      <br><br>
-
-      <button
-        class="start"
-        style="max-width:220px"
-        onclick="location.reload()"
-      >
-        Refresh
-      </button>
-
-    </div>
-
-  `;
-
+  document.getElementById("errorText").textContent = message;
 }
 
 
-/* =========================================================
-   CATEGORY
-========================================================= */
+/* =========================
+   FILTER BUTTONS
+========================= */
 
-function getCategory(value){
+document.querySelectorAll(".filter").forEach(button => {
 
-  const c =
-    String(value || "")
-      .toLowerCase();
+  button.addEventListener("click",() => {
+
+    document.querySelectorAll(".filter")
+      .forEach(item => item.classList.remove("active"));
+
+    button.classList.add("active");
+
+    activeFilter =
+      button.dataset.filter || "all";
+
+    renderTasks();
+  });
+
+});
 
 
-  if(c.includes("survey")){
+/* =========================
+   THEME
+========================= */
 
-    return {
-      label:"SURVEY",
-      iconClass:"icon-task",
-      badgeClass:"badge-task",
-      icon:`
+function applyTheme(){
 
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
+  const saved =
+    localStorage.getItem("tallybuck-theme");
 
-          <rect
-            x="5"
-            y="3"
-            width="14"
-            height="18"
-            rx="2"
-          />
-
-          <path d="M9 7h6"/>
-          <path d="M9 11h6"/>
-          <path d="M9 15h3"/>
-
-        </svg>
-
-      `
-    };
-
+  if(saved === "light"){
+    document.body.classList.add("light");
+  }else{
+    document.body.classList.remove("light");
   }
-
-
-  if(
-    c.includes("sign") ||
-    c.includes("signup") ||
-    c.includes("register")
-  ){
-
-    return {
-      label:"SIGN UP",
-      iconClass:"icon-signup",
-      badgeClass:"badge-signup",
-      icon:`
-
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-
-          <circle
-            cx="9"
-            cy="8"
-            r="3"
-          />
-
-          <path
-            d="M3 20c0-3.5 2.5-6 6-6s6 2.5 6 6"
-          />
-
-          <path d="M18 12v6"/>
-          <path d="M15 15h6"/>
-
-        </svg>
-
-      `
-    };
-
-  }
-
-
-  if(c.includes("offer")){
-
-    return {
-      label:"OFFER",
-      iconClass:"icon-offer",
-      badgeClass:"badge-offer",
-      icon:`
-
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-
-          <path d="M3 8h18v5H3z"/>
-          <path d="M12 8v12"/>
-          <path d="M5 13v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/>
-
-        </svg>
-
-      `
-    };
-
-  }
-
-
-  if(c.includes("daily")){
-
-    return {
-      label:"DAILY",
-      iconClass:"icon-daily",
-      badgeClass:"badge-daily",
-      icon:`
-
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-
-          <rect
-            x="4"
-            y="5"
-            width="16"
-            height="15"
-            rx="2"
-          />
-
-          <path d="M8 3v4"/>
-          <path d="M16 3v4"/>
-          <path d="M4 9h16"/>
-
-        </svg>
-
-      `
-    };
-
-  }
-
-
-  if(c.includes("referral")){
-
-    return {
-      label:"REFERRAL",
-      iconClass:"icon-referral",
-      badgeClass:"badge-referral",
-      icon:`
-
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-
-          <circle
-            cx="9"
-            cy="8"
-            r="3"
-          />
-
-          <circle
-            cx="17"
-            cy="9"
-            r="2.5"
-          />
-
-          <path
-            d="M3 20c0-3.2 2.6-5 6-5s6 1.8 6 5"
-          />
-
-          <path
-            d="M15 15c3 0 5 1.6 5 4"
-          />
-
-        </svg>
-
-      `
-    };
-
-  }
-
-
-  if(
-    c.includes("app") ||
-    c.includes("install")
-  ){
-
-    return {
-      label:"APP",
-      iconClass:"icon-app",
-      badgeClass:"badge-app",
-      icon:`
-
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-
-          <rect
-            x="6"
-            y="3"
-            width="12"
-            height="18"
-            rx="2"
-          />
-
-          <path d="M9 6h6"/>
-          <path d="M10 18h4"/>
-
-        </svg>
-
-      `
-    };
-
-  }
-
-
-  return {
-    label:"TASK",
-    iconClass:"icon-task",
-    badgeClass:"badge-task",
-    icon:`
-
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-      >
-
-        <rect
-          x="5"
-          y="3"
-          width="14"
-          height="18"
-          rx="2"
-        />
-
-        <path d="M9 8h6"/>
-        <path d="M9 12h6"/>
-        <path d="M9 16h3"/>
-
-      </svg>
-
-    `
-  };
-
 }
 
 
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
+document.getElementById("themeBtn")
+  .addEventListener("click",() => {
 
-function escapeHTML(value){
+    document.body.classList.toggle("light");
 
-  return String(
-    value ?? ""
-  )
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
+    localStorage.setItem(
+      "tallybuck-theme",
+      document.body.classList.contains("light")
+        ? "light"
+        : "dark"
+    );
 
-}
+  });
 
 
-/* =========================================================
-   START
-========================================================= */
+/* =========================
+   RETRY
+========================= */
 
-(async function(){
+document.getElementById("retryBtn")
+  .addEventListener("click",async () => {
 
-  const user =
-    await checkSession();
+    await initialise();
 
-  if(!user){
-    return;
-  }
+  });
 
+
+document.getElementById("errorRetryBtn")
+  .addEventListener("click",async () => {
+
+    await initialise();
+
+  });
+
+
+/* =========================
+   INITIALISE
+========================= */
+
+async function initialise(){
+
+  applyTheme();
 
   try{
 
-    const country =
-      await detectCountry();
+    const authenticated =
+      await loadUser();
 
+    if(!authenticated){
+      return;
+    }
 
-    showCountry(
-      country
-    );
+    await detectCountry();
 
-
-    await loadTasks(
-      country
-    );
-
+    await loadTasks();
 
   }catch(error){
 
-    console.error(
-      "Tasks initialization error:",
-      error
+    console.error(error);
+
+    showError(
+      "Something went wrong. Please try again."
     );
-
-
-    document.getElementById(
-      "locationContent"
-    ).innerHTML = `
-
-      <div class="location-status">
-        Unable to detect your country.
-        Please refresh and try again.
-      </div>
-
-    `;
-
-
-    showEmpty(
-      "Tasks cannot be loaded until your location is detected."
-    );
-
   }
+}
 
-})();
 
-</script></body>
+initialise();
+</script>
+
+</body>
 </html>
