@@ -3,93 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Create Account — RexTasks</title>
-
-<meta name="description" content="Create your free RexTasks account and start completing tasks to earn rewards.">
+<title>Create Account — TallyBuck</title>
+<meta name="description" content="Create your free TallyBuck account and start completing eligible tasks to earn rewards.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-
 :root{
   --forest-deep:#061A12;
   --forest:#0D2E20;
   --forest-mid:#153F2B;
   --forest-light:#1B5037;
-
   --green:#2E9A5E;
   --green-bright:#3EBE79;
-
   --ink:#E4F0E8;
   --ink-soft:#9CBFA9;
-
   --danger:#ff6677;
-  --warning:#f4c95d;
-
   --border:rgba(228,240,232,.11);
 }
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
-html{
-  scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
   min-height:100vh;
   font-family:'Manrope',sans-serif;
   color:var(--ink);
-
   background:
-    radial-gradient(
-      circle at 50% -10%,
-      #16482f 0%,
-      var(--forest-deep) 48%,
-      #030d08 100%
-    );
-
+    radial-gradient(circle at 50% -10%,#16482f 0%,var(--forest-deep) 48%,#030d08 100%);
   display:flex;
   flex-direction:column;
 }
 
-button,
-input,
-select{
-  font-family:inherit;
-}
+button,input,select{font-family:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
 
-button{
-  cursor:pointer;
-}
-
-a{
-  color:inherit;
-  text-decoration:none;
-}
-
-/* =========================================
-   NAVIGATION
-========================================= */
-
+/* NAV */
 nav{
   width:100%;
   height:72px;
-
   border-bottom:1px solid rgba(228,240,232,.08);
-
   background:rgba(6,26,18,.88);
-
   backdrop-filter:blur(14px);
   -webkit-backdrop-filter:blur(14px);
-
   position:relative;
   z-index:10;
 }
@@ -97,10 +57,8 @@ nav{
 .nav-inner{
   max-width:1120px;
   height:100%;
-
   margin:auto;
   padding:0 24px;
-
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -110,7 +68,6 @@ nav{
   display:flex;
   align-items:center;
   gap:10px;
-
   font-family:'Fraunces',serif;
   font-size:1.35rem;
   font-weight:700;
@@ -125,86 +82,57 @@ nav{
 .back-login{
   font-size:.9rem;
   font-weight:700;
-
   color:var(--ink-soft);
-
-  transition:.2s ease;
 }
 
-.back-login:hover{
-  color:var(--green-bright);
-}
+.back-login:hover{color:var(--green-bright)}
 
-/* =========================================
-   MAIN
-========================================= */
-
+/* MAIN */
 main{
   flex:1;
-
   display:flex;
   align-items:center;
   justify-content:center;
-
   padding:55px 20px 70px;
 }
 
 .signup-layout{
   width:100%;
   max-width:1050px;
-
   display:grid;
   grid-template-columns:1fr 480px;
-
   gap:70px;
-
   align-items:center;
 }
 
-/* =========================================
-   LEFT SIDE
-========================================= */
-
-.intro{
-  max-width:510px;
-}
+/* INTRO */
+.intro{max-width:510px}
 
 .eyebrow{
   display:inline-flex;
   align-items:center;
   gap:8px;
-
   color:var(--green-bright);
-
   font-size:.82rem;
   font-weight:800;
-
   letter-spacing:.04em;
   text-transform:uppercase;
-
   margin-bottom:18px;
 }
 
 .eyebrow-dot{
   width:7px;
   height:7px;
-
   border-radius:50%;
-
   background:var(--green-bright);
-
   box-shadow:0 0 15px rgba(62,190,121,.65);
 }
 
 .intro h1{
   font-family:'Fraunces',serif;
-
   font-size:clamp(2.35rem,5vw,4rem);
-
   line-height:1.04;
-
   letter-spacing:-.025em;
-
   margin-bottom:22px;
 }
 
@@ -215,24 +143,14 @@ main{
 
 .intro-text{
   max-width:46ch;
-
   color:var(--ink-soft);
-
   font-size:1rem;
-
   line-height:1.7;
-
   margin-bottom:32px;
 }
 
-/* =========================================
-   BENEFITS
-========================================= */
-
-.benefits{
-  display:grid;
-  gap:15px;
-}
+/* BENEFITS */
+.benefits{display:grid;gap:15px}
 
 .benefit{
   display:flex;
@@ -243,19 +161,13 @@ main{
 .benefit-icon{
   width:40px;
   height:40px;
-
   flex:0 0 40px;
-
   display:flex;
   align-items:center;
   justify-content:center;
-
   border-radius:11px;
-
   background:rgba(46,154,94,.13);
-
   border:1px solid rgba(62,190,121,.15);
-
   color:var(--green-bright);
 }
 
@@ -266,218 +178,133 @@ main{
 
 .benefit-text strong{
   display:block;
-
   font-size:.92rem;
-
   margin-bottom:2px;
 }
 
 .benefit-text span{
   color:var(--ink-soft);
-
   font-size:.8rem;
 }
 
-/* =========================================
-   SIGNUP CARD
-========================================= */
-
+/* CARD */
 .signup-card{
   width:100%;
-
   padding:32px;
-
   border-radius:24px;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(21,63,43,.96),
-      rgba(9,35,24,.98)
-    );
-
+  background:linear-gradient(145deg,rgba(21,63,43,.96),rgba(9,35,24,.98));
   border:1px solid var(--border);
-
   box-shadow:
     0 30px 80px rgba(0,0,0,.45),
     inset 0 1px 0 rgba(255,255,255,.025);
 }
 
-.card-head{
-  margin-bottom:25px;
-}
+.card-head{margin-bottom:25px}
 
 .card-head h2{
   font-family:'Fraunces',serif;
-
   font-size:1.8rem;
-
   margin-bottom:7px;
 }
 
 .card-head p{
   color:var(--ink-soft);
-
   font-size:.88rem;
 }
 
-/* =========================================
-   FORM
-========================================= */
-
-.form-group{
-  margin-bottom:17px;
-}
+/* FORM */
+.form-group{margin-bottom:17px}
 
 .form-label{
   display:block;
-
   color:var(--ink);
-
   font-size:.82rem;
   font-weight:700;
-
   margin-bottom:8px;
 }
 
-.input-wrap{
-  position:relative;
-}
+.input-wrap{position:relative}
 
 .input-icon{
   position:absolute;
-
   left:14px;
   top:50%;
-
   transform:translateY(-50%);
-
   width:18px;
   height:18px;
-
   color:var(--ink-soft);
-
   pointer-events:none;
 }
 
 .form-input,
 .form-select{
   width:100%;
-
   min-height:50px;
-
   padding:13px 14px 13px 43px;
-
   border-radius:11px;
-
   border:1px solid rgba(228,240,232,.13);
-
   background:rgba(6,26,18,.75);
-
   color:var(--ink);
-
   outline:none;
-
   font-size:.9rem;
-
-  transition:
-    border-color .2s ease,
-    box-shadow .2s ease,
-    background .2s ease;
+  transition:.2s ease;
 }
 
 .form-select{
   appearance:none;
   -webkit-appearance:none;
-
   padding-right:42px;
 }
 
 .select-arrow{
   position:absolute;
-
   right:15px;
   top:50%;
-
   transform:translateY(-50%);
-
   pointer-events:none;
-
   color:var(--ink-soft);
 }
 
-.form-input::placeholder{
-  color:#6f9280;
-}
+.form-input::placeholder{color:#6f9280}
 
 .form-input:focus,
 .form-select:focus{
   border-color:var(--green-bright);
-
   background:rgba(6,26,18,.9);
-
-  box-shadow:
-    0 0 0 3px rgba(62,190,121,.09);
+  box-shadow:0 0 0 3px rgba(62,190,121,.09);
 }
 
-/* =========================================
-   PASSWORD
-========================================= */
-
+/* PASSWORD */
 .password-toggle{
   position:absolute;
-
   right:12px;
   top:50%;
-
   transform:translateY(-50%);
-
   border:none;
-
   background:none;
-
   color:var(--ink-soft);
-
   padding:5px;
 }
 
-.password-toggle:hover{
-  color:var(--green-bright);
-}
+.password-toggle:hover{color:var(--green-bright)}
 
-.password-input{
-  padding-right:45px;
-}
-
-/* =========================================
-   REFERRAL
-========================================= */
+.password-input{padding-right:45px}
 
 .referral-note{
   color:var(--ink-soft);
-
   font-size:.72rem;
-
   margin-top:6px;
 }
 
-/* =========================================
-   SECURITY
-========================================= */
-
+/* SECURITY */
 .security-box{
   padding:13px 14px;
-
   border-radius:11px;
-
   border:1px solid rgba(228,240,232,.1);
-
   background:rgba(6,26,18,.48);
-
   display:flex;
   align-items:center;
   justify-content:space-between;
-
   gap:15px;
 }
 
@@ -488,11 +315,9 @@ main{
 }
 
 .security-check{
-  width:20px;
-  height:20px;
-
+  width:18px;
+  height:18px;
   accent-color:var(--green);
-
   cursor:pointer;
 }
 
@@ -504,93 +329,61 @@ main{
 .security-status{
   width:8px;
   height:8px;
-
   border-radius:50%;
-
   background:#596d62;
 }
 
 .security-box.verified .security-status{
   background:var(--green-bright);
-
   box-shadow:0 0 10px rgba(62,190,121,.6);
 }
 
-/* =========================================
-   TERMS
-========================================= */
-
+/* TERMS */
 .terms{
   display:flex;
   align-items:flex-start;
-
   gap:9px;
-
   margin:17px 0 20px;
 }
 
 .terms input{
   margin-top:3px;
-
   accent-color:var(--green);
-
   cursor:pointer;
 }
 
 .terms label{
   color:var(--ink-soft);
-
   font-size:.74rem;
-
   line-height:1.5;
 }
 
-.terms a{
+.terms button{
+  border:0;
+  background:none;
   color:var(--green-bright);
-
   text-decoration:underline;
+  padding:0;
+  font-size:inherit;
 }
 
-/* =========================================
-   SUBMIT
-========================================= */
-
+/* SUBMIT */
 .submit-btn{
   width:100%;
-
   min-height:52px;
-
   border:none;
-
   border-radius:12px;
-
-  background:
-    linear-gradient(
-      135deg,
-      var(--green-bright),
-      var(--green)
-    );
-
+  background:linear-gradient(135deg,var(--green-bright),var(--green));
   color:var(--forest-deep);
-
   font-size:.95rem;
-
   font-weight:800;
-
-  box-shadow:
-    0 10px 25px rgba(46,154,94,.18);
-
-  transition:
-    transform .2s ease,
-    box-shadow .2s ease,
-    opacity .2s ease;
+  box-shadow:0 10px 25px rgba(46,154,94,.18);
+  transition:.2s ease;
 }
 
 .submit-btn:hover{
   transform:translateY(-2px);
-
-  box-shadow:
-    0 14px 30px rgba(46,154,94,.28);
+  box-shadow:0 14px 30px rgba(46,154,94,.28);
 }
 
 .submit-btn:disabled{
@@ -601,136 +394,80 @@ main{
 
 .login-link{
   text-align:center;
-
   color:var(--ink-soft);
-
   font-size:.8rem;
-
   margin-top:20px;
 }
 
 .login-link a{
   color:var(--green-bright);
-
   font-weight:800;
 }
 
-/* =========================================
-   MESSAGES
-========================================= */
-
+/* MESSAGES */
 .message{
   display:none;
-
   padding:12px 14px;
-
   border-radius:10px;
-
   margin-bottom:17px;
-
   font-size:.8rem;
-
   line-height:1.5;
 }
 
-.message.show{
-  display:block;
-}
+.message.show{display:block}
 
 .message.error{
   background:rgba(255,102,119,.08);
-
   border:1px solid rgba(255,102,119,.2);
-
   color:#ff9ca8;
 }
 
 .message.success{
   background:rgba(62,190,121,.08);
-
   border:1px solid rgba(62,190,121,.2);
-
   color:#7be0a5;
 }
 
-/* =========================================
-   POPUP
-========================================= */
-
-.popup-overlay{
+/* POPUP */
+.popup-overlay,
+.policy-overlay{
   position:fixed;
-
   inset:0;
-
   z-index:100;
-
-  background:rgba(0,0,0,.7);
-
-  backdrop-filter:blur(7px);
-
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(8px);
   display:none;
-
   align-items:center;
   justify-content:center;
-
-  padding:20px;
+  padding:18px;
 }
 
-.popup-overlay.show{
+.popup-overlay.show,
+.policy-overlay.show{
   display:flex;
 }
 
 .popup{
   width:100%;
   max-width:420px;
-
   padding:32px;
-
   border-radius:22px;
-
   text-align:center;
-
-  background:
-    linear-gradient(
-      145deg,
-      #153F2B,
-      #081d14
-    );
-
+  background:linear-gradient(145deg,#153F2B,#081d14);
   border:1px solid rgba(62,190,121,.18);
-
   box-shadow:0 30px 80px rgba(0,0,0,.6);
-
-  animation:popupIn .25s ease;
-}
-
-@keyframes popupIn{
-  from{
-    opacity:0;
-    transform:translateY(15px) scale(.97);
-  }
-  to{
-    opacity:1;
-    transform:none;
-  }
 }
 
 .popup-icon{
   width:62px;
   height:62px;
-
   margin:0 auto 18px;
-
   border-radius:50%;
-
   display:flex;
   align-items:center;
   justify-content:center;
-
   background:rgba(62,190,121,.13);
-
   color:var(--green-bright);
-
   border:1px solid rgba(62,190,121,.2);
 }
 
@@ -741,87 +478,117 @@ main{
 
 .popup h3{
   font-family:'Fraunces',serif;
-
   font-size:1.7rem;
-
   margin-bottom:10px;
 }
 
 .popup p{
   color:var(--ink-soft);
-
   font-size:.86rem;
-
   line-height:1.6;
-
   margin-bottom:22px;
 }
 
 .popup-btn{
   width:100%;
-
   min-height:48px;
-
   border:none;
-
   border-radius:11px;
-
   background:var(--green);
-
   color:var(--forest-deep);
-
   font-weight:800;
 }
 
-/* =========================================
-   FOOTER
-========================================= */
+/* POLICY */
+.policy{
+  width:min(700px,100%);
+  max-height:88vh;
+  overflow:auto;
+  padding:28px;
+  border-radius:22px;
+  background:#0b2117;
+  border:1px solid var(--border);
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+}
 
+.policy-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:22px;
+}
+
+.policy-head h2{
+  font-family:'Fraunces',serif;
+  font-size:1.8rem;
+}
+
+.close-policy{
+  width:38px;
+  height:38px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:#10281b;
+  color:var(--ink);
+  font-size:20px;
+}
+
+.policy h3{
+  font-size:.95rem;
+  margin:20px 0 7px;
+}
+
+.policy p{
+  color:var(--ink-soft);
+  font-size:.82rem;
+  line-height:1.7;
+}
+
+.policy-footer{
+  margin-top:25px;
+  padding-top:18px;
+  border-top:1px solid var(--border);
+}
+
+.policy-footer button{
+  width:100%;
+  min-height:46px;
+  border:0;
+  border-radius:10px;
+  background:var(--green);
+  color:var(--forest-deep);
+  font-weight:800;
+}
+
+/* FOOTER */
 footer{
   padding:25px 20px;
-
   border-top:1px solid rgba(228,240,232,.07);
-
   color:var(--ink-soft);
-
   font-size:.7rem;
-
   text-align:center;
 }
 
-/* =========================================
-   HIDDEN HONEYPOT
-========================================= */
-
+/* HONEYPOT */
 .hp-field{
   position:absolute !important;
-
   left:-9999px !important;
-
   width:1px !important;
-
   height:1px !important;
-
   opacity:0 !important;
 }
 
-/* =========================================
-   RESPONSIVE
-========================================= */
-
+/* RESPONSIVE */
 @media(max-width:900px){
-
   .signup-layout{
     grid-template-columns:1fr;
-
     max-width:520px;
-
     gap:35px;
   }
 
   .intro{
     max-width:none;
-
     text-align:center;
   }
 
@@ -830,29 +597,23 @@ footer{
     margin-right:auto;
   }
 
-  .benefits{
-    text-align:left;
-  }
-
+  .benefits{text-align:left}
 }
 
 @media(max-width:600px){
+  nav{height:64px}
 
-  nav{
-    height:64px;
-  }
+  .nav-inner{padding:0 17px}
 
-  .nav-inner{
-    padding:0 17px;
-  }
-
-  .logo{
-    font-size:1.2rem;
-  }
+  .logo{font-size:1.2rem}
 
   .logo svg{
     width:26px;
     height:26px;
+  }
+
+  .back-login{
+    font-size:.72rem;
   }
 
   main{
@@ -869,7 +630,6 @@ footer{
 
   .signup-card{
     padding:23px 18px;
-
     border-radius:20px;
   }
 
@@ -877,29 +637,23 @@ footer{
     font-size:1.55rem;
   }
 
+  .policy{
+    padding:22px;
+  }
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- =========================================
-     NAV
-========================================= -->
-
 <nav>
-
   <div class="nav-inner">
 
     <a href="index.html" class="logo">
-
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="currentColor">
         <path d="M2 18h20l-1.5-9-5 4-3.5-7-3.5 7-5-4L2 18z"/>
       </svg>
-
-      RexTasks
-
+      TallyBuck
     </a>
 
     <a href="login.html" class="back-login">
@@ -907,552 +661,290 @@ footer{
     </a>
 
   </div>
-
 </nav>
-
-
-<!-- =========================================
-     MAIN
-========================================= -->
 
 <main>
 
-  <div class="signup-layout">
+<div class="signup-layout">
 
+<section class="intro">
 
-    <!-- LEFT INTRO -->
+  <div class="eyebrow">
+    <span class="eyebrow-dot"></span>
+    Join TallyBuck
+  </div>
 
-    <section class="intro">
+  <h1>
+    Start turning your
+    <span>spare time</span>
+    into rewards.
+  </h1>
 
-      <div class="eyebrow">
+  <p class="intro-text">
+    Create your free TallyBuck account and discover eligible
+    surveys, offers, apps and other reward activities available
+    to your account.
+  </p>
 
-        <span class="eyebrow-dot"></span>
+  <div class="benefits">
 
-        Join RexTasks
-
+    <div class="benefit">
+      <div class="benefit-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M20 7L10 17l-5-5"/>
+        </svg>
       </div>
-
-
-      <h1>
-        Start turning your
-        <span>spare time</span>
-        into rewards.
-      </h1>
-
-
-      <p class="intro-text">
-        Create your free RexTasks account and discover surveys,
-        offers, apps and other tasks available in your region.
-      </p>
-
-
-      <div class="benefits">
-
-
-        <div class="benefit">
-
-          <div class="benefit-icon">
-
-            <svg viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.8"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
-
-              <path d="M20 7L10 17l-5-5"/>
-
-            </svg>
-
-          </div>
-
-          <div class="benefit-text">
-
-            <strong>Free to join</strong>
-
-            <span>No deposit is required to create an account.</span>
-
-          </div>
-
-        </div>
-
-
-        <div class="benefit">
-
-          <div class="benefit-icon">
-
-            <svg viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.8"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
-
-              <rect x="3" y="5" width="18" height="14" rx="2"/>
-              <path d="M7 9h10"/>
-              <path d="M7 13h5"/>
-
-            </svg>
-
-          </div>
-
-          <div class="benefit-text">
-
-            <strong>Multiple ways to earn</strong>
-
-            <span>Complete eligible tasks available to your account.</span>
-
-          </div>
-
-        </div>
-
-
-        <div class="benefit">
-
-          <div class="benefit-icon">
-
-            <svg viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.8"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
-
-              <path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/>
-              <path d="M9 12l2 2 4-4"/>
-
-            </svg>
-
-          </div>
-
-          <div class="benefit-text">
-
-            <strong>Secure account</strong>
-
-            <span>Your account is protected by Supabase authentication.</span>
-
-          </div>
-
-        </div>
-
-
+      <div class="benefit-text">
+        <strong>Free to join</strong>
+        <span>No deposit is required to create an account.</span>
       </div>
+    </div>
 
-    </section>
-
-
-    <!-- SIGNUP CARD -->
-
-    <section class="signup-card">
-
-      <div class="card-head">
-
-        <h2>Create your account</h2>
-
-        <p>
-          It only takes a minute to get started.
-        </p>
-
+    <div class="benefit">
+      <div class="benefit-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="5" width="18" height="14" rx="2"/>
+          <path d="M7 9h10"/>
+          <path d="M7 13h5"/>
+        </svg>
       </div>
-
-
-      <!-- MESSAGE -->
-
-      <div id="errorMessage" class="message error"></div>
-
-      <div id="successMessage" class="message success"></div>
-
-
-      <form id="signupForm" novalidate>
-
-
-        <!-- HONEYPOT -->
-
-        <input
-          type="text"
-          id="website"
-          name="website"
-          class="hp-field"
-          tabindex="-1"
-          autocomplete="off"
-        >
-
-
-        <!-- FULL NAME -->
-
-        <div class="form-group">
-
-          <label class="form-label" for="fullName">
-            Full name
-          </label>
-
-          <div class="input-wrap">
-
-            <svg class="input-icon"
-                 viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.8"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
-
-              <circle cx="12" cy="8" r="4"/>
-              <path d="M4 21c.8-4 3.4-6 8-6s7.2 2 8 6"/>
-
-            </svg>
-
-            <input
-              class="form-input"
-              id="fullName"
-              type="text"
-              autocomplete="name"
-              placeholder="Your full name"
-              required
-            >
-
-          </div>
-
-        </div>
-
-
-        <!-- EMAIL -->
-
-        <div class="form-group">
-
-          <label class="form-label" for="email">
-            Email address
-          </label>
-
-          <div class="input-wrap">
-
-            <svg class="input-icon"
-                 viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.8"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
-
-              <rect x="3" y="5" width="18" height="14" rx="2"/>
-              <path d="M3 7l9 6 9-6"/>
-
-            </svg>
-
-            <input
-              class="form-input"
-              id="email"
-              type="email"
-              autocomplete="email"
-              placeholder="you@example.com"
-              required
-            >
-
-          </div>
-
-        </div>
-
-
-        <!-- PASSWORD -->
-
-        <div class="form-group">
-
-          <label class="form-label" for="password">
-            Password
-          </label>
-
-          <div class="input-wrap">
-
-            <svg class="input-icon"
-                 viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.8"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
-
-              <rect x="4" y="10" width="16" height="11" rx="2"/>
-              <path d="M8 10V7a4 4 0 018 0v3"/>
-
-            </svg>
-
-            <input
-              class="form-input password-input"
-              id="password"
-              type="password"
-              autocomplete="new-password"
-              placeholder="At least 8 characters"
-              minlength="8"
-              required
-            >
-
-            <button
-              type="button"
-              class="password-toggle"
-              id="togglePassword"
-              aria-label="Show password"
-            >
-
-              <svg id="eyeIcon"
-                   width="19"
-                   height="19"
-                   viewBox="0 0 24 24"
-                   fill="none"
-                   stroke="currentColor"
-                   stroke-width="1.8"
-                   stroke-linecap="round"
-                   stroke-linejoin="round">
-
-                <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/>
-                <circle cx="12" cy="12" r="2.5"/>
-
-              </svg>
-
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <!-- COUNTRY -->
-
-        <div class="form-group">
-
-          <label class="form-label" for="country">
-            Country
-          </label>
-
-          <div class="input-wrap">
-
-            <svg class="input-icon"
-                 viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.8"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
-
-              <circle cx="12" cy="12" r="9"/>
-              <path d="M3 12h18"/>
-              <path d="M12 3c2.2 2.4 3.3 5.4 3.3 9s-1.1 6.6-3.3 9"/>
-              <path d="M12 3c-2.2 2.4-3.3 5.4-3.3 9s1.1 6.6 3.3 9"/>
-
-            </svg>
-
-            <select
-              class="form-select"
-              id="country"
-              required
-            >
-
-              <option value="">Select your country</option>
-
-              <option value="NG">Nigeria</option>
-              <option value="GH">Ghana</option>
-              <option value="KE">Kenya</option>
-              <option value="ZA">South Africa</option>
-              <option value="US">United States</option>
-              <option value="GB">United Kingdom</option>
-              <option value="CA">Canada</option>
-              <option value="AU">Australia</option>
-              <option value="DE">Germany</option>
-              <option value="FR">France</option>
-              <option value="IN">India</option>
-              <option value="PH">Philippines</option>
-              <option value="OTHER">Other</option>
-
-            </select>
-
-            <svg class="select-arrow"
-                 width="17"
-                 height="17"
-                 viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2">
-
-              <path d="M6 9l6 6 6-6"/>
-
-            </svg>
-
-          </div>
-
-        </div>
-
-
-        <!-- REFERRAL -->
-
-        <div class="form-group">
-
-          <label class="form-label" for="referral">
-            Referral code
-            <span style="color:var(--ink-soft);font-weight:500;">
-              (optional)
-            </span>
-          </label>
-
-          <div class="input-wrap">
-
-            <svg class="input-icon"
-                 viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.8"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
-
-              <circle cx="9" cy="7" r="3"/>
-              <path d="M3 20c.5-3.5 2.5-5 6-5"/>
-              <path d="M16 12v8"/>
-              <path d="M12 16h8"/>
-
-            </svg>
-
-            <input
-              class="form-input"
-              id="referral"
-              type="text"
-              placeholder="Enter referral code"
-              autocomplete="off"
-            >
-
-          </div>
-
-          <div class="referral-note">
-            If you arrived through a referral link, your code will be filled automatically.
-          </div>
-
-        </div>
-
-
-        <!-- SECURITY -->
-
-        <div class="form-group">
-
-          <label class="form-label">
-            Security verification
-          </label>
-
-          <div class="security-box" id="securityBox">
-
-            <div class="security-left">
-
-              <input
-                class="security-check"
-                type="checkbox"
-                id="securityCheck"
-              >
-
-              <span class="security-text">
-                I am a real person
-              </span>
-
-            </div>
-
-            <span class="security-status"></span>
-
-          </div>
-
-        </div>
-
-
-        <!-- TERMS -->
-
-        <div class="terms">
-
-          <input
-            type="checkbox"
-            id="terms"
-            required
-          >
-
-          <label for="terms">
-
-            I agree to the
-            <a href="terms.html">Terms of Service</a>
-            and
-            <a href="privacy.html">Privacy Policy</a>.
-
-          </label>
-
-        </div>
-
-
-        <!-- SUBMIT -->
-
-        <button
-          type="submit"
-          class="submit-btn"
-          id="submitBtn"
-        >
-          Create free account
-        </button>
-
-
-        <div class="login-link">
-
-          Already have an account?
-
-          <a href="login.html">
-            Log in
-          </a>
-
-        </div>
-
-
-      </form>
-
-    </section>
+      <div class="benefit-text">
+        <strong>Multiple ways to earn</strong>
+        <span>Complete eligible activities available to your account.</span>
+      </div>
+    </div>
+
+    <div class="benefit">
+      <div class="benefit-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/>
+          <path d="M9 12l2 2 4-4"/>
+        </svg>
+      </div>
+      <div class="benefit-text">
+        <strong>Secure account</strong>
+        <span>Your account is protected by secure authentication.</span>
+      </div>
+    </div>
 
   </div>
 
+</section>
+
+<section class="signup-card">
+
+  <div class="card-head">
+    <h2>Create your account</h2>
+    <p>It only takes a minute to get started.</p>
+  </div>
+
+  <div id="errorMessage" class="message error"></div>
+  <div id="successMessage" class="message success"></div>
+
+  <form id="signupForm" novalidate>
+
+    <input type="text" id="website" class="hp-field" tabindex="-1" autocomplete="off">
+
+    <div class="form-group">
+      <label class="form-label" for="fullName">Full name</label>
+
+      <div class="input-wrap">
+        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 21c.8-4 3.4-6 8-6s7.2 2 8 6"/>
+        </svg>
+
+        <input
+          class="form-input"
+          id="fullName"
+          type="text"
+          autocomplete="name"
+          placeholder="Your full name"
+          required
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="email">Email address</label>
+
+      <div class="input-wrap">
+        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="5" width="18" height="14" rx="2"/>
+          <path d="M3 7l9 6 9-6"/>
+        </svg>
+
+        <input
+          class="form-input"
+          id="email"
+          type="email"
+          autocomplete="email"
+          placeholder="you@example.com"
+          required
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="password">Password</label>
+
+      <div class="input-wrap">
+        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="4" y="10" width="16" height="11" rx="2"/>
+          <path d="M8 10V7a4 4 0 018 0v3"/>
+        </svg>
+
+        <input
+          class="form-input password-input"
+          id="password"
+          type="password"
+          autocomplete="new-password"
+          placeholder="At least 8 characters"
+          minlength="8"
+          required
+        >
+
+        <button type="button" class="password-toggle" id="togglePassword">
+          <svg id="eyeIcon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/>
+            <circle cx="12" cy="12" r="2.5"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="country">Country</label>
+
+      <div class="input-wrap">
+        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M3 12h18"/>
+          <path d="M12 3c2.2 2.4 3.3 5.4 3.3 9s-1.1 6.6-3.3 9"/>
+          <path d="M12 3c-2.2 2.4-3.3 5.4-3.3 9s1.1 6.6 3.3 9"/>
+        </svg>
+
+        <select class="form-select" id="country" required>
+          <option value="">Select your country</option>
+          <option value="NG">Nigeria</option>
+          <option value="GH">Ghana</option>
+          <option value="KE">Kenya</option>
+          <option value="ZA">South Africa</option>
+          <option value="US">United States</option>
+          <option value="GB">United Kingdom</option>
+          <option value="CA">Canada</option>
+          <option value="AU">Australia</option>
+          <option value="DE">Germany</option>
+          <option value="FR">France</option>
+          <option value="IN">India</option>
+          <option value="PH">Philippines</option>
+          <option value="OTHER">Other</option>
+        </select>
+
+        <svg class="select-arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="referral">
+        Referral code
+        <span style="color:var(--ink-soft);font-weight:500;">(optional)</span>
+      </label>
+
+      <div class="input-wrap">
+        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="9" cy="7" r="3"/>
+          <path d="M3 20c.5-3.5 2.5-5 6-5"/>
+          <path d="M16 12v8"/>
+          <path d="M12 16h8"/>
+        </svg>
+
+        <input
+          class="form-input"
+          id="referral"
+          type="text"
+          placeholder="Enter referral code"
+          autocomplete="off"
+        >
+      </div>
+
+      <div class="referral-note">
+        If you arrived through a referral link, your code will be filled automatically.
+      </div>
+    </div>
+
+    <div class="form-group">
+
+      <label class="form-label">Security verification</label>
+
+      <div class="security-box" id="securityBox">
+
+        <div class="security-left">
+          <input class="security-check" type="checkbox" id="securityCheck">
+          <span class="security-text">I am a real person</span>
+        </div>
+
+        <span class="security-status"></span>
+
+      </div>
+
+    </div>
+
+    <div class="terms">
+
+      <input type="checkbox" id="terms" required>
+
+      <label for="terms">
+        I agree to the
+        <button type="button" onclick="openPolicy('terms')">Terms of Service</button>
+        and
+        <button type="button" onclick="openPolicy('privacy')">Privacy Policy</button>.
+      </label>
+
+    </div>
+
+    <button type="submit" class="submit-btn" id="submitBtn">
+      Create free account
+    </button>
+
+    <div class="login-link">
+      Already have an account?
+      <a href="login.html">Log in</a>
+    </div>
+
+  </form>
+
+</section>
+
+</div>
+
 </main>
 
-
 <footer>
-
-  © 2026 RexTasks. All rights reserved.
-
+  © 2026 TallyBuck. All rights reserved.
 </footer>
 
-
-<!-- =========================================
-     SUCCESS POPUP
-========================================= -->
-
-<div
-  class="popup-overlay"
-  id="successPopup"
->
+<!-- SUCCESS -->
+<div class="popup-overlay" id="successPopup">
 
   <div class="popup">
 
     <div class="popup-icon">
-
-      <svg viewBox="0 0 24 24"
-           fill="none"
-           stroke="currentColor"
-           stroke-width="2"
-           stroke-linecap="round"
-           stroke-linejoin="round">
-
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M20 6L9 17l-5-5"/>
-
       </svg>
-
     </div>
-
 
     <h3>Account created</h3>
 
-    <p id="popupText">
+    <p>
       Your account has been created successfully.
       Please check your email and confirm your address before continuing.
     </p>
 
-
-    <button
-      class="popup-btn"
-      id="popupButton"
-      type="button"
-    >
+    <button class="popup-btn" id="popupButton">
       Continue
     </button>
 
@@ -1460,19 +952,129 @@ footer{
 
 </div>
 
+<!-- TERMS -->
+<div class="policy-overlay" id="termsOverlay">
 
-<!-- =========================================
-     SUPABASE
-========================================= -->
+  <div class="policy">
+
+    <div class="policy-head">
+      <h2>Terms of Service</h2>
+      <button class="close-policy" onclick="closePolicy('terms')">×</button>
+    </div>
+
+    <p>
+      By creating and using a TallyBuck account, you agree to use
+      the platform lawfully and follow the requirements attached to
+      each activity.
+    </p>
+
+    <h3>1. Account</h3>
+    <p>
+      You are responsible for providing accurate information and
+      maintaining the security of your account.
+    </p>
+
+    <h3>2. Tasks and activities</h3>
+    <p>
+      Tasks and reward opportunities may have individual eligibility
+      requirements. Completing an activity does not guarantee a
+      reward until the applicable requirements have been verified.
+    </p>
+
+    <h3>3. Rewards</h3>
+    <p>
+      Rewards may be reviewed before being credited. Fraudulent,
+      incomplete, duplicated or invalid activity may be rejected.
+    </p>
+
+    <h3>4. Withdrawals</h3>
+    <p>
+      Withdrawals are subject to the minimum withdrawal requirement,
+      applicable fees, account status and administrative review.
+    </p>
+
+    <h3>5. Prohibited activity</h3>
+    <p>
+      Fraud, abuse, automated manipulation, duplicate accounts,
+      false information and attempts to exploit the platform are
+      prohibited.
+    </p>
+
+    <h3>6. Changes</h3>
+    <p>
+      TallyBuck may update these terms when necessary. Continued
+      use of the platform after an update constitutes acceptance
+      of the updated terms.
+    </p>
+
+    <div class="policy-footer">
+      <button onclick="closePolicy('terms')">I understand</button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- PRIVACY -->
+<div class="policy-overlay" id="privacyOverlay">
+
+  <div class="policy">
+
+    <div class="policy-head">
+      <h2>Privacy Policy</h2>
+      <button class="close-policy" onclick="closePolicy('privacy')">×</button>
+    </div>
+
+    <p>
+      TallyBuck uses information necessary to operate your account,
+      provide eligible activities, verify rewards and process
+      withdrawals.
+    </p>
+
+    <h3>1. Information we collect</h3>
+    <p>
+      This may include your name, email address, country, account
+      information, activity information and withdrawal information.
+    </p>
+
+    <h3>2. How information is used</h3>
+    <p>
+      Information may be used to operate your account, provide
+      eligible activities, verify submissions, prevent abuse,
+      process withdrawals and communicate important account updates.
+    </p>
+
+    <h3>3. Third-party services</h3>
+    <p>
+      Some activities may be provided by third-party survey,
+      offer or reward partners. Those services may process
+      information according to their own policies.
+    </p>
+
+    <h3>4. Security</h3>
+    <p>
+      We use reasonable measures to protect account information.
+      However, no internet service can guarantee absolute security.
+    </p>
+
+    <h3>5. Contact</h3>
+    <p>
+      For privacy questions or account-related concerns, contact
+      TallyBuck support through the support channel provided on
+      the platform.
+    </p>
+
+    <div class="policy-footer">
+      <button onclick="closePolicy('privacy')">I understand</button>
+    </div>
+
+  </div>
+
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
 <script>
-
-/* =========================================================
-   REXTASKS SUPABASE CONFIGURATION
-========================================================= */
 
 const SUPABASE_URL =
   "https://cetsxdkoauucxwsbdktl.supabase.co";
@@ -1480,21 +1082,11 @@ const SUPABASE_URL =
 const SUPABASE_ANON_KEY =
   "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
 
-
-const { createClient } =
-  supabase;
-
-
 const db =
-  createClient(
+  supabase.createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
   );
-
-
-/* =========================================================
-   ELEMENTS
-========================================================= */
 
 const form =
   document.getElementById("signupForm");
@@ -1538,9 +1130,6 @@ const successMessage =
 const successPopup =
   document.getElementById("successPopup");
 
-const popupText =
-  document.getElementById("popupText");
-
 const popupButton =
   document.getElementById("popupButton");
 
@@ -1551,9 +1140,7 @@ const eyeIcon =
   document.getElementById("eyeIcon");
 
 
-/* =========================================================
-   REFERRAL CODE
-========================================================= */
+/* REFERRAL */
 
 function loadReferralCode(){
 
@@ -1574,66 +1161,50 @@ function loadReferralCode(){
 
 }
 
-
 loadReferralCode();
 
 
-/* =========================================================
-   PASSWORD VISIBILITY
-========================================================= */
+/* PASSWORD */
 
-togglePassword.addEventListener(
-  "click",
-  () => {
+togglePassword.addEventListener("click",()=>{
 
-    const showing =
-      password.type === "text";
+  const showing =
+    password.type === "text";
 
-    password.type =
-      showing ? "password" : "text";
+  password.type =
+    showing ? "password" : "text";
 
-    if(showing){
+  eyeIcon.innerHTML =
+    showing
+    ?
+    `
+    <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/>
+    <circle cx="12" cy="12" r="2.5"/>
+    `
+    :
+    `
+    <path d="M3 3l18 18"/>
+    <path d="M10.6 10.6a2 2 0 102.8 2.8"/>
+    <path d="M9.9 4.3A10.6 10.6 0 0112 4c6.5 0 10 8 10 8a17 17 0 01-3.2 4.3"/>
+    <path d="M6.6 6.6C3.5 8.4 2 12 2 12s3.5 8 10 8a9.8 9.8 0 004-.8"/>
+    `;
 
-      eyeIcon.innerHTML = `
-        <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/>
-        <circle cx="12" cy="12" r="2.5"/>
-      `;
-
-    }else{
-
-      eyeIcon.innerHTML = `
-        <path d="M3 3l18 18"/>
-        <path d="M10.6 10.6a2 2 0 102.8 2.8"/>
-        <path d="M9.9 4.3A10.6 10.6 0 0112 4c6.5 0 10 8 10 8a17 17 0 01-3.2 4.3"/>
-        <path d="M6.6 6.6C3.5 8.4 2 12 2 12s3.5 8 10 8a9.8 9.8 0 004-.8"/>
-      `;
-
-    }
-
-  }
-);
+});
 
 
-/* =========================================================
-   SECURITY CHECK
-========================================================= */
+/* SECURITY */
 
-securityCheck.addEventListener(
-  "change",
-  () => {
+securityCheck.addEventListener("change",()=>{
 
-    securityBox.classList.toggle(
-      "verified",
-      securityCheck.checked
-    );
+  securityBox.classList.toggle(
+    "verified",
+    securityCheck.checked
+  );
 
-  }
-);
+});
 
 
-/* =========================================================
-   MESSAGE HELPERS
-========================================================= */
+/* MESSAGES */
 
 function showError(message){
 
@@ -1651,7 +1222,6 @@ function showError(message){
 
 }
 
-
 function showSuccess(message){
 
   errorMessage.classList.remove("show");
@@ -1664,192 +1234,105 @@ function showSuccess(message){
 }
 
 
-/* =========================================================
-   VALIDATION
-========================================================= */
+/* VALIDATION */
 
 function validateForm(){
 
   if(!fullName.value.trim()){
-
     showError("Please enter your full name.");
-
     fullName.focus();
-
     return false;
-
   }
-
 
   if(fullName.value.trim().length < 2){
-
     showError("Please enter a valid full name.");
-
     fullName.focus();
-
     return false;
-
   }
-
 
   if(!email.value.trim()){
-
     showError("Please enter your email address.");
-
     email.focus();
-
     return false;
-
   }
-
 
   if(!email.validity.valid){
-
     showError("Please enter a valid email address.");
-
     email.focus();
-
     return false;
-
   }
-
 
   if(password.value.length < 8){
-
-    showError(
-      "Your password must contain at least 8 characters."
-    );
-
+    showError("Your password must contain at least 8 characters.");
     password.focus();
-
     return false;
-
   }
-
 
   if(!country.value){
-
     showError("Please select your country.");
-
     country.focus();
-
     return false;
-
   }
-
 
   if(!securityCheck.checked){
-
-    showError(
-      "Please complete the security verification."
-    );
-
+    showError("Please complete the security verification.");
     securityCheck.focus();
-
     return false;
-
   }
-
 
   if(!terms.checked){
-
-    showError(
-      "Please accept the Terms of Service and Privacy Policy."
-    );
-
+    showError("Please accept the Terms of Service and Privacy Policy.");
     terms.focus();
-
     return false;
-
   }
-
-
-  /*
-     Honeypot:
-     Real users never see this field.
-     If it contains text, treat it as suspicious.
-  */
 
   if(website.value.trim() !== ""){
-
-    showError(
-      "Security verification failed. Please try again."
-    );
-
+    showError("Security verification failed. Please try again.");
     return false;
-
   }
 
-
   return true;
-
 }
 
 
-/* =========================================================
-   SIGN UP
-========================================================= */
+/* SIGNUP */
 
-form.addEventListener(
-  "submit",
-  async (event) => {
+form.addEventListener("submit",async(event)=>{
 
-    event.preventDefault();
+  event.preventDefault();
 
+  errorMessage.classList.remove("show");
 
-    errorMessage.classList.remove("show");
+  if(!validateForm()){
+    return;
+  }
 
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Creating account...";
 
-    if(!validateForm()){
+  try{
 
-      return;
+    const redirectUrl =
+      window.location.origin + "/dashboard.html";
 
-    }
+    const metadata = {
 
+      full_name:
+        fullName.value.trim(),
 
-    submitBtn.disabled =
-      true;
+      country:
+        country.value,
 
-    submitBtn.textContent =
-      "Creating account...";
+      referral_code:
+        referral.value.trim() || null
 
+    };
 
-    try{
-
-      /*
-        The current Vercel site is used as the
-        email confirmation destination.
-
-        Once dashboard.html exists, confirmed users
-        will be sent there.
-      */
-
-      const redirectUrl =
-        window.location.origin +
-        "/dashboard.html";
-
-
-      const metadata = {
-
-        full_name:
-          fullName.value.trim(),
-
-        country:
-          country.value,
-
-        referral_code:
-          referral.value.trim() || null,
-
-        signup_source:
-          "rextasks"
-
-      };
-
-
-      const {
-        data,
-        error
-      } = await db.auth.signUp({
+    const {
+      data,
+      error
+    } =
+      await db.auth.signUp({
 
         email:
           email.value.trim(),
@@ -1857,177 +1340,189 @@ form.addEventListener(
         password:
           password.value,
 
-        options: {
-
+        options:{
           emailRedirectTo:
             redirectUrl,
 
           data:
             metadata
-
         }
 
       });
 
+    if(error){
+      throw error;
+    }
 
-      if(error){
+    showSuccess(
+      "Your account has been created successfully."
+    );
 
-        throw error;
+    successPopup.classList.add("show");
 
-      }
+  }catch(error){
 
+    console.error(
+      "TallyBuck signup error:",
+      error
+    );
 
-      /*
-        Supabase can return an existing-user style
-        response depending on the project's email
-        confirmation settings.
-      */
+    let message =
+      "Unable to create your account. Please try again.";
 
-      showSuccess(
-        "Your account was created successfully."
-      );
+    if(error && error.message){
 
+      const text =
+        error.message.toLowerCase();
 
-      popupText.textContent =
-        "Your account has been created. " +
-        "Please check your email and click the confirmation link. " +
-        "After confirmation, you can continue to your RexTasks dashboard.";
+      if(
+        text.includes("already registered") ||
+        text.includes("already been registered") ||
+        text.includes("user already registered")
+      ){
 
+        message =
+          "An account with this email already exists. Please log in instead.";
 
-      successPopup.classList.add("show");
+      }else if(text.includes("rate limit")){
 
+        message =
+          "Too many attempts. Please wait a few minutes and try again.";
 
-    }catch(error){
+      }else{
 
-      console.error(
-        "RexTasks signup error:",
-        error
-      );
-
-
-      let message =
-        "Unable to create your account. Please try again.";
-
-
-      if(error && error.message){
-
-        const text =
-          error.message.toLowerCase();
-
-
-        if(
-          text.includes("already registered") ||
-          text.includes("already been registered") ||
-          text.includes("user already registered")
-        ){
-
-          message =
-            "An account with this email already exists. Please log in instead.";
-
-        }
-
-        else if(
-          text.includes("password")
-        ){
-
-          message =
-            error.message;
-
-        }
-
-        else if(
-          text.includes("rate limit")
-        ){
-
-          message =
-            "Too many attempts. Please wait a few minutes and try again.";
-
-        }
-
-        else{
-
-          message =
-            error.message;
-
-        }
+        message =
+          error.message;
 
       }
-
-
-      showError(message);
-
-
-    }finally{
-
-      submitBtn.disabled =
-        false;
-
-      submitBtn.textContent =
-        "Create free account";
 
     }
 
+    showError(message);
+
+  }finally{
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Create free account";
+
   }
-);
+
+});
 
 
-/* =========================================================
-   POPUP CONTINUE
-========================================================= */
+/* SUCCESS */
 
-popupButton.addEventListener(
-  "click",
-  () => {
+popupButton.addEventListener("click",()=>{
 
-    /*
-      We don't immediately force the user into the dashboard
-      because the email still needs to be confirmed.
-    */
+  successPopup.classList.remove("show");
+
+  window.location.href =
+    "login.html";
+
+});
+
+
+successPopup.addEventListener("click",(event)=>{
+
+  if(event.target === successPopup){
 
     successPopup.classList.remove("show");
 
   }
-);
+
+});
 
 
-/* =========================================================
-   CLOSE POPUP WHEN BACKDROP IS CLICKED
-========================================================= */
+/* POLICY */
 
-successPopup.addEventListener(
-  "click",
-  (event) => {
+function openPolicy(type){
 
-    if(event.target === successPopup){
+  const id =
+    type === "terms"
+    ? "termsOverlay"
+    : "privacyOverlay";
 
-      successPopup.classList.remove("show");
+  document
+    .getElementById(id)
+    .classList.add("show");
+
+  document.body.style.overflow =
+    "hidden";
+
+}
+
+function closePolicy(type){
+
+  const id =
+    type === "terms"
+    ? "termsOverlay"
+    : "privacyOverlay";
+
+  document
+    .getElementById(id)
+    .classList.remove("show");
+
+  document.body.style.overflow =
+    "";
+
+}
+
+
+/* CLOSE POLICY ON BACKDROP */
+
+document.querySelectorAll(".policy-overlay")
+.forEach(overlay=>{
+
+  overlay.addEventListener("click",(event)=>{
+
+    if(event.target === overlay){
+
+      overlay.classList.remove("show");
+
+      document.body.style.overflow =
+        "";
 
     }
 
+  });
+
+});
+
+
+/* ESCAPE */
+
+document.addEventListener("keydown",(event)=>{
+
+  if(event.key === "Escape"){
+
+    document.querySelectorAll(".policy-overlay.show")
+    .forEach(overlay=>{
+
+      overlay.classList.remove("show");
+
+    });
+
+    document.body.style.overflow =
+      "";
+
   }
-);
+
+});
 
 
-/* =========================================================
-   AUTO REDIRECT AFTER AUTH CONFIRMATION
-========================================================= */
+/* EXISTING SESSION */
 
 async function checkExistingSession(){
 
   const {
     data
-  } = await db.auth.getSession();
-
+  } =
+    await db.auth.getSession();
 
   if(
     data &&
     data.session
   ){
-
-    /*
-      If the user is already authenticated,
-      don't leave them sitting on signup.
-    */
 
     window.location.href =
       "dashboard.html";
@@ -2036,9 +1531,7 @@ async function checkExistingSession(){
 
 }
 
-
 checkExistingSession();
-
 
 </script>
 
