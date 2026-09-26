@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#061A12">
 
-<title>Log in — RexTasks</title>
+<title>Log in — TallyBuck</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -718,10 +718,6 @@ svg{
 
 <body>
 
-<!-- =========================
-     TOP BAR
-========================= -->
-
 <header class="topbar">
   <div class="topbar-inner">
 
@@ -734,7 +730,7 @@ svg{
         </svg>
       </span>
 
-      RexTasks
+      TallyBuck
 
     </a>
 
@@ -752,17 +748,9 @@ svg{
   </div>
 </header>
 
-
-<!-- =========================
-     MAIN
-========================= -->
-
 <main class="page">
 
   <div class="login-layout">
-
-
-    <!-- INTRO -->
 
     <section class="intro">
 
@@ -777,7 +765,7 @@ svg{
       </h1>
 
       <p class="intro-text">
-        Sign in to your RexTasks account to continue completing available tasks,
+        Sign in to your TallyBuck account to continue completing available tasks,
         track your earnings and manage your rewards.
       </p>
 
@@ -795,7 +783,6 @@ svg{
           Track your earnings
         </div>
 
-
         <div class="benefit">
 
           <span class="benefit-icon">
@@ -808,7 +795,6 @@ svg{
           Secure account access
         </div>
 
-
         <div class="benefit">
 
           <span class="benefit-icon">
@@ -820,7 +806,6 @@ svg{
 
           Pick up where you stopped
         </div>
-
 
         <div class="benefit">
 
@@ -842,9 +827,6 @@ svg{
 
     </section>
 
-
-    <!-- LOGIN CARD -->
-
     <section class="login-card">
 
       <div class="card-heading">
@@ -857,13 +839,9 @@ svg{
 
       </div>
 
-
       <div id="formMessage" class="form-message"></div>
 
-
       <form id="loginForm" autocomplete="on">
-
-        <!-- EMAIL -->
 
         <div class="form-group">
 
@@ -895,9 +873,6 @@ svg{
           </div>
 
         </div>
-
-
-        <!-- PASSWORD -->
 
         <div class="form-group">
 
@@ -951,9 +926,6 @@ svg{
 
         </div>
 
-
-        <!-- OPTIONS -->
-
         <div class="form-options">
 
           <label class="remember">
@@ -975,9 +947,6 @@ svg{
           </a>
 
         </div>
-
-
-        <!-- SECURITY -->
 
         <div class="security-box">
 
@@ -1013,9 +982,6 @@ svg{
 
         </div>
 
-
-        <!-- HONEYPOT -->
-
         <div
           style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;"
           aria-hidden="true"
@@ -1035,9 +1001,6 @@ svg{
 
         </div>
 
-
-        <!-- LOGIN -->
-
         <button
           type="submit"
           class="login-button"
@@ -1045,7 +1008,7 @@ svg{
         >
 
           <span id="buttonText">
-            Log in to RexTasks
+            Log in to TallyBuck
           </span>
 
           <svg
@@ -1065,10 +1028,9 @@ svg{
 
       </form>
 
-
       <div class="signup-link">
 
-        Don't have a RexTasks account?
+        Don't have a TallyBuck account?
 
         <a href="signup.html">
           Create an account
@@ -1082,15 +1044,9 @@ svg{
 
 </main>
 
-
 <footer class="footer">
-  RexTasks is a rewards platform. Task availability and earnings may vary by region and offer.
+  TallyBuck is a rewards platform. Task availability and earnings may vary by region and offer.
 </footer>
-
-
-<!-- =========================
-     SUCCESS POPUP
-========================= -->
 
 <div
   class="popup-overlay"
@@ -1115,7 +1071,7 @@ svg{
     </h3>
 
     <p>
-      Welcome back. Taking you to your RexTasks dashboard.
+      Welcome back. Taking you to your TallyBuck dashboard.
     </p>
 
     <div class="popup-loader"></div>
@@ -1124,16 +1080,9 @@ svg{
 
 </div>
 
-
-<!-- SUPABASE -->
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-
-/* =========================================================
-   SUPABASE CONFIGURATION
-========================================================= */
 
 const SUPABASE_URL =
   "https://cetsxdkoauucxwsbdktl.supabase.co";
@@ -1147,11 +1096,6 @@ const supabaseClient = createClient(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY
 );
-
-
-/* =========================================================
-   ELEMENTS
-========================================================= */
 
 const loginForm =
   document.getElementById("loginForm");
@@ -1192,11 +1136,6 @@ const eyeOpen =
 const eyeClosed =
   document.getElementById("eyeClosed");
 
-
-/* =========================================================
-   PASSWORD SHOW / HIDE
-========================================================= */
-
 passwordToggle.addEventListener("click", function(){
 
   const isPassword =
@@ -1220,11 +1159,6 @@ passwordToggle.addEventListener("click", function(){
 
 });
 
-
-/* =========================================================
-   MESSAGE
-========================================================= */
-
 function showMessage(message, type){
 
   formMessage.textContent = message;
@@ -1233,11 +1167,6 @@ function showMessage(message, type){
     "form-message " + type;
 
 }
-
-
-/* =========================================================
-   LOADING STATE
-========================================================= */
 
 function setLoading(loading){
 
@@ -1265,7 +1194,7 @@ function setLoading(loading){
   }else{
 
     buttonText.textContent =
-      "Log in to RexTasks";
+      "Log in to TallyBuck";
 
     buttonArrow.style.display =
       "block";
@@ -1281,11 +1210,6 @@ function setLoading(loading){
 
 }
 
-
-/* =========================================================
-   LOGIN
-========================================================= */
-
 loginForm.addEventListener(
   "submit",
   async function(event){
@@ -1293,11 +1217,6 @@ loginForm.addEventListener(
     event.preventDefault();
 
     showMessage("", "");
-
-    /*
-      Basic anti-bot honeypot.
-      Normal users will never see this field.
-    */
 
     if(websiteInput.value.trim() !== ""){
 
@@ -1310,7 +1229,6 @@ loginForm.addEventListener(
 
     }
 
-
     if(!humanCheck.checked){
 
       showMessage(
@@ -1322,13 +1240,11 @@ loginForm.addEventListener(
 
     }
 
-
     const email =
       emailInput.value.trim();
 
     const password =
       passwordInput.value;
-
 
     if(!email || !password){
 
@@ -1341,15 +1257,9 @@ loginForm.addEventListener(
 
     }
 
-
     setLoading(true);
 
-
     try{
-
-      /*
-        Supabase email/password authentication.
-      */
 
       const {
         data,
@@ -1359,7 +1269,6 @@ loginForm.addEventListener(
           email: email,
           password: password
         });
-
 
       if(error){
 
@@ -1371,7 +1280,6 @@ loginForm.addEventListener(
         let message =
           "Unable to sign in. Please check your details and try again.";
 
-
         if(
           error.message &&
           error.message.toLowerCase().includes("email not confirmed")
@@ -1381,7 +1289,6 @@ loginForm.addEventListener(
             "Please confirm your email address before signing in.";
 
         }
-
 
         if(
           error.message &&
@@ -1393,7 +1300,6 @@ loginForm.addEventListener(
 
         }
 
-
         showMessage(
           message,
           "error"
@@ -1404,7 +1310,6 @@ loginForm.addEventListener(
         return;
 
       }
-
 
       if(!data.session){
 
@@ -1419,11 +1324,6 @@ loginForm.addEventListener(
 
       }
 
-
-      /*
-        Login successful.
-      */
-
       showMessage(
         "Login successful.",
         "success"
@@ -1431,34 +1331,22 @@ loginForm.addEventListener(
 
       successPopup.classList.add("show");
 
-
-      /*
-        Store the user's preferred session behavior.
-        Supabase itself manages the authenticated session.
-      */
-
       if(
         document.getElementById("remember").checked
       ){
 
         localStorage.setItem(
-          "rextasks_remember",
+          "tallybuck_remember",
           "true"
         );
 
       }else{
 
         localStorage.removeItem(
-          "rextasks_remember"
+          "tallybuck_remember"
         );
 
       }
-
-
-      /*
-        Give the success popup time to display,
-        then open the dashboard.
-      */
 
       setTimeout(function(){
 
@@ -1466,7 +1354,6 @@ loginForm.addEventListener(
           "dashboard.html";
 
       }, 1300);
-
 
     }catch(error){
 
@@ -1487,11 +1374,6 @@ loginForm.addEventListener(
   }
 );
 
-
-/* =========================================================
-   CHECK EXISTING SESSION
-========================================================= */
-
 async function checkExistingSession(){
 
   try{
@@ -1501,16 +1383,10 @@ async function checkExistingSession(){
     } =
       await supabaseClient.auth.getSession();
 
-
     if(
       data &&
       data.session
     ){
-
-      /*
-        If already logged in,
-        send the user directly to dashboard.
-      */
 
       window.location.href =
         "dashboard.html";
@@ -1527,11 +1403,6 @@ async function checkExistingSession(){
   }
 
 }
-
-
-/*
-  Run session check.
-*/
 
 checkExistingSession();
 
