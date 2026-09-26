@@ -2,7 +2,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#ffffff"><title>TallyBuck — Dashboard</title><style>
+<meta name="theme-color" content="#ffffff">
+<title>TallyBuck — Dashboard</title><style>
 *{box-sizing:border-box}
 
 :root{
@@ -38,13 +39,8 @@ body{
   transition:.25s;
 }
 
-button,a{
-  font-family:inherit;
-}
-
-button{
-  -webkit-tap-highlight-color:transparent;
-}
+button,a{font-family:inherit}
+button{-webkit-tap-highlight-color:transparent}
 
 .app{
   max-width:760px;
@@ -52,8 +48,6 @@ button{
   min-height:100vh;
   padding-bottom:90px;
 }
-
-/* ================= HEADER ================= */
 
 header{
   height:70px;
@@ -68,8 +62,7 @@ header{
   z-index:50;
 }
 
-.menu-btn,
-.icon-btn{
+.menu-btn,.icon-btn{
   width:42px;
   height:42px;
   border:0;
@@ -82,14 +75,11 @@ header{
   cursor:pointer;
 }
 
-.menu-btn:active,
-.icon-btn:active,
-.theme-btn:active{
+.menu-btn:active,.icon-btn:active,.theme-btn:active{
   transform:scale(.94);
 }
 
-.menu-btn svg,
-.icon-btn svg{
+.menu-btn svg,.icon-btn svg{
   width:23px;
   height:23px;
 }
@@ -115,9 +105,7 @@ header{
   gap:3px;
 }
 
-.notification{
-  position:relative;
-}
+.notification{position:relative}
 
 .notification-dot{
   position:absolute;
@@ -130,11 +118,7 @@ header{
   border:2px solid var(--card);
 }
 
-/* ================= THEME ================= */
-
-.theme-wrap{
-  position:relative;
-}
+.theme-wrap{position:relative}
 
 .theme-btn{
   width:42px;
@@ -168,9 +152,7 @@ header{
   box-shadow:var(--shadow);
 }
 
-.theme-menu.show{
-  display:block;
-}
+.theme-menu.show{display:block}
 
 .theme-option{
   width:100%;
@@ -183,11 +165,7 @@ header{
   cursor:pointer;
 }
 
-.theme-option:hover{
-  background:var(--lightgreen);
-}
-
-/* ================= SIDE MENU ================= */
+.theme-option:hover{background:var(--lightgreen)}
 
 .overlay{
   display:none;
@@ -197,9 +175,7 @@ header{
   z-index:90;
 }
 
-.overlay.show{
-  display:block;
-}
+.overlay.show{display:block}
 
 .side-menu{
   position:fixed;
@@ -214,9 +190,7 @@ header{
   overflow-y:auto;
 }
 
-.side-menu.open{
-  left:0;
-}
+.side-menu.open{left:0}
 
 .side-head{
   height:75px;
@@ -270,9 +244,7 @@ header{
   margin-top:4px;
 }
 
-.side-links{
-  padding:10px;
-}
+.side-links{padding:10px}
 
 .side-link{
   width:100%;
@@ -300,11 +272,7 @@ header{
   height:20px;
 }
 
-.logout{
-  color:var(--danger);
-}
-
-/* ================= NOTIFICATION POPUP ================= */
+.logout{color:var(--danger)}
 
 .notification-panel{
   display:none;
@@ -320,9 +288,7 @@ header{
   overflow:hidden;
 }
 
-.notification-panel.show{
-  display:block;
-}
+.notification-panel.show{display:block}
 
 .notification-head{
   padding:14px 15px;
@@ -332,9 +298,7 @@ header{
   align-items:center;
 }
 
-.notification-head strong{
-  font-size:14px;
-}
+.notification-head strong{font-size:14px}
 
 .notification-head a{
   color:var(--green);
@@ -350,9 +314,7 @@ header{
   border-bottom:1px solid var(--border);
 }
 
-.notification-item:last-child{
-  border-bottom:0;
-}
+.notification-item:last-child{border-bottom:0}
 
 .notification-icon{
   width:35px;
@@ -383,11 +345,7 @@ header{
   margin-top:4px;
 }
 
-/* ================= MAIN ================= */
-
-main{
-  padding:16px;
-}
+main{padding:16px}
 
 .welcome{
   margin:3px 2px 17px;
@@ -403,8 +361,6 @@ main{
   color:var(--muted);
   font-size:13px;
 }
-
-/* ================= WALLET ================= */
 
 .wallet{
   background:var(--card);
@@ -463,9 +419,7 @@ main{
   border-right:1px solid var(--border);
 }
 
-.wallet-stat:last-child{
-  border-right:0;
-}
+.wallet-stat:last-child{border-right:0}
 
 .wallet-stat small{
   display:block;
@@ -479,8 +433,6 @@ main{
   margin-top:5px;
   font-size:15px;
 }
-
-/* ================= SURVEY ================= */
 
 .survey-banner{
   margin-top:17px;
@@ -570,8 +522,6 @@ main{
   margin:4px 0 0 14px;
 }
 
-/* ================= FEATURES ================= */
-
 .features{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -592,9 +542,7 @@ main{
   transition:.15s;
 }
 
-.feature:active{
-  transform:scale(.97);
-}
+.feature:active{transform:scale(.97)}
 
 .feature-icon{
   width:43px;
@@ -653,11 +601,7 @@ main{
   margin-top:5px;
 }
 
-/* ================= SECTION ================= */
-
-.section{
-  margin-top:21px;
-}
+.section{margin-top:21px}
 
 .section-title{
   display:flex;
@@ -678,8 +622,6 @@ main{
   font-weight:700;
 }
 
-/* ================= ACTIVITY ================= */
-
 .activity{
   background:var(--card);
   border:1px solid var(--border);
@@ -696,9 +638,7 @@ main{
   border-bottom:1px solid var(--border);
 }
 
-.activity-row:last-child{
-  border-bottom:0;
-}
+.activity-row:last-child{border-bottom:0}
 
 .activity-left{
   display:flex;
@@ -738,8 +678,6 @@ main{
   font-weight:800;
   white-space:nowrap;
 }
-
-/* ================= TELEGRAM ================= */
 
 .telegram{
   margin-top:15px;
@@ -796,8 +734,6 @@ main{
   font-size:12px;
   font-weight:800;
 }
-
-/* ================= TASKS ================= */
 
 .task-grid{
   display:grid;
@@ -856,16 +792,12 @@ main{
   font-weight:800;
 }
 
-/* ================= EMPTY ================= */
-
 .empty{
   text-align:center;
   padding:25px;
   color:var(--muted);
   font-size:12px;
 }
-
-/* ================= BOTTOM NAV ================= */
 
 .bottom-nav{
   position:fixed;
@@ -938,262 +870,152 @@ main{
     padding-right:8px;
   }
 
-  .wallet-stat small{
-    font-size:10px;
-  }
-
-  .wallet-stat strong{
-    font-size:14px;
-  }
+  .wallet-stat small{font-size:10px}
+  .wallet-stat strong{font-size:14px}
 
   .survey-art{
     right:10px;
     transform:scale(.9);
   }
 }
-</style></head><body><div class="overlay" id="overlay"></div><aside class="side-menu" id="sideMenu">  <div class="side-head"><div class="side-logo">
-  <span class="side-logo-mark">T</span>
-  TallyBuck
-</div>
-
-<button class="side-close" id="closeMenu" aria-label="Close menu">
-  ×
-</button>
-
-  </div>  <div class="side-user">
-    <strong id="sideName">User</strong>
-    <span id="sideEmail">Loading...</span>
-  </div>  <div class="side-links"><a class="side-link" href="dashboard.html">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <path d="m3 10 9-7 9 7"/>
-    <path d="M5 9v11h14V9"/>
-  </svg>
-  Dashboard
-</a>
-
-<a class="side-link" href="tasks.html">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <rect x="5" y="3" width="14" height="18" rx="2"/>
-    <path d="M8 8h8M8 12h8M8 16h5"/>
-  </svg>
-  Earn Tasks
-</a>
-
-<a class="side-link" href="referrals.html">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <circle cx="9" cy="8" r="3"/>
-    <circle cx="17" cy="10" r="3"/>
-    <path d="M3 20c0-3 2-5 6-5s6 2 6 5"/>
-    <path d="M14 16c4 0 6 1.5 7 4"/>
-  </svg>
-  Referrals
-</a>
-
-<a class="side-link" href="withdraw.html">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <rect x="3" y="5" width="18" height="14" rx="3"/>
-    <path d="M3 10h18"/>
-    <path d="M16 15h2"/>
-  </svg>
-  Wallet / Withdraw
-</a>
-
-<a class="side-link" href="history.html">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <path d="M3 12a9 9 0 1 0 3-6.7"/>
-    <path d="M3 4v6h6"/>
-    <path d="M12 7v5l3 2"/>
-  </svg>
-  History
-</a>
-
-<a class="side-link" href="profile.html">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <circle cx="12" cy="8" r="3"/>
-    <path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>
-  </svg>
-  Profile
-</a>
-
-<a class="side-link" href="notifications.html">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-    <path d="M10 21h4"/>
-  </svg>
-  Notifications
-</a>
-
-<button class="side-link logout" id="logoutBtn">
-
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <path d="M10 17l5-5-5-5"/>
-    <path d="M15 12H3"/>
-    <path d="M21 3v18"/>
-  </svg>
-
-  Logout
-
-</button>
-
-  </div></aside><div class="app"><header>  <button class="menu-btn" id="menuBtn" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-  <path d="M4 6h16M4 12h16M4 18h16"/>
+</style></head><body><div class="overlay" id="overlay"></div><aside class="side-menu" id="sideMenu"><div class="side-head"><div class="side-logo">
+<span class="side-logo-mark">T</span>
+TallyBuck
+</div><button class="side-close" id="closeMenu" aria-label="Close menu">
+×
+</button></div><div class="side-user">
+<strong id="sideName">User</strong>
+<span id="sideEmail">Loading...</span>
+</div><div class="side-links"><a class="side-link" href="dashboard.html">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="m3 10 9-7 9 7"/>
+<path d="M5 9v11h14V9"/>
 </svg>
-
-  </button>  <div class="logo"><div class="logo-mark">T</div>
-
+Dashboard
+</a><a class="side-link" href="tasks.html">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="5" y="3" width="14" height="18" rx="2"/>
+<path d="M8 8h8M8 12h8M8 16h5"/>
+</svg>
+Earn Tasks
+</a><a class="side-link" href="referrals.html">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="9" cy="8" r="3"/>
+<circle cx="17" cy="10" r="3"/>
+<path d="M3 20c0-3 2-5 6-5s6 2 6 5"/>
+<path d="M14 16c4 0 6 1.5 7 4"/>
+</svg>
+Referrals
+</a><a class="side-link" href="withdraw.html">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="3" y="5" width="18" height="14" rx="3"/>
+<path d="M3 10h18"/>
+<path d="M16 15h2"/>
+</svg>
+Wallet / Withdraw
+</a><a class="side-link" href="history.html">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M3 12a9 9 0 1 0 3-6.7"/>
+<path d="M3 4v6h6"/>
+<path d="M12 7v5l3 2"/>
+</svg>
+History
+</a><a class="side-link" href="profile.html">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="12" cy="8" r="3"/>
+<path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>
+</svg>
+Profile
+</a><a class="side-link" href="notifications.html">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+<path d="M10 21h4"/>
+</svg>
+Notifications
+</a><button class="side-link logout" id="logoutBtn">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M10 17l5-5-5-5"/>
+<path d="M15 12H3"/>
+<path d="M21 3v18"/>
+</svg>
+Logout
+</button></div>
+</aside><div class="app"><header><button class="menu-btn" id="menuBtn" aria-label="Open menu">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M4 6h16M4 12h16M4 18h16"/>
+</svg>
+</button><div class="logo">
+<div class="logo-mark">T</div>
 <span>TallyBuck</span>
+</div><div class="header-right"><button class="icon-btn notification" id="notificationBtn" aria-label="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+<path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+<path d="M10 21h4"/>
+</svg><span class="notification-dot"></span>
 
-  </div>  <div class="header-right"><button class="icon-btn notification" id="notificationBtn" aria-label="Notifications">
+</button><div class="theme-wrap"><button class="theme-btn" id="themeBtn" aria-label="Choose theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="12" cy="12" r="4"/>
+<path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+</svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="m6 9 6 6 6-6"/>
+</svg></button><div class="theme-menu" id="themeMenu"><button class="theme-option" onclick="setTheme('light')">Light</button>
+<button class="theme-option" onclick="setTheme('dark')">Dark</button>
+<button class="theme-option" onclick="setTheme('system')">System</button>
 
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
-    <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-    <path d="M10 21h4"/>
-  </svg>
+</div></div></div>
+</header><div class="notification-panel" id="notificationPanel"><div class="notification-head">
+<strong>Notifications</strong>
+<a href="notifications.html">View All</a>
+</div><div class="notification-item"><div class="notification-icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M20 6 9 17l-5-5"/>
+</svg>
+</div><div>
+<strong>Welcome to TallyBuck</strong>
+<span>Start completing eligible tasks to earn rewards.</span>
+</div></div><div class="notification-item"><div class="notification-icon">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="4" y="4" width="16" height="16" rx="3"/>
+<path d="M8 12h8"/>
+</svg>
+</div><div>
+<strong>New tasks available</strong>
+<span>Check the task section for available opportunities.</span>
+</div></div></div><main><div id="page" class="loading">
+Loading dashboard...
+</div></main></div><nav class="bottom-nav"><div class="nav-inner"><a class="nav-item active" href="dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="m3 10 9-7 9 7"/>
+<path d="M5 9v11h14V9"/>
+</svg>Home
+</a>
 
-  <span class="notification-dot"></span>
+<a class="nav-item" href="tasks.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="5" y="3" width="14" height="18" rx="2"/>
+<path d="M8 8h8M8 12h8M8 16h5"/>
+</svg>Tasks
+</a>
 
-</button>
+<a class="nav-item" href="withdraw.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="3" y="5" width="18" height="14" rx="3"/>
+<path d="M3 10h18"/>
+<path d="M16 15h2"/>
+</svg>Wallet
+</a>
 
-<div class="theme-wrap">
+<a class="nav-item" href="history.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M3 12a9 9 0 1 0 3-6.7"/>
+<path d="M3 4v6h6"/>
+<path d="M12 7v5l3 2"/>
+</svg>History
+</a>
 
-  <button class="theme-btn" id="themeBtn" aria-label="Choose theme">
-
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="12" cy="12" r="4"/>
-      <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
-    </svg>
-
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="m6 9 6 6 6-6"/>
-    </svg>
-
-  </button>
-
-  <div class="theme-menu" id="themeMenu">
-
-    <button class="theme-option" onclick="setTheme('light')">
-      Light
-    </button>
-
-    <button class="theme-option" onclick="setTheme('dark')">
-      Dark
-    </button>
-
-    <button class="theme-option" onclick="setTheme('system')">
-      System
-    </button>
-
-  </div>
+<a class="nav-item" href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="12" cy="8" r="3"/>
+<path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>
+</svg>Profile
+</a>
 
 </div>
-
-  </div></header><div class="notification-panel" id="notificationPanel">  <div class="notification-head"><strong>Notifications</strong>
-
-<a href="notifications.html">
-  View All
-</a>
-
-  </div>  <div class="notification-item"><div class="notification-icon">
-
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <path d="M20 6 9 17l-5-5"/>
-  </svg>
-
-</div>
-
-<div>
-
-  <strong>Welcome to TallyBuck</strong>
-
-  <span>
-    Start completing eligible tasks to earn rewards.
-  </span>
-
-</div>
-
-  </div>  <div class="notification-item"><div class="notification-icon">
-
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <rect x="4" y="4" width="16" height="16" rx="3"/>
-    <path d="M8 12h8"/>
-  </svg>
-
-</div>
-
-<div>
-
-  <strong>New tasks available</strong>
-
-  <span>
-    Check the task section for available opportunities.
-  </span>
-
-</div>
-
-  </div></div><main>  <div id="page" class="loading">
-    Loading dashboard...
-  </div></main></div><nav class="bottom-nav">  <div class="nav-inner"><a class="nav-item active" href="dashboard.html">
-
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <path d="m3 10 9-7 9 7"/>
-    <path d="M5 9v11h14V9"/>
-  </svg>
-
-  Home
-
-</a>
-
-<a class="nav-item" href="tasks.html">
-
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <rect x="5" y="3" width="14" height="18" rx="2"/>
-    <path d="M8 8h8M8 12h8M8 16h5"/>
-  </svg>
-
-  Surveys
-
-</a>
-
-<a class="nav-item" href="withdraw.html">
-
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <rect x="3" y="5" width="18" height="14" rx="3"/>
-    <path d="M3 10h18"/>
-    <path d="M16 15h2"/>
-  </svg>
-
-  Wallet
-
-</a>
-
-<a class="nav-item" href="history.html">
-
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <path d="M3 12a9 9 0 1 0 3-6.7"/>
-    <path d="M3 4v6h6"/>
-    <path d="M12 7v5l3 2"/>
-  </svg>
-
-  History
-
-</a>
-
-<a class="nav-item" href="profile.html">
-
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <circle cx="12" cy="8" r="3"/>
-    <path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>
-  </svg>
-
-  Profile
-
-</a>
-
-  </div></nav><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
-
-/* =========================================================
-   SUPABASE
-========================================================= */
+</nav><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
 
 const SUPABASE_URL =
 "https://cetsxdkoauucxwsbdktl.supabase.co";
@@ -1211,17 +1033,10 @@ const db = supabase.createClient(
    ELEMENTS
 ========================================================= */
 
-const menuBtn =
-document.getElementById("menuBtn");
-
-const closeMenu =
-document.getElementById("closeMenu");
-
-const sideMenu =
-document.getElementById("sideMenu");
-
-const overlay =
-document.getElementById("overlay");
+const menuBtn = document.getElementById("menuBtn");
+const closeMenu = document.getElementById("closeMenu");
+const sideMenu = document.getElementById("sideMenu");
+const overlay = document.getElementById("overlay");
 
 const notificationBtn =
 document.getElementById("notificationBtn");
@@ -1244,94 +1059,64 @@ document.getElementById("logoutBtn");
 ========================================================= */
 
 function openSideMenu(){
-
   sideMenu.classList.add("open");
   overlay.classList.add("show");
-
 }
 
 function closeSideMenu(){
-
   sideMenu.classList.remove("open");
   overlay.classList.remove("show");
-
 }
 
-menuBtn.addEventListener(
-"click",
-openSideMenu
-);
-
-closeMenu.addEventListener(
-"click",
-closeSideMenu
-);
-
-overlay.addEventListener(
-"click",
-closeSideMenu
-);
+menuBtn.addEventListener("click",openSideMenu);
+closeMenu.addEventListener("click",closeSideMenu);
+overlay.addEventListener("click",closeSideMenu);
 
 
 /* =========================================================
    NOTIFICATIONS
 ========================================================= */
 
-notificationBtn.addEventListener(
-"click",
-function(e){
+notificationBtn.addEventListener("click",function(e){
 
   e.stopPropagation();
 
   notificationPanel.classList.toggle("show");
-
   themeMenu.classList.remove("show");
 
-}
-);
+});
 
 
 /* =========================================================
    THEME
 ========================================================= */
 
-themeBtn.addEventListener(
-"click",
-function(e){
+themeBtn.addEventListener("click",function(e){
 
   e.stopPropagation();
 
   themeMenu.classList.toggle("show");
-
   notificationPanel.classList.remove("show");
 
-}
-);
+});
 
-document.addEventListener(
-"click",
-function(e){
+document.addEventListener("click",function(e){
 
   if(
     !themeMenu.contains(e.target) &&
     e.target !== themeBtn
   ){
-
     themeMenu.classList.remove("show");
-
   }
 
   if(
     !notificationPanel.contains(e.target) &&
     e.target !== notificationBtn
   ){
-
     notificationPanel.classList.remove("show");
-
   }
 
-}
-);
+});
 
 function setTheme(theme){
 
@@ -1357,9 +1142,9 @@ function applyTheme(theme){
   if(theme==="system"){
 
     dark =
-      window.matchMedia(
-        "(prefers-color-scheme:dark)"
-      ).matches;
+    window.matchMedia(
+      "(prefers-color-scheme:dark)"
+    ).matches;
 
   }
 
@@ -1371,8 +1156,8 @@ function applyTheme(theme){
 }
 
 const savedTheme =
-localStorage.getItem("tallybuck-theme")
-||"system";
+localStorage.getItem("tallybuck-theme") ||
+"system";
 
 applyTheme(savedTheme);
 
@@ -1391,8 +1176,7 @@ function(){
 
   }
 
-}
-);
+});
 
 
 /* =========================================================
@@ -1415,9 +1199,7 @@ function toggleBalance(){
 
   if(balance.dataset.hidden==="true"){
 
-    balance.textContent =
-      realValue;
-
+    balance.textContent=realValue;
     balance.dataset.hidden="false";
 
     eyeOpen.style.display="block";
@@ -1425,9 +1207,7 @@ function toggleBalance(){
 
   }else{
 
-    balance.textContent =
-      "••••••";
-
+    balance.textContent="••••••";
     balance.dataset.hidden="true";
 
     eyeOpen.style.display="none";
@@ -1447,7 +1227,7 @@ logoutBtn.addEventListener(
 async function(){
 
   const confirmed =
-    confirm("Are you sure you want to log out?");
+  confirm("Are you sure you want to log out?");
 
   if(!confirmed) return;
 
@@ -1455,8 +1235,7 @@ async function(){
 
   location.href="login.html";
 
-}
-);
+});
 
 
 /* =========================================================
@@ -1466,7 +1245,7 @@ async function(){
 async function loadDashboard(){
 
   const page =
-    document.getElementById("page");
+  document.getElementById("page");
 
   try{
 
@@ -1474,180 +1253,236 @@ async function loadDashboard(){
       data:{session},
       error:sessionError
     } =
-      await db.auth.getSession();
+    await db.auth.getSession();
 
-    if(
-      sessionError ||
-      !session
-    ){
+    if(sessionError){
+      console.error(sessionError);
+      location.href="login.html";
+      return;
+    }
+
+    if(!session){
 
       location.href="login.html";
       return;
 
     }
 
-    const user =
-      session.user;
+    const user=session.user;
 
 
-    /* PROFILE */
+/* =========================================================
+   PROFILE
+========================================================= */
 
     const {
-      data:profile
+      data:profile,
+      error:profileError
     } =
-      await db
-      .from("profiles")
-      .select("full_name,country")
-      .eq("id",user.id)
-      .maybeSingle();
+    await db
+    .from("profiles")
+    .select("full_name,country,referral_code")
+    .eq("id",user.id)
+    .maybeSingle();
 
+    if(profileError){
+      console.error("Profile error:",profileError);
+    }
 
     const fullName =
-      profile?.full_name ||
-      user.user_metadata?.full_name ||
-      user.email?.split("@")[0] ||
-      "User";
+    profile?.full_name ||
+    user.user_metadata?.full_name ||
+    user.email?.split("@")[0] ||
+    "User";
+
+    document.getElementById("sideName").textContent=
+    fullName;
+
+    document.getElementById("sideEmail").textContent=
+    user.email || "";
 
 
-    document.getElementById(
-      "sideName"
-    ).textContent=fullName;
-
-
-    document.getElementById(
-      "sideEmail"
-    ).textContent=
-      user.email || "";
-
-
-    /* WALLET */
+/* =========================================================
+   WALLET
+========================================================= */
 
     const {
-      data:wallet
+      data:wallet,
+      error:walletError
     } =
-      await db
-      .from("wallets")
-      .select(
-        "balance,total_earned,referral_earnings"
-      )
-      .eq("user_id",user.id)
-      .maybeSingle();
+    await db
+    .from("wallets")
+    .select(`
+      balance,
+      total_earned,
+      referral_earnings
+    `)
+    .eq("user_id",user.id)
+    .maybeSingle();
 
+    if(walletError){
+      console.error("Wallet error:",walletError);
+    }
 
     const balance =
-      Number(wallet?.balance || 0);
+    Number(wallet?.balance || 0);
 
     const totalEarned =
-      Number(wallet?.total_earned || 0);
+    Number(wallet?.total_earned || 0);
 
     const referralEarnings =
-      Number(wallet?.referral_earnings || 0);
+    Number(wallet?.referral_earnings || 0);
 
 
-    /* APPROVED TASKS */
-
-    const {
-      data:approved
-    } =
-      await db
-      .from("task_submissions")
-      .select("id")
-      .eq("user_id",user.id)
-      .eq("status","approved");
-
-
-    const completed =
-      approved?.length || 0;
-
-
-    /* REFERRALS */
+/* =========================================================
+   COMPLETED TASKS
+========================================================= */
 
     const {
-      data:referrals
+      count:completed,
+      error:completedError
     } =
-      await db
-      .from("referrals")
-      .select("id")
-      .eq("referrer_id",user.id);
+    await db
+    .from("task_submissions")
+    .select("id",{count:"exact",head:true})
+    .eq("user_id",user.id)
+    .eq("status","approved");
+
+    if(completedError){
+      console.error("Completed task error:",completedError);
+    }
 
 
-    const referralCount =
-      referrals?.length || 0;
-
-
-    /* TASKS */
+/* =========================================================
+   PENDING TASKS
+========================================================= */
 
     const {
-      data:tasks
+      data:pendingRows,
+      error:pendingError
     } =
-      await db
-      .from("tasks")
-      .select(`
-        id,
-        title,
-        description,
-        payout,
-        user_reward_percent,
-        task_url,
-        status
-      `)
-      .eq("status","active")
-      .order("created_at",{ascending:false})
-      .limit(4);
+    await db
+    .from("task_submissions")
+    .select("user_reward")
+    .eq("user_id",user.id)
+    .eq("status","pending");
+
+    if(pendingError){
+      console.error("Pending task error:",pendingError);
+    }
+
+    const pendingBalance =
+    (pendingRows || []).reduce(
+      (sum,row)=>
+      sum + Number(row.user_reward || 0),
+      0
+    );
 
 
-    /* ACTIVITY */
+/* =========================================================
+   REFERRALS
+========================================================= */
 
     const {
-      data:activity
+      count:referralCount,
+      error:referralError
     } =
-      await db
-      .from("task_submissions")
-      .select(`
-        id,
-        status,
-        user_reward,
-        created_at,
-        tasks(title)
-      `)
-      .eq("user_id",user.id)
-      .order("created_at",{ascending:false})
-      .limit(4);
+    await db
+    .from("referrals")
+    .select("id",{count:"exact",head:true})
+    .eq("referrer_id",user.id);
+
+    if(referralError){
+      console.error("Referral error:",referralError);
+    }
 
 
-    /* ACTIVITY HTML */
+/* =========================================================
+   TASKS
+========================================================= */
+
+    const {
+      data:tasks,
+      error:tasksError
+    } =
+    await db
+    .from("tasks")
+    .select(`
+      id,
+      title,
+      description,
+      payout,
+      user_reward_percent,
+      task_url,
+      status,
+      created_at
+    `)
+    .eq("status","active")
+    .order("created_at",{ascending:false})
+    .limit(4);
+
+    if(tasksError){
+      console.error("Tasks error:",tasksError);
+    }
+
+
+/* =========================================================
+   ACTIVITY
+========================================================= */
+
+    const {
+      data:activity,
+      error:activityError
+    } =
+    await db
+    .from("task_submissions")
+    .select(`
+      id,
+      status,
+      user_reward,
+      created_at,
+      tasks(title)
+    `)
+    .eq("user_id",user.id)
+    .order("created_at",{ascending:false})
+    .limit(4);
+
+    if(activityError){
+      console.error("Activity error:",activityError);
+    }
+
+
+/* =========================================================
+   ACTIVITY HTML
+========================================================= */
 
     let activityHTML="";
 
-    if(
-      activity &&
-      activity.length
-    ){
+    if(activity && activity.length){
 
       activity.forEach(row=>{
 
         const title =
-          row.tasks?.title ||
-          "Task";
+        row.tasks?.title ||
+        "Task";
 
         const status =
-          String(row.status || "")
-          .toLowerCase();
+        String(row.status || "")
+        .toLowerCase();
 
         const reward =
-          Number(row.user_reward || 0);
+        Number(row.user_reward || 0);
 
         const date =
-          new Date(
-            row.created_at
-          ).toLocaleDateString(
-            undefined,
-            {
-              month:"short",
-              day:"numeric",
-              year:"numeric"
-            }
-          );
+        new Date(row.created_at)
+        .toLocaleDateString(
+          undefined,
+          {
+            month:"short",
+            day:"numeric",
+            year:"numeric"
+          }
+        );
 
         let iconClass="green";
         let amount="";
@@ -1669,56 +1504,56 @@ async function loadDashboard(){
 
         }
 
-        activityHTML += `
+        activityHTML+=`
 
-          <div class="activity-row">
+        <div class="activity-row">
 
-            <div class="activity-left">
+          <div class="activity-left">
 
-              <div class="activity-icon ${iconClass}">
+            <div class="activity-icon ${iconClass}">
 
-                <svg viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2">
+              <svg viewBox="0 0 24 24"
+                   fill="none"
+                   stroke="currentColor"
+                   stroke-width="2">
 
-                  <path d="M6 3h9l3 3v15H6z"/>
-                  <path d="M14 3v4h4"/>
-                  <path d="m9 13 2 2 4-4"/>
+                <path d="M6 3h9l3 3v15H6z"/>
+                <path d="M14 3v4h4"/>
+                <path d="m9 13 2 2 4-4"/>
 
-                </svg>
-
-              </div>
-
-              <div>
-
-                <div class="activity-name">
-                  ${escapeHtml(title)}
-                </div>
-
-                <div class="activity-date">
-                  ${escapeHtml(date)}
-                </div>
-
-              </div>
+              </svg>
 
             </div>
 
-            <div
-              class="activity-amount"
-              style="color:${
-                status==="approved"
-                ?"#079447"
-                :status==="pending"
-                ?"#c58b00"
-                :"#c74343"
-              }">
+            <div>
 
-              ${escapeHtml(amount)}
+              <div class="activity-name">
+                ${escapeHtml(title)}
+              </div>
+
+              <div class="activity-date">
+                ${escapeHtml(date)}
+              </div>
 
             </div>
 
           </div>
+
+          <div
+            class="activity-amount"
+            style="color:${
+              status==="approved"
+              ?"#079447"
+              :status==="pending"
+              ?"#c58b00"
+              :"#c74343"
+            }">
+
+            ${escapeHtml(amount)}
+
+          </div>
+
+        </div>
 
         `;
 
@@ -1727,271 +1562,38 @@ async function loadDashboard(){
     }else{
 
       activityHTML=`
-        <div class="empty">
-          No activity yet.
-        </div>
+      <div class="empty">
+        No activity yet.
+      </div>
       `;
 
     }
 
 
-    /* TASK HTML */
+/* =========================================================
+   TASK HTML
+========================================================= */
 
     let taskHTML="";
 
-    if(
-      tasks &&
-      tasks.length
-    ){
+    if(tasks && tasks.length){
 
       tasks.forEach(task=>{
 
         const payout =
-          Number(task.payout || 0);
+        Number(task.payout || 0);
 
         const percentage =
-          Number(task.user_reward_percent || 0);
+        Number(task.user_reward_percent || 0);
 
         const reward =
-          payout * percentage / 100;
+        payout * percentage / 100;
 
+        taskHTML+=`
 
-        taskHTML += `
+        <div class="task-card">
 
-          <div class="task-card">
-
-            <div class="task-icon">
-
-              <svg viewBox="0 0 24 24"
-                   fill="none"
-                   stroke="currentColor"
-                   stroke-width="2">
-
-                <rect x="4" y="4"
-                      width="16"
-                      height="16"
-                      rx="3"/>
-
-                <path d="M8 9h8"/>
-                <path d="M8 13h6"/>
-                <path d="M8 17h4"/>
-
-              </svg>
-
-            </div>
-
-            <div class="task-title">
-              ${escapeHtml(task.title)}
-            </div>
-
-            <div class="task-reward">
-              Earn $${reward.toFixed(2)}
-            </div>
-
-            <a
-              class="task-button"
-              href="submit-task.html?task=${encodeURIComponent(task.id)}">
-
-              Start Task
-
-            </a>
-
-          </div>
-
-        `;
-
-      });
-
-    }else{
-
-      taskHTML=`
-
-        <div
-          class="empty"
-          style="
-          grid-column:1/-1;
-          background:var(--card);
-          border:1px solid var(--border);
-          border-radius:15px">
-
-          No tasks available right now.
-
-        </div>
-
-      `;
-
-    }
-
-
-    /* RENDER */
-
-    page.className="";
-
-    page.innerHTML=`
-
-      <div class="welcome">
-
-        <h2>
-          Welcome back, ${escapeHtml(fullName)}
-        </h2>
-
-        <p>
-          Complete eligible tasks and earn rewards.
-        </p>
-
-      </div>
-
-
-      <div class="wallet">
-
-        <div class="wallet-main">
-
-          <div class="wallet-label">
-            Wallet Balance
-          </div>
-
-          <div
-            class="wallet-balance"
-            id="walletBalance"
-            data-value="$${balance.toFixed(2)}"
-            data-hidden="false">
-
-            $${balance.toFixed(2)}
-
-          </div>
-
-
-          <button
-            class="eye"
-            onclick="toggleBalance()"
-            aria-label="Hide or show balance">
-
-            <svg
-              id="eyeOpen"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2">
-
-              <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/>
-              <circle cx="12" cy="12" r="3"/>
-
-            </svg>
-
-
-            <svg
-              id="eyeClosed"
-              style="display:none"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2">
-
-              <path d="M3 3l18 18"/>
-              <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/>
-              <path d="M9.9 5.1A10.9 10.9 0 0 1 12 5c7 0 10 7 10 7a18 18 0 0 1-3.1 4.2"/>
-              <path d="M6.6 6.6C3.6 8.7 2 12 2 12s3.5 6 10 6c1.2 0 2.3-.2 3.3-.6"/>
-
-            </svg>
-
-          </button>
-
-        </div>
-
-
-        <div class="wallet-stats">
-
-          <div class="wallet-stat">
-
-            <small>Total Earned</small>
-
-            <strong>
-              $${totalEarned.toFixed(2)}
-            </strong>
-
-          </div>
-
-
-          <div class="wallet-stat">
-
-            <small>Referral Earnings</small>
-
-            <strong>
-              $${referralEarnings.toFixed(2)}
-            </strong>
-
-          </div>
-
-
-          <div class="wallet-stat">
-
-            <small>Completed Tasks</small>
-
-            <strong>
-              ${completed}
-            </strong>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="survey-banner">
-
-        <h2>
-          Complete Surveys
-        </h2>
-
-        <p>
-          Share your opinion and complete eligible opportunities.
-        </p>
-
-        <a
-          class="survey-button"
-          href="tasks.html">
-
-          View Opportunities
-
-          <svg width="16"
-               height="16"
-               viewBox="0 0 24 24"
-               fill="none"
-               stroke="currentColor"
-               stroke-width="2">
-
-            <path d="M5 12h14"/>
-            <path d="m13 6 6 6-6 6"/>
-
-          </svg>
-
-        </a>
-
-
-        <div class="survey-art">
-
-          <div class="clipboard">
-
-            <div class="clip"></div>
-
-            <div class="check"></div>
-            <div class="check"></div>
-            <div class="check"></div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="features">
-
-
-        <a class="feature" href="tasks.html">
-
-          <div class="feature-icon green">
+          <div class="task-icon">
 
             <svg viewBox="0 0 24 24"
                  fill="none"
@@ -2004,231 +1606,487 @@ async function loadDashboard(){
                     rx="3"/>
 
               <path d="M8 9h8"/>
-              <path d="M8 13h5"/>
-              <path d="m8 17 2 2 5-5"/>
+              <path d="M8 13h6"/>
+              <path d="M8 17h4"/>
 
             </svg>
 
           </div>
 
-          <strong>Earn Tasks</strong>
-          <span>Find opportunities</span>
-
-        </a>
-
-
-        <a class="feature" href="referrals.html">
-
-          <div class="feature-icon blue">
-
-            <svg viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2">
-
-              <circle cx="9" cy="8" r="3"/>
-              <circle cx="17" cy="10" r="3"/>
-              <path d="M3 20c0-3 2-5 6-5s6 2 6 5"/>
-              <path d="M14 16c4 0 6 1.5 7 4"/>
-
-            </svg>
-
+          <div class="task-title">
+            ${escapeHtml(task.title)}
           </div>
 
-          <strong>Referrals</strong>
-          <span>${referralCount} referrals</span>
-
-        </a>
-
-
-        <a class="feature" href="history.html">
-
-          <div class="feature-icon orange">
-
-            <svg viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2">
-
-              <circle cx="12" cy="12" r="8"/>
-              <path d="M12 8v5l3 2"/>
-
-            </svg>
-
+          <div class="task-reward">
+            Earn $${reward.toFixed(2)}
           </div>
 
-          <strong>History</strong>
-          <span>Earnings history</span>
+          <a
+            class="task-button"
+            href="submit-task.html?task=${encodeURIComponent(task.id)}">
 
-        </a>
+            Start Task
 
-
-        <a class="feature" href="withdraw.html">
-
-          <div class="feature-icon purple">
-
-            <svg viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2">
-
-              <rect x="5" y="3"
-                    width="14"
-                    height="18"
-                    rx="2"/>
-
-              <path d="M8 8h8"/>
-              <path d="M8 12h5"/>
-              <path d="M8 16h4"/>
-
-            </svg>
-
-          </div>
-
-          <strong>Withdraw</strong>
-          <span>Request payout</span>
-
-        </a>
-
-
-        <a class="feature" href="profile.html">
-
-          <div class="feature-icon cyan">
-
-            <svg viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2">
-
-              <circle cx="12" cy="8" r="3"/>
-              <path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>
-
-            </svg>
-
-          </div>
-
-          <strong>Profile</strong>
-          <span>Account settings</span>
-
-        </a>
-
-
-        <a class="feature" href="notifications.html">
-
-          <div class="feature-icon pink">
-
-            <svg viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2">
-
-              <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-              <path d="M10 21h4"/>
-
-            </svg>
-
-          </div>
-
-          <strong>Notifications</strong>
-          <span>Recent updates</span>
-
-        </a>
-
-      </div>
-
-
-      <div class="section">
-
-        <div class="section-title">
-
-          <h3>
-            Recent Activity
-          </h3>
-
-          <a href="history.html">
-            View All
           </a>
 
         </div>
 
+        `;
 
-        <div class="activity">
+      });
 
-          ${activityHTML}
+    }else{
+
+      taskHTML=`
+
+      <div
+        class="empty"
+        style="
+        grid-column:1/-1;
+        background:var(--card);
+        border:1px solid var(--border);
+        border-radius:15px">
+
+        No tasks available right now.
+
+      </div>
+
+      `;
+
+    }
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+    page.className="";
+
+    page.innerHTML=`
+
+    <div class="welcome">
+
+      <h2>
+        Welcome back, ${escapeHtml(fullName)}
+      </h2>
+
+      <p>
+        Complete eligible tasks and earn rewards.
+      </p>
+
+    </div>
+
+
+    <div class="wallet">
+
+      <div class="wallet-main">
+
+        <div class="wallet-label">
+          Wallet Balance
+        </div>
+
+        <div
+          class="wallet-balance"
+          id="walletBalance"
+          data-value="$${balance.toFixed(2)}"
+          data-hidden="false">
+
+          $${balance.toFixed(2)}
+
+        </div>
+
+        <button
+          class="eye"
+          onclick="toggleBalance()"
+          aria-label="Hide or show balance">
+
+          <svg
+            id="eyeOpen"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2">
+
+            <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/>
+            <circle cx="12" cy="12" r="3"/>
+
+          </svg>
+
+          <svg
+            id="eyeClosed"
+            style="display:none"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2">
+
+            <path d="M3 3l18 18"/>
+            <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/>
+            <path d="M9.9 5.1A10.9 10.9 0 0 1 12 5c7 0 10 7 10 7a18 18 0 0 1-3.1 4.2"/>
+            <path d="M6.6 6.6C3.6 8.7 2 12 2 12s3.5 6 10 6c1.2 0 2.3-.2 3.3-.6"/>
+
+          </svg>
+
+        </button>
+
+      </div>
+
+
+      <div class="wallet-stats">
+
+        <div class="wallet-stat">
+
+          <small>Total Earned</small>
+
+          <strong>
+            $${totalEarned.toFixed(2)}
+          </strong>
+
+        </div>
+
+
+        <div class="wallet-stat">
+
+          <small>Referral Earnings</small>
+
+          <strong>
+            $${referralEarnings.toFixed(2)}
+          </strong>
+
+        </div>
+
+
+        <div class="wallet-stat">
+
+          <small>Completed Tasks</small>
+
+          <strong>
+            ${Number(completed || 0)}
+          </strong>
 
         </div>
 
       </div>
 
+    </div>
 
-      <div class="telegram">
 
-        <div class="telegram-icon">
+    <div class="survey-banner">
+
+      <h2>
+        Complete Surveys
+      </h2>
+
+      <p>
+        Share your opinion and complete eligible opportunities.
+      </p>
+
+      <a
+        class="survey-button"
+        href="tasks.html">
+
+        View Opportunities
+
+        <svg width="16"
+             height="16"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2">
+
+          <path d="M5 12h14"/>
+          <path d="m13 6 6 6-6 6"/>
+
+        </svg>
+
+      </a>
+
+      <div class="survey-art">
+
+        <div class="clipboard">
+
+          <div class="clip"></div>
+
+          <div class="check"></div>
+          <div class="check"></div>
+          <div class="check"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="features">
+
+      <a class="feature" href="tasks.html">
+
+        <div class="feature-icon green">
 
           <svg viewBox="0 0 24 24"
-               fill="currentColor">
+               fill="none"
+               stroke="currentColor"
+               stroke-width="2">
 
-            <path d="M21.4 4.6 18.3 19c-.2 1-.8 1.2-1.6.8l-4.5-3.3-2.2 2.1c-.2.2-.4.4-.8.4l.3-4.6 8.4-7.6c.4-.3-.1-.5-.6-.2L7 13.2l-4.4-1.4c-1-.3-1-1 .2-1.5L20 4.1c.8-.3 1.6.2 1.4.5z"/>
+            <rect x="4" y="4"
+                  width="16"
+                  height="16"
+                  rx="3"/>
+
+            <path d="M8 9h8"/>
+            <path d="M8 13h5"/>
+            <path d="m8 17 2 2 5-5"/>
 
           </svg>
 
         </div>
 
+        <strong>Earn Tasks</strong>
+        <span>Find opportunities</span>
 
-        <div class="telegram-text">
+      </a>
 
-          <strong>
-            Join TallyBuck on Telegram
-          </strong>
 
-          <span>
-            Get updates and important platform announcements.
-          </span>
+      <a class="feature" href="referrals.html">
+
+        <div class="feature-icon blue">
+
+          <svg viewBox="0 0 24 24"
+               fill="none"
+               stroke="currentColor"
+               stroke-width="2">
+
+            <circle cx="9" cy="8" r="3"/>
+            <circle cx="17" cy="10" r="3"/>
+            <path d="M3 20c0-3 2-5 6-5s6 2 6 5"/>
+            <path d="M14 16c4 0 6 1.5 7 4"/>
+
+          </svg>
 
         </div>
 
+        <strong>Referrals</strong>
+        <span>${Number(referralCount || 0)} referrals</span>
 
-        <a
-          class="join"
-          href="https://t.me/tallybuck"
-          target="_blank"
-          rel="noopener">
+      </a>
 
-          Join
 
+      <a class="feature" href="history.html">
+
+        <div class="feature-icon orange">
+
+          <svg viewBox="0 0 24 24"
+               fill="none"
+               stroke="currentColor"
+               stroke-width="2">
+
+            <circle cx="12" cy="12" r="8"/>
+            <path d="M12 8v5l3 2"/>
+
+          </svg>
+
+        </div>
+
+        <strong>History</strong>
+        <span>Earnings history</span>
+
+      </a>
+
+
+      <a class="feature" href="withdraw.html">
+
+        <div class="feature-icon purple">
+
+          <svg viewBox="0 0 24 24"
+               fill="none"
+               stroke="currentColor"
+               stroke-width="2">
+
+            <rect x="5" y="3"
+                  width="14"
+                  height="18"
+                  rx="2"/>
+
+            <path d="M8 8h8"/>
+            <path d="M8 12h5"/>
+            <path d="M8 16h4"/>
+
+          </svg>
+
+        </div>
+
+        <strong>Withdraw</strong>
+        <span>Request payout</span>
+
+      </a>
+
+
+      <a class="feature" href="profile.html">
+
+        <div class="feature-icon cyan">
+
+          <svg viewBox="0 0 24 24"
+               fill="none"
+               stroke="currentColor"
+               stroke-width="2">
+
+            <circle cx="12" cy="8" r="3"/>
+            <path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>
+
+          </svg>
+
+        </div>
+
+        <strong>Profile</strong>
+        <span>Account settings</span>
+
+      </a>
+
+
+      <a class="feature" href="notifications.html">
+
+        <div class="feature-icon pink">
+
+          <svg viewBox="0 0 24 24"
+               fill="none"
+               stroke="currentColor"
+               stroke-width="2">
+
+            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+            <path d="M10 21h4"/>
+
+          </svg>
+
+        </div>
+
+        <strong>Notifications</strong>
+        <span>Recent updates</span>
+
+      </a>
+
+    </div>
+
+
+    <div class="section">
+
+      <div class="section-title">
+
+        <h3>Recent Activity</h3>
+
+        <a href="history.html">
+          View All
         </a>
 
       </div>
 
+      <div class="activity">
+        ${activityHTML}
+      </div>
 
-      <div class="section">
-
-        <div class="section-title">
-
-          <h3>
-            Available Tasks
-          </h3>
-
-          <a href="tasks.html">
-            View All
-          </a>
-
-        </div>
+    </div>
 
 
-        <div class="task-grid">
+    <div class="telegram">
 
-          ${taskHTML}
+      <div class="telegram-icon">
+
+        <svg viewBox="0 0 24 24"
+             fill="currentColor">
+
+          <path d="M21.4 4.6 18.3 19c-.2 1-.8 1.2-1.6.8l-4.5-3.3-2.2 2.1c-.2.2-.4.4-.8.4l.3-4.6 8.4-7.6c.4-.3-.1-.5-.6-.2L7 13.2l-4.4-1.4c-1-.3-1-1 .2-1.5L20 4.1c.8-.3 1.6.2 1.4.5z"/>
+
+        </svg>
+
+      </div>
+
+      <div class="telegram-text">
+
+        <strong>
+          Join TallyBuck on Telegram
+        </strong>
+
+        <span>
+          Get updates and important platform announcements.
+        </span>
+
+      </div>
+
+      <a
+        class="join"
+        href="https://t.me/tallybuck"
+        target="_blank"
+        rel="noopener">
+
+        Join
+
+      </a>
+
+    </div>
+
+
+    <div class="section">
+
+      <div class="section-title">
+
+        <h3>Available Tasks</h3>
+
+        <a href="tasks.html">
+          View All
+        </a>
+
+      </div>
+
+      <div class="task-grid">
+
+        ${taskHTML}
+
+      </div>
+
+    </div>
+
+
+    <div class="section">
+
+      <div class="section-title">
+
+        <h3>Pending Earnings</h3>
+
+      </div>
+
+      <div class="wallet">
+
+        <div class="wallet-main" style="padding:16px 20px">
+
+          <div class="wallet-label">
+            Awaiting review
+          </div>
+
+          <div
+            style="
+            color:var(--green);
+            font-size:25px;
+            font-weight:800;
+            margin-top:5px">
+
+            $${pendingBalance.toFixed(2)}
+
+          </div>
 
         </div>
 
       </div>
+
+    </div>
 
     `;
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Dashboard load error:",
+      error
+    );
 
     page.innerHTML=`
 
@@ -2256,13 +2114,47 @@ async function loadDashboard(){
 function escapeHtml(value){
 
   return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
 
 }
+
+
+/* =========================================================
+   REFRESH WHEN USER RETURNS
+========================================================= */
+
+document.addEventListener(
+"visibilitychange",
+function(){
+
+  if(!document.hidden){
+    loadDashboard();
+  }
+
+});
+
+
+/* =========================================================
+   AUTH STATE
+========================================================= */
+
+db.auth.onAuthStateChange(
+function(event,session){
+
+  if(
+    event==="SIGNED_OUT" ||
+    !session
+  ){
+
+    location.href="login.html";
+
+  }
+
+});
 
 
 /* =========================================================
