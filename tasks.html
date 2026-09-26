@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RexTasks - Surveys</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#03150f">
+<title>TallyBuck — Tasks</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
 *{
   box-sizing:border-box;
   margin:0;
@@ -16,6 +12,7 @@
 
 :root{
   --bg:#03150f;
+  --header:#061d15;
   --card:#08251c;
   --card2:#0a2b21;
   --border:#123d30;
@@ -23,6 +20,7 @@
   --green2:#20c982;
   --white:#f4faf7;
   --muted:#8ea79e;
+  --danger:#e56a6a;
 }
 
 body{
@@ -37,44 +35,48 @@ body{
 
 .header{
   height:78px;
-  background:#061d15;
+  background:var(--header);
   border-bottom:1px solid #12372c;
   display:flex;
   align-items:center;
-  justify-content:space-between;
   padding:0 18px;
   position:sticky;
   top:0;
   z-index:20;
 }
 
-.menu{
+.header-menu{
   width:38px;
   height:38px;
   display:flex;
   align-items:center;
   justify-content:center;
   color:white;
+  text-decoration:none;
+  flex-shrink:0;
 }
 
-.menu svg{
-  width:29px;
-  height:29px;
+.header-menu svg{
+  width:27px;
+  height:27px;
+}
+
+.logo-link{
+  text-decoration:none;
+  margin-left:18px;
 }
 
 .logo{
   display:flex;
   align-items:center;
   gap:7px;
-  font-size:25px;
+  font-size:23px;
   font-weight:800;
-  margin-right:auto;
-  margin-left:25px;
 }
 
-.logo-r{
+.logo-mark{
   color:var(--green);
-  font-size:43px;
+  font-size:39px;
   line-height:1;
   font-weight:900;
 }
@@ -84,9 +86,10 @@ body{
 }
 
 .header-right{
+  margin-left:auto;
   display:flex;
   align-items:center;
-  gap:13px;
+  gap:12px;
 }
 
 .notification{
@@ -96,11 +99,13 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
+  color:white;
+  text-decoration:none;
 }
 
 .notification svg{
-  width:28px;
-  height:28px;
+  width:25px;
+  height:25px;
 }
 
 .notification-dot{
@@ -110,22 +115,7 @@ body{
   background:#1fd184;
   border-radius:50%;
   top:5px;
-  right:6px;
-}
-
-.theme{
-  width:58px;
-  height:45px;
-  border:1px solid #153f32;
-  border-radius:15px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--green);
-}
-
-.theme svg{
-  width:22px;
+  right:5px;
 }
 
 /* PAGE */
@@ -145,7 +135,8 @@ body{
 
 .subtitle{
   color:var(--muted);
-  font-size:16px;
+  font-size:15px;
+  line-height:1.5;
   margin-bottom:25px;
 }
 
@@ -155,7 +146,7 @@ body{
   background:#062219;
   border:1px solid #154638;
   border-radius:18px;
-  padding:17px;
+  padding:16px;
   margin-bottom:25px;
   min-height:68px;
   display:flex;
@@ -171,7 +162,8 @@ body{
 }
 
 .location-content{
-  font-size:15px;
+  font-size:14px;
+  min-width:0;
 }
 
 .location-status{
@@ -189,7 +181,15 @@ body{
 .loading{
   display:flex;
   align-items:center;
+  justify-content:center;
   gap:9px;
+  color:var(--muted);
+  padding:50px 10px;
+}
+
+.location-box .loading{
+  justify-content:flex-start;
+  padding:0;
 }
 
 .spinner{
@@ -199,6 +199,7 @@ body{
   border-top-color:var(--green);
   border-radius:50%;
   animation:spin .8s linear infinite;
+  flex-shrink:0;
 }
 
 @keyframes spin{
@@ -227,6 +228,7 @@ body{
   min-height:350px;
   display:flex;
   flex-direction:column;
+  box-shadow:0 7px 25px rgba(0,0,0,.12);
 }
 
 .task-top{
@@ -239,6 +241,7 @@ body{
   display:flex;
   align-items:center;
   gap:10px;
+  min-width:0;
 }
 
 .task-icon{
@@ -249,6 +252,7 @@ body{
   align-items:center;
   justify-content:center;
   color:white;
+  flex-shrink:0;
 }
 
 .task-icon svg{
@@ -256,40 +260,36 @@ body{
   height:30px;
 }
 
-.app{
+.icon-app{
   background:#119d78;
 }
 
-.task{
-  background:#3978d8;
-}
-
-.signup{
-  background:#dc8b18;
-}
-
-.offer{
-  background:#7d48d2;
-}
-
-.daily{
-  background:#159e72;
-}
-
-.task{
+.icon-task{
   background:#168d9b;
 }
 
-.referral{
+.icon-signup{
+  background:#dc8b18;
+}
+
+.icon-offer{
+  background:#7d48d2;
+}
+
+.icon-daily{
+  background:#159e72;
+}
+
+.icon-referral{
   background:#bc3c92;
 }
 
 .badge{
   border-radius:30px;
   padding:8px 12px;
-  font-size:11px;
+  font-size:10px;
   font-weight:800;
-  margin-top:9px;
+  white-space:nowrap;
 }
 
 .badge-app{
@@ -298,8 +298,8 @@ body{
 }
 
 .badge-task{
-  background:#214d8e;
-  color:#c9ddff;
+  background:#145e68;
+  color:#b7f4f6;
 }
 
 .badge-signup{
@@ -317,28 +317,24 @@ body{
   color:#b9ffe5;
 }
 
-.badge-task{
-  background:#145e68;
-  color:#b7f4f6;
-}
-
 .badge-referral{
   background:#74275b;
   color:#ffc9ec;
 }
 
-.more{
-  color:#dce9e5;
+.task-more{
+  color:#91aaa1;
   width:28px;
   height:35px;
+  flex-shrink:0;
 }
 
-.more svg{
+.task-more svg{
   width:23px;
 }
 
 .task-title{
-  font-size:22px;
+  font-size:21px;
   line-height:1.25;
   margin-top:23px;
   font-weight:800;
@@ -346,7 +342,7 @@ body{
 
 .task-description{
   color:#9db5ae;
-  font-size:15px;
+  font-size:14px;
   line-height:1.55;
   margin-top:11px;
 }
@@ -361,7 +357,7 @@ body{
   align-items:center;
   gap:10px;
   color:var(--green);
-  font-size:25px;
+  font-size:24px;
   font-weight:900;
   margin-bottom:18px;
 }
@@ -375,7 +371,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:22px;
+  font-size:21px;
   font-weight:900;
 }
 
@@ -390,17 +386,44 @@ body{
     #18c981
   );
   color:#032017;
-  font-size:17px;
+  font-size:16px;
   font-weight:900;
+  cursor:pointer;
+}
+
+.start:active{
+  transform:scale(.98);
+}
+
+.start:disabled{
+  opacity:.55;
+  cursor:not-allowed;
 }
 
 /* EMPTY */
 
 .empty{
+  grid-column:1/-1;
   text-align:center;
   padding:55px 20px;
   color:var(--muted);
   line-height:1.6;
+  background:#061e17;
+  border:1px solid var(--border);
+  border-radius:18px;
+}
+
+/* ERROR */
+
+.error{
+  grid-column:1/-1;
+  text-align:center;
+  padding:45px 20px;
+  color:var(--danger);
+  line-height:1.6;
+  background:#1d0b0b;
+  border:1px solid #4b2020;
+  border-radius:18px;
 }
 
 /* BOTTOM NAV */
@@ -429,6 +452,7 @@ body{
   font-size:11px;
   font-weight:700;
   min-width:58px;
+  position:relative;
 }
 
 .nav-item svg{
@@ -442,7 +466,7 @@ body{
 
 .nav-line{
   position:absolute;
-  bottom:10px;
+  bottom:-13px;
   width:32px;
   height:3px;
   border-radius:5px;
@@ -464,7 +488,6 @@ body{
   .title{
     font-size:42px;
   }
-
 }
 
 /* SMALL PHONES */
@@ -472,281 +495,246 @@ body{
 @media(max-width:380px){
 
   .logo{
-    margin-left:12px;
-    font-size:22px;
+    font-size:21px;
   }
 
-  .logo-r{
-    font-size:37px;
+  .logo-mark{
+    font-size:35px;
   }
 
-  .theme{
-    display:none;
+  .logo-link{
+    margin-left:10px;
   }
 
   .title{
     font-size:30px;
   }
+
+  .header-right{
+    gap:5px;
+  }
+
+  .task-card{
+    padding:16px;
+  }
+
+  .task-title{
+    font-size:19px;
+  }
 }
-</style>
-</head>
+</style></head><body><header class="header"><a
+href="dashboard.html"
+class="header-menu"
+aria-label="Dashboard"
 
-<body>
+«»
 
-<header class="header">
+<svg
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2.3"
+>
+  <path d="M4 6h16"/>
+  <path d="M4 12h16"/>
+  <path d="M4 18h16"/>
+</svg>
 
-  <a href="dashboard.html" class="menu">
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="2.3">
-      <path d="M4 6h16"/>
-      <path d="M4 12h16"/>
-      <path d="M4 18h16"/>
-    </svg>
-  </a>
+  </a><a
+href="dashboard.html"
+class="logo-link"
 
-  <a href="dashboard.html"
-     style="text-decoration:none;">
-    <div class="logo">
-      <span class="logo-r">R</span>
-      <span class="logo-text">RexTasks</span>
-    </div>
-  </a>
+«»
 
-  <div class="header-right">
+<div class="logo">
+  <span class="logo-mark">T</span>
+  <span class="logo-text">TallyBuck</span>
+</div>
 
-    <div class="notification">
-      <svg viewBox="0 0 24 24"
-           fill="none"
-           stroke="currentColor"
-           stroke-width="2">
-        <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-        <path d="M10 21h4"/>
-      </svg>
+  </a>  <div class="header-right"><a
+  href="notifications.html"
+  class="notification"
+  aria-label="Notifications"
+>
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+  >
+    <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+    <path d="M10 21h4"/>
+  </svg>
 
-      <span class="notification-dot"></span>
-    </div>
+  <span class="notification-dot"></span>
+</a>
 
-    <div class="theme">
-      <svg viewBox="0 0 24 24"
-           fill="none"
-           stroke="currentColor"
-           stroke-width="2">
-        <circle cx="12" cy="12" r="4"/>
-        <path d="M12 2v2"/>
-        <path d="M12 20v2"/>
-        <path d="m4.93 4.93 1.42 1.42"/>
-        <path d="m17.65 17.65 1.42 1.42"/>
-        <path d="M2 12h2"/>
-        <path d="M20 12h2"/>
-      </svg>
-    </div>
+  </div></header><main class="container">  <h1 class="title">
+    Available Tasks
+  </h1>  <p class="subtitle">
+    Complete eligible tasks and earn rewards.
+  </p>  <div class="location-box"><svg
+  class="location-icon"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+>
+  <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/>
+  <circle cx="12" cy="10" r="2.5"/>
+</svg>
 
+<div
+  class="location-content"
+  id="locationContent"
+>
+  <div class="loading">
+    <span class="spinner"></span>
+    <span>Detecting your location...</span>
   </div>
+</div>
 
-</header>
-
-
-<main class="container">
-
-  <h1 class="title">Available Tasks</h1>
-
-  <p class="subtitle">
-    Complete tasks and earn rewards.
-  </p>
-
-
-  <!-- COUNTRY DETECTION -->
-
-  <div class="location-box">
-
-    <svg class="location-icon"
-         viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="2">
-
-      <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/>
-
-      <circle cx="12"
-              cy="10"
-              r="2.5"/>
-
-    </svg>
-
-
-    <div class="location-content"
-         id="locationContent">
-
-      <div class="loading">
-
-        <span class="spinner"></span>
-
-        <span>
-          Detecting your location...
-        </span>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- REAL TASKS ONLY -->
-
-  <section
+  </div>  <section
     id="taskGrid"
     class="task-grid"
-  ></section>
+  ></section></main><nav class="bottom-nav"><a
+href="dashboard.html"
+class="nav-item"
 
-</main>
+«»
 
+<svg
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+>
+  <path d="m3 10 9-7 9 7"/>
+  <path d="M5 9v11h14V9"/>
+  <path d="M9 20v-6h6v6"/>
+</svg>
 
-<!-- BOTTOM NAVIGATION -->
+<span>Home</span>
 
-<nav class="bottom-nav">
+  </a><a
+href="tasks.html"
+class="nav-item active"
 
-  <a href="dashboard.html"
-     class="nav-item">
+«»
 
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="2">
+<svg
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+>
+  <rect
+    x="5"
+    y="3"
+    width="14"
+    height="18"
+    rx="2"
+  />
+  <path d="M9 7h6"/>
+  <path d="M9 11h6"/>
+  <path d="M9 15h3"/>
+</svg>
 
-      <path d="m3 10 9-7 9 7"/>
-      <path d="M5 9v11h14V9"/>
-      <path d="M9 20v-6h6v6"/>
+<span>Tasks</span>
 
-    </svg>
+<span class="nav-line"></span>
 
-    <span>Home</span>
+  </a><a
+href="withdraw.html"
+class="nav-item"
 
-  </a>
+«»
 
+<svg
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+>
+  <rect
+    x="3"
+    y="5"
+    width="18"
+    height="14"
+    rx="3"
+  />
+  <path d="M16 9h5v6h-5a3 3 0 0 1 0-6Z"/>
+  <circle cx="16" cy="12" r="1"/>
+</svg>
 
-  <a href="tasks.html"
-     class="nav-item active">
+<span>Wallet</span>
 
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="2">
+  </a><a
+href="history.html"
+class="nav-item"
 
-      <rect x="5"
-            y="3"
-            width="14"
-            height="18"
-            rx="2"/>
+«»
 
-      <path d="M9 7h6"/>
-      <path d="M9 11h6"/>
-      <path d="M9 15h3"/>
+<svg
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+>
+  <circle
+    cx="12"
+    cy="12"
+    r="9"
+  />
+  <path d="M12 7v5l3 2"/>
+</svg>
 
-    </svg>
+<span>History</span>
 
-    <span>task</span>
+  </a><a
+href="profile.html"
+class="nav-item"
 
-    <span class="nav-line"></span>
+«»
 
-  </a>
+<svg
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+>
+  <circle
+    cx="12"
+    cy="8"
+    r="3"
+  />
+  <path d="M5 20c0-4 3-6 7-6s7 2 7 6"/>
+</svg>
 
+<span>Profile</span>
 
-  <a href="wallet.html"
-     class="nav-item">
+  </a></nav><script>
 
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="2">
-
-      <rect x="3"
-            y="5"
-            width="18"
-            height="14"
-            rx="3"/>
-
-      <path d="M16 9h5v6h-5a3 3 0 0 1 0-6Z"/>
-
-      <circle cx="16"
-              cy="12"
-              r="1"/>
-
-    </svg>
-
-    <span>Wallet</span>
-
-  </a>
-
-
-  <a href="history.html"
-     class="nav-item">
-
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="2">
-
-      <circle cx="12"
-              cy="12"
-              r="9"/>
-
-      <path d="M12 7v5l3 2"/>
-
-    </svg>
-
-    <span>History</span>
-
-  </a>
-
-
-  <a href="profile.html"
-     class="nav-item">
-
-    <svg viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="2">
-
-      <circle cx="12"
-              cy="8"
-              r="3"/>
-
-      <path d="M5 20c0-4 3-6 7-6s7 2 7 6"/>
-
-    </svg>
-
-    <span>Profile</span>
-
-  </a>
-
-</nav>
-
-
-<script>
-
-/* =========================
+/* =========================================================
    SUPABASE
-========================= */
+========================================================= */
 
 const SUPABASE_URL =
-"https://cetsxdkoauucxwsbdktl.supabase.co";
+  "https://cetsxdkoauucxwsbdktl.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
+  "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
 
 const supabaseClient =
-supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 
-/* =========================
+/* =========================================================
    SESSION
-========================= */
+========================================================= */
 
 async function checkSession(){
 
@@ -754,9 +742,12 @@ async function checkSession(){
     data,
     error
   } =
-  await supabaseClient.auth.getSession();
+    await supabaseClient.auth.getSession();
 
-  if(error || !data.session){
+  if(
+    error ||
+    !data.session
+  ){
 
     window.location.href =
       "login.html";
@@ -768,13 +759,11 @@ async function checkSession(){
 }
 
 
-/* =========================
+/* =========================================================
    COUNTRY DETECTION
-========================= */
+========================================================= */
 
 async function detectCountry(){
-
-  /* FIRST SERVICE */
 
   try{
 
@@ -791,7 +780,10 @@ async function detectCountry(){
       const data =
         await response.json();
 
-      if(data && data.country_name){
+      if(
+        data &&
+        data.country_name
+      ){
 
         return data.country_name.trim();
 
@@ -807,8 +799,6 @@ async function detectCountry(){
 
   }
 
-
-  /* FALLBACK SERVICE */
 
   try{
 
@@ -845,16 +835,15 @@ async function detectCountry(){
 
   }
 
-
   throw new Error(
     "Unable to detect country."
   );
 }
 
 
-/* =========================
+/* =========================================================
    SHOW COUNTRY
-========================= */
+========================================================= */
 
 function showCountry(country){
 
@@ -863,7 +852,7 @@ function showCountry(country){
   ).innerHTML = `
 
     <div class="location-status">
-      Your location:
+      Available opportunities for:
       <span class="country">
         ${escapeHTML(country)}
       </span>
@@ -874,9 +863,9 @@ function showCountry(country){
 }
 
 
-/* =========================
+/* =========================================================
    LOAD TASKS
-========================= */
+========================================================= */
 
 async function loadTasks(country){
 
@@ -890,39 +879,42 @@ async function loadTasks(country){
     data:tasks,
     error
   } =
-  await supabaseClient
-    .from("tasks")
-    .select(`
-      id,
-      title,
-      description,
-      category,
-      country,
-      payout,
-      user_reward_percent,
-      task_url,
-      proof_required,
-      max_completions,
-      status,
-      created_at
-    `)
-    .eq(
-      "status",
-      "active"
-    )
-    .order(
-      "created_at",
-      {
-        ascending:false
-      }
-    );
+    await supabaseClient
+      .from("tasks")
+      .select(`
+        id,
+        title,
+        description,
+        category,
+        country,
+        payout,
+        user_reward_percent,
+        task_url,
+        proof_required,
+        max_completions,
+        status,
+        created_at
+      `)
+      .eq(
+        "status",
+        "active"
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
 
 
   if(error){
 
-    console.error(error);
+    console.error(
+      "Task query error:",
+      error
+    );
 
-    showEmpty(
+    showError(
       "Tasks could not be loaded right now."
     );
 
@@ -932,7 +924,7 @@ async function loadTasks(country){
 
 
   const detected =
-    country
+    String(country)
       .trim()
       .toLowerCase();
 
@@ -973,11 +965,21 @@ async function loadTasks(country){
 
   available.forEach(task => {
 
-    const reward =
-      Number(task.payout || 0) *
+    const payout =
+      Number(
+        task.payout || 0
+      );
+
+
+    const percentage =
       Number(
         task.user_reward_percent || 0
-      ) /
+      );
+
+
+    const reward =
+      payout *
+      percentage /
       100;
 
 
@@ -991,6 +993,7 @@ async function loadTasks(country){
       document.createElement(
         "article"
       );
+
 
     card.className =
       "task-card";
@@ -1023,23 +1026,29 @@ async function loadTasks(country){
         </div>
 
 
-        <div class="more">
+        <div class="task-more">
 
-          <svg viewBox="0 0 24 24"
-               fill="currentColor">
+          <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <circle
+              cx="12"
+              cy="5"
+              r="1.6"
+            />
 
-            <circle cx="12"
-                    cy="5"
-                    r="1.6"/>
+            <circle
+              cx="12"
+              cy="12"
+              r="1.6"
+            />
 
-            <circle cx="12"
-                    cy="12"
-                    r="1.6"/>
-
-            <circle cx="12"
-                    cy="19"
-                    r="1.6"/>
-
+            <circle
+              cx="12"
+              cy="19"
+              r="1.6"
+            />
           </svg>
 
         </div>
@@ -1064,7 +1073,9 @@ async function loadTasks(country){
 
         <div class="reward">
 
-          <span class="money">$</span>
+          <span class="money">
+            $
+          </span>
 
           $${reward.toFixed(2)}
 
@@ -1073,7 +1084,7 @@ async function loadTasks(country){
 
         <button
           class="start"
-          onclick="startTask(${Number(task.id)})"
+          data-task-id="${Number(task.id)}"
         >
           Start Task
         </button>
@@ -1083,6 +1094,25 @@ async function loadTasks(country){
     `;
 
 
+    const startButton =
+      card.querySelector(
+        ".start"
+      );
+
+
+    startButton.addEventListener(
+      "click",
+      function(){
+
+        startTask(
+          Number(task.id),
+          task.task_url
+        );
+
+      }
+    );
+
+
     grid.appendChild(card);
 
   });
@@ -1090,11 +1120,27 @@ async function loadTasks(country){
 }
 
 
-/* =========================
+/* =========================================================
    START TASK
-========================= */
+========================================================= */
 
-function startTask(taskId){
+function startTask(
+  taskId,
+  taskUrl
+){
+
+  if(!taskId){
+    return;
+  }
+
+
+  /*
+    For now all tasks continue through the existing
+    submission flow.
+
+    CPA/offerwall automatic tracking will be connected
+    later through the secure backend/postback system.
+  */
 
   window.location.href =
     "submit-task.html?task=" +
@@ -1103,9 +1149,9 @@ function startTask(taskId){
 }
 
 
-/* =========================
+/* =========================================================
    EMPTY STATE
-========================= */
+========================================================= */
 
 function showEmpty(message){
 
@@ -1124,40 +1170,77 @@ function showEmpty(message){
 }
 
 
-/* =========================
+/* =========================================================
+   ERROR STATE
+========================================================= */
+
+function showError(message){
+
+  document.getElementById(
+    "taskGrid"
+  ).innerHTML = `
+
+    <div class="error">
+
+      ${escapeHTML(message)}
+
+      <br><br>
+
+      <button
+        class="start"
+        style="max-width:220px"
+        onclick="location.reload()"
+      >
+        Refresh
+      </button>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
    CATEGORY
-========================= */
+========================================================= */
 
 function getCategory(value){
 
   const c =
     String(value || "")
-    .toLowerCase();
+      .toLowerCase();
 
 
   if(c.includes("survey")){
 
     return {
       label:"SURVEY",
-      iconClass:"survey",
-      badgeClass:"badge-survey",
+      iconClass:"icon-task",
+      badgeClass:"badge-task",
       icon:`
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
 
-          <rect x="5"
-                y="3"
-                width="14"
-                height="18"
-                rx="2"/>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+
+          <rect
+            x="5"
+            y="3"
+            width="14"
+            height="18"
+            rx="2"
+          />
 
           <path d="M9 7h6"/>
           <path d="M9 11h6"/>
           <path d="M9 15h3"/>
 
         </svg>
+
       `
     };
 
@@ -1172,24 +1255,32 @@ function getCategory(value){
 
     return {
       label:"SIGN UP",
-      iconClass:"signup",
+      iconClass:"icon-signup",
       badgeClass:"badge-signup",
       icon:`
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
 
-          <circle cx="9"
-                  cy="8"
-                  r="3"/>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
 
-          <path d="M3 20c0-3.5 2.5-6 6-6s6 2.5 6 6"/>
+          <circle
+            cx="9"
+            cy="8"
+            r="3"
+          />
+
+          <path
+            d="M3 20c0-3.5 2.5-6 6-6s6 2.5 6 6"
+          />
 
           <path d="M18 12v6"/>
           <path d="M15 15h6"/>
 
         </svg>
+
       `
     };
 
@@ -1200,19 +1291,23 @@ function getCategory(value){
 
     return {
       label:"OFFER",
-      iconClass:"offer",
+      iconClass:"icon-offer",
       badgeClass:"badge-offer",
       icon:`
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
 
           <path d="M3 8h18v5H3z"/>
           <path d="M12 8v12"/>
           <path d="M5 13v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/>
 
         </svg>
+
       `
     };
 
@@ -1223,25 +1318,31 @@ function getCategory(value){
 
     return {
       label:"DAILY",
-      iconClass:"daily",
+      iconClass:"icon-daily",
       badgeClass:"badge-daily",
       icon:`
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
 
-          <rect x="4"
-                y="5"
-                width="16"
-                height="15"
-                rx="2"/>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+
+          <rect
+            x="4"
+            y="5"
+            width="16"
+            height="15"
+            rx="2"
+          />
 
           <path d="M8 3v4"/>
           <path d="M16 3v4"/>
           <path d="M4 9h16"/>
 
         </svg>
+
       `
     };
 
@@ -1252,27 +1353,39 @@ function getCategory(value){
 
     return {
       label:"REFERRAL",
-      iconClass:"referral",
+      iconClass:"icon-referral",
       badgeClass:"badge-referral",
       icon:`
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
 
-          <circle cx="9"
-                  cy="8"
-                  r="3"/>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
 
-          <circle cx="17"
-                  cy="9"
-                  r="2.5"/>
+          <circle
+            cx="9"
+            cy="8"
+            r="3"
+          />
 
-          <path d="M3 20c0-3.2 2.6-5 6-5s6 1.8 6 5"/>
+          <circle
+            cx="17"
+            cy="9"
+            r="2.5"
+          />
 
-          <path d="M15 15c3 0 5 1.6 5 4"/>
+          <path
+            d="M3 20c0-3.2 2.6-5 6-5s6 1.8 6 5"
+          />
+
+          <path
+            d="M15 15c3 0 5 1.6 5 4"
+          />
 
         </svg>
+
       `
     };
 
@@ -1286,24 +1399,30 @@ function getCategory(value){
 
     return {
       label:"APP",
-      iconClass:"app",
+      iconClass:"icon-app",
       badgeClass:"badge-app",
       icon:`
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
 
-          <rect x="6"
-                y="3"
-                width="12"
-                height="18"
-                rx="2"/>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+
+          <rect
+            x="6"
+            y="3"
+            width="12"
+            height="18"
+            rx="2"
+          />
 
           <path d="M9 6h6"/>
           <path d="M10 18h4"/>
 
         </svg>
+
       `
     };
 
@@ -1312,34 +1431,40 @@ function getCategory(value){
 
   return {
     label:"TASK",
-    iconClass:"task",
+    iconClass:"icon-task",
     badgeClass:"badge-task",
     icon:`
-      <svg viewBox="0 0 24 24"
-           fill="none"
-           stroke="currentColor"
-           stroke-width="2">
 
-        <rect x="5"
-              y="3"
-              width="14"
-              height="18"
-              rx="2"/>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+
+        <rect
+          x="5"
+          y="3"
+          width="14"
+          height="18"
+          rx="2"
+        />
 
         <path d="M9 8h6"/>
         <path d="M9 12h6"/>
         <path d="M9 16h3"/>
 
       </svg>
+
     `
   };
 
 }
 
 
-/* =========================
-   SECURITY
-========================= */
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
 
 function escapeHTML(value){
 
@@ -1355,9 +1480,9 @@ function escapeHTML(value){
 }
 
 
-/* =========================
+/* =========================================================
    START
-========================= */
+========================================================= */
 
 (async function(){
 
@@ -1375,16 +1500,20 @@ function escapeHTML(value){
       await detectCountry();
 
 
-    showCountry(country);
+    showCountry(
+      country
+    );
 
 
-    await loadTasks(country);
+    await loadTasks(
+      country
+    );
 
 
   }catch(error){
 
     console.error(
-      "Country detection error:",
+      "Tasks initialization error:",
       error
     );
 
@@ -1409,7 +1538,5 @@ function escapeHTML(value){
 
 })();
 
-</script>
-
-</body>
+</script></body>
 </html>
