@@ -3,101 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#06110b">
-<meta name="description" content="TallyBuck — Complete tasks, earn real rewards.">
-<title>TallyBuck — Complete Tasks. Earn Real Rewards.</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
-
+<title>TallyBuck — Complete Tasks. Get Rewarded.</title>
+<meta name="description" content="TallyBuck helps you discover verified tasks and earn rewards.">
 <style>
-
 :root{
-  --bg:#06110b;
-  --bg2:#09170e;
-  --card:#0d2015;
-  --card2:#10291a;
-  --green:#55d98a;
-  --green2:#2bb96c;
-  --gold:#e6b936;
-  --gold2:#f5d36b;
-  --text:#f4faf6;
-  --muted:#9caf9f;
+  --bg:#06100c;
+  --bg2:#0a1711;
+  --card:#0d1f16;
+  --card2:#10271b;
+  --green:#27d17f;
+  --green2:#19a965;
+  --text:#f5faf7;
+  --muted:#9caf a4;
   --line:rgba(255,255,255,.09);
-  --max:1180px;
+  --gold:#d7ad55;
+  --white:#fff;
 }
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
-html{
-  scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   background:
-    radial-gradient(circle at 80% 10%,rgba(55,190,105,.12),transparent 28%),
-    radial-gradient(circle at 15% 30%,rgba(55,190,105,.07),transparent 25%),
+    radial-gradient(circle at 80% 0%,rgba(39,209,127,.12),transparent 28%),
+    radial-gradient(circle at 10% 30%,rgba(39,209,127,.07),transparent 25%),
     var(--bg);
   color:var(--text);
-  font-family:"DM Sans",sans-serif;
   line-height:1.6;
 }
 
-a{
-  color:inherit;
-  text-decoration:none;
-}
+a{text-decoration:none;color:inherit}
+
+button{font:inherit}
 
 .container{
-  width:min(var(--max),calc(100% - 32px));
+  width:min(1160px,calc(100% - 32px));
   margin:auto;
 }
 
-
-/* =========================
-   HEADER
-========================= */
-
+/* HEADER */
 header{
   position:sticky;
   top:0;
-  z-index:1000;
+  z-index:100;
+  background:rgba(6,16,12,.82);
   backdrop-filter:blur(18px);
-  background:rgba(6,17,11,.86);
   border-bottom:1px solid var(--line);
 }
 
 .nav{
-  min-height:72px;
+  height:72px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:20px;
+  gap:14px;
 }
 
 .logo{
   display:flex;
   align-items:center;
   gap:10px;
-  font-weight:700;
-  font-size:20px;
-  letter-spacing:-.4px;
+  font-size:21px;
+  font-weight:800;
+  letter-spacing:-.5px;
 }
 
 .logo-mark{
-  width:36px;
-  height:36px;
-  border-radius:11px;
+  width:38px;
+  height:38px;
+  border-radius:12px;
   display:grid;
   place-items:center;
-  background:linear-gradient(135deg,#72e9a0,#219c5a);
-  color:#06110b;
-  box-shadow:0 8px 30px rgba(49,205,112,.18);
+  background:linear-gradient(145deg,#35e58e,#0d8f55);
+  box-shadow:0 8px 28px rgba(39,209,127,.22);
 }
 
 .logo-mark svg{
@@ -105,2874 +85,1311 @@ header{
   height:21px;
 }
 
-.nav-links{
-  display:none;
-  align-items:center;
-  gap:24px;
-  color:var(--muted);
-  font-size:14px;
-}
-
-.nav-links a:hover{
-  color:#fff;
-}
-
-.nav-buttons{
+.nav-actions{
   display:flex;
   align-items:center;
-  gap:9px;
+  gap:8px;
 }
 
 .btn{
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:11px 16px;
+  border:0;
+  cursor:pointer;
   display:inline-flex;
   align-items:center;
   justify-content:center;
   gap:8px;
-  font-weight:600;
-  font-size:14px;
+  min-height:46px;
+  padding:0 19px;
+  border-radius:13px;
+  font-weight:750;
   transition:.2s ease;
 }
 
 .btn:hover{
-  transform:translateY(-1px);
-}
-
-.btn-outline{
-  background:rgba(255,255,255,.03);
+  transform:translateY(-2px);
 }
 
 .btn-primary{
-  background:var(--green);
-  color:#06110b;
-  border-color:var(--green);
+  color:#03130b;
+  background:linear-gradient(135deg,#4ae99a,#19b86c);
+  box-shadow:0 10px 30px rgba(39,209,127,.18);
 }
 
-.btn-primary:hover{
-  background:#72e9a0;
+.btn-dark{
+  color:var(--text);
+  background:#0d1d15;
+  border:1px solid var(--line);
 }
 
+.btn-large{
+  min-height:54px;
+  padding:0 25px;
+  border-radius:15px;
+}
 
-/* =========================
-   HERO
-========================= */
-
+/* HERO */
 .hero{
-  padding:74px 0 70px;
+  padding:76px 0 60px;
   overflow:hidden;
 }
 
 .hero-grid{
   display:grid;
-  gap:46px;
+  grid-template-columns:1fr 1fr;
   align-items:center;
+  gap:60px;
 }
 
 .eyebrow{
   display:inline-flex;
   align-items:center;
   gap:8px;
-  padding:7px 11px;
-  border:1px solid rgba(85,217,138,.22);
-  background:rgba(85,217,138,.06);
+  padding:8px 12px;
+  border:1px solid rgba(39,209,127,.2);
+  background:rgba(39,209,127,.07);
+  color:#65e9a7;
   border-radius:999px;
-  color:#8ee8ae;
-  font-size:12px;
-  font-weight:700;
-  letter-spacing:.5px;
-  text-transform:uppercase;
+  font-size:13px;
+  font-weight:750;
+  margin-bottom:20px;
 }
 
-.dot{
+.eyebrow-dot{
   width:7px;
   height:7px;
   border-radius:50%;
   background:var(--green);
-}
-
-h1,
-h2{
-  font-family:"Fraunces",serif;
-  letter-spacing:-1.5px;
+  box-shadow:0 0 12px var(--green);
 }
 
 .hero h1{
-  font-size:clamp(43px,11vw,76px);
-  line-height:1.01;
-  margin:20px 0;
-  max-width:800px;
+  font-size:clamp(43px,6vw,76px);
+  line-height:1.02;
+  letter-spacing:-4px;
+  max-width:650px;
 }
 
 .hero h1 span{
-  color:var(--green);
+  color:#42df91;
 }
 
-.hero p{
-  color:var(--muted);
-  font-size:17px;
-  max-width:650px;
+.hero-text{
+  color:#a9bbb2;
+  font-size:18px;
+  max-width:560px;
+  margin:24px 0 30px;
 }
 
 .hero-actions{
   display:flex;
   flex-wrap:wrap;
   gap:12px;
-  margin-top:28px;
 }
 
 .hero-note{
-  margin-top:18px;
-  color:#78907e;
-  font-size:12px;
-}
-
-
-/* =========================
-   NEW PHONE MOCKUP
-========================= */
-
-.phone-wrap{
-  display:flex;
-  justify-content:center;
-  position:relative;
-  padding:10px 0;
-}
-
-.phone{
-  width:330px;
-  max-width:92vw;
-  height:690px;
-  border:8px solid #17251c;
-  border-radius:42px;
-  background:#050d08;
-  box-shadow:
-    0 45px 100px rgba(0,0,0,.55),
-    0 0 0 1px rgba(255,255,255,.04);
-  padding:0;
-  overflow:hidden;
-  position:relative;
-}
-
-.phone-top{
-  height:29px;
-  display:flex;
-  justify-content:center;
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  z-index:20;
-}
-
-.phone-notch{
-  width:105px;
-  height:24px;
-  background:#17251c;
-  border-radius:0 0 17px 17px;
-}
-
-.phone-screen{
-  height:100%;
-  overflow:hidden;
-  padding:38px 15px 0;
-  background:
-    radial-gradient(
-      circle at 85% 4%,
-      rgba(85,217,138,.12),
-      transparent 25%
-    ),
-    #07130b;
-  position:relative;
-}
-
-
-/* PHONE HEADER */
-
-.app-header{
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  margin-bottom:14px;
-}
-
-.app-greeting{
-  color:#718879;
-  font-size:9px;
-  margin-bottom:2px;
-}
-
-.app-name{
-  font-size:17px;
-  font-weight:700;
-  letter-spacing:-.4px;
-}
-
-.profile-circle{
-  width:32px;
-  height:32px;
-  border-radius:50%;
-  background:#102419;
-  border:1px solid rgba(255,255,255,.08);
-  display:grid;
-  place-items:center;
-  color:#78df9c;
-}
-
-.profile-circle svg{
-  width:17px;
-  height:17px;
-}
-
-
-/* BALANCE */
-
-.balance-card{
-  border-radius:21px;
-  padding:18px;
-  background:
-    radial-gradient(
-      circle at 90% 15%,
-      rgba(255,208,74,.15),
-      transparent 28%
-    ),
-    linear-gradient(
-      145deg,
-      #12331f,
-      #0b1d12
-    );
-  border:1px solid rgba(85,217,138,.17);
-  box-shadow:0 15px 35px rgba(0,0,0,.22);
-}
-
-.balance-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.balance-label{
-  display:block;
-  color:#91a798;
-  font-size:9px;
-}
-
-.balance-amount{
-  font-family:"Fraunces",serif;
-  font-size:32px;
-  line-height:1.1;
-  margin-top:4px;
-  letter-spacing:-1px;
-}
-
-.coin-large{
-  width:53px;
-  height:53px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:
-    radial-gradient(
-      circle at 30% 25%,
-      #ffe994,
-      #e5b932 45%,
-      #a97712
-    );
-  color:#513800;
-  box-shadow:
-    0 7px 20px rgba(224,174,38,.2),
-    inset 0 1px 2px rgba(255,255,255,.65);
-}
-
-.coin-large svg{
-  width:28px;
-  height:28px;
-}
-
-.coin-count{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  margin-top:9px;
-  color:#c6d7ca;
-  font-size:10px;
-}
-
-.tiny-coin{
-  width:15px;
-  height:15px;
-  display:grid;
-  place-items:center;
-  border-radius:50%;
-  background:#d9ac32;
-  color:#4b3500;
-}
-
-.tiny-coin svg{
-  width:10px;
-  height:10px;
-}
-
-.balance-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
   gap:8px;
+  color:#80958a;
+  font-size:13px;
+  margin-top:18px;
+}
+
+.hero-note svg{
+  color:#42df91;
+}
+
+/* WALLET VISUAL */
+.visual{
+  position:relative;
+  min-height:500px;
+  display:grid;
+  place-items:center;
+}
+
+.wallet-bag{
+  width:min(430px,90%);
+  height:300px;
+  position:relative;
+  border-radius:30px;
+  background:
+    linear-gradient(145deg,#173d29,#0b2116 65%,#07140e);
+  border:1px solid rgba(255,255,255,.13);
+  box-shadow:
+    0 40px 90px rgba(0,0,0,.45),
+    inset 0 1px rgba(255,255,255,.08);
+  transform:rotate(-4deg);
+}
+
+.wallet-bag:before{
+  content:"";
+  position:absolute;
+  width:120px;
+  height:45px;
+  border:10px solid #153722;
+  border-bottom:0;
+  border-radius:60px 60px 0 0;
+  top:-38px;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+.wallet-top{
+  position:absolute;
+  top:22px;
+  left:24px;
+  right:24px;
+  height:70px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#1e4c33,#102b1d);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.wallet-seal{
+  position:absolute;
+  top:32px;
+  right:28px;
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:#06100c;
+  background:linear-gradient(145deg,#e5c36d,#a98031);
+  box-shadow:0 5px 20px rgba(215,173,85,.25);
+}
+
+.wallet-content{
+  position:absolute;
+  left:28px;
+  right:28px;
+  bottom:28px;
+}
+
+.wallet-label{
+  color:#8fa79a;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+}
+
+.wallet-balance{
+  font-size:43px;
+  font-weight:850;
+  letter-spacing:-2px;
+  margin-top:4px;
+}
+
+.wallet-status{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:#55e69b;
+  font-size:13px;
+  margin-top:5px;
+}
+
+.money{
+  position:absolute;
+  width:105px;
+  height:58px;
+  border-radius:8px;
+  background:linear-gradient(135deg,#d9ad4d,#f2d47e);
+  color:#684a12;
+  display:grid;
+  place-items:center;
+  font-weight:900;
+  font-size:22px;
+  box-shadow:0 14px 30px rgba(0,0,0,.3);
+}
+
+.money.one{
+  top:40px;
+  left:8px;
+  transform:rotate(-20deg);
+}
+
+.money.two{
+  bottom:32px;
+  right:-10px;
+  transform:rotate(17deg);
+}
+
+.coin{
+  position:absolute;
+  width:57px;
+  height:57px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:#624613;
+  font-weight:900;
+  background:linear-gradient(145deg,#f1d47c,#aa7e2b);
+  box-shadow:0 12px 25px rgba(0,0,0,.3);
+}
+
+.coin.one{top:5px;right:20px}
+.coin.two{bottom:5px;left:20px}
+
+.float-card{
+  position:absolute;
+  background:rgba(12,29,20,.92);
+  backdrop-filter:blur(15px);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:17px;
+  box-shadow:0 20px 45px rgba(0,0,0,.3);
+}
+
+.reward-card{
+  left:0;
+  bottom:50px;
+  padding:15px 17px;
+  min-width:175px;
+}
+
+.float-small{
+  color:#81978c;
+  font-size:11px;
+}
+
+.float-amount{
+  font-size:22px;
+  font-weight:800;
+  margin-top:2px;
+}
+
+.security-card{
+  right:0;
+  top:70px;
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.security-icon{
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  background:rgba(39,209,127,.1);
+  color:#4be39a;
+  display:grid;
+  place-items:center;
+}
+
+/* SECTIONS */
+section{
+  padding:90px 0;
+}
+
+.section-heading{
+  max-width:650px;
+  margin-bottom:45px;
+}
+
+.section-heading .label{
+  color:#42df91;
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  font-weight:800;
+  margin-bottom:10px;
+}
+
+.section-heading h2{
+  font-size:clamp(32px,5vw,52px);
+  line-height:1.08;
+  letter-spacing:-2px;
+}
+
+.section-heading p{
+  color:#91a69a;
   margin-top:15px;
 }
 
-.balance-btn{
-  padding:9px;
-  border-radius:10px;
-  text-align:center;
-  font-size:10px;
-  font-weight:700;
-}
-
-.balance-btn.primary{
-  background:#55d98a;
-  color:#06110b;
-}
-
-.balance-btn.secondary{
-  background:rgba(255,255,255,.055);
-  border:1px solid rgba(255,255,255,.08);
-  color:#dce9df;
-}
-
-
-/* PHONE SECTION */
-
-.phone-section-title{
-  font-size:11px;
-  font-weight:700;
-  margin:15px 0 9px;
-  color:#e8f2ea;
-}
-
-.phone-section-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.phone-section-header .phone-section-title{
-  margin-bottom:8px;
-}
-
-.phone-section-header span{
-  color:#67d995;
-  font-size:8px;
-}
-
-
-/* QUICK STATS */
-
-.quick-stats{
+/* BENEFITS */
+.benefit-grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-}
-
-.stat-card{
-  padding:10px;
-  border-radius:13px;
-  background:#0c1d12;
-  border:1px solid rgba(255,255,255,.07);
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.stat-icon{
-  width:27px;
-  height:27px;
-  flex:none;
-  border-radius:8px;
-  display:grid;
-  place-items:center;
-  color:#69db95;
-  background:rgba(85,217,138,.08);
-}
-
-.stat-icon svg{
-  width:14px;
-  height:14px;
-}
-
-.stat-card span{
-  display:block;
-  color:#718879;
-  font-size:7px;
-}
-
-.stat-card strong{
-  display:block;
-  color:#e9f4eb;
-  font-size:10px;
-  margin-top:1px;
-}
-
-
-/* EARNING CARDS */
-
-.earning-card{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  padding:10px;
-  border-radius:13px;
-  margin-bottom:7px;
-  background:#0b1c11;
-  border:1px solid rgba(255,255,255,.07);
-}
-
-.earning-icon{
-  width:31px;
-  height:31px;
-  flex:none;
-  display:grid;
-  place-items:center;
-  border-radius:9px;
-}
-
-.survey-icon{
-  background:rgba(85,217,138,.1);
-  color:#63dc91;
-}
-
-.task-icon{
-  background:rgba(226,180,51,.1);
-  color:#e1b736;
-}
-
-.earning-icon svg{
-  width:16px;
-  height:16px;
-}
-
-.earning-info{
-  min-width:0;
-  flex:1;
-}
-
-.earning-info strong{
-  display:block;
-  font-size:9px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-.earning-info span{
-  color:#708678;
-  font-size:7px;
-}
-
-.earning-reward{
-  text-align:right;
-  color:#e6b936;
-  line-height:1;
-}
-
-.earning-reward span{
-  font-size:8px;
-}
-
-.earning-reward strong{
-  font-size:12px;
-}
-
-.earning-reward small{
-  display:block;
-  color:#7d8f82;
-  font-size:6px;
-  margin-top:2px;
-}
-
-
-/* REFERRAL */
-
-.referral-mini{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  margin-top:9px;
-  padding:11px;
-  border-radius:13px;
-  background:
-    linear-gradient(
-      100deg,
-      rgba(85,217,138,.09),
-      rgba(85,217,138,.025)
-    );
-  border:1px solid rgba(85,217,138,.12);
-}
-
-.referral-coin{
-  width:31px;
-  height:31px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  color:#72df9c;
-  background:#102b1a;
-}
-
-.referral-coin svg{
-  width:17px;
-  height:17px;
-}
-
-.referral-mini-text{
-  flex:1;
-}
-
-.referral-mini-text strong{
-  display:block;
-  font-size:9px;
-}
-
-.referral-mini-text span{
-  display:block;
-  color:#708678;
-  font-size:7px;
-  margin-top:2px;
-}
-
-.referral-arrow{
-  color:#69d995;
-}
-
-.referral-arrow svg{
-  width:14px;
-  height:14px;
-}
-
-
-/* ACTIVITY */
-
-.recent-title{
-  margin-top:14px;
-}
-
-.activity-row{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:7px 0;
-  border-bottom:1px solid rgba(255,255,255,.05);
-}
-
-.activity-icon{
-  width:25px;
-  height:25px;
-  border-radius:8px;
-  background:rgba(85,217,138,.07);
-  color:#65da92;
-  display:grid;
-  place-items:center;
-}
-
-.activity-icon svg{
-  width:13px;
-  height:13px;
-}
-
-.activity-info{
-  flex:1;
-}
-
-.activity-info strong{
-  display:block;
-  font-size:8px;
-}
-
-.activity-info span{
-  display:block;
-  color:#667b6d;
-  font-size:6px;
-}
-
-.activity-money{
-  font-size:9px;
-  color:#62d98f;
-}
-
-
-/* PHONE NAV */
-
-.phone-nav{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  height:58px;
-  background:rgba(6,16,10,.96);
-  backdrop-filter:blur(14px);
-  border-top:1px solid rgba(255,255,255,.07);
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  padding:7px 8px 6px;
-}
-
-.phone-nav-item{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:3px;
-  color:#52675a;
-  font-size:6px;
-}
-
-.phone-nav-item svg{
-  width:15px;
-  height:15px;
-}
-
-.phone-nav-item.active{
-  color:#62db90;
-}
-
-.phone-nav-item.active svg{
-  filter:drop-shadow(0 0 5px rgba(85,217,138,.3));
-}
-
-
-/* =========================
-   TRUST
-========================= */
-
-.trust{
-  padding:18px 0;
-  border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-}
-
-.trust-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:18px;
-}
-
-.trust-item{
-  color:var(--muted);
-  font-size:12px;
-}
-
-.trust-item strong{
-  display:block;
-  color:var(--text);
-  font-size:14px;
-  margin-bottom:2px;
-}
-
-
-/* =========================
-   SECTIONS
-========================= */
-
-section{
-  padding:85px 0;
-}
-
-.section-head{
-  max-width:720px;
-  margin-bottom:38px;
-}
-
-.section-kicker{
-  color:var(--green);
-  text-transform:uppercase;
-  letter-spacing:1.5px;
-  font-size:11px;
-  font-weight:700;
-  margin-bottom:10px;
-}
-
-.section-head h2{
-  font-size:clamp(34px,7vw,52px);
-  line-height:1.05;
-  margin-bottom:14px;
-}
-
-.section-head p{
-  color:var(--muted);
-}
-
-
-/* ABOUT */
-
-.about-grid{
-  display:grid;
+  grid-template-columns:repeat(3,1fr);
   gap:16px;
 }
 
-.about-card{
-  background:linear-gradient(145deg,#0c2114,#09170e);
-  border:1px solid var(--line);
-  border-radius:22px;
+.benefit{
   padding:26px;
-}
-
-.about-card h3{
-  margin-bottom:10px;
-  font-size:20px;
-}
-
-.about-card p{
-  color:var(--muted);
-  font-size:14px;
-}
-
-
-/* CARDS */
-
-.cards{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:14px;
-}
-
-.card{
-  padding:25px;
-  background:rgba(13,32,21,.8);
+  border-radius:20px;
+  background:linear-gradient(145deg,#0d2016,#091710);
   border:1px solid var(--line);
-  border-radius:22px;
 }
 
-.icon{
-  width:44px;
-  height:44px;
+.icon-box{
+  width:48px;
+  height:48px;
   display:grid;
   place-items:center;
   border-radius:14px;
-  background:rgba(85,217,138,.09);
-  color:var(--green);
+  color:#48df94;
+  background:rgba(39,209,127,.08);
   margin-bottom:20px;
 }
 
-.icon svg{
-  width:22px;
-  height:22px;
+.benefit h3{
+  font-size:19px;
+  margin-bottom:8px;
 }
 
-.card h3{
-  font-size:18px;
-  margin-bottom:7px;
-}
-
-.card p{
-  color:var(--muted);
+.benefit p{
+  color:#8fa298;
   font-size:14px;
 }
 
-
-/* STEPS */
-
+/* HOW */
 .steps{
   display:grid;
-  gap:14px;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
 }
 
 .step{
-  padding:24px;
-  border:1px solid var(--line);
-  background:#0b1b11;
+  position:relative;
+  padding:28px;
   border-radius:20px;
+  border:1px solid var(--line);
+  background:#0b1b13;
 }
 
 .step-number{
-  color:var(--green);
-  font-size:12px;
-  font-weight:700;
+  color:#42df91;
+  font-size:13px;
+  font-weight:900;
   letter-spacing:1px;
+  margin-bottom:25px;
 }
 
 .step h3{
-  margin:8px 0;
+  margin-bottom:8px;
 }
 
 .step p{
-  color:var(--muted);
+  color:#8fa298;
   font-size:14px;
 }
 
-
-/* PAYOUT */
-
-.payout-box{
-  background:
-    radial-gradient(circle at 80% 20%,rgba(85,217,138,.16),transparent 35%),
-    #0c2114;
-  border:1px solid rgba(85,217,138,.18);
-  border-radius:28px;
-  padding:30px;
-}
-
-.payout-list{
+/* EARN */
+.earn-grid{
   display:grid;
-  gap:14px;
-  margin-top:22px;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
 }
 
-.payout-row{
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  padding:16px 0;
-  border-bottom:1px solid var(--line);
+.earn-card{
+  min-height:220px;
+  padding:28px;
+  border-radius:22px;
+  border:1px solid var(--line);
+  background:
+    radial-gradient(circle at 90% 10%,rgba(39,209,127,.09),transparent 35%),
+    #0b1b13;
+}
+
+.earn-card h3{
+  margin:20px 0 8px;
+}
+
+.earn-card p{
+  color:#8fa298;
+  max-width:450px;
   font-size:14px;
 }
-
-.payout-row:last-child{
-  border-bottom:0;
-}
-
-.payout-row span:first-child{
-  color:var(--muted);
-}
-
 
 /* REFERRAL */
-
 .referral{
-  display:grid;
-  gap:24px;
+  padding:55px;
+  border-radius:28px;
+  border:1px solid rgba(39,209,127,.18);
+  background:
+    radial-gradient(circle at 80% 20%,rgba(39,209,127,.12),transparent 35%),
+    linear-gradient(135deg,#0e2418,#091710);
+  display:flex;
   align-items:center;
+  justify-content:space-between;
+  gap:35px;
 }
 
-.referral-box{
-  padding:30px;
-  border:1px solid var(--line);
-  border-radius:25px;
-  background:linear-gradient(145deg,#102a19,#0a180f);
+.referral h2{
+  font-size:clamp(30px,4vw,48px);
+  letter-spacing:-2px;
+  line-height:1.1;
 }
 
-.reward{
-  font-family:"Fraunces",serif;
+.referral p{
+  color:#91a69a;
+  margin-top:12px;
+  max-width:580px;
+}
+
+.referral-amount{
   font-size:48px;
-  color:var(--green);
-  margin:12px 0;
+  font-weight:900;
+  color:#50e39a;
+  white-space:nowrap;
 }
-
 
 /* FAQ */
-
 .faq{
-  display:grid;
-  gap:10px;
+  max-width:800px;
 }
 
 details{
-  border:1px solid var(--line);
-  border-radius:17px;
-  background:#0b1b11;
-  padding:17px 18px;
+  border-bottom:1px solid var(--line);
+  padding:20px 0;
 }
 
 summary{
   cursor:pointer;
-  font-weight:600;
+  list-style:none;
+  font-weight:750;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+summary::-webkit-details-marker{display:none}
+
+summary:after{
+  content:"+";
+  color:#48df94;
+  font-size:23px;
+  font-weight:400;
+}
+
+details[open] summary:after{
+  content:"−";
 }
 
 details p{
-  color:var(--muted);
-  font-size:14px;
+  color:#8fa298;
   padding-top:12px;
-}
-
-
-/* LEGAL */
-
-.legal{
-  background:#08150c;
-  border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-}
-
-.legal-grid{
-  display:grid;
-  gap:18px;
-}
-
-.legal-card{
-  padding:28px;
-  border:1px solid var(--line);
-  border-radius:22px;
-  background:#0b1b11;
-}
-
-.legal-card h3{
-  margin:20px 0 7px;
-}
-
-.legal-card h3:first-child{
-  margin-top:0;
-}
-
-.legal-card p,
-.legal-card li{
-  color:var(--muted);
   font-size:14px;
+  max-width:700px;
 }
 
-.legal-card ul{
-  padding-left:20px;
+/* FINAL CTA */
+.final{
+  padding:90px 0 110px;
 }
 
-
-/* CONTACT */
-
-.contact-box{
+.final-box{
   text-align:center;
-  padding:42px 24px;
-  border-radius:28px;
-  background:linear-gradient(145deg,#10291a,#0a180f);
+  padding:70px 25px;
+  border-radius:30px;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(39,209,127,.16),transparent 45%),
+    #0b1b13;
   border:1px solid var(--line);
 }
 
-.contact-box p{
-  max-width:620px;
-  margin:14px auto 24px;
-  color:var(--muted);
+.final-box h2{
+  font-size:clamp(35px,6vw,60px);
+  letter-spacing:-2.5px;
+  line-height:1.05;
 }
 
+.final-box p{
+  color:#91a69a;
+  max-width:600px;
+  margin:16px auto 28px;
+}
+
+.final-actions{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:12px;
+}
 
 /* FOOTER */
-
 footer{
   border-top:1px solid var(--line);
-  padding:38px 0 28px;
+  padding:35px 0;
 }
 
 .footer-top{
   display:flex;
-  flex-direction:column;
-  gap:25px;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
 }
 
 .footer-links{
   display:flex;
+  gap:20px;
   flex-wrap:wrap;
-  gap:16px;
-  color:var(--muted);
+  color:#879a91;
   font-size:13px;
 }
 
-.footer-links a:hover{
-  color:#fff;
+.footer-links button{
+  background:none;
+  border:0;
+  color:inherit;
+  cursor:pointer;
 }
 
 .footer-bottom{
-  margin-top:28px;
-  padding-top:20px;
-  border-top:1px solid var(--line);
-  color:#718477;
+  color:#5f7469;
   font-size:12px;
+  margin-top:25px;
 }
 
+/* MODALS */
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:500;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(10px);
+}
 
-/* =========================
-   RESPONSIVE
-========================= */
+.modal.active{
+  display:flex;
+}
 
-@media(min-width:700px){
+.modal-box{
+  width:min(720px,100%);
+  max-height:88vh;
+  overflow:auto;
+  background:#0c1d14;
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:28px;
+  box-shadow:0 30px 80px rgba(0,0,0,.5);
+}
 
+.modal-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:22px;
+}
+
+.modal-head h2{
+  font-size:25px;
+}
+
+.close{
+  width:38px;
+  height:38px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#10251a;
+  color:#fff;
+  cursor:pointer;
+  font-size:20px;
+}
+
+.modal-box h3{
+  font-size:16px;
+  margin:22px 0 7px;
+}
+
+.modal-box p,
+.modal-box li{
+  color:#91a69a;
+  font-size:14px;
+}
+
+.modal-box ul{
+  padding-left:20px;
+}
+
+/* MOBILE */
+@media(max-width:820px){
   .container{
-    width:min(var(--max),calc(100% - 48px));
+    width:min(100% - 24px,600px);
   }
 
-  .nav-links{
-    display:flex;
+  .nav{
+    height:66px;
+  }
+
+  .logo{
+    font-size:19px;
+  }
+
+  .logo-mark{
+    width:35px;
+    height:35px;
+  }
+
+  .nav-actions{
+    gap:6px;
+  }
+
+  .nav-actions .btn{
+    min-height:39px;
+    padding:0 11px;
+    font-size:12px;
+    border-radius:10px;
   }
 
   .hero{
-    padding:105px 0 90px;
+    padding:55px 0 30px;
   }
 
   .hero-grid{
-    grid-template-columns:1.2fr .8fr;
+    grid-template-columns:1fr;
+    gap:25px;
   }
 
-  .trust-grid{
-    grid-template-columns:repeat(4,1fr);
+  .hero h1{
+    font-size:47px;
+    letter-spacing:-2.8px;
   }
 
-  .cards{
-    grid-template-columns:repeat(2,1fr);
+  .hero-text{
+    font-size:16px;
   }
 
-  .about-grid{
-    grid-template-columns:1.2fr .8fr;
+  .visual{
+    min-height:420px;
+    margin-top:5px;
   }
 
+  .wallet-bag{
+    width:88%;
+    height:270px;
+  }
+
+  .reward-card{
+    left:0;
+    bottom:20px;
+  }
+
+  .security-card{
+    right:0;
+    top:25px;
+  }
+
+  section{
+    padding:65px 0;
+  }
+
+  .benefit-grid,
   .steps{
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:1fr;
+  }
+
+  .earn-grid{
+    grid-template-columns:1fr;
   }
 
   .referral{
-    grid-template-columns:1fr 1fr;
+    padding:30px 22px;
+    flex-direction:column;
+    align-items:flex-start;
   }
 
-  .legal-grid{
-    grid-template-columns:1fr 1fr;
+  .referral-amount{
+    font-size:40px;
   }
 
   .footer-top{
-    flex-direction:row;
-    align-items:center;
-    justify-content:space-between;
+    flex-direction:column;
+    align-items:flex-start;
   }
-
 }
 
-@media(min-width:1000px){
-
-  .cards{
-    grid-template-columns:repeat(4,1fr);
+@media(max-width:430px){
+  .nav-actions .login-btn{
+    display:inline-flex;
   }
 
+  .nav-actions .start-btn{
+    display:none;
+  }
+
+  .hero h1{
+    font-size:42px;
+  }
+
+  .hero-actions{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .hero-actions .btn{
+    width:100%;
+  }
+
+  .visual{
+    min-height:390px;
+  }
+
+  .wallet-bag{
+    width:94%;
+    height:245px;
+  }
+
+  .wallet-balance{
+    font-size:36px;
+  }
+
+  .money{
+    width:86px;
+    height:49px;
+  }
+
+  .coin{
+    width:49px;
+    height:49px;
+  }
+
+  .float-card{
+    transform:scale(.88);
+  }
 }
-
-
-/* SMALL PHONE SCREENS */
-
-@media(max-width:360px){
-
-  .phone{
-    width:305px;
-    height:650px;
-  }
-
-  .phone-screen{
-    padding-left:12px;
-    padding-right:12px;
-  }
-
-  .balance-card{
-    padding:15px;
-  }
-
-  .balance-amount{
-    font-size:29px;
-  }
-
-  .coin-large{
-    width:47px;
-    height:47px;
-  }
-
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-     HEADER
-========================= -->
-
 <header>
-
   <div class="container nav">
-
-    <a href="#top" class="logo">
-
+    <a href="index.html" class="logo">
       <span class="logo-mark">
-
-        <svg viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2.2">
-          <path d="M12 3v18M7 7h8a3 3 0 0 1 0 6H7h7a3 3 0 0 1 0 6H7"/>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M7 8.5h10a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2Z"/>
+          <path d="M8 8.5V7a4 4 0 0 1 8 0v1.5"/>
+          <path d="M9 13h6"/>
         </svg>
-
       </span>
-
       TallyBuck
-
     </a>
 
-
-    <nav class="nav-links">
-
-      <a href="#about">About</a>
-      <a href="#how">How It Works</a>
-      <a href="#earn">Ways to Earn</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contact">Contact</a>
-
-    </nav>
-
-
-    <div class="nav-buttons">
-
-      <a href="login.html" class="btn btn-outline">
-        Sign In
-      </a>
-
-      <a href="signup.html" class="btn btn-primary">
-        Start Earning
-      </a>
-
+    <div class="nav-actions">
+      <a href="login.html" class="btn btn-dark login-btn">Log In</a>
+      <a href="signup.html" class="btn btn-primary start-btn">Start Earning</a>
     </div>
-
   </div>
-
 </header>
 
-
-<main id="top">
-
-
-<!-- =========================
-     HERO
-========================= -->
+<main>
 
 <section class="hero">
-
   <div class="container hero-grid">
 
     <div>
-
       <div class="eyebrow">
-        <span class="dot"></span>
-        Global rewards platform
+        <span class="eyebrow-dot"></span>
+        Rewards made simple
       </div>
-
 
       <h1>
         Complete tasks.<br>
-        <span>Earn real rewards.</span>
+        <span>Get rewarded.</span>
       </h1>
 
-
-      <p>
-        TallyBuck gives you a simple way to discover available surveys,
-        tasks and offers, complete eligible activities and build your
-        rewards balance.
+      <p class="hero-text">
+        Discover available activities, complete eligible tasks,
+        and build your reward balance through TallyBuck.
       </p>
 
-
       <div class="hero-actions">
-
-        <a href="signup.html" class="btn btn-primary">
+        <a href="signup.html" class="btn btn-primary btn-large">
           Start Earning
         </a>
 
-        <a href="#how" class="btn btn-outline">
-          How It Works
+        <a href="login.html" class="btn btn-dark btn-large">
+          Log In
         </a>
-
       </div>
-
 
       <div class="hero-note">
-        Free to join. No deposit required. Task availability depends on
-        your location, device and eligibility.
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 3 5 6v5c0 4.6 2.9 8.7 7 10 4.1-1.3 7-5.4 7-10V6l-7-3Z"/>
+          <path d="m9 12 2 2 4-4"/>
+        </svg>
+        Secure account and reward tracking
       </div>
-
     </div>
 
+    <div class="visual">
 
-    <!-- =========================
-         FULL APP PHONE
-    ========================= -->
+      <div class="money one">$</div>
+      <div class="money two">$</div>
 
-    <div class="phone-wrap">
+      <div class="coin one">$</div>
+      <div class="coin two">$</div>
 
-      <div class="phone">
+      <div class="wallet-bag">
 
-        <div class="phone-top">
-          <div class="phone-notch"></div>
+        <div class="wallet-top"></div>
+
+        <div class="wallet-seal">
+          $
         </div>
 
+        <div class="wallet-content">
+          <div class="wallet-label">Available rewards</div>
+          <div class="wallet-balance">$12.80</div>
 
-        <div class="phone-screen">
-
-
-          <!-- APP HEADER -->
-
-          <div class="app-header">
-
-            <div>
-
-              <div class="app-greeting">
-                Welcome back
-              </div>
-
-              <div class="app-name">
-                TallyBuck
-              </div>
-
-            </div>
-
-
-            <div class="profile-circle">
-
-              <svg viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="1.8">
-
-                <circle cx="12" cy="8" r="3"/>
-                <path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>
-
-              </svg>
-
-            </div>
-
+          <div class="wallet-status">
+            <span class="eyebrow-dot"></span>
+            Ready for eligible withdrawal
           </div>
-
-
-          <!-- BALANCE -->
-
-          <div class="balance-card">
-
-            <div class="balance-top">
-
-              <div>
-
-                <span class="balance-label">
-                  Available Balance
-                </span>
-
-                <div class="balance-amount">
-                  $12.80
-                </div>
-
-              </div>
-
-
-              <div class="coin-large">
-
-                <svg viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="1.6">
-
-                  <circle cx="12" cy="12" r="8"/>
-                  <path d="M12 7v10"/>
-                  <path d="M9 9h4a2 2 0 0 1 0 4H9h4a2 2 0 0 1 0 4H9"/>
-
-                </svg>
-
-              </div>
-
-            </div>
-
-
-            <div class="coin-count">
-
-              <span class="tiny-coin">
-
-                <svg viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2">
-
-                  <circle cx="12" cy="12" r="7"/>
-                  <path d="M12 8v8M9.5 10h4a1.5 1.5 0 0 1 0 3h-4h4a1.5 1.5 0 0 1 0 3h-4"/>
-
-                </svg>
-
-              </span>
-
-              1,280 coins
-
-            </div>
-
-
-            <div class="balance-actions">
-
-              <div class="balance-btn primary">
-                Earn Now
-              </div>
-
-              <div class="balance-btn secondary">
-                Withdraw
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <!-- QUICK STATS -->
-
-          <div class="phone-section-title">
-            Overview
-          </div>
-
-
-          <div class="quick-stats">
-
-
-            <div class="stat-card">
-
-              <div class="stat-icon">
-
-                <svg viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="1.8">
-
-                  <path d="M4 17l5-5 4 3 7-8"/>
-
-                </svg>
-
-              </div>
-
-
-              <div>
-
-                <span>
-                  Today
-                </span>
-
-                <strong>
-                  +$2.40
-                </strong>
-
-              </div>
-
-            </div>
-
-
-            <div class="stat-card">
-
-              <div class="stat-icon">
-
-                <svg viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="1.8">
-
-                  <circle cx="8" cy="8" r="3"/>
-                  <circle cx="16" cy="8" r="3"/>
-                  <path d="M3 19c0-3 2-5 5-5s5 2 5 5"/>
-                  <path d="M11 19c0-3 2-5 5-5s5 2 5 5"/>
-
-                </svg>
-
-              </div>
-
-
-              <div>
-
-                <span>
-                  Referrals
-                </span>
-
-                <strong>
-                  +$0.80
-                </strong>
-
-              </div>
-
-            </div>
-
-
-          </div>
-
-
-          <!-- EARN -->
-
-          <div class="phone-section-header">
-
-            <div class="phone-section-title">
-              Earn more
-            </div>
-
-            <span>
-              View all
-            </span>
-
-          </div>
-
-
-          <!-- SURVEY -->
-
-          <div class="earning-card">
-
-            <div class="earning-icon survey-icon">
-
-              <svg viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="1.8">
-
-                <rect x="4" y="4" width="16" height="16" rx="3"/>
-                <path d="M8 9h8M8 13h5"/>
-
-              </svg>
-
-            </div>
-
-
-            <div class="earning-info">
-
-              <strong>
-                Complete a survey
-              </strong>
-
-              <span>
-                5 minutes
-              </span>
-
-            </div>
-
-
-            <div class="earning-reward">
-
-              <span>+</span>
-              <strong>350</strong>
-              <small>coins</small>
-
-            </div>
-
-          </div>
-
-
-          <!-- TASK -->
-
-          <div class="earning-card">
-
-            <div class="earning-icon task-icon">
-
-              <svg viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="1.8">
-
-                <path d="M5 5h14v14H5z"/>
-                <path d="M8 9h8M8 13h6"/>
-
-              </svg>
-
-            </div>
-
-
-            <div class="earning-info">
-
-              <strong>
-                Quick online task
-              </strong>
-
-              <span>
-                2 minutes
-              </span>
-
-            </div>
-
-
-            <div class="earning-reward">
-
-              <span>+</span>
-              <strong>180</strong>
-              <small>coins</small>
-
-            </div>
-
-          </div>
-
-
-          <!-- REFERRAL -->
-
-          <div class="referral-mini">
-
-            <div class="referral-coin">
-
-              <svg viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="1.7">
-
-                <circle cx="9" cy="8" r="3"/>
-                <circle cx="16" cy="9" r="2.5"/>
-                <path d="M3 19c0-3.5 2.5-6 6-6s6 2.5 6 6"/>
-                <path d="M15 14c3 0 5 2 5 5"/>
-
-              </svg>
-
-            </div>
-
-
-            <div class="referral-mini-text">
-
-              <strong>
-                Invite friends
-              </strong>
-
-              <span>
-                Earn $0.10 per qualified referral
-              </span>
-
-            </div>
-
-
-            <div class="referral-arrow">
-
-              <svg viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="2">
-
-                <path d="M9 6l6 6-6 6"/>
-
-              </svg>
-
-            </div>
-
-          </div>
-
-
-          <!-- RECENT ACTIVITY -->
-
-          <div class="phone-section-title recent-title">
-            Recent activity
-          </div>
-
-
-          <div class="activity-row">
-
-            <div class="activity-icon">
-
-              <svg viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="1.8">
-
-                <path d="M5 12l4 4L19 6"/>
-
-              </svg>
-
-            </div>
-
-
-            <div class="activity-info">
-
-              <strong>
-                Survey completed
-              </strong>
-
-              <span>
-                Today
-              </span>
-
-            </div>
-
-
-            <strong class="activity-money">
-              +$1.20
-            </strong>
-
-          </div>
-
-
-          <div class="activity-row">
-
-            <div class="activity-icon">
-
-              <svg viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="1.8">
-
-                <circle cx="12" cy="8" r="3"/>
-                <path d="M5 20c0-4 3-7 7-7s7 3 7 7"/>
-
-              </svg>
-
-            </div>
-
-
-            <div class="activity-info">
-
-              <strong>
-                Referral reward
-              </strong>
-
-              <span>
-                Yesterday
-              </span>
-
-            </div>
-
-
-            <strong class="activity-money">
-              +$0.10
-            </strong>
-
-          </div>
-
-
-          <!-- BOTTOM NAV -->
-
-          <div class="phone-nav">
-
-
-            <div class="phone-nav-item active">
-
-              <svg viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="1.8">
-
-                <path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/>
-                <path d="M9 20v-6h6v6"/>
-
-              </svg>
-
-              <span>
-                Home
-              </span>
-
-            </div>
-
-
-            <div class="phone-nav-item">
-
-              <svg viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="1.8">
-
-                <path d="M5 5h14v14H5z"/>
-                <path d="M8 9h8M8 13h6"/>
-
-              </svg>
-
-              <span>
-                Earn
-              </span>
-
-            </div>
-
-
-            <div class="phone-nav-item">
-
-              <svg viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="1.8">
-
-                <path d="M4 7h16v12H4z"/>
-                <path d="M16 11h4v5h-4a2.5 2.5 0 0 1 0-5z"/>
-
-              </svg>
-
-              <span>
-                Wallet
-              </span>
-
-            </div>
-
-
-            <div class="phone-nav-item">
-
-              <svg viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="1.8">
-
-                <circle cx="12" cy="8" r="3"/>
-                <path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>
-
-              </svg>
-
-              <span>
-                Profile
-              </span>
-
-            </div>
-
-
-          </div>
-
         </div>
 
       </div>
 
+      <div class="float-card reward-card">
+        <div class="float-small">Verified rewards</div>
+        <div class="float-amount">$12.80</div>
+      </div>
+
+      <div class="float-card security-card">
+        <div class="security-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 3 5 6v5c0 4.6 2.9 8.7 7 10 4.1-1.3 7-5.4 7-10V6l-7-3Z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <div>
+          <div style="font-weight:750;font-size:13px;">Protected</div>
+          <div class="float-small">Secure account</div>
+        </div>
+      </div>
+
     </div>
-
   </div>
-
 </section>
 
-
-<!-- =========================
-     TRUST
-========================= -->
-
-<section class="trust">
-
-  <div class="container trust-grid">
-
-    <div class="trust-item">
-      <strong>Free to join</strong>
-      No membership deposit
-    </div>
-
-    <div class="trust-item">
-      <strong>$10 minimum</strong>
-      Withdrawal threshold
-    </div>
-
-    <div class="trust-item">
-      <strong>Global access</strong>
-      Availability varies by location
-    </div>
-
-    <div class="trust-item">
-      <strong>Manual review</strong>
-      Withdrawals are reviewed
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     ABOUT
-========================= -->
-
-<section id="about">
-
+<section>
   <div class="container">
 
-    <div class="section-head">
-
-      <div class="section-kicker">
-        About TallyBuck
-      </div>
-
-      <h2>
-        A simpler way to turn spare time into rewards.
-      </h2>
-
+    <div class="section-heading">
+      <div class="label">Why TallyBuck</div>
+      <h2>A simpler way to earn from eligible activities.</h2>
       <p>
-        TallyBuck is a global rewards platform built to make online earning
-        simple, transparent and accessible.
+        TallyBuck brings available reward opportunities into one
+        straightforward experience.
       </p>
-
     </div>
 
+    <div class="benefit-grid">
 
-    <div class="about-grid">
-
-
-      <div class="about-card">
-
-        <h3>
-          What TallyBuck does
-        </h3>
-
+      <div class="benefit">
+        <div class="icon-box">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M8 12h8M12 8v8"/>
+          </svg>
+        </div>
+        <h3>Discover tasks</h3>
         <p>
-          TallyBuck connects users with eligible online activities such as
-          surveys, tasks, offers and other reward opportunities. After joining,
-          you can browse the opportunities available to you, complete eligible
-          activities and receive rewards when the required conditions are met
-          and the activity is verified.
+          Browse eligible activities available for your account,
+          location and device.
         </p>
-
       </div>
 
-
-      <div class="about-card">
-
-        <h3>
-          Built for a global audience
-        </h3>
-
+      <div class="benefit">
+        <div class="icon-box">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14"/>
+            <path d="m13 6 6 6-6 6"/>
+          </svg>
+        </div>
+        <h3>Complete activities</h3>
         <p>
-          Opportunities are not identical for everyone. Available tasks can
-          depend on your country, device, eligibility, campaign limits and
-          other factors. TallyBuck is designed to show users opportunities
-          that are relevant to their account and available traffic.
+          Follow the requirements of an eligible task and submit
+          any required proof.
         </p>
-
       </div>
 
+      <div class="benefit">
+        <div class="icon-box">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="6" width="18" height="13" rx="2"/>
+            <path d="M7 10h.01M17 10h.01M8 15h8"/>
+          </svg>
+        </div>
+        <h3>Track your rewards</h3>
+        <p>
+          Keep your eligible earnings organized in your TallyBuck
+          account wallet.
+        </p>
+      </div>
 
     </div>
-
   </div>
-
 </section>
 
-
-<!-- =========================
-     HOW IT WORKS
-========================= -->
-
-<section id="how">
-
+<section>
   <div class="container">
 
-    <div class="section-head">
-
-      <div class="section-kicker">
-        How it works
-      </div>
-
-      <h2>
-        Start earning in a few simple steps.
-      </h2>
-
-      <p>
-        No complicated setup. Create your account, find an eligible opportunity
-        and complete it according to the instructions.
-      </p>
-
+    <div class="section-heading">
+      <div class="label">How it works</div>
+      <h2>Three simple steps.</h2>
     </div>
-
 
     <div class="steps">
 
-
       <div class="step">
-
-        <div class="step-number">
-          01
-        </div>
-
-        <h3>
-          Create your account
-        </h3>
-
+        <div class="step-number">01</div>
+        <h3>Create your account</h3>
         <p>
-          Sign up for free and provide the information required to create
-          your TallyBuck account.
+          Sign up with your details and create your personal
+          TallyBuck account.
         </p>
-
       </div>
 
-
       <div class="step">
-
-        <div class="step-number">
-          02
-        </div>
-
-        <h3>
-          Choose an opportunity
-        </h3>
-
+        <div class="step-number">02</div>
+        <h3>Complete eligible tasks</h3>
         <p>
-          Browse the tasks, surveys and offers currently available to your
-          account.
+          Choose from the opportunities available to your account
+          and complete their requirements.
         </p>
-
       </div>
 
-
       <div class="step">
-
-        <div class="step-number">
-          03
-        </div>
-
-        <h3>
-          Complete and earn
-        </h3>
-
+        <div class="step-number">03</div>
+        <h3>Receive your reward</h3>
         <p>
-          Follow the required instructions. Eligible rewards are credited
-          after the required verification process.
+          Once an eligible activity is verified, the applicable
+          reward is added to your balance.
         </p>
-
       </div>
-
 
     </div>
-
   </div>
-
 </section>
 
-
-<!-- =========================
-     WAYS TO EARN
-========================= -->
-
-<section id="earn">
-
+<section>
   <div class="container">
 
-    <div class="section-head">
-
-      <div class="section-kicker">
-        Ways to earn
-      </div>
-
-      <h2>
-        Different opportunities. One rewards balance.
-      </h2>
-
+    <div class="section-heading">
+      <div class="label">Ways to earn</div>
+      <h2>Different activities. One wallet.</h2>
       <p>
-        Your available opportunities may change based on location, eligibility,
-        device and campaign availability.
+        Available opportunities can vary based on your location,
+        device and eligibility.
       </p>
-
     </div>
 
+    <div class="earn-grid">
 
-    <div class="cards">
-
-
-      <div class="card">
-
-        <div class="icon">
-
-          <svg viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="1.8">
-
+      <div class="earn-card">
+        <div class="icon-box">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M4 5h16v12H4z"/>
             <path d="M8 21h8M12 17v4"/>
-
           </svg>
-
         </div>
-
-        <h3>
-          Surveys
-        </h3>
-
+        <h3>Online activities</h3>
         <p>
-          Share your opinions through eligible research surveys available
-          to your profile.
+          Complete eligible digital activities and offers shown
+          inside your account.
         </p>
-
       </div>
 
-
-      <div class="card">
-
-        <div class="icon">
-
-          <svg viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="1.8">
-
-            <path d="M4 5h16v14H4z"/>
-            <path d="M8 9h8M8 13h5"/>
-
+      <div class="earn-card">
+        <div class="icon-box">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 3v18"/>
+            <path d="M17 7.5c0-1.7-2.2-3-5-3s-5 1.3-5 3 2.2 3 5 3 5 1.3 5 3-2.2 3-5 3-5-1.3-5-3"/>
           </svg>
-
         </div>
-
-        <h3>
-          Tasks & Offers
-        </h3>
-
+        <h3>Reward opportunities</h3>
         <p>
-          Complete eligible online activities and offers according to their
-          individual requirements.
+          Explore available reward activities and keep track of
+          verified earnings in your wallet.
         </p>
-
       </div>
-
-
-      <div class="card">
-
-        <div class="icon">
-
-          <svg viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="1.8">
-
-            <circle cx="12" cy="12" r="8"/>
-            <path d="M12 7v5l3 2"/>
-
-          </svg>
-
-        </div>
-
-        <h3>
-          Daily Opportunities
-        </h3>
-
-        <p>
-          Check back regularly because available campaigns and opportunities
-          can change over time.
-        </p>
-
-      </div>
-
-
-      <div class="card">
-
-        <div class="icon">
-
-          <svg viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="1.8">
-
-            <circle cx="8" cy="8" r="3"/>
-            <circle cx="16" cy="8" r="3"/>
-            <path d="M3 19c0-3 2-5 5-5s5 2 5 5"/>
-            <path d="M11 19c0-3 2-5 5-5s5 2 5 5"/>
-
-          </svg>
-
-        </div>
-
-        <h3>
-          Referral Rewards
-        </h3>
-
-        <p>
-          Invite people using your referral link and receive the applicable
-          referral reward after qualifying activity is completed.
-        </p>
-
-      </div>
-
 
     </div>
-
   </div>
-
 </section>
 
+<section>
+  <div class="container">
+    <div class="referral">
 
-<!-- =========================
-     PAYOUTS
-========================= -->
+      <div>
+        <div class="section-heading" style="margin:0">
+          <div class="label">Refer & earn</div>
+          <h2>Invite people you know.</h2>
+          <p>
+            When an eligible referred user completes at least one
+            verified task, the applicable referral reward can be credited.
+          </p>
+        </div>
+      </div>
 
-<section id="payouts">
+      <div class="referral-amount">$0.10</div>
 
+    </div>
+  </div>
+</section>
+
+<section>
   <div class="container">
 
-    <div class="section-head">
-
-      <div class="section-kicker">
-        Payouts
-      </div>
-
-      <h2>
-        Use your rewards when you reach the withdrawal threshold.
-      </h2>
-
-      <p>
-        Withdrawal options can depend on your country and the payment methods
-        available to your account.
-      </p>
-
+    <div class="section-heading">
+      <div class="label">FAQ</div>
+      <h2>Questions, answered.</h2>
     </div>
-
-
-    <div class="payout-box">
-
-      <div class="payout-list">
-
-
-        <div class="payout-row">
-
-          <span>
-            Minimum withdrawal
-          </span>
-
-          <strong>
-            $10
-          </strong>
-
-        </div>
-
-
-        <div class="payout-row">
-
-          <span>
-            Nigeria
-          </span>
-
-          <strong>
-            Bank transfer + Crypto
-          </strong>
-
-        </div>
-
-
-        <div class="payout-row">
-
-          <span>
-            Other supported locations
-          </span>
-
-          <strong>
-            Crypto
-          </strong>
-
-        </div>
-
-
-        <div class="payout-row">
-
-          <span>
-            Processing
-          </span>
-
-          <strong>
-            Admin review
-          </strong>
-
-        </div>
-
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     REFERRALS
-========================= -->
-
-<section id="referrals">
-
-  <div class="container referral">
-
-
-    <div>
-
-      <div class="section-kicker">
-        Referral program
-      </div>
-
-      <h2>
-        Share TallyBuck with people you know.
-      </h2>
-
-      <p style="color:var(--muted);margin-top:14px;">
-
-        Every account can have a referral link. When someone joins through
-        your referral and completes at least one eligible and verified task,
-        the applicable referral reward can be credited to your account.
-
-      </p>
-
-    </div>
-
-
-    <div class="referral-box">
-
-      <div style="color:var(--muted);font-size:13px;">
-        Current referral reward
-      </div>
-
-      <div class="reward">
-        $0.10
-      </div>
-
-      <p style="color:var(--muted);font-size:13px;">
-
-        Credited after the referred user completes at least one eligible
-        and verified task.
-
-      </p>
-
-    </div>
-
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     FAQ
-========================= -->
-
-<section id="faq">
-
-  <div class="container">
-
-    <div class="section-head">
-
-      <div class="section-kicker">
-        FAQ
-      </div>
-
-      <h2>
-        Questions, answered.
-      </h2>
-
-    </div>
-
 
     <div class="faq">
 
-
       <details>
-
-        <summary>
-          Is TallyBuck free to join?
-        </summary>
-
+        <summary>What is TallyBuck?</summary>
         <p>
-          Yes. Creating a TallyBuck account does not require a deposit.
+          TallyBuck is a rewards platform where registered users
+          can discover and complete eligible activities for rewards.
         </p>
-
       </details>
 
-
       <details>
-
-        <summary>
-          How do I earn rewards?
-        </summary>
-
+        <summary>How do I start earning?</summary>
         <p>
-          After signing in, you can browse the tasks, surveys and offers
-          available to your account and complete eligible opportunities.
+          Create an account, sign in and open the available task
+          section to see activities currently available to you.
         </p>
-
       </details>
 
-
       <details>
-
-        <summary>
-          Why can another person see different tasks?
-        </summary>
-
+        <summary>Do all users see the same tasks?</summary>
         <p>
-          Opportunities can depend on country, device, eligibility,
-          campaign availability, limits and other targeting conditions.
+          No. Available opportunities may vary according to factors
+          such as location, device and eligibility.
         </p>
-
       </details>
 
-
       <details>
-
-        <summary>
-          Can every task be completed more than once?
-        </summary>
-
+        <summary>When are rewards credited?</summary>
         <p>
-          No. Individual opportunities can have completion limits,
-          eligibility rules or other restrictions.
+          Rewards are credited after the applicable activity has
+          satisfied its verification requirements.
         </p>
-
       </details>
 
-
       <details>
-
-        <summary>
-          What is the minimum withdrawal?
-        </summary>
-
+        <summary>What is the minimum withdrawal?</summary>
         <p>
-          The current minimum withdrawal threshold is $10.
+          The minimum withdrawal amount is $10, subject to the
+          applicable withdrawal requirements and review.
         </p>
-
       </details>
 
-
       <details>
-
-        <summary>
-          Are withdrawals automatic?
-        </summary>
-
+        <summary>Does TallyBuck require deposits?</summary>
         <p>
-          Withdrawals are subject to review. A request does not guarantee
-          immediate payment or approval.
+          No. TallyBuck does not require users to deposit money
+          in order to use the rewards platform.
         </p>
-
       </details>
-
-
-      <details>
-
-        <summary>
-          Can my reward be reversed?
-        </summary>
-
-        <p>
-          Yes. If a provider rejects, reverses or charges back an activity,
-          the related reward may be adjusted or removed.
-        </p>
-
-      </details>
-
-
-      <details>
-
-        <summary>
-          Does TallyBuck guarantee a specific amount of earnings?
-        </summary>
-
-        <p>
-          No. Earnings vary according to the opportunities available to you,
-          eligibility, completion requirements and other factors.
-        </p>
-
-      </details>
-
 
     </div>
-
   </div>
-
 </section>
 
-
-<!-- =========================
-     CONTACT
-========================= -->
-
-<section id="contact">
-
+<section class="final">
   <div class="container">
 
-    <div class="contact-box">
-
-      <div class="section-kicker">
-        Contact TallyBuck
-      </div>
-
-      <h2>
-        Need help?
-      </h2>
+    <div class="final-box">
+      <h2>Your next reward<br>starts here.</h2>
 
       <p>
-        For updates, support information and community announcements,
-        visit the official TallyBuck Telegram channel.
+        Create your TallyBuck account and explore the activities
+        available to you.
       </p>
 
-      <a
-        href="https://t.me/tallybuck"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn btn-primary"
-      >
-        Visit TallyBuck on Telegram
-      </a>
+      <div class="final-actions">
+        <a href="signup.html" class="btn btn-primary btn-large">
+          Start Earning
+        </a>
 
+        <a href="login.html" class="btn btn-dark btn-large">
+          Log In
+        </a>
+      </div>
     </div>
 
   </div>
-
 </section>
-
-
-<!-- =========================
-     TERMS
-========================= -->
-
-<section class="legal" id="terms">
-
-  <div class="container">
-
-    <div class="section-head">
-
-      <div class="section-kicker">
-        Legal
-      </div>
-
-      <h2>
-        Terms of Service
-      </h2>
-
-      <p>
-        Please read these terms before using TallyBuck.
-      </p>
-
-    </div>
-
-
-    <div class="legal-grid">
-
-
-      <div class="legal-card">
-
-
-        <h3>
-          1. Acceptance
-        </h3>
-
-        <p>
-          By creating or using a TallyBuck account, you agree to these
-          Terms of Service and to use the platform in accordance with
-          applicable laws and the rules of individual tasks and offers.
-        </p>
-
-
-        <h3>
-          2. Eligibility
-        </h3>
-
-        <p>
-          You must meet the minimum legal age applicable to you and any
-          additional eligibility requirements imposed by a task or offer
-          provider.
-        </p>
-
-
-        <h3>
-          3. Accounts
-        </h3>
-
-        <p>
-          You are responsible for providing accurate information and keeping
-          your account credentials secure. You must not create accounts for
-          fraudulent purposes or impersonate another person.
-        </p>
-
-
-        <h3>
-          4. Tasks and Offers
-        </h3>
-
-        <p>
-          Tasks and offers may be supplied by third parties. Each opportunity
-          can have its own eligibility, completion, geographic, device,
-          frequency and verification requirements.
-        </p>
-
-
-        <h3>
-          5. Rewards
-        </h3>
-
-        <p>
-          Rewards are credited only when the applicable requirements are met
-          and the activity is accepted or verified. Provider reversals,
-          chargebacks, invalid activity or failed verification can result in
-          reward adjustments.
-        </p>
-
-
-        <h3>
-          6. Withdrawals
-        </h3>
-
-        <p>
-          The minimum withdrawal threshold is currently $10. Withdrawal
-          requests are subject to account checks and administrative review.
-          Available payment methods depend on your country and the options
-          supported by TallyBuck.
-        </p>
-
-
-        <h3>
-          7. Prohibited Activity
-        </h3>
-
-        <p>
-          You must not use bots, automation, fake identities, multiple
-          accounts, fraudulent information, VPN or proxy manipulation where
-          prohibited by an offer, self-referrals, misleading submissions,
-          or any method designed to abuse the reward system.
-        </p>
-
-
-        <h3>
-          8. Account Restrictions
-        </h3>
-
-        <p>
-          TallyBuck may restrict, suspend or terminate an account where there
-          is suspected fraud, abuse, manipulation, violation of these terms,
-          provider requirements or applicable law.
-        </p>
-
-
-        <h3>
-          9. Availability
-        </h3>
-
-        <p>
-          TallyBuck does not guarantee that a particular task, survey, offer,
-          payout method or earning opportunity will always be available.
-        </p>
-
-
-      </div>
-
-
-      <div class="legal-card">
-
-
-        <h3>
-          10. Changes
-        </h3>
-
-        <p>
-          TallyBuck may update these terms, features, reward rules,
-          availability and withdrawal requirements when necessary. Continued
-          use of the platform after an update means you accept the revised terms.
-        </p>
-
-
-        <h3>
-          11. No Guaranteed Income
-        </h3>
-
-        <p>
-          TallyBuck is a rewards platform and does not guarantee a specific
-          level of income, number of tasks, number of surveys or amount of
-          rewards.
-        </p>
-
-
-        <h3>
-          12. Third-Party Services
-        </h3>
-
-        <p>
-          Some tasks, surveys and offers may be operated by third parties.
-          Their own terms, privacy policies and eligibility requirements may
-          apply.
-        </p>
-
-
-        <h3>
-          13. User Submissions
-        </h3>
-
-        <p>
-          Where proof or other information is required, you agree to submit
-          truthful and relevant information. False or misleading submissions
-          may result in rejection or account restrictions.
-        </p>
-
-
-        <h3>
-          14. Platform Changes
-        </h3>
-
-        <p>
-          Features may be added, removed, changed or temporarily unavailable.
-          TallyBuck may also change how opportunities are displayed or
-          categorized.
-        </p>
-
-
-        <h3>
-          15. No Deposit Requirement
-        </h3>
-
-        <p>
-          TallyBuck does not require users to deposit money in order to create
-          an account or access the platform.
-        </p>
-
-
-        <h3>
-          16. Limitation
-        </h3>
-
-        <p>
-          TallyBuck is provided on an availability basis. To the extent
-          permitted by applicable law, TallyBuck is not responsible for
-          interruptions caused by third-party providers, internet services,
-          payment processors or events outside its reasonable control.
-        </p>
-
-
-        <h3>
-          17. Contact
-        </h3>
-
-        <p>
-          Questions about these terms can be raised through the official
-          TallyBuck Telegram community.
-        </p>
-
-
-      </div>
-
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     PRIVACY
-========================= -->
-
-<section id="privacy">
-
-  <div class="container">
-
-    <div class="section-head">
-
-      <div class="section-kicker">
-        Privacy
-      </div>
-
-      <h2>
-        Privacy Policy
-      </h2>
-
-      <p>
-        This section explains the types of information TallyBuck may collect
-        and how it may be used.
-      </p>
-
-    </div>
-
-
-    <div class="legal-card">
-
-
-      <h3>
-        1. Information We Collect
-      </h3>
-
-      <p>
-        Depending on how you use the platform, information may include your
-        name, email address, country, account information, referral information,
-        task submissions, reward history and withdrawal information.
-      </p>
-
-
-      <h3>
-        2. Technical Information
-      </h3>
-
-      <p>
-        TallyBuck and its service providers may process technical information
-        needed to operate tasks and offers, such as IP address, browser,
-        device information, session information and related technical data.
-      </p>
-
-
-      <h3>
-        3. How Information Is Used
-      </h3>
-
-      <ul>
-
-        <li>
-          To create and manage your account.
-        </li>
-
-        <li>
-          To display available tasks and offers.
-        </li>
-
-        <li>
-          To verify task activity and prevent abuse.
-        </li>
-
-        <li>
-          To process rewards and withdrawals.
-        </li>
-
-        <li>
-          To operate the referral system.
-        </li>
-
-        <li>
-          To communicate important service information.
-        </li>
-
-        <li>
-          To improve platform security and performance.
-        </li>
-
-      </ul>
-
-
-      <h3>
-        4. Third-Party Providers
-      </h3>
-
-      <p>
-        Some task and offer providers may receive information required to
-        determine eligibility, track an activity or verify a conversion.
-        Third-party providers operate according to their own terms and
-        privacy policies.
-      </p>
-
-
-      <h3>
-        5. Payments
-      </h3>
-
-      <p>
-        When you request a withdrawal, information required to process the
-        selected payment method may be collected and reviewed. Users should
-        only submit payment information through the designated TallyBuck
-        withdrawal process.
-      </p>
-
-
-      <h3>
-        6. Security
-      </h3>
-
-      <p>
-        TallyBuck uses reasonable technical and organizational measures to
-        protect account information. However, no internet service can
-        guarantee absolute security.
-      </p>
-
-
-      <h3>
-        7. Cookies and Local Storage
-      </h3>
-
-      <p>
-        The website may use cookies, browser storage or similar technologies
-        for authentication, preferences, security and normal website
-        functionality.
-      </p>
-
-
-      <h3>
-        8. Data Retention
-      </h3>
-
-      <p>
-        Information may be retained for as long as reasonably necessary to
-        operate the service, maintain financial and reward records, prevent
-        fraud, resolve disputes and meet applicable obligations.
-      </p>
-
-
-      <h3>
-        9. Your Choices
-      </h3>
-
-      <p>
-        You may contact TallyBuck regarding your account information or
-        privacy questions through the official support channel.
-      </p>
-
-
-      <h3>
-        10. Policy Updates
-      </h3>
-
-      <p>
-        This Privacy Policy may be updated when the platform, providers,
-        features or applicable requirements change. The latest version will
-        be published on this page.
-      </p>
-
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     FINAL CTA
-========================= -->
-
-<section>
-
-  <div class="container">
-
-    <div class="contact-box">
-
-      <div class="section-kicker">
-        Ready?
-      </div>
-
-      <h2>
-        Start earning with TallyBuck.
-      </h2>
-
-      <p>
-        Create your free account and explore the opportunities available
-        to you.
-      </p>
-
-      <a href="signup.html" class="btn btn-primary">
-        Create Free Account
-      </a>
-
-    </div>
-
-  </div>
-
-</section>
-
 
 </main>
 
-
-<!-- =========================
-     FOOTER
-========================= -->
-
 <footer>
-
   <div class="container">
-
 
     <div class="footer-top">
 
-
-      <a href="#top" class="logo">
-
+      <a href="index.html" class="logo">
         <span class="logo-mark">
-
-          <svg viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2.2">
-
-            <path d="M12 3v18M7 7h8a3 3 0 0 1 0 6H7h7a3 3 0 0 1 0 6H7"/>
-
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M7 8.5h10a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2Z"/>
+            <path d="M8 8.5V7a4 4 0 0 1 8 0v1.5"/>
           </svg>
-
         </span>
-
         TallyBuck
-
       </a>
 
-
       <div class="footer-links">
-
-        <a href="#about">
-          About
-        </a>
-
-        <a href="#how">
-          How It Works
-        </a>
-
-        <a href="#earn">
-          Ways to Earn
-        </a>
-
-        <a href="#payouts">
-          Payouts
-        </a>
-
-        <a href="#referrals">
-          Referrals
-        </a>
-
-        <a href="#faq">
-          FAQ
-        </a>
-
-        <a href="#terms">
-          Terms
-        </a>
-
-        <a href="#privacy">
-          Privacy
-        </a>
-
-        <a href="#contact">
-          Contact
-        </a>
-
-        <a
-          href="https://t.me/tallybuck"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Telegram
-        </a>
-
+        <button onclick="openModal('termsModal')">Terms</button>
+        <button onclick="openModal('privacyModal')">Privacy</button>
+        <a href="https://t.me/tallybuck" target="_blank">Telegram</a>
+        <a href="mailto:support@tallybuck.com">Support</a>
       </div>
 
-
     </div>
-
 
     <div class="footer-bottom">
-
       © 2026 TallyBuck. All rights reserved.
-      Rewards and task availability vary by user, location, device and eligibility.
-      TallyBuck does not guarantee a specific level of earnings.
-
     </div>
 
-
   </div>
-
 </footer>
 
+<!-- TERMS MODAL -->
+<div class="modal" id="termsModal">
+  <div class="modal-box">
+
+    <div class="modal-head">
+      <h2>Terms of Use</h2>
+      <button class="close" onclick="closeModal('termsModal')">×</button>
+    </div>
+
+    <p>
+      By using TallyBuck, you agree to use the platform lawfully
+      and follow the requirements associated with each activity.
+    </p>
+
+    <h3>Account</h3>
+    <p>
+      You are responsible for keeping your account information
+      accurate and protecting access to your account.
+    </p>
+
+    <h3>Activities</h3>
+    <p>
+      Each task may have its own eligibility and completion
+      requirements. Completing an activity does not guarantee a
+      reward if the activity is not successfully verified.
+    </p>
+
+    <h3>Rewards</h3>
+    <p>
+      Rewards are subject to verification. TallyBuck may reject
+      submissions that do not satisfy the applicable requirements.
+    </p>
+
+    <h3>Withdrawals</h3>
+    <p>
+      Withdrawal requests are subject to the minimum withdrawal
+      requirement, applicable fees, account status and review.
+    </p>
+
+    <h3>Prohibited activity</h3>
+    <p>
+      Fraud, manipulation, duplicate accounts, automated abuse,
+      false information and attempts to exploit the platform are
+      prohibited.
+    </p>
+
+    <h3>Changes</h3>
+    <p>
+      TallyBuck may update these terms when necessary. Continued
+      use of the platform after changes means you accept the
+      updated terms.
+    </p>
+
+  </div>
+</div>
+
+<!-- PRIVACY MODAL -->
+<div class="modal" id="privacyModal">
+  <div class="modal-box">
+
+    <div class="modal-head">
+      <h2>Privacy Policy</h2>
+      <button class="close" onclick="closeModal('privacyModal')">×</button>
+    </div>
+
+    <p>
+      TallyBuck respects your privacy and uses information required
+      to operate accounts, provide activities and process rewards.
+    </p>
+
+    <h3>Information we collect</h3>
+    <p>
+      Depending on how you use the platform, information may include
+      your name, email address, country, account information,
+      activity information and withdrawal details.
+    </p>
+
+    <h3>How information is used</h3>
+    <p>
+      Information may be used to operate your account, provide
+      eligible activities, verify submissions, prevent abuse,
+      process withdrawals and communicate important account updates.
+    </p>
+
+    <h3>Service providers</h3>
+    <p>
+      Certain activities may be provided by third-party reward,
+      survey or offer partners. Those services may process
+      information according to their own privacy policies.
+    </p>
+
+    <h3>Security</h3>
+    <p>
+      We use reasonable technical and organizational measures to
+      protect account information, although no online service can
+      guarantee absolute security.
+    </p>
+
+    <h3>Your choices</h3>
+    <p>
+      You may contact support regarding questions about your account
+      information or privacy.
+    </p>
+
+  </div>
+</div>
+
+<script>
+function openModal(id){
+  document.getElementById(id).classList.add("active");
+  document.body.style.overflow="hidden";
+}
+
+function closeModal(id){
+  document.getElementById(id).classList.remove("active");
+  document.body.style.overflow="";
+}
+
+document.querySelectorAll(".modal").forEach(modal=>{
+  modal.addEventListener("click",function(e){
+    if(e.target===modal){
+      closeModal(modal.id);
+    }
+  });
+});
+
+document.addEventListener("keydown",function(e){
+  if(e.key==="Escape"){
+    document.querySelectorAll(".modal.active").forEach(modal=>{
+      closeModal(modal.id);
+    });
+  }
+});
+</script>
 
 </body>
 </html>
