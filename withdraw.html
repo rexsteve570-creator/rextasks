@@ -54,9 +54,7 @@ body{
   transition:background .2s,color .2s;
 }
 
-button,
-input,
-select{
+button,input,select{
   font:inherit;
 }
 
@@ -70,8 +68,6 @@ button{
   min-height:100vh;
   padding-bottom:88px;
 }
-
-/* HEADER */
 
 .header{
   height:70px;
@@ -136,8 +132,6 @@ button{
   display:none;
 }
 
-/* THEME */
-
 .theme-wrap{
   position:relative;
 }
@@ -189,8 +183,6 @@ button{
   background:var(--lightgreen);
   color:var(--green);
 }
-
-/* SIDE MENU */
 
 .side-menu{
   position:fixed;
@@ -249,8 +241,6 @@ button{
   font-weight:700;
 }
 
-/* MAIN */
-
 main{
   padding:22px 16px;
 }
@@ -267,8 +257,6 @@ main{
   font-size:14px;
   margin-bottom:20px;
 }
-
-/* BALANCE */
 
 .balance-card{
   background:var(--darkgreen);
@@ -314,8 +302,6 @@ main{
   font-size:16px;
 }
 
-/* CARD */
-
 .card{
   background:var(--card);
   border:1px solid var(--border);
@@ -336,8 +322,6 @@ main{
   font-size:13px;
   margin-bottom:18px;
 }
-
-/* METHODS */
 
 .methods{
   display:grid;
@@ -370,8 +354,6 @@ main{
   font-size:11px;
   margin-top:4px;
 }
-
-/* FORMS */
 
 .form-group{
   margin-bottom:15px;
@@ -465,8 +447,6 @@ select option{
   cursor:not-allowed;
 }
 
-/* HISTORY */
-
 .withdrawal-item{
   padding:15px 0;
   border-bottom:1px solid var(--border);
@@ -523,8 +503,6 @@ select option{
   font-size:13px;
 }
 
-/* MESSAGE */
-
 .message{
   display:none;
   padding:12px;
@@ -546,8 +524,6 @@ select option{
   background:var(--lightgreen);
   color:var(--green);
 }
-
-/* BOTTOM NAV */
 
 .bottom-nav{
   position:fixed;
@@ -622,563 +598,523 @@ svg{
 
 <header class="header">
 
-  <button class="icon-btn" id="menuBtn" aria-label="Menu">
-    <svg viewBox="0 0 24 24">
-      <path d="M4 6h16M4 12h16M4 18h16"/>
-    </svg>
-  </button>
+<button class="icon-btn" id="menuBtn" aria-label="Menu">
+<svg viewBox="0 0 24 24">
+<path d="M4 6h16M4 12h16M4 18h16"/>
+</svg>
+</button>
 
-  <div class="logo">T</div>
+<div class="logo">T</div>
 
-  <div class="header-right">
+<div class="header-right">
 
-    <button
-      class="icon-btn notification"
-      aria-label="Notifications"
-      onclick="location.href='notifications.html'"
-    >
-      <svg viewBox="0 0 24 24">
-        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-        <path d="M10 21h4"/>
-      </svg>
-      <span class="notification-dot" id="notificationDot"></span>
-    </button>
+<button
+class="icon-btn notification"
+aria-label="Notifications"
+onclick="location.href='notifications.html'"
+>
+<svg viewBox="0 0 24 24">
+<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+<path d="M10 21h4"/>
+</svg>
+<span class="notification-dot" id="notificationDot"></span>
+</button>
 
-    <div class="theme-wrap">
+<div class="theme-wrap">
 
-      <button
-        class="icon-btn theme-btn"
-        id="themeBtn"
-        aria-label="Theme"
-      >
+<button
+class="icon-btn theme-btn"
+id="themeBtn"
+aria-label="Theme"
+>
 
-        <svg viewBox="0 0 24 24" id="themeIcon">
-          <circle cx="12" cy="12" r="4"/>
-          <path d="M12 2v2"/>
-          <path d="M12 20v2"/>
-          <path d="M4.93 4.93l1.41 1.41"/>
-          <path d="M17.66 17.66l1.41 1.41"/>
-          <path d="M2 12h2"/>
-          <path d="M20 12h2"/>
-          <path d="M4.93 19.07l1.41-1.41"/>
-          <path d="M17.66 6.34l1.41-1.41"/>
-        </svg>
+<svg viewBox="0 0 24 24" id="themeIcon">
+<circle cx="12" cy="12" r="4"/>
+<path d="M12 2v2"/>
+<path d="M12 20v2"/>
+<path d="M4.93 4.93l1.41 1.41"/>
+<path d="M17.66 17.66l1.41 1.41"/>
+<path d="M2 12h2"/>
+<path d="M20 12h2"/>
+<path d="M4.93 19.07l1.41-1.41"/>
+<path d="M17.66 6.34l1.41-1.41"/>
+</svg>
 
-        <svg class="theme-arrow" viewBox="0 0 24 24">
-          <path d="m6 9 6 6 6-6"/>
-        </svg>
+<svg class="theme-arrow" viewBox="0 0 24 24">
+<path d="m6 9 6 6 6-6"/>
+</svg>
 
-      </button>
+</button>
 
-      <div class="theme-dropdown" id="themeDropdown">
+<div class="theme-dropdown" id="themeDropdown">
 
-        <button class="theme-option" data-theme-choice="light">
-          Light
-        </button>
+<button class="theme-option" data-theme-choice="light">Light</button>
+<button class="theme-option" data-theme-choice="dark">Dark</button>
+<button class="theme-option" data-theme-choice="system">System</button>
 
-        <button class="theme-option" data-theme-choice="dark">
-          Dark
-        </button>
+</div>
 
-        <button class="theme-option" data-theme-choice="system">
-          System
-        </button>
+</div>
 
-      </div>
-
-    </div>
-
-  </div>
-
+</div>
 </header>
 
-
-<!-- SIDE MENU -->
 
 <div class="menu-overlay" id="menuOverlay"></div>
 
 <aside class="side-menu" id="sideMenu">
 
-  <div class="menu-title">TallyBuck</div>
+<div class="menu-title">TallyBuck</div>
 
-  <a class="menu-link" href="dashboard.html">
-    <svg viewBox="0 0 24 24">
-      <rect x="3" y="3" width="7" height="7"/>
-      <rect x="14" y="3" width="7" height="7"/>
-      <rect x="3" y="14" width="7" height="7"/>
-      <rect x="14" y="14" width="7" height="7"/>
-    </svg>
-    Dashboard
-  </a>
+<a class="menu-link" href="dashboard.html">
+<svg viewBox="0 0 24 24">
+<rect x="3" y="3" width="7" height="7"/>
+<rect x="14" y="3" width="7" height="7"/>
+<rect x="3" y="14" width="7" height="7"/>
+<rect x="14" y="14" width="7" height="7"/>
+</svg>
+Dashboard
+</a>
 
-  <a class="menu-link" href="tasks.html">
-    <svg viewBox="0 0 24 24">
-      <path d="M9 11l3 3L22 4"/>
-      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-    </svg>
-    Earn Tasks
-  </a>
+<a class="menu-link" href="tasks.html">
+<svg viewBox="0 0 24 24">
+<path d="M9 11l3 3L22 4"/>
+<path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+</svg>
+Earn Tasks
+</a>
 
-  <a class="menu-link" href="referrals.html">
-    <svg viewBox="0 0 24 24">
-      <circle cx="9" cy="7" r="4"/>
-      <path d="M3 21v-1a6 6 0 0 1 12 0v1"/>
-      <path d="M16 11a4 4 0 1 0 0-8"/>
-      <path d="M21 21v-1a6 6 0 0 0-5-5.91"/>
-    </svg>
-    Referrals
-  </a>
+<a class="menu-link" href="referrals.html">
+<svg viewBox="0 0 24 24">
+<circle cx="9" cy="7" r="4"/>
+<path d="M3 21v-1a6 6 0 0 1 12 0v1"/>
+<path d="M16 11a4 4 0 1 0 0-8"/>
+<path d="M21 21v-1a6 6 0 0 0-5-5.91"/>
+</svg>
+Referrals
+</a>
 
-  <a class="menu-link active" href="withdraw.html">
-    <svg viewBox="0 0 24 24">
-      <rect x="3" y="5" width="18" height="14" rx="2"/>
-      <path d="M3 10h18"/>
-      <path d="M7 15h4"/>
-    </svg>
-    Wallet / Withdraw
-  </a>
+<a class="menu-link active" href="withdraw.html">
+<svg viewBox="0 0 24 24">
+<rect x="3" y="5" width="18" height="14" rx="2"/>
+<path d="M3 10h18"/>
+<path d="M7 15h4"/>
+</svg>
+Wallet / Withdraw
+</a>
 
-  <a class="menu-link" href="history.html">
-    <svg viewBox="0 0 24 24">
-      <path d="M3 12a9 9 0 1 0 3-6.7"/>
-      <path d="M3 4v5h5"/>
-      <path d="M12 7v5l3 2"/>
-    </svg>
-    History
-  </a>
+<a class="menu-link" href="history.html">
+<svg viewBox="0 0 24 24">
+<path d="M3 12a9 9 0 1 0 3-6.7"/>
+<path d="M3 4v5h5"/>
+<path d="M12 7v5l3 2"/>
+</svg>
+History
+</a>
 
-  <a class="menu-link" href="profile.html">
-    <svg viewBox="0 0 24 24">
-      <circle cx="12" cy="8" r="4"/>
-      <path d="M4 21a8 8 0 0 1 16 0"/>
-    </svg>
-    Profile
-  </a>
+<a class="menu-link" href="profile.html">
+<svg viewBox="0 0 24 24">
+<circle cx="12" cy="8" r="4"/>
+<path d="M4 21a8 8 0 0 1 16 0"/>
+</svg>
+Profile
+</a>
 
-  <a class="menu-link" href="notifications.html">
-    <svg viewBox="0 0 24 24">
-      <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-      <path d="M10 21h4"/>
-    </svg>
-    Notifications
-  </a>
+<a class="menu-link" href="notifications.html">
+<svg viewBox="0 0 24 24">
+<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+<path d="M10 21h4"/>
+</svg>
+Notifications
+</a>
 
-  <a class="menu-link" href="#" id="logoutBtn">
-    <svg viewBox="0 0 24 24">
-      <path d="M10 17l5-5-5-5"/>
-      <path d="M15 12H3"/>
-      <path d="M21 19V5a2 2 0 0 0-2-2h-6"/>
-    </svg>
-    Logout
-  </a>
+<a class="menu-link" href="#" id="logoutBtn">
+<svg viewBox="0 0 24 24">
+<path d="M10 17l5-5-5-5"/>
+<path d="M15 12H3"/>
+<path d="M21 19V5a2 2 0 0 0-2-2h-6"/>
+</svg>
+Logout
+</a>
 
 </aside>
 
 
 <main>
 
-  <h1 class="page-title">Wallet & Withdraw</h1>
+<h1 class="page-title">Wallet & Withdraw</h1>
 
-  <p class="page-subtitle">
-    Manage your earnings and request a withdrawal.
-  </p>
+<p class="page-subtitle">
+Manage your earnings and request a withdrawal.
+</p>
 
 
-  <!-- BALANCE -->
+<section class="balance-card">
 
-  <section class="balance-card">
+<div class="balance-label">
+Available balance
+</div>
 
-    <div class="balance-label">
-      Available balance
-    </div>
+<div class="balance" id="balance">
+$0.00
+</div>
 
-    <div class="balance" id="balance">
-      $0.00
-    </div>
+<div class="balance-stats">
 
-    <div class="balance-stats">
+<div class="balance-stat">
+<span>Total earned</span>
+<strong id="totalEarned">$0.00</strong>
+</div>
 
-      <div class="balance-stat">
-        <span>Total earned</span>
-        <strong id="totalEarned">$0.00</strong>
-      </div>
+<div class="balance-stat">
+<span>Total withdrawn</span>
+<strong id="totalWithdrawn">$0.00</strong>
+</div>
 
-      <div class="balance-stat">
-        <span>Total withdrawn</span>
-        <strong id="totalWithdrawn">$0.00</strong>
-      </div>
+</div>
 
-    </div>
+</section>
 
-  </section>
 
+<section class="card">
 
-  <!-- WITHDRAWAL FORM -->
+<div class="card-title">
+Request withdrawal
+</div>
 
-  <section class="card">
+<div class="card-subtitle">
+Choose how you want to receive your payment.
+</div>
 
-    <div class="card-title">
-      Request withdrawal
-    </div>
 
-    <div class="card-subtitle">
-      Choose how you want to receive your payment.
-    </div>
+<div class="methods">
 
+<button class="method active" id="bankMethod">
 
-    <div class="methods">
+<div class="method-title">
+Nigeria Bank
+</div>
 
-      <button class="method active" id="bankMethod">
+<div class="method-description">
+Nigerian bank or fintech account
+</div>
 
-        <div class="method-title">
-          Nigeria Bank
-        </div>
+</button>
 
-        <div class="method-description">
-          Nigerian bank or fintech account
-        </div>
 
-      </button>
+<button class="method" id="cryptoMethod">
 
+<div class="method-title">
+Crypto
+</div>
 
-      <button class="method" id="cryptoMethod">
+<div class="method-description">
+Receive payment to your crypto wallet
+</div>
 
-        <div class="method-title">
-          Crypto
-        </div>
+</button>
 
-        <div class="method-description">
-          Receive payment to your crypto wallet
-        </div>
+</div>
 
-      </button>
 
-    </div>
+<div id="message" class="message"></div>
 
 
-    <div id="message" class="message"></div>
+<div class="form-group">
 
+<label for="amount">
+Withdrawal amount
+</label>
 
-    <div class="form-group">
+<div class="amount-wrap">
 
-      <label for="amount">
-        Withdrawal amount
-      </label>
+<span class="amount-symbol">$</span>
 
-      <div class="amount-wrap">
+<input
+id="amount"
+class="amount-input"
+type="number"
+min="10"
+step="0.01"
+placeholder="Minimum $10"
+>
 
-        <span class="amount-symbol">$</span>
+</div>
 
-        <input
-          id="amount"
-          class="amount-input"
-          type="number"
-          min="10"
-          step="0.01"
-          placeholder="Minimum $10"
-        >
+</div>
 
-      </div>
 
-    </div>
+<div id="bankFields">
 
+<div class="form-group">
 
-    <!-- NIGERIA BANK -->
+<label for="bankName">
+Bank / financial institution
+</label>
 
-    <div id="bankFields">
+<select id="bankName">
 
-      <div class="form-group">
+<option value="">Select bank</option>
+
+<optgroup label="Popular">
+<option>OPay</option>
+<option>PalmPay</option>
+<option>Moniepoint</option>
+<option>Kuda</option>
+</optgroup>
 
-        <label for="bankName">
-          Bank / financial institution
-        </label>
+<optgroup label="Commercial Banks">
+<option>Access Bank</option>
+<option>Citibank Nigeria</option>
+<option>Ecobank Nigeria</option>
+<option>Fidelity Bank</option>
+<option>First Bank of Nigeria</option>
+<option>First City Monument Bank (FCMB)</option>
+<option>Globus Bank</option>
+<option>Guaranty Trust Bank (GTBank)</option>
+<option>Jaiz Bank</option>
+<option>Keystone Bank</option>
+<option>Lotus Bank</option>
+<option>Nova Bank</option>
+<option>Parallex Bank</option>
+<option>Polaris Bank</option>
+<option>Premium Trust Bank</option>
+<option>Providus Bank</option>
+<option>Stanbic IBTC Bank</option>
+<option>Standard Chartered Bank</option>
+<option>Sterling Bank</option>
+<option>SunTrust Bank</option>
+<option>Union Bank</option>
+<option>United Bank for Africa (UBA)</option>
+<option>Unity Bank</option>
+<option>Wema Bank</option>
+<option>Zenith Bank</option>
+</optgroup>
 
-        <select id="bankName">
+<optgroup label="Other Financial Institutions">
+<option>Carbon</option>
+<option>FairMoney</option>
+<option>Branch</option>
+<option>VFD Microfinance Bank</option>
+<option>Rubies Bank</option>
+<option>Eyowo</option>
+</optgroup>
 
-          <option value="">
-            Select bank
-          </option>
+</select>
 
-          <optgroup label="Popular">
+</div>
 
-            <option>OPay</option>
-            <option>PalmPay</option>
-            <option>Moniepoint</option>
-            <option>Kuda</option>
 
-          </optgroup>
+<div class="form-group">
 
-          <optgroup label="Commercial Banks">
+<label for="accountName">
+Account name
+</label>
 
-            <option>Access Bank</option>
-            <option>Citibank Nigeria</option>
-            <option>Ecobank Nigeria</option>
-            <option>Fidelity Bank</option>
-            <option>First Bank of Nigeria</option>
-            <option>First City Monument Bank (FCMB)</option>
-            <option>Globus Bank</option>
-            <option>Guaranty Trust Bank (GTBank)</option>
-            <option>Jaiz Bank</option>
-            <option>Keystone Bank</option>
-            <option>Lotus Bank</option>
-            <option>Nova Bank</option>
-            <option>Parallex Bank</option>
-            <option>Polaris Bank</option>
-            <option>Premium Trust Bank</option>
-            <option>Providus Bank</option>
-            <option>Stanbic IBTC Bank</option>
-            <option>Standard Chartered Bank</option>
-            <option>Sterling Bank</option>
-            <option>SunTrust Bank</option>
-            <option>Union Bank</option>
-            <option>United Bank for Africa (UBA)</option>
-            <option>Unity Bank</option>
-            <option>Wema Bank</option>
-            <option>Zenith Bank</option>
+<input
+id="accountName"
+type="text"
+placeholder="Name on the account"
+>
 
-          </optgroup>
+</div>
 
-          <optgroup label="Other Financial Institutions">
 
-            <option>Carbon</option>
-            <option>FairMoney</option>
-            <option>Branch</option>
-            <option>VFD Microfinance Bank</option>
-            <option>Rubies Bank</option>
-            <option>Eyowo</option>
-            <option>Palmpay</option>
+<div class="form-group">
 
-          </optgroup>
+<label for="accountNumber">
+Account number
+</label>
 
-        </select>
+<input
+id="accountNumber"
+type="text"
+inputmode="numeric"
+maxlength="10"
+placeholder="10-digit account number"
+>
 
-      </div>
+</div>
 
+</div>
 
-      <div class="form-group">
 
-        <label for="accountName">
-          Account name
-        </label>
+<div id="cryptoFields" class="hidden">
 
-        <input
-          id="accountName"
-          type="text"
-          placeholder="Name on the account"
-        >
+<div class="form-group">
 
-      </div>
+<label for="crypto">
+Cryptocurrency
+</label>
 
+<select id="crypto">
 
-      <div class="form-group">
+<option value="">Select cryptocurrency</option>
+<option>USDT</option>
+<option>USDC</option>
+<option>BTC</option>
+<option>ETH</option>
+<option>BNB</option>
+<option>SOL</option>
+<option>TON</option>
 
-        <label for="accountNumber">
-          Account number
-        </label>
+</select>
 
-        <input
-          id="accountNumber"
-          type="text"
-          inputmode="numeric"
-          maxlength="10"
-          placeholder="10-digit account number"
-        >
+</div>
 
-      </div>
 
-    </div>
+<div class="form-group">
 
+<label for="network">
+Network
+</label>
 
-    <!-- CRYPTO -->
+<select id="network">
 
-    <div id="cryptoFields" class="hidden">
+<option value="">Select network</option>
+<option>TRC20</option>
+<option>BEP20</option>
+<option>ERC20</option>
+<option>Solana</option>
+<option>TON</option>
+<option>Bitcoin</option>
 
-      <div class="form-group">
+</select>
 
-        <label for="crypto">
-          Cryptocurrency
-        </label>
+</div>
 
-        <select id="crypto">
 
-          <option value="">
-            Select cryptocurrency
-          </option>
+<div class="form-group">
 
-          <option>USDT</option>
-          <option>USDC</option>
-          <option>BTC</option>
-          <option>ETH</option>
-          <option>BNB</option>
-          <option>SOL</option>
-          <option>TON</option>
+<label for="walletAddress">
+Wallet address
+</label>
 
-        </select>
+<input
+id="walletAddress"
+type="text"
+placeholder="Enter wallet address"
+>
 
-      </div>
+</div>
 
+</div>
 
-      <div class="form-group">
 
-        <label for="network">
-          Network
-        </label>
+<div class="fee-box">
 
-        <select id="network">
+<div class="fee-row">
+<span>Withdrawal</span>
+<strong id="feeAmount">$0.00</strong>
+</div>
 
-          <option value="">
-            Select network
-          </option>
+<div class="fee-row">
+<span>Processing fee</span>
+<strong id="fee">$0.00</strong>
+</div>
 
-          <option>TRC20</option>
-          <option>BEP20</option>
-          <option>ERC20</option>
-          <option>Solana</option>
-          <option>TON</option>
-          <option>Bitcoin</option>
+<div class="fee-row">
+<span>You receive</span>
+<strong id="netAmount">$0.00</strong>
+</div>
 
-        </select>
+</div>
 
-      </div>
 
+<button
+class="withdraw-btn"
+id="withdrawBtn"
+>
+Request withdrawal
+</button>
 
-      <div class="form-group">
+</section>
 
-        <label for="walletAddress">
-          Wallet address
-        </label>
 
-        <input
-          id="walletAddress"
-          type="text"
-          placeholder="Enter wallet address"
-        >
+<section class="card">
 
-      </div>
+<div class="card-title">
+Withdrawal history
+</div>
 
-    </div>
+<div class="card-subtitle">
+Your recent withdrawal requests.
+</div>
 
+<div id="withdrawalList">
+<div class="empty">
+Loading withdrawals...
+</div>
+</div>
 
-    <!-- FEE -->
-
-    <div class="fee-box">
-
-      <div class="fee-row">
-        <span>Withdrawal</span>
-        <strong id="feeAmount">$0.00</strong>
-      </div>
-
-      <div class="fee-row">
-        <span>Processing fee</span>
-        <strong id="fee">$0.00</strong>
-      </div>
-
-      <div class="fee-row">
-        <span>You receive</span>
-        <strong id="netAmount">$0.00</strong>
-      </div>
-
-    </div>
-
-
-    <button
-      class="withdraw-btn"
-      id="withdrawBtn"
-    >
-      Request withdrawal
-    </button>
-
-  </section>
-
-
-  <!-- HISTORY -->
-
-  <section class="card">
-
-    <div class="card-title">
-      Withdrawal history
-    </div>
-
-    <div class="card-subtitle">
-      Your recent withdrawal requests.
-    </div>
-
-    <div id="withdrawalList">
-      <div class="empty">
-        Loading withdrawals...
-      </div>
-    </div>
-
-  </section>
+</section>
 
 </main>
 
 
-<!-- BOTTOM NAV -->
-
 <nav class="bottom-nav">
 
-  <a href="dashboard.html" class="nav-item">
+<a href="dashboard.html" class="nav-item">
 
-    <svg viewBox="0 0 24 24">
-      <path d="M3 11.5L12 4l9 7.5"/>
-      <path d="M5 10v10h14V10"/>
-      <path d="M9 20v-6h6v6"/>
-    </svg>
+<svg viewBox="0 0 24 24">
+<path d="M3 11.5L12 4l9 7.5"/>
+<path d="M5 10v10h14V10"/>
+<path d="M9 20v-6h6v6"/>
+</svg>
 
-    Home
+Home
 
-  </a>
-
-
-  <a href="tasks.html" class="nav-item">
-
-    <svg viewBox="0 0 24 24">
-      <path d="M9 11l3 3L22 4"/>
-      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-    </svg>
-
-    Tasks
-
-  </a>
+</a>
 
 
-  <a href="withdraw.html" class="nav-item active">
+<a href="tasks.html" class="nav-item">
 
-    <svg viewBox="0 0 24 24">
-      <rect x="3" y="5" width="18" height="14" rx="2"/>
-      <path d="M3 10h18"/>
-      <path d="M7 15h4"/>
-    </svg>
+<svg viewBox="0 0 24 24">
+<path d="M9 11l3 3L22 4"/>
+<path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+</svg>
 
-    Wallet
+Tasks
 
-  </a>
-
-
-  <a href="history.html" class="nav-item">
-
-    <svg viewBox="0 0 24 24">
-      <path d="M3 12a9 9 0 1 0 3-6.7"/>
-      <path d="M3 4v5h5"/>
-      <path d="M12 7v5l3 2"/>
-    </svg>
-
-    History
-
-  </a>
+</a>
 
 
-  <a href="profile.html" class="nav-item">
+<a href="withdraw.html" class="nav-item active">
 
-    <svg viewBox="0 0 24 24">
-      <circle cx="12" cy="8" r="4"/>
-      <path d="M4 21a8 8 0 0 1 16 0"/>
-    </svg>
+<svg viewBox="0 0 24 24">
+<rect x="3" y="5" width="18" height="14" rx="2"/>
+<path d="M3 10h18"/>
+<path d="M7 15h4"/>
+</svg>
 
-    Profile
+Wallet
 
-  </a>
+</a>
+
+
+<a href="history.html" class="nav-item">
+
+<svg viewBox="0 0 24 24">
+<path d="M3 12a9 9 0 1 0 3-6.7"/>
+<path d="M3 4v5h5"/>
+<path d="M12 7v5l3 2"/>
+</svg>
+
+History
+
+</a>
+
+
+<a href="profile.html" class="nav-item">
+
+<svg viewBox="0 0 24 24">
+<circle cx="12" cy="8" r="4"/>
+<path d="M4 21a8 8 0 0 1 16 0"/>
+</svg>
+
+Profile
+
+</a>
 
 </nav>
 
@@ -1212,14 +1148,10 @@ const THEME_KEY =
   "tallybuck-theme";
 
 const themeDropdown =
-  document.getElementById(
-    "themeDropdown"
-  );
+  document.getElementById("themeDropdown");
 
 const themeBtn =
-  document.getElementById(
-    "themeBtn"
-  );
+  document.getElementById("themeBtn");
 
 
 function getSystemTheme(){
@@ -1236,20 +1168,17 @@ function getSystemTheme(){
 function applyTheme(){
 
   const saved =
-    localStorage.getItem(
-      THEME_KEY
-    ) || "system";
+    localStorage.getItem(THEME_KEY) || "system";
 
   const actual =
     saved === "system"
       ? getSystemTheme()
       : saved;
 
-  document.documentElement
-    .setAttribute(
-      "data-theme",
-      actual
-    );
+  document.documentElement.setAttribute(
+    "data-theme",
+    actual
+  );
 
   document
     .querySelectorAll(".theme-option")
@@ -1271,9 +1200,7 @@ themeBtn.addEventListener(
 
     event.stopPropagation();
 
-    themeDropdown.classList.toggle(
-      "show"
-    );
+    themeDropdown.classList.toggle("show");
 
   }
 );
@@ -1294,9 +1221,7 @@ document
 
         applyTheme();
 
-        themeDropdown.classList.remove(
-          "show"
-        );
+        themeDropdown.classList.remove("show");
 
       }
     );
@@ -1309,14 +1234,10 @@ document.addEventListener(
   event => {
 
     if(
-      !event.target.closest(
-        ".theme-wrap"
-      )
+      !event.target.closest(".theme-wrap")
     ){
 
-      themeDropdown.classList.remove(
-        "show"
-      );
+      themeDropdown.classList.remove("show");
 
     }
 
@@ -1325,17 +1246,13 @@ document.addEventListener(
 
 
 window
-  .matchMedia(
-    "(prefers-color-scheme: dark)"
-  )
+  .matchMedia("(prefers-color-scheme: dark)")
   .addEventListener(
     "change",
     () => {
 
       const saved =
-        localStorage.getItem(
-          THEME_KEY
-        ) || "system";
+        localStorage.getItem(THEME_KEY) || "system";
 
       if(saved === "system"){
         applyTheme();
@@ -1411,8 +1328,7 @@ const withdrawBtn =
 function money(value){
 
   return "$" +
-    Number(value || 0)
-      .toFixed(2);
+    Number(value || 0).toFixed(2);
 
 }
 
@@ -1421,13 +1337,9 @@ function money(value){
    MESSAGE
 ========================================================= */
 
-function showMessage(
-  text,
-  type
-){
+function showMessage(text,type){
 
-  messageEl.textContent =
-    text;
+  messageEl.textContent = text;
 
   messageEl.className =
     "message show " + type;
@@ -1437,55 +1349,36 @@ function showMessage(
 
 function clearMessage(){
 
-  messageEl.textContent =
-    "";
+  messageEl.textContent = "";
 
-  messageEl.className =
-    "message";
+  messageEl.className = "message";
 
 }
 
 
 /* =========================================================
    FEE
-   $1 PER $10 = 10%
 ========================================================= */
 
 function calculateFee(){
 
   const amount =
-    Number(
-      amountEl.value || 0
-    );
+    Number(amountEl.value || 0);
 
-  if(
-    amount <= 0
-  ){
+  if(amount <= 0){
 
-    feeAmountEl.textContent =
-      "$0.00";
-
-    feeEl.textContent =
-      "$0.00";
-
-    netAmountEl.textContent =
-      "$0.00";
+    feeAmountEl.textContent = "$0.00";
+    feeEl.textContent = "$0.00";
+    netAmountEl.textContent = "$0.00";
 
     return;
-
   }
 
   const fee =
-    Number(
-      (amount * 0.10)
-        .toFixed(2)
-    );
+    Number((amount * 0.10).toFixed(2));
 
   const net =
-    Number(
-      (amount - fee)
-        .toFixed(2)
-    );
+    Number((amount - fee).toFixed(2));
 
   feeAmountEl.textContent =
     money(amount);
@@ -1513,24 +1406,13 @@ bankMethod.addEventListener(
   "click",
   () => {
 
-    withdrawalMethod =
-      "bank";
+    withdrawalMethod = "bank";
 
-    bankMethod.classList.add(
-      "active"
-    );
+    bankMethod.classList.add("active");
+    cryptoMethod.classList.remove("active");
 
-    cryptoMethod.classList.remove(
-      "active"
-    );
-
-    bankFields.classList.remove(
-      "hidden"
-    );
-
-    cryptoFields.classList.add(
-      "hidden"
-    );
+    bankFields.classList.remove("hidden");
+    cryptoFields.classList.add("hidden");
 
     clearMessage();
 
@@ -1542,24 +1424,13 @@ cryptoMethod.addEventListener(
   "click",
   () => {
 
-    withdrawalMethod =
-      "crypto";
+    withdrawalMethod = "crypto";
 
-    cryptoMethod.classList.add(
-      "active"
-    );
+    cryptoMethod.classList.add("active");
+    bankMethod.classList.remove("active");
 
-    bankMethod.classList.remove(
-      "active"
-    );
-
-    cryptoFields.classList.remove(
-      "hidden"
-    );
-
-    bankFields.classList.add(
-      "hidden"
-    );
+    cryptoFields.classList.remove("hidden");
+    bankFields.classList.add("hidden");
 
     clearMessage();
 
@@ -1574,26 +1445,21 @@ cryptoMethod.addEventListener(
 async function loadUser(){
 
   const {
-    data:{
-      session
-    }
+    data:{session}
   } =
   await db.auth.getSession();
 
   if(!session){
 
-    location.href =
-      "login.html";
+    location.href = "login.html";
 
     return;
 
   }
 
-  currentUser =
-    session.user;
+  currentUser = session.user;
 
   await loadWallet();
-
   await loadWithdrawals();
 
 }
@@ -1640,24 +1506,16 @@ async function loadWallet(){
   }
 
   currentBalance =
-    Number(
-      data.balance || 0
-    );
+    Number(data.balance || 0);
 
   balanceEl.textContent =
-    money(
-      data.balance
-    );
+    money(data.balance);
 
   totalEarnedEl.textContent =
-    money(
-      data.total_earned
-    );
+    money(data.total_earned);
 
   totalWithdrawnEl.textContent =
-    money(
-      data.total_withdrawn
-    );
+    money(data.total_withdrawn);
 
 }
 
@@ -1709,10 +1567,7 @@ async function loadWithdrawals(){
 
   }
 
-  if(
-    !data ||
-    !data.length
-  ){
+  if(!data || !data.length){
 
     withdrawalList.innerHTML =
       `<div class="empty">
@@ -1727,16 +1582,15 @@ async function loadWithdrawals(){
     data.map(row => {
 
       const date =
-        new Date(
-          row.created_at
-        ).toLocaleDateString(
-          undefined,
-          {
-            day:"numeric",
-            month:"short",
-            year:"numeric"
-          }
-        );
+        new Date(row.created_at)
+          .toLocaleDateString(
+            undefined,
+            {
+              day:"numeric",
+              month:"short",
+              year:"numeric"
+            }
+          );
 
       const method =
         row.method === "bank"
@@ -1749,10 +1603,8 @@ async function loadWithdrawals(){
             );
 
       const status =
-        String(
-          row.status ||
-          "pending"
-        ).toLowerCase();
+        String(row.status || "pending")
+          .toLowerCase();
 
       return `
 
@@ -1797,40 +1649,24 @@ async function loadWithdrawals(){
 function validateBank(){
 
   const bankName =
-    document.getElementById(
-      "bankName"
-    ).value.trim();
+    document.getElementById("bankName").value.trim();
 
   const accountName =
-    document.getElementById(
-      "accountName"
-    ).value.trim();
+    document.getElementById("accountName").value.trim();
 
   const accountNumber =
-    document.getElementById(
-      "accountNumber"
-    ).value.trim();
+    document.getElementById("accountNumber").value.trim();
 
   if(!bankName){
-
     return "Please select your bank or financial institution.";
-
   }
 
   if(!accountName){
-
     return "Please enter your account name.";
-
   }
 
-  if(
-    !/^\d{10}$/.test(
-      accountNumber
-    )
-  ){
-
+  if(!/^\d{10}$/.test(accountNumber)){
     return "Please enter a valid 10-digit account number.";
-
   }
 
   return null;
@@ -1845,36 +1681,24 @@ function validateBank(){
 function validateCrypto(){
 
   const crypto =
-    document.getElementById(
-      "crypto"
-    ).value;
+    document.getElementById("crypto").value;
 
   const network =
-    document.getElementById(
-      "network"
-    ).value;
+    document.getElementById("network").value;
 
   const walletAddress =
-    document.getElementById(
-      "walletAddress"
-    ).value.trim();
+    document.getElementById("walletAddress").value.trim();
 
   if(!crypto){
-
     return "Please select a cryptocurrency.";
-
   }
 
   if(!network){
-
     return "Please select a network.";
-
   }
 
   if(!walletAddress){
-
     return "Please enter your wallet address.";
-
   }
 
   return null;
@@ -1883,7 +1707,7 @@ function validateCrypto(){
 
 
 /* =========================================================
-   SUBMIT
+   SECURE WITHDRAWAL SUBMISSION
 ========================================================= */
 
 withdrawBtn.addEventListener(
@@ -1893,9 +1717,7 @@ withdrawBtn.addEventListener(
     clearMessage();
 
     const amount =
-      Number(
-        amountEl.value || 0
-      );
+      Number(amountEl.value || 0);
 
     if(
       !Number.isFinite(amount) ||
@@ -1922,34 +1744,13 @@ withdrawBtn.addEventListener(
 
     }
 
-    if(
-      amount > currentBalance
-    ){
-
-      showMessage(
-        "Your available balance is too low for this withdrawal.",
-        "error"
-      );
-
-      return;
-
-    }
-
 
     let validationError = null;
 
-    if(
-      withdrawalMethod === "bank"
-    ){
-
-      validationError =
-        validateBank();
-
+    if(withdrawalMethod === "bank"){
+      validationError = validateBank();
     }else{
-
-      validationError =
-        validateCrypto();
-
+      validationError = validateCrypto();
     }
 
     if(validationError){
@@ -1964,126 +1765,101 @@ withdrawBtn.addEventListener(
     }
 
 
-    const fee =
-      Number(
-        (amount * 0.10)
-          .toFixed(2)
-      );
-
-    const netAmount =
-      Number(
-        (amount - fee)
-          .toFixed(2)
-      );
-
-
     let paymentDetails = {};
-
     let network = null;
 
 
-    if(
-      withdrawalMethod === "bank"
-    ){
+    if(withdrawalMethod === "bank"){
 
       paymentDetails = {
 
         bank_name:
-          document.getElementById(
-            "bankName"
-          ).value,
+          document.getElementById("bankName").value,
 
         account_name:
-          document.getElementById(
-            "accountName"
-          ).value.trim(),
+          document.getElementById("accountName").value.trim(),
 
         account_number:
-          document.getElementById(
-            "accountNumber"
-          ).value.trim()
+          document.getElementById("accountNumber").value.trim()
 
       };
 
     }else{
 
       network =
-        document.getElementById(
-          "network"
-        ).value;
+        document.getElementById("network").value;
 
       paymentDetails = {
 
         cryptocurrency:
-          document.getElementById(
-            "crypto"
-          ).value,
+          document.getElementById("crypto").value,
 
         network,
 
         wallet_address:
-          document.getElementById(
-            "walletAddress"
-          ).value.trim()
+          document.getElementById("walletAddress").value.trim()
 
       };
 
     }
 
 
-    withdrawBtn.disabled =
-      true;
+    withdrawBtn.disabled = true;
 
-    withdrawBtn.textContent =
-      "Submitting...";
+    withdrawBtn.textContent = "Submitting...";
 
 
     try{
 
+      /*
+        IMPORTANT:
+
+        The withdrawal is now processed by the
+        secure Supabase RPC.
+
+        The server calculates the fee,
+        checks the real balance,
+        locks the wallet,
+        deducts the amount,
+        creates the withdrawal,
+        and records the transaction.
+      */
+
       const {
+        data,
         error
       } =
-      await db
-        .from("withdrawals")
-        .insert({
-
-          user_id:
-            currentUser.id,
-
-          amount,
-
-          fee,
-
-          net_amount:
-            netAmount,
-
-          method:
-            withdrawalMethod,
-
-          network,
-
-          payment_details:
-            JSON.stringify(
-              paymentDetails
-            ),
-
-          status:
-            "pending"
-
-        });
+      await db.rpc(
+        "create_withdrawal",
+        {
+          p_amount: amount,
+          p_method: withdrawalMethod,
+          p_network: network,
+          p_payment_details: paymentDetails
+        }
+      );
 
 
       if(error){
 
-        console.error(error);
+        console.error("Withdrawal RPC error:",error);
 
         throw error;
 
       }
 
 
+      if(!data || !data.success){
+
+        throw new Error(
+          "Withdrawal could not be completed."
+        );
+
+      }
+
+
       showMessage(
-        "Withdrawal request submitted successfully.",
+        `Withdrawal request submitted successfully. You will receive ${money(data.net_amount)} after processing.`,
         "success"
       );
 
@@ -2091,6 +1867,13 @@ withdrawBtn.addEventListener(
       amountEl.value = "";
 
       calculateFee();
+
+
+      /*
+        Reload wallet immediately.
+        The server has already deducted the
+        withdrawal amount.
+      */
 
       await loadWallet();
 
@@ -2101,15 +1884,29 @@ withdrawBtn.addEventListener(
 
       console.error(error);
 
+
+      let errorMessage =
+        "Unable to submit your withdrawal request. Please try again.";
+
+
+      if(error && error.message){
+
+        errorMessage =
+          error.message
+            .replace("Error: ","");
+
+      }
+
+
       showMessage(
-        "Unable to submit your withdrawal request. Please try again.",
+        errorMessage,
         "error"
       );
 
+
     }finally{
 
-      withdrawBtn.disabled =
-        false;
+      withdrawBtn.disabled = false;
 
       withdrawBtn.textContent =
         "Request withdrawal";
@@ -2125,30 +1922,20 @@ withdrawBtn.addEventListener(
 ========================================================= */
 
 const menuBtn =
-  document.getElementById(
-    "menuBtn"
-  );
+  document.getElementById("menuBtn");
 
 const sideMenu =
-  document.getElementById(
-    "sideMenu"
-  );
+  document.getElementById("sideMenu");
 
 const menuOverlay =
-  document.getElementById(
-    "menuOverlay"
-  );
+  document.getElementById("menuOverlay");
 
 
 function closeMenu(){
 
-  sideMenu.classList.remove(
-    "open"
-  );
+  sideMenu.classList.remove("open");
 
-  menuOverlay.classList.remove(
-    "show"
-  );
+  menuOverlay.classList.remove("show");
 
 }
 
@@ -2157,13 +1944,9 @@ menuBtn.addEventListener(
   "click",
   () => {
 
-    sideMenu.classList.add(
-      "open"
-    );
+    sideMenu.classList.add("open");
 
-    menuOverlay.classList.add(
-      "show"
-    );
+    menuOverlay.classList.add("show");
 
   }
 );
@@ -2189,8 +1972,7 @@ document
 
       await db.auth.signOut();
 
-      location.href =
-        "login.html";
+      location.href = "login.html";
 
     }
   );
