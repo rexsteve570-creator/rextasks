@@ -15,7 +15,6 @@
   --forest-deep:#061A12;
   --forest:#0D2E20;
   --forest-mid:#153F2B;
-  --forest-light:#1B5037;
   --green:#2E9A5E;
   --green-bright:#3EBE79;
   --ink:#E4F0E8;
@@ -24,9 +23,15 @@
   --border:rgba(228,240,232,.11);
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-html{scroll-behavior:smooth}
+html{
+  scroll-behavior:smooth;
+}
 
 body{
   min-height:100vh;
@@ -38,11 +43,23 @@ body{
   flex-direction:column;
 }
 
-button,input,select{font-family:inherit}
-button{cursor:pointer}
-a{color:inherit;text-decoration:none}
+button,
+input,
+select{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
 
 /* NAV */
+
 nav{
   width:100%;
   height:72px;
@@ -85,9 +102,12 @@ nav{
   color:var(--ink-soft);
 }
 
-.back-login:hover{color:var(--green-bright)}
+.back-login:hover{
+  color:var(--green-bright);
+}
 
 /* MAIN */
+
 main{
   flex:1;
   display:flex;
@@ -106,7 +126,10 @@ main{
 }
 
 /* INTRO */
-.intro{max-width:510px}
+
+.intro{
+  max-width:510px;
+}
 
 .eyebrow{
   display:inline-flex;
@@ -150,7 +173,11 @@ main{
 }
 
 /* BENEFITS */
-.benefits{display:grid;gap:15px}
+
+.benefits{
+  display:grid;
+  gap:15px;
+}
 
 .benefit{
   display:flex;
@@ -188,6 +215,7 @@ main{
 }
 
 /* CARD */
+
 .signup-card{
   width:100%;
   padding:32px;
@@ -199,7 +227,9 @@ main{
     inset 0 1px 0 rgba(255,255,255,.025);
 }
 
-.card-head{margin-bottom:25px}
+.card-head{
+  margin-bottom:25px;
+}
 
 .card-head h2{
   font-family:'Fraunces',serif;
@@ -213,7 +243,10 @@ main{
 }
 
 /* FORM */
-.form-group{margin-bottom:17px}
+
+.form-group{
+  margin-bottom:17px;
+}
 
 .form-label{
   display:block;
@@ -223,7 +256,9 @@ main{
   margin-bottom:8px;
 }
 
-.input-wrap{position:relative}
+.input-wrap{
+  position:relative;
+}
 
 .input-icon{
   position:absolute;
@@ -265,7 +300,9 @@ main{
   color:var(--ink-soft);
 }
 
-.form-input::placeholder{color:#6f9280}
+.form-input::placeholder{
+  color:#6f9280;
+}
 
 .form-input:focus,
 .form-select:focus{
@@ -274,7 +311,12 @@ main{
   box-shadow:0 0 0 3px rgba(62,190,121,.09);
 }
 
+.form-input:read-only{
+  opacity:.82;
+}
+
 /* PASSWORD */
+
 .password-toggle{
   position:absolute;
   right:12px;
@@ -286,9 +328,13 @@ main{
   padding:5px;
 }
 
-.password-toggle:hover{color:var(--green-bright)}
+.password-toggle:hover{
+  color:var(--green-bright);
+}
 
-.password-input{padding-right:45px}
+.password-input{
+  padding-right:45px;
+}
 
 .referral-note{
   color:var(--ink-soft);
@@ -297,6 +343,7 @@ main{
 }
 
 /* SECURITY */
+
 .security-box{
   padding:13px 14px;
   border-radius:11px;
@@ -339,6 +386,7 @@ main{
 }
 
 /* TERMS */
+
 .terms{
   display:flex;
   align-items:flex-start;
@@ -368,6 +416,7 @@ main{
 }
 
 /* SUBMIT */
+
 .submit-btn{
   width:100%;
   min-height:52px;
@@ -392,6 +441,8 @@ main{
   transform:none;
 }
 
+/* LOGIN */
+
 .login-link{
   text-align:center;
   color:var(--ink-soft);
@@ -405,6 +456,7 @@ main{
 }
 
 /* MESSAGES */
+
 .message{
   display:none;
   padding:12px 14px;
@@ -414,7 +466,9 @@ main{
   line-height:1.5;
 }
 
-.message.show{display:block}
+.message.show{
+  display:block;
+}
 
 .message.error{
   background:rgba(255,102,119,.08);
@@ -429,6 +483,7 @@ main{
 }
 
 /* POPUP */
+
 .popup-overlay,
 .policy-overlay{
   position:fixed;
@@ -500,6 +555,7 @@ main{
 }
 
 /* POLICY */
+
 .policy{
   width:min(700px,100%);
   max-height:88vh;
@@ -562,6 +618,7 @@ main{
 }
 
 /* FOOTER */
+
 footer{
   padding:25px 20px;
   border-top:1px solid rgba(228,240,232,.07);
@@ -571,6 +628,7 @@ footer{
 }
 
 /* HONEYPOT */
+
 .hp-field{
   position:absolute !important;
   left:-9999px !important;
@@ -580,7 +638,9 @@ footer{
 }
 
 /* RESPONSIVE */
+
 @media(max-width:900px){
+
   .signup-layout{
     grid-template-columns:1fr;
     max-width:520px;
@@ -597,15 +657,24 @@ footer{
     margin-right:auto;
   }
 
-  .benefits{text-align:left}
+  .benefits{
+    text-align:left;
+  }
 }
 
 @media(max-width:600px){
-  nav{height:64px}
 
-  .nav-inner{padding:0 17px}
+  nav{
+    height:64px;
+  }
 
-  .logo{font-size:1.2rem}
+  .nav-inner{
+    padding:0 17px;
+  }
+
+  .logo{
+    font-size:1.2rem;
+  }
 
   .logo svg{
     width:26px;
@@ -650,10 +719,13 @@ footer{
   <div class="nav-inner">
 
     <a href="index.html" class="logo">
-      <svg viewBox="0 0 24 24" fill="currentColor">
+
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="M2 18h20l-1.5-9-5 4-3.5-7-3.5 7-5-4L2 18z"/>
       </svg>
+
       TallyBuck
+
     </a>
 
     <a href="login.html" class="back-login">
@@ -689,18 +761,22 @@ footer{
   <div class="benefits">
 
     <div class="benefit">
+
       <div class="benefit-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <path d="M20 7L10 17l-5-5"/>
         </svg>
       </div>
+
       <div class="benefit-text">
         <strong>Free to join</strong>
         <span>No deposit is required to create an account.</span>
       </div>
+
     </div>
 
     <div class="benefit">
+
       <div class="benefit-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <rect x="3" y="5" width="18" height="14" rx="2"/>
@@ -708,23 +784,28 @@ footer{
           <path d="M7 13h5"/>
         </svg>
       </div>
+
       <div class="benefit-text">
         <strong>Multiple ways to earn</strong>
         <span>Complete eligible activities available to your account.</span>
       </div>
+
     </div>
 
     <div class="benefit">
+
       <div class="benefit-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/>
           <path d="M9 12l2 2 4-4"/>
         </svg>
       </div>
+
       <div class="benefit-text">
         <strong>Secure account</strong>
         <span>Your account is protected by secure authentication.</span>
       </div>
+
     </div>
 
   </div>
@@ -734,21 +815,37 @@ footer{
 <section class="signup-card">
 
   <div class="card-head">
+
     <h2>Create your account</h2>
-    <p>It only takes a minute to get started.</p>
+
+    <p>
+      It only takes a minute to get started.
+    </p>
+
   </div>
 
   <div id="errorMessage" class="message error"></div>
+
   <div id="successMessage" class="message success"></div>
 
   <form id="signupForm" novalidate>
 
-    <input type="text" id="website" class="hp-field" tabindex="-1" autocomplete="off">
+    <input
+      type="text"
+      id="website"
+      class="hp-field"
+      tabindex="-1"
+      autocomplete="off"
+    >
 
     <div class="form-group">
-      <label class="form-label" for="fullName">Full name</label>
+
+      <label class="form-label" for="fullName">
+        Full name
+      </label>
 
       <div class="input-wrap">
+
         <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <circle cx="12" cy="8" r="4"/>
           <path d="M4 21c.8-4 3.4-6 8-6s7.2 2 8 6"/>
@@ -760,15 +857,22 @@ footer{
           type="text"
           autocomplete="name"
           placeholder="Your full name"
+          maxlength="100"
           required
         >
+
       </div>
+
     </div>
 
     <div class="form-group">
-      <label class="form-label" for="email">Email address</label>
+
+      <label class="form-label" for="email">
+        Email address
+      </label>
 
       <div class="input-wrap">
+
         <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <rect x="3" y="5" width="18" height="14" rx="2"/>
           <path d="M3 7l9 6 9-6"/>
@@ -780,15 +884,22 @@ footer{
           type="email"
           autocomplete="email"
           placeholder="you@example.com"
+          maxlength="254"
           required
         >
+
       </div>
+
     </div>
 
     <div class="form-group">
-      <label class="form-label" for="password">Password</label>
+
+      <label class="form-label" for="password">
+        Password
+      </label>
 
       <div class="input-wrap">
+
         <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <rect x="4" y="10" width="16" height="11" rx="2"/>
           <path d="M8 10V7a4 4 0 018 0v3"/>
@@ -801,22 +912,44 @@ footer{
           autocomplete="new-password"
           placeholder="At least 8 characters"
           minlength="8"
+          maxlength="128"
           required
         >
 
-        <button type="button" class="password-toggle" id="togglePassword">
-          <svg id="eyeIcon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <button
+          type="button"
+          class="password-toggle"
+          id="togglePassword"
+          aria-label="Show password"
+        >
+
+          <svg
+            id="eyeIcon"
+            width="19"
+            height="19"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          >
             <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/>
             <circle cx="12" cy="12" r="2.5"/>
           </svg>
+
         </button>
+
       </div>
+
     </div>
 
     <div class="form-group">
-      <label class="form-label" for="country">Country</label>
+
+      <label class="form-label" for="country">
+        Country
+      </label>
 
       <div class="input-wrap">
+
         <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <circle cx="12" cy="12" r="9"/>
           <path d="M3 12h18"/>
@@ -825,7 +958,11 @@ footer{
         </svg>
 
         <select class="form-select" id="country" required>
-          <option value="">Select your country</option>
+
+          <option value="">
+            Select your country
+          </option>
+
           <option value="NG">Nigeria</option>
           <option value="GH">Ghana</option>
           <option value="KE">Kenya</option>
@@ -839,21 +976,39 @@ footer{
           <option value="IN">India</option>
           <option value="PH">Philippines</option>
           <option value="OTHER">Other</option>
+
         </select>
 
-        <svg class="select-arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg
+          class="select-arrow"
+          width="17"
+          height="17"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
           <path d="M6 9l6 6 6-6"/>
         </svg>
+
       </div>
+
     </div>
 
     <div class="form-group">
+
       <label class="form-label" for="referral">
+
         Referral code
-        <span style="color:var(--ink-soft);font-weight:500;">(optional)</span>
+
+        <span style="color:var(--ink-soft);font-weight:500;">
+          (optional)
+        </span>
+
       </label>
 
       <div class="input-wrap">
+
         <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <circle cx="9" cy="7" r="3"/>
           <path d="M3 20c.5-3.5 2.5-5 6-5"/>
@@ -867,23 +1022,37 @@ footer{
           type="text"
           placeholder="Enter referral code"
           autocomplete="off"
+          maxlength="50"
         >
+
       </div>
 
       <div class="referral-note">
         If you arrived through a referral link, your code will be filled automatically.
       </div>
+
     </div>
 
     <div class="form-group">
 
-      <label class="form-label">Security verification</label>
+      <label class="form-label">
+        Security verification
+      </label>
 
       <div class="security-box" id="securityBox">
 
         <div class="security-left">
-          <input class="security-check" type="checkbox" id="securityCheck">
-          <span class="security-text">I am a real person</span>
+
+          <input
+            class="security-check"
+            type="checkbox"
+            id="securityCheck"
+          >
+
+          <span class="security-text">
+            I am a real person
+          </span>
+
         </div>
 
         <span class="security-status"></span>
@@ -894,24 +1063,46 @@ footer{
 
     <div class="terms">
 
-      <input type="checkbox" id="terms" required>
+      <input
+        type="checkbox"
+        id="terms"
+        required
+      >
 
       <label for="terms">
+
         I agree to the
-        <button type="button" onclick="openPolicy('terms')">Terms of Service</button>
+
+        <button type="button" onclick="openPolicy('terms')">
+          Terms of Service
+        </button>
+
         and
-        <button type="button" onclick="openPolicy('privacy')">Privacy Policy</button>.
+
+        <button type="button" onclick="openPolicy('privacy')">
+          Privacy Policy
+        </button>.
+
       </label>
 
     </div>
 
-    <button type="submit" class="submit-btn" id="submitBtn">
+    <button
+      type="submit"
+      class="submit-btn"
+      id="submitBtn"
+    >
       Create free account
     </button>
 
     <div class="login-link">
+
       Already have an account?
-      <a href="login.html">Log in</a>
+
+      <a href="login.html">
+        Log in
+      </a>
+
     </div>
 
   </form>
@@ -926,25 +1117,39 @@ footer{
   © 2026 TallyBuck. All rights reserved.
 </footer>
 
-<!-- SUCCESS -->
+
+<!-- SUCCESS POPUP -->
+
 <div class="popup-overlay" id="successPopup">
 
   <div class="popup">
 
     <div class="popup-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
         <path d="M20 6L9 17l-5-5"/>
       </svg>
+
     </div>
 
-    <h3>Account created</h3>
+    <h3>
+      Account created
+    </h3>
 
-    <p>
+    <p id="successPopupText">
       Your account has been created successfully.
       Please check your email and confirm your address before continuing.
     </p>
 
-    <button class="popup-btn" id="popupButton">
+    <button
+      class="popup-btn"
+      id="popupButton"
+    >
       Continue
     </button>
 
@@ -952,14 +1157,27 @@ footer{
 
 </div>
 
+
 <!-- TERMS -->
+
 <div class="policy-overlay" id="termsOverlay">
 
   <div class="policy">
 
     <div class="policy-head">
-      <h2>Terms of Service</h2>
-      <button class="close-policy" onclick="closePolicy('terms')">×</button>
+
+      <h2>
+        Terms of Service
+      </h2>
+
+      <button
+        class="close-policy"
+        onclick="closePolicy('terms')"
+        aria-label="Close terms"
+      >
+        ×
+      </button>
+
     </div>
 
     <p>
@@ -969,12 +1187,14 @@ footer{
     </p>
 
     <h3>1. Account</h3>
+
     <p>
       You are responsible for providing accurate information and
       maintaining the security of your account.
     </p>
 
     <h3>2. Tasks and activities</h3>
+
     <p>
       Tasks and reward opportunities may have individual eligibility
       requirements. Completing an activity does not guarantee a
@@ -982,18 +1202,21 @@ footer{
     </p>
 
     <h3>3. Rewards</h3>
+
     <p>
       Rewards may be reviewed before being credited. Fraudulent,
       incomplete, duplicated or invalid activity may be rejected.
     </p>
 
     <h3>4. Withdrawals</h3>
+
     <p>
       Withdrawals are subject to the minimum withdrawal requirement,
       applicable fees, account status and administrative review.
     </p>
 
     <h3>5. Prohibited activity</h3>
+
     <p>
       Fraud, abuse, automated manipulation, duplicate accounts,
       false information and attempts to exploit the platform are
@@ -1001,6 +1224,7 @@ footer{
     </p>
 
     <h3>6. Changes</h3>
+
     <p>
       TallyBuck may update these terms when necessary. Continued
       use of the platform after an update constitutes acceptance
@@ -1008,21 +1232,38 @@ footer{
     </p>
 
     <div class="policy-footer">
-      <button onclick="closePolicy('terms')">I understand</button>
+
+      <button onclick="closePolicy('terms')">
+        I understand
+      </button>
+
     </div>
 
   </div>
 
 </div>
 
+
 <!-- PRIVACY -->
+
 <div class="policy-overlay" id="privacyOverlay">
 
   <div class="policy">
 
     <div class="policy-head">
-      <h2>Privacy Policy</h2>
-      <button class="close-policy" onclick="closePolicy('privacy')">×</button>
+
+      <h2>
+        Privacy Policy
+      </h2>
+
+      <button
+        class="close-policy"
+        onclick="closePolicy('privacy')"
+        aria-label="Close privacy policy"
+      >
+        ×
+      </button>
+
     </div>
 
     <p>
@@ -1032,12 +1273,14 @@ footer{
     </p>
 
     <h3>1. Information we collect</h3>
+
     <p>
       This may include your name, email address, country, account
       information, activity information and withdrawal information.
     </p>
 
     <h3>2. How information is used</h3>
+
     <p>
       Information may be used to operate your account, provide
       eligible activities, verify submissions, prevent abuse,
@@ -1045,6 +1288,7 @@ footer{
     </p>
 
     <h3>3. Third-party services</h3>
+
     <p>
       Some activities may be provided by third-party survey,
       offer or reward partners. Those services may process
@@ -1052,12 +1296,14 @@ footer{
     </p>
 
     <h3>4. Security</h3>
+
     <p>
       We use reasonable measures to protect account information.
       However, no internet service can guarantee absolute security.
     </p>
 
     <h3>5. Contact</h3>
+
     <p>
       For privacy questions or account-related concerns, contact
       TallyBuck support through the support channel provided on
@@ -1065,12 +1311,17 @@ footer{
     </p>
 
     <div class="policy-footer">
-      <button onclick="closePolicy('privacy')">I understand</button>
+
+      <button onclick="closePolicy('privacy')">
+        I understand
+      </button>
+
     </div>
 
   </div>
 
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -1087,6 +1338,9 @@ const db =
     SUPABASE_URL,
     SUPABASE_ANON_KEY
   );
+
+
+/* ELEMENTS */
 
 const form =
   document.getElementById("signupForm");
@@ -1133,6 +1387,9 @@ const successPopup =
 const popupButton =
   document.getElementById("popupButton");
 
+const successPopupText =
+  document.getElementById("successPopupText");
+
 const togglePassword =
   document.getElementById("togglePassword");
 
@@ -1140,80 +1397,127 @@ const eyeIcon =
   document.getElementById("eyeIcon");
 
 
-/* REFERRAL */
+/* REFERRAL CODE */
 
 function loadReferralCode(){
 
   const params =
-    new URLSearchParams(window.location.search);
+    new URLSearchParams(
+      window.location.search
+    );
 
   const ref =
     params.get("ref");
 
-  if(ref){
-
-    referral.value =
-      ref.trim().slice(0,50);
-
-    referral.readOnly = true;
-
+  if(!ref){
+    return;
   }
+
+  const cleanRef =
+    ref
+      .trim()
+      .slice(0,50);
+
+  if(!cleanRef){
+    return;
+  }
+
+  referral.value =
+    cleanRef;
+
+  referral.readOnly =
+    true;
 
 }
 
 loadReferralCode();
 
 
-/* PASSWORD */
+/* PASSWORD VISIBILITY */
 
-togglePassword.addEventListener("click",()=>{
+togglePassword.addEventListener(
+  "click",
+  ()=>{
 
-  const showing =
-    password.type === "text";
+    const showing =
+      password.type === "text";
 
-  password.type =
-    showing ? "password" : "text";
+    password.type =
+      showing
+        ? "password"
+        : "text";
 
-  eyeIcon.innerHTML =
-    showing
-    ?
-    `
-    <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/>
-    <circle cx="12" cy="12" r="2.5"/>
-    `
-    :
-    `
-    <path d="M3 3l18 18"/>
-    <path d="M10.6 10.6a2 2 0 102.8 2.8"/>
-    <path d="M9.9 4.3A10.6 10.6 0 0112 4c6.5 0 10 8 10 8a17 17 0 01-3.2 4.3"/>
-    <path d="M6.6 6.6C3.5 8.4 2 12 2 12s3.5 8 10 8a9.8 9.8 0 004-.8"/>
-    `;
+    togglePassword.setAttribute(
+      "aria-label",
+      showing
+        ? "Show password"
+        : "Hide password"
+    );
 
-});
+    eyeIcon.innerHTML =
+      showing
+
+      ?
+
+      `
+      <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/>
+      <circle cx="12" cy="12" r="2.5"/>
+      `
+
+      :
+
+      `
+      <path d="M3 3l18 18"/>
+      <path d="M10.6 10.6a2 2 0 102.8 2.8"/>
+      <path d="M9.9 4.3A10.6 10.6 0 0112 4c6.5 0 10 8 10 8a17 17 0 01-3.2 4.3"/>
+      <path d="M6.6 6.6C3.5 8.4 2 12 2 12s3.5 8 10 8a9.8 9.8 0 004-.8"/>
+      `;
+
+  }
+);
 
 
-/* SECURITY */
+/* SECURITY CHECK */
 
-securityCheck.addEventListener("change",()=>{
+securityCheck.addEventListener(
+  "change",
+  ()=>{
 
-  securityBox.classList.toggle(
-    "verified",
-    securityCheck.checked
-  );
+    securityBox.classList.toggle(
+      "verified",
+      securityCheck.checked
+    );
 
-});
+  }
+);
 
 
 /* MESSAGES */
 
+function clearMessages(){
+
+  errorMessage.classList.remove(
+    "show"
+  );
+
+  successMessage.classList.remove(
+    "show"
+  );
+
+}
+
 function showError(message){
 
-  successMessage.classList.remove("show");
+  successMessage.classList.remove(
+    "show"
+  );
 
   errorMessage.textContent =
     message;
 
-  errorMessage.classList.add("show");
+  errorMessage.classList.add(
+    "show"
+  );
 
   window.scrollTo({
     top:0,
@@ -1224,12 +1528,16 @@ function showError(message){
 
 function showSuccess(message){
 
-  errorMessage.classList.remove("show");
+  errorMessage.classList.remove(
+    "show"
+  );
 
   successMessage.textContent =
     message;
 
-  successMessage.classList.add("show");
+  successMessage.classList.add(
+    "show"
+  );
 
 }
 
@@ -1238,199 +1546,331 @@ function showSuccess(message){
 
 function validateForm(){
 
-  if(!fullName.value.trim()){
-    showError("Please enter your full name.");
+  const name =
+    fullName.value.trim();
+
+  const mail =
+    email.value.trim();
+
+  const pass =
+    password.value;
+
+  if(!name){
+
+    showError(
+      "Please enter your full name."
+    );
+
     fullName.focus();
+
     return false;
   }
 
-  if(fullName.value.trim().length < 2){
-    showError("Please enter a valid full name.");
+  if(name.length < 2){
+
+    showError(
+      "Please enter a valid full name."
+    );
+
     fullName.focus();
+
     return false;
   }
 
-  if(!email.value.trim()){
-    showError("Please enter your email address.");
+  if(name.length > 100){
+
+    showError(
+      "Your full name is too long."
+    );
+
+    fullName.focus();
+
+    return false;
+  }
+
+  if(!mail){
+
+    showError(
+      "Please enter your email address."
+    );
+
     email.focus();
+
     return false;
   }
 
   if(!email.validity.valid){
-    showError("Please enter a valid email address.");
+
+    showError(
+      "Please enter a valid email address."
+    );
+
     email.focus();
+
     return false;
   }
 
-  if(password.value.length < 8){
-    showError("Your password must contain at least 8 characters.");
+  if(pass.length < 8){
+
+    showError(
+      "Your password must contain at least 8 characters."
+    );
+
     password.focus();
+
     return false;
   }
 
   if(!country.value){
-    showError("Please select your country.");
+
+    showError(
+      "Please select your country."
+    );
+
     country.focus();
+
     return false;
   }
 
   if(!securityCheck.checked){
-    showError("Please complete the security verification.");
+
+    showError(
+      "Please complete the security verification."
+    );
+
     securityCheck.focus();
+
     return false;
   }
 
   if(!terms.checked){
-    showError("Please accept the Terms of Service and Privacy Policy.");
+
+    showError(
+      "Please accept the Terms of Service and Privacy Policy."
+    );
+
     terms.focus();
+
     return false;
   }
 
   if(website.value.trim() !== ""){
-    showError("Security verification failed. Please try again.");
+
+    showError(
+      "Security verification failed. Please try again."
+    );
+
     return false;
   }
 
   return true;
+
 }
 
 
 /* SIGNUP */
 
-form.addEventListener("submit",async(event)=>{
+form.addEventListener(
+  "submit",
+  async(event)=>{
 
-  event.preventDefault();
+    event.preventDefault();
 
-  errorMessage.classList.remove("show");
+    clearMessages();
 
-  if(!validateForm()){
-    return;
-  }
-
-  submitBtn.disabled = true;
-  submitBtn.textContent = "Creating account...";
-
-  try{
-
-    const redirectUrl =
-      window.location.origin + "/dashboard.html";
-
-    const metadata = {
-
-      full_name:
-        fullName.value.trim(),
-
-      country:
-        country.value,
-
-      referral_code:
-        referral.value.trim() || null
-
-    };
-
-    const {
-      data,
-      error
-    } =
-      await db.auth.signUp({
-
-        email:
-          email.value.trim(),
-
-        password:
-          password.value,
-
-        options:{
-          emailRedirectTo:
-            redirectUrl,
-
-          data:
-            metadata
-        }
-
-      });
-
-    if(error){
-      throw error;
+    if(!validateForm()){
+      return;
     }
 
-    showSuccess(
-      "Your account has been created successfully."
-    );
+    submitBtn.disabled =
+      true;
 
-    successPopup.classList.add("show");
+    submitBtn.textContent =
+      "Creating account...";
 
-  }catch(error){
+    try{
 
-    console.error(
-      "TallyBuck signup error:",
-      error
-    );
+      const redirectUrl =
+        window.location.origin +
+        "/dashboard.html";
 
-    let message =
-      "Unable to create your account. Please try again.";
+      const metadata = {
 
-    if(error && error.message){
+        full_name:
+          fullName.value.trim(),
 
-      const text =
-        error.message.toLowerCase();
+        country:
+          country.value,
+
+        referral_code:
+          referral.value.trim() || null
+
+      };
+
+      const {
+        data,
+        error
+      } =
+        await db.auth.signUp({
+
+          email:
+            email.value.trim(),
+
+          password:
+            password.value,
+
+          options:{
+
+            emailRedirectTo:
+              redirectUrl,
+
+            data:
+              metadata
+
+          }
+
+        });
+
+      if(error){
+        throw error;
+      }
+
+      /*
+       * IMPORTANT:
+       *
+       * The welcome notification is NOT inserted
+       * from this browser.
+       *
+       * Supabase will create it securely through
+       * the database trigger configured separately.
+       */
+
+      showSuccess(
+        "Your account has been created successfully."
+      );
 
       if(
-        text.includes("already registered") ||
-        text.includes("already been registered") ||
-        text.includes("user already registered")
+        data &&
+        data.session
       ){
 
-        message =
-          "An account with this email already exists. Please log in instead.";
-
-      }else if(text.includes("rate limit")){
-
-        message =
-          "Too many attempts. Please wait a few minutes and try again.";
+        successPopupText.textContent =
+          "Your account has been created successfully. You can continue to your dashboard.";
 
       }else{
 
-        message =
-          error.message;
+        successPopupText.textContent =
+          "Your account has been created successfully. Please check your email and confirm your address before continuing.";
 
       }
 
+      successPopup.classList.add(
+        "show"
+      );
+
+    }catch(error){
+
+      console.error(
+        "TallyBuck signup error:",
+        error
+      );
+
+      let message =
+        "Unable to create your account. Please try again.";
+
+      if(error && error.message){
+
+        const text =
+          error.message.toLowerCase();
+
+        if(
+          text.includes("already registered") ||
+          text.includes("already been registered") ||
+          text.includes("user already registered")
+        ){
+
+          message =
+            "An account with this email already exists. Please log in instead.";
+
+        }else if(
+          text.includes("rate limit")
+        ){
+
+          message =
+            "Too many attempts. Please wait a few minutes and try again.";
+
+        }else if(
+          text.includes("password")
+        ){
+
+          message =
+            "Your password does not meet the required security rules.";
+
+        }else if(
+          text.includes("invalid email")
+        ){
+
+          message =
+            "Please enter a valid email address.";
+
+        }else{
+
+          message =
+            error.message;
+
+        }
+
+      }
+
+      showError(message);
+
+    }finally{
+
+      submitBtn.disabled =
+        false;
+
+      submitBtn.textContent =
+        "Create free account";
+
     }
 
-    showError(message);
+  }
+);
 
-  }finally{
 
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Create free account";
+/* SUCCESS POPUP */
+
+popupButton.addEventListener(
+  "click",
+  ()=>{
+
+    successPopup.classList.remove(
+      "show"
+    );
+
+    window.location.href =
+      "login.html";
 
   }
-
-});
-
-
-/* SUCCESS */
-
-popupButton.addEventListener("click",()=>{
-
-  successPopup.classList.remove("show");
-
-  window.location.href =
-    "login.html";
-
-});
+);
 
 
-successPopup.addEventListener("click",(event)=>{
+successPopup.addEventListener(
+  "click",
+  (event)=>{
 
-  if(event.target === successPopup){
+    if(
+      event.target === successPopup
+    ){
 
-    successPopup.classList.remove("show");
+      successPopup.classList.remove(
+        "show"
+      );
+
+    }
 
   }
-
-});
+);
 
 
 /* POLICY */
@@ -1439,8 +1879,8 @@ function openPolicy(type){
 
   const id =
     type === "terms"
-    ? "termsOverlay"
-    : "privacyOverlay";
+      ? "termsOverlay"
+      : "privacyOverlay";
 
   document
     .getElementById(id)
@@ -1451,12 +1891,13 @@ function openPolicy(type){
 
 }
 
+
 function closePolicy(type){
 
   const id =
     type === "terms"
-    ? "termsOverlay"
-    : "privacyOverlay";
+      ? "termsOverlay"
+      : "privacyOverlay";
 
   document
     .getElementById(id)
@@ -1468,64 +1909,98 @@ function closePolicy(type){
 }
 
 
-/* CLOSE POLICY ON BACKDROP */
+/* POLICY BACKDROP */
 
-document.querySelectorAll(".policy-overlay")
-.forEach(overlay=>{
+document
+  .querySelectorAll(".policy-overlay")
+  .forEach(overlay=>{
 
-  overlay.addEventListener("click",(event)=>{
+    overlay.addEventListener(
+      "click",
+      (event)=>{
 
-    if(event.target === overlay){
+        if(
+          event.target === overlay
+        ){
 
-      overlay.classList.remove("show");
+          overlay.classList.remove(
+            "show"
+          );
 
-      document.body.style.overflow =
-        "";
+          document.body.style.overflow =
+            "";
 
-    }
+        }
+
+      }
+    );
 
   });
-
-});
 
 
 /* ESCAPE */
 
-document.addEventListener("keydown",(event)=>{
+document.addEventListener(
+  "keydown",
+  (event)=>{
 
-  if(event.key === "Escape"){
+    if(
+      event.key !== "Escape"
+    ){
+      return;
+    }
 
-    document.querySelectorAll(".policy-overlay.show")
-    .forEach(overlay=>{
+    document
+      .querySelectorAll(
+        ".policy-overlay.show"
+      )
+      .forEach(overlay=>{
 
-      overlay.classList.remove("show");
+        overlay.classList.remove(
+          "show"
+        );
 
-    });
+      });
 
     document.body.style.overflow =
       "";
 
   }
-
-});
+);
 
 
 /* EXISTING SESSION */
 
 async function checkExistingSession(){
 
-  const {
-    data
-  } =
-    await db.auth.getSession();
+  try{
 
-  if(
-    data &&
-    data.session
-  ){
+    const {
+      data,
+      error
+    } =
+      await db.auth.getSession();
 
-    window.location.href =
-      "dashboard.html";
+    if(error){
+      return;
+    }
+
+    if(
+      data &&
+      data.session
+    ){
+
+      window.location.href =
+        "dashboard.html";
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Session check error:",
+      error
+    );
 
   }
 
