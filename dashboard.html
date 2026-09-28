@@ -11,7 +11,7 @@
 
 :root{
   --bg:#f5faf7;
-  --card:#ffffff;
+  --card:#fff;
   --text:#15231d;
   --muted:#718078;
   --border:#e3ebe7;
@@ -19,6 +19,7 @@
   --darkgreen:#063f2d;
   --lightgreen:#e9f8ef;
   --danger:#d64545;
+  --warning:#c58b00;
   --shadow:0 4px 18px rgba(6,63,45,.07);
 }
 
@@ -31,6 +32,8 @@ body.dark{
   --green:#59e696;
   --darkgreen:#052d20;
   --lightgreen:#123a29;
+  --danger:#ff7272;
+  --warning:#e7b34b;
   --shadow:0 5px 20px rgba(0,0,0,.28);
 }
 
@@ -52,6 +55,8 @@ button{-webkit-tap-highlight-color:transparent}
   padding-bottom:90px;
 }
 
+/* HEADER */
+
 header{
   height:70px;
   background:var(--card);
@@ -65,7 +70,8 @@ header{
   z-index:50;
 }
 
-.menu-btn,.icon-btn{
+.menu-btn,
+.icon-btn{
   width:42px;
   height:42px;
   border:0;
@@ -111,7 +117,9 @@ header{
   gap:3px;
 }
 
-.notification{position:relative}
+.notification{
+  position:relative;
+}
 
 .notification-dot{
   position:absolute;
@@ -124,7 +132,9 @@ header{
   border:2px solid var(--card);
 }
 
-.theme-wrap{position:relative}
+.theme-wrap{
+  position:relative;
+}
 
 .theme-btn{
   width:42px;
@@ -156,9 +166,12 @@ header{
   border-radius:13px;
   padding:6px;
   box-shadow:var(--shadow);
+  z-index:120;
 }
 
-.theme-menu.show{display:block}
+.theme-menu.show{
+  display:block;
+}
 
 .theme-option{
   width:100%;
@@ -175,6 +188,8 @@ header{
   background:var(--lightgreen);
 }
 
+/* SIDE MENU */
+
 .overlay{
   display:none;
   position:fixed;
@@ -183,7 +198,9 @@ header{
   z-index:90;
 }
 
-.overlay.show{display:block}
+.overlay.show{
+  display:block;
+}
 
 .side-menu{
   position:fixed;
@@ -198,7 +215,9 @@ header{
   overflow-y:auto;
 }
 
-.side-menu.open{left:0}
+.side-menu.open{
+  left:0;
+}
 
 .side-head{
   height:75px;
@@ -250,6 +269,7 @@ header{
   color:var(--muted);
   font-size:11px;
   margin-top:4px;
+  word-break:break-all;
 }
 
 .side-links{
@@ -280,11 +300,14 @@ header{
 .side-link svg{
   width:20px;
   height:20px;
+  flex-shrink:0;
 }
 
 .logout{
   color:var(--danger);
 }
+
+/* NOTIFICATIONS */
 
 .notification-panel{
   display:none;
@@ -363,6 +386,8 @@ header{
   margin-top:4px;
 }
 
+/* MAIN */
+
 main{
   padding:16px;
 }
@@ -374,6 +399,7 @@ main{
 .welcome h2{
   margin:0;
   font-size:22px;
+  line-height:1.25;
 }
 
 .welcome p{
@@ -381,6 +407,8 @@ main{
   color:var(--muted);
   font-size:13px;
 }
+
+/* WALLET */
 
 .wallet{
   background:var(--card);
@@ -456,6 +484,8 @@ main{
   font-size:15px;
 }
 
+/* BANNER */
+
 .survey-banner{
   margin-top:17px;
   min-height:150px;
@@ -480,6 +510,7 @@ main{
   font-size:12px;
   position:relative;
   z-index:2;
+  max-width:250px;
 }
 
 .survey-button{
@@ -543,6 +574,8 @@ main{
   background:#d4e6dc;
   margin:4px 0 0 14px;
 }
+
+/* FEATURES */
 
 .features{
   display:grid;
@@ -625,6 +658,8 @@ main{
   margin-top:5px;
 }
 
+/* SECTIONS */
+
 .section{
   margin-top:21px;
 }
@@ -648,6 +683,8 @@ main{
   font-weight:700;
 }
 
+/* ACTIVITY */
+
 .activity{
   background:var(--card);
   border:1px solid var(--border);
@@ -662,6 +699,7 @@ main{
   justify-content:space-between;
   padding:14px 13px;
   border-bottom:1px solid var(--border);
+  gap:10px;
 }
 
 .activity-row:last-child{
@@ -693,6 +731,10 @@ main{
 .activity-name{
   font-size:12px;
   font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:220px;
 }
 
 .activity-date{
@@ -706,6 +748,8 @@ main{
   font-weight:800;
   white-space:nowrap;
 }
+
+/* TELEGRAM */
 
 .telegram{
   margin-top:15px;
@@ -761,7 +805,10 @@ main{
   border-radius:9px;
   font-size:12px;
   font-weight:800;
+  flex-shrink:0;
 }
+
+/* OFFERS */
 
 .offer-grid{
   display:grid;
@@ -844,6 +891,8 @@ main{
   transform:scale(.97);
 }
 
+/* STATES */
+
 .empty{
   text-align:center;
   padding:25px;
@@ -884,6 +933,8 @@ main{
   color:var(--danger);
   padding:35px 10px;
 }
+
+/* BOTTOM NAV */
 
 .bottom-nav{
   position:fixed;
@@ -957,6 +1008,34 @@ main{
     right:10px;
     transform:scale(.9);
   }
+
+  .activity-name{
+    max-width:155px;
+  }
+}
+
+@media(max-width:340px){
+
+  .features{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .offer-grid{
+    grid-template-columns:1fr;
+  }
+
+  .telegram{
+    align-items:flex-start;
+    flex-wrap:wrap;
+  }
+
+  .telegram-text{
+    width:calc(100% - 58px);
+  }
+
+  .join{
+    margin-left:55px;
+  }
 }
 </style>
 </head>
@@ -968,16 +1047,14 @@ main{
 <aside class="side-menu" id="sideMenu">
 
   <div class="side-head">
-
     <div class="side-logo">
       <span class="side-logo-mark">T</span>
       TallyBuck
     </div>
 
-    <button class="side-close" id="closeMenu">
+    <button class="side-close" id="closeMenu" aria-label="Close menu">
       ×
     </button>
-
   </div>
 
   <div class="side-user">
@@ -1063,7 +1140,7 @@ main{
 
 <header>
 
-  <button class="menu-btn" id="menuBtn">
+  <button class="menu-btn" id="menuBtn" aria-label="Open menu">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M4 6h16M4 12h16M4 18h16"/>
     </svg>
@@ -1076,7 +1153,7 @@ main{
 
   <div class="header-right">
 
-    <button class="icon-btn notification" id="notificationBtn">
+    <button class="icon-btn notification" id="notificationBtn" aria-label="Notifications">
 
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
         <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
@@ -1089,7 +1166,7 @@ main{
 
     <div class="theme-wrap">
 
-      <button class="theme-btn" id="themeBtn">
+      <button class="theme-btn" id="themeBtn" aria-label="Change theme">
 
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="4"/>
@@ -1328,7 +1405,6 @@ function(e){
 
 });
 
-
 document.addEventListener(
 "click",
 function(e){
@@ -1337,22 +1413,17 @@ function(e){
     !themeMenu.contains(e.target) &&
     e.target !== themeBtn
   ){
-
     themeMenu.classList.remove("show");
-
   }
 
   if(
     !notificationPanel.contains(e.target) &&
     e.target !== notificationBtn
   ){
-
     notificationPanel.classList.remove("show");
-
   }
 
 });
-
 
 function setTheme(theme){
 
@@ -1364,9 +1435,7 @@ function setTheme(theme){
   applyTheme(theme);
 
   themeMenu.classList.remove("show");
-
 }
-
 
 function applyTheme(theme){
 
@@ -1392,13 +1461,12 @@ function applyTheme(theme){
 
 }
 
-
 const savedTheme =
-localStorage.getItem("tallybuck-theme") ||
-"system";
+localStorage.getItem(
+  "tallybuck-theme"
+) || "system";
 
 applyTheme(savedTheme);
-
 
 window.matchMedia(
 "(prefers-color-scheme:dark)"
@@ -1407,12 +1475,13 @@ window.matchMedia(
 function(){
 
   if(
-    (localStorage.getItem("tallybuck-theme")||"system")
-    ==="system"
+    (
+      localStorage.getItem(
+        "tallybuck-theme"
+      ) || "system"
+    ) === "system"
   ){
-
     applyTheme("system");
-
   }
 
 });
@@ -1439,12 +1508,14 @@ function toggleBalance(){
     "eyeClosed"
   );
 
+  if(!balance) return;
+
   const realValue =
   balance.dataset.value ||
   "$0.00";
 
   if(
-    balance.dataset.hidden==="true"
+    balance.dataset.hidden === "true"
   ){
 
     balance.textContent =
@@ -1502,7 +1573,7 @@ async function(){
 
 
 /* =========================================================
-   LOAD LIVE OFFERS
+   LIVE OFFERS
 ========================================================= */
 
 async function getLiveOffers(session){
@@ -1531,28 +1602,22 @@ async function getLiveOffers(session){
   let result;
 
   try{
-
     result =
     await response.json();
-
   }catch(error){
-
     throw new Error(
       "Unable to load current opportunities."
     );
-
   }
 
   if(
     !response.ok ||
     !result.success
   ){
-
     throw new Error(
       result.error ||
       "Unable to load current opportunities."
     );
-
   }
 
   return Array.isArray(
@@ -1565,21 +1630,36 @@ async function getLiveOffers(session){
 
 
 /* =========================================================
-   OFFER CATEGORY
+   CATEGORY LABEL
+   Supports backend values:
+   Surveys
+   App Installs
+   Offers
 ========================================================= */
 
 function categoryLabel(category){
 
-  if(category==="survey"){
+  const value =
+  String(
+    category || ""
+  ).trim().toLowerCase();
+
+  if(
+    value === "surveys" ||
+    value === "survey"
+  ){
     return "Survey";
   }
 
-  if(category==="app"){
+  if(
+    value === "app installs" ||
+    value === "app install" ||
+    value === "app"
+  ){
     return "App Install";
   }
 
   return "Offer";
-
 }
 
 
@@ -1662,7 +1742,9 @@ function buildOfferHTML(offers){
       );
 
       const url =
-      offer.url || "";
+      String(
+        offer.url || ""
+      );
 
       let imageHTML =
       offerFallbackIcon();
@@ -1689,9 +1771,7 @@ function buildOfferHTML(offers){
       <div class="offer-card">
 
         <div class="offer-image">
-
           ${imageHTML}
-
         </div>
 
         <div class="offer-category">
@@ -1761,16 +1841,13 @@ async function loadDashboard(){
       "login.html";
 
       return;
-
     }
 
     const user =
     session.user;
 
 
-/* =========================================================
-   PROFILE
-========================================================= */
+/* PROFILE */
 
     const {
       data:profile,
@@ -1788,12 +1865,10 @@ async function loadDashboard(){
     .maybeSingle();
 
     if(profileError){
-
       console.error(
         "Profile error:",
         profileError
       );
-
     }
 
     const fullName =
@@ -1813,9 +1888,7 @@ async function loadDashboard(){
     user.email || "";
 
 
-/* =========================================================
-   WALLET
-========================================================= */
+/* WALLET */
 
     const {
       data:wallet,
@@ -1835,12 +1908,10 @@ async function loadDashboard(){
     .maybeSingle();
 
     if(walletError){
-
       console.error(
         "Wallet error:",
         walletError
       );
-
     }
 
     const balance =
@@ -1859,9 +1930,7 @@ async function loadDashboard(){
     );
 
 
-/* =========================================================
-   COMPLETED TASKS
-========================================================= */
+/* COMPLETED TASKS */
 
     const {
       count:completed,
@@ -1886,18 +1955,14 @@ async function loadDashboard(){
     );
 
     if(completedError){
-
       console.error(
         "Completed task error:",
         completedError
       );
-
     }
 
 
-/* =========================================================
-   PENDING TASKS
-========================================================= */
+/* PENDING TASKS */
 
     const {
       data:pendingRows,
@@ -1918,32 +1983,26 @@ async function loadDashboard(){
     );
 
     if(pendingError){
-
       console.error(
         "Pending task error:",
         pendingError
       );
-
     }
 
     const pendingBalance =
     (pendingRows || [])
     .reduce(
       function(sum,row){
-
         return sum +
         Number(
           row.user_reward || 0
         );
-
       },
       0
     );
 
 
-/* =========================================================
-   REFERRALS
-========================================================= */
+/* REFERRALS */
 
     const {
       count:referralCount,
@@ -1964,18 +2023,14 @@ async function loadDashboard(){
     );
 
     if(referralError){
-
       console.error(
         "Referral error:",
         referralError
       );
-
     }
 
 
-/* =========================================================
-   ACTIVITY
-========================================================= */
+/* ACTIVITY */
 
     const {
       data:activity,
@@ -2003,18 +2058,14 @@ async function loadDashboard(){
     .limit(4);
 
     if(activityError){
-
       console.error(
         "Activity error:",
         activityError
       );
-
     }
 
 
-/* =========================================================
-   LIVE OFFERS
-========================================================= */
+/* LIVE OFFERS */
 
     let liveOffers = [];
 
@@ -2036,13 +2087,10 @@ async function loadDashboard(){
 
       offerLoadError =
       error;
-
     }
 
 
-/* =========================================================
-   ACTIVITY HTML
-========================================================= */
+/* ACTIVITY HTML */
 
     let activityHTML = "";
 
@@ -2085,9 +2133,7 @@ async function loadDashboard(){
 
           let amount = "";
 
-          if(
-            status==="approved"
-          ){
+          if(status==="approved"){
 
             iconClass =
             "green";
@@ -2096,9 +2142,7 @@ async function loadDashboard(){
             "+$" +
             reward.toFixed(2);
 
-          }else if(
-            status==="pending"
-          ){
+          }else if(status==="pending"){
 
             iconClass =
             "orange";
@@ -2113,7 +2157,6 @@ async function loadDashboard(){
 
             amount =
             "Denied";
-
           }
 
           activityHTML += `
@@ -2157,10 +2200,10 @@ async function loadDashboard(){
               class="activity-amount"
               style="color:${
                 status==="approved"
-                ?"#079447"
-                :status==="pending"
-                ?"#c58b00"
-                :"#c74343"
+                ? "var(--green)"
+                : status==="pending"
+                ? "var(--warning)"
+                : "var(--danger)"
               }">
 
               ${escapeHtml(amount)}
@@ -2170,26 +2213,20 @@ async function loadDashboard(){
           </div>
 
           `;
-
         }
       );
 
     }else{
 
       activityHTML = `
-
         <div class="empty">
           No activity yet.
         </div>
-
       `;
-
     }
 
 
-/* =========================================================
-   LIVE OFFER SECTION
-========================================================= */
+/* OFFER SECTION */
 
     let offerSectionHTML = "";
 
@@ -2230,13 +2267,10 @@ async function loadDashboard(){
         </div>
 
       `;
-
     }
 
 
-/* =========================================================
-   RENDER
-========================================================= */
+/* RENDER */
 
     page.className = "";
 
@@ -2312,33 +2346,24 @@ async function loadDashboard(){
       <div class="wallet-stats">
 
         <div class="wallet-stat">
-
           <small>Total Earned</small>
-
           <strong>
             $${totalEarned.toFixed(2)}
           </strong>
-
         </div>
 
         <div class="wallet-stat">
-
           <small>Referral Earnings</small>
-
           <strong>
             $${referralEarnings.toFixed(2)}
           </strong>
-
         </div>
 
         <div class="wallet-stat">
-
           <small>Completed Tasks</small>
-
           <strong>
             ${Number(completed || 0)}
           </strong>
-
         </div>
 
       </div>
@@ -2677,9 +2702,7 @@ async function loadDashboard(){
       Please refresh the page.
 
     `;
-
   }
-
 }
 
 
@@ -2708,9 +2731,7 @@ document.addEventListener(
 function(){
 
   if(!document.hidden){
-
     loadDashboard();
-
   }
 
 });
