@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff">
+<title>TallyBuck — Notifications</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+  --bg:#f5faf7;
+  --card:#fff;
+  --text:#15231d;
+  --muted:#718078;
+  --border:#e3ebe7;
+  --green:#079447;
+  --darkgreen:#063f2d;
+  --lightgreen:#e9f8ef;
+  --danger:#d64545;
+  --shadow:0 4px 18px rgba(6,63,45,.07);
+}
+
+html.dark{
+  --bg:#06130d;
+  --card:#0b2117;
+  --text:#effaf4;
+  --muted:#91aa9e;
+  --border:#1b3a2c;
+  --green:#59e696;
+  --darkgreen:#052d20;
+  --lightgreen:#123a29;
+  --danger:#ff7272;
+  --shadow:0 5px 20px rgba(0,0,0,.28);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  padding-bottom:20px;
+}
+
+button,a{
+  -webkit-tap-highlight-color:transparent;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+  height:70px;
+  background:var(--card);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:800;
+  font-size:19px;
+}
+
+.logo{
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  background:var(--green);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:21px;
+  font-weight:900;
+}
+
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.icon-btn{
+  width:42px;
+  height:42px;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  position:relative;
+}
+
+.icon{
+  width:20px;
+  height:20px;
+  display:block;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.9;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.notification-count{
+  position:absolute;
+  top:-4px;
+  right:-4px;
+  min-width:18px;
+  height:18px;
+  padding:0 5px;
+  border-radius:20px;
+  background:var(--danger);
+  color:#fff;
+  font-size:10px;
+  font-weight:800;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  border:2px solid var(--card);
+}
+
+/* =========================
+   SIDE MENU
+========================= */
+
+.side-menu{
+  position:fixed;
+  top:70px;
+  left:0;
+  width:275px;
+  height:calc(100vh - 70px);
+  background:var(--card);
+  border-right:1px solid var(--border);
+  padding:20px 14px;
+  z-index:90;
+}
+
+.menu-title{
+  font-size:11px;
+  font-weight:800;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  padding:0 12px 10px;
+}
+
+.menu-link{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:13px 14px;
+  border-radius:12px;
+  margin-bottom:4px;
+  color:var(--muted);
+  font-size:14px;
+  font-weight:700;
+}
+
+.menu-link:hover,
+.menu-link.active{
+  background:var(--lightgreen);
+  color:var(--green);
+}
+
+.menu-icon{
+  width:21px;
+  height:21px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.menu-icon svg{
+  width:18px;
+  height:18px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.9;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+  margin-left:275px;
+  padding:30px;
+  max-width:1080px;
+}
+
+.page-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:20px;
+  margin-bottom:25px;
+}
+
+.page-title{
+  font-size:28px;
+  font-weight:850;
+  margin-bottom:7px;
+}
+
+.page-subtitle{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.5;
+}
+
+.mark-all{
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--green);
+  padding:11px 15px;
+  border-radius:11px;
+  font-weight:800;
+  font-size:13px;
+  cursor:pointer;
+}
+
+.mark-all:hover{
+  background:var(--lightgreen);
+}
+
+/* =========================
+   NOTIFICATIONS
+========================= */
+
+.notifications-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.notification{
+  display:flex;
+  gap:14px;
+  padding:18px;
+  border-bottom:1px solid var(--border);
+  position:relative;
+}
+
+.notification:last-child{
+  border-bottom:0;
+}
+
+.notification.unread{
+  background:var(--lightgreen);
+}
+
+.notification.unread::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:4px;
+  background:var(--green);
+}
+
+.notification-icon{
+  width:44px;
+  height:44px;
+  flex:0 0 44px;
+  border-radius:13px;
+  background:var(--lightgreen);
+  color:var(--green);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.notification-icon svg{
+  width:21px;
+  height:21px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.9;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.notification-content{
+  flex:1;
+  min-width:0;
+}
+
+.notification-title{
+  font-size:15px;
+  font-weight:800;
+  margin-bottom:5px;
+}
+
+.notification-message{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.55;
+  margin-bottom:8px;
+}
+
+.notification-time{
+  font-size:11px;
+  color:var(--muted);
+}
+
+.read-btn{
+  border:0;
+  background:transparent;
+  color:var(--green);
+  font-size:11px;
+  font-weight:800;
+  cursor:pointer;
+  padding:0;
+  margin-top:8px;
+}
+
+.empty{
+  padding:55px 20px;
+  text-align:center;
+}
+
+.empty-icon{
+  width:60px;
+  height:60px;
+  border-radius:18px;
+  background:var(--lightgreen);
+  color:var(--green);
+  margin:0 auto 15px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.empty-icon svg{
+  width:27px;
+  height:27px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.empty h3{
+  font-size:17px;
+  margin-bottom:7px;
+}
+
+.empty p{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.loading{
+  padding:50px 20px;
+  text-align:center;
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:30px;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--darkgreen);
+  color:#fff;
+  padding:12px 17px;
+  border-radius:12px;
+  font-size:13px;
+  font-weight:700;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  z-index:300;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+/* =========================
+   BOTTOM NAV
+========================= */
+
+.bottom-nav{
+  display:none;
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:73px;
+  background:var(--card);
+  border-top:1px solid var(--border);
+  z-index:100;
+  padding:6px 5px;
+}
+
+.bottom-link{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:700;
+  border-radius:10px;
+}
+
+.bottom-link.active{
+  color:var(--green);
+}
+
+.bottom-icon{
+  width:20px;
+  height:20px;
+}
+
+.bottom-icon svg{
+  width:19px;
+  height:19px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.9;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:760px){
+
+  body{
+    padding-bottom:90px;
+  }
+
+  .header{
+    padding:0 14px;
+  }
+
+  .side-menu{
+    display:none;
+  }
+
+  .main{
+    margin-left:0;
+    padding:22px 15px 20px;
+  }
+
+  .page-head{
+    align-items:flex-start;
+  }
+
+  .page-title{
+    font-size:23px;
+  }
+
+  .page-subtitle{
+    font-size:13px;
+  }
+
+  .mark-all{
+    padding:9px 11px;
+    font-size:11px;
+    white-space:nowrap;
+  }
+
+  .notification{
+    padding:16px 14px;
+  }
+
+  .notification-icon{
+    width:40px;
+    height:40px;
+    flex-basis:40px;
+  }
+
+  .notification-title{
+    font-size:14px;
+  }
+
+  .notification-message{
+    font-size:12px;
+  }
+
+  .bottom-nav{
+    display:flex;
+  }
+
+  .toast{
+    bottom:88px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+  <a href="dashboard.html" class="brand">
+    <div class="logo">T</div>
+    <span>TallyBuck</span>
+  </a>
+
+  <div class="header-actions">
+
+    <button class="icon-btn" id="themeBtn" title="Theme">
+
+      <svg class="icon" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2"></path>
+        <path d="M12 20v2"></path>
+        <path d="M4.93 4.93l1.42 1.42"></path>
+        <path d="M17.65 17.65l1.42 1.42"></path>
+        <path d="M2 12h2"></path>
+        <path d="M20 12h2"></path>
+        <path d="M4.93 19.07l1.42-1.42"></path>
+        <path d="M17.65 6.35l1.42-1.42"></path>
+      </svg>
+
+    </button>
+
+    <button class="icon-btn" id="notificationBtn" title="Notifications">
+
+      <svg class="icon" viewBox="0 0 24 24">
+        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+        <path d="M10 21h4"></path>
+      </svg>
+
+      <span class="notification-count" id="headerNotificationCount"></span>
+
+    </button>
+
+  </div>
+
+</header>
+
+
+<aside class="side-menu">
+
+  <div class="menu-title">Menu</div>
+
+  <a href="dashboard.html" class="menu-link">
+    <span class="menu-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M3 10.5 12 3l9 7.5"></path>
+        <path d="M5 9.5V21h14V9.5"></path>
+        <path d="M9 21v-7h6v7"></path>
+      </svg>
+    </span>
+    Dashboard
+  </a>
+
+  <a href="tasks.html" class="menu-link">
+    <span class="menu-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M9 11l3 3L20 6"></path>
+        <path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"></path>
+      </svg>
+    </span>
+    Earn Tasks
+  </a>
+
+  <a href="referrals.html" class="menu-link">
+    <span class="menu-icon">
+      <svg viewBox="0 0 24 24">
+        <circle cx="9" cy="8" r="3"></circle>
+        <path d="M3 21a6 6 0 0 1 12 0"></path>
+        <circle cx="17" cy="9" r="2.5"></circle>
+        <path d="M16 15a5 5 0 0 1 5 5"></path>
+      </svg>
+    </span>
+    Referrals
+  </a>
+
+  <a href="withdraw.html" class="menu-link">
+    <span class="menu-icon">
+      <svg viewBox="0 0 24 24">
+        <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+        <path d="M3 10h18"></path>
+        <path d="M7 15h4"></path>
+      </svg>
+    </span>
+    Withdraw
+  </a>
+
+  <a href="history.html" class="menu-link">
+    <span class="menu-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M3 12a9 9 0 1 0 3-6.7"></path>
+        <path d="M3 4v6h6"></path>
+        <path d="M12 7v5l3 2"></path>
+      </svg>
+    </span>
+    History
+  </a>
+
+  <a href="profile.html" class="menu-link">
+    <span class="menu-icon">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4"></circle>
+        <path d="M4 21a8 8 0 0 1 16 0"></path>
+      </svg>
+    </span>
+    Profile
+  </a>
+
+  <a href="notifications.html" class="menu-link active">
+    <span class="menu-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+        <path d="M10 21h4"></path>
+      </svg>
+    </span>
+    Notifications
+  </a>
+
+  <a href="#" class="menu-link" id="logoutBtn">
+    <span class="menu-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M10 17l5-5-5-5"></path>
+        <path d="M15 12H3"></path>
+        <path d="M21 19V5a2 2 0 0 0-2-2h-6"></path>
+      </svg>
+    </span>
+    Logout
+  </a>
+
+</aside>
+
+
+<main class="main">
+
+  <div class="page-head">
+
+    <div>
+      <h1 class="page-title">Notifications</h1>
+
+      <p class="page-subtitle">
+        Stay updated with your TallyBuck activity and opportunities.
+      </p>
+    </div>
+
+    <button class="mark-all" id="markAllBtn">
+      Mark all as read
+    </button>
+
+  </div>
+
+  <section class="notifications-card">
+
+    <div class="loading" id="loading">
+      Loading notifications...
+    </div>
+
+    <div id="notificationList"></div>
+
+  </section>
+
+</main>
+
+
+<nav class="bottom-nav">
+
+  <a href="dashboard.html" class="bottom-link">
+    <span class="bottom-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M3 10.5 12 3l9 7.5"></path>
+        <path d="M5 9.5V21h14V9.5"></path>
+      </svg>
+    </span>
+    <span>Home</span>
+  </a>
+
+  <a href="tasks.html" class="bottom-link">
+    <span class="bottom-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M9 11l3 3L20 6"></path>
+        <path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"></path>
+      </svg>
+    </span>
+    <span>Tasks</span>
+  </a>
+
+  <a href="referrals.html" class="bottom-link">
+    <span class="bottom-icon">
+      <svg viewBox="0 0 24 24">
+        <circle cx="9" cy="8" r="3"></circle>
+        <path d="M3 21a6 6 0 0 1 12 0"></path>
+        <circle cx="17" cy="9" r="2.5"></circle>
+      </svg>
+    </span>
+    <span>Referrals</span>
+  </a>
+
+  <a href="withdraw.html" class="bottom-link">
+    <span class="bottom-icon">
+      <svg viewBox="0 0 24 24">
+        <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+        <path d="M3 10h18"></path>
+      </svg>
+    </span>
+    <span>Withdraw</span>
+  </a>
+
+  <a href="profile.html" class="bottom-link">
+    <span class="bottom-icon">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="8" r="4"></circle>
+        <path d="M4 21a8 8 0 0 1 16 0"></path>
+      </svg>
+    </span>
+    <span>Profile</span>
+  </a>
+
+</nav>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+const SUPABASE_URL =
+  "https://cetsxdkoauucxwsbdktl.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+const $ = id => document.getElementById(id);
+
+let currentUser = null;
+
+
+/* =========================
+   TOAST
+========================= */
+
+function showToast(message){
+
+  const toast = $("toast");
+
+  toast.textContent = message;
+
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  },2500);
+}
+
+
+/* =========================
+   THEME
+========================= */
+
+function applyTheme(){
+
+  const saved =
+    localStorage.getItem("tallybuck-theme") || "system";
+
+  if(saved === "dark"){
+
+    document.documentElement.classList.add("dark");
+
+  }else if(saved === "light"){
+
+    document.documentElement.classList.remove("dark");
+
+  }else{
+
+    const dark =
+      window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+
+    document.documentElement.classList.toggle(
+      "dark",
+      dark
+    );
+  }
+}
+
+applyTheme();
+
+$("themeBtn").addEventListener("click",()=>{
+
+  const current =
+    localStorage.getItem("tallybuck-theme") || "system";
+
+  const next =
+    current === "system"
+      ? "light"
+      : current === "light"
+      ? "dark"
+      : "system";
+
+  localStorage.setItem(
+    "tallybuck-theme",
+    next
+  );
+
+  applyTheme();
+
+  showToast(
+    next === "system"
+      ? "Theme: System"
+      : next === "light"
+      ? "Theme: Light"
+      : "Theme: Dark"
+  );
+});
+
+
+/* =========================
+   AUTH
+========================= */
+
+async function checkAuth(){
+
+  const {
+    data:{session},
+    error
+  } = await db.auth.getSession();
+
+  if(error || !session){
+
+    window.location.href = "login.html";
+
+    return null;
+  }
+
+  currentUser = session.user;
+
+  return currentUser;
+}
+
+
+/* =========================
+   ICONS
+========================= */
+
+function notificationIcon(type){
+
+  const icons = {
+
+    welcome: `
+      <svg viewBox="0 0 24 24">
+        <path d="M20 7v6a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h8"></path>
+        <path d="m14 9 2 2 4-4"></path>
+      </svg>
+    `,
+
+    task: `
+      <svg viewBox="0 0 24 24">
+        <path d="M9 11l3 3L20 6"></path>
+        <path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"></path>
+      </svg>
+    `,
+
+    task_approved: `
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"></circle>
+        <path d="m8 12 3 3 5-6"></path>
+      </svg>
+    `,
+
+    task_rejected: `
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"></circle>
+        <path d="m9 9 6 6"></path>
+        <path d="m15 9-6 6"></path>
+      </svg>
+    `,
+
+    referral: `
+      <svg viewBox="0 0 24 24">
+        <circle cx="9" cy="8" r="3"></circle>
+        <path d="M3 21a6 6 0 0 1 12 0"></path>
+        <circle cx="17" cy="9" r="2.5"></circle>
+        <path d="M16 15a5 5 0 0 1 5 5"></path>
+      </svg>
+    `,
+
+    withdrawal: `
+      <svg viewBox="0 0 24 24">
+        <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+        <path d="M3 10h18"></path>
+        <path d="M7 15h4"></path>
+      </svg>
+    `,
+
+    system: `
+      <svg viewBox="0 0 24 24">
+        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+        <path d="M10 21h4"></path>
+      </svg>
+    `
+  };
+
+  return icons[type] || icons.system;
+}
+
+
+/* =========================
+   TIME
+========================= */
+
+function formatTime(value){
+
+  const date = new Date(value);
+
+  const seconds =
+    Math.floor(
+      (Date.now() - date.getTime()) / 1000
+    );
+
+  if(seconds < 60){
+    return "Just now";
+  }
+
+  const minutes =
+    Math.floor(seconds / 60);
+
+  if(minutes < 60){
+    return minutes === 1
+      ? "1 minute ago"
+      : `${minutes} minutes ago`;
+  }
+
+  const hours =
+    Math.floor(minutes / 60);
+
+  if(hours < 24){
+    return hours === 1
+      ? "1 hour ago"
+      : `${hours} hours ago`;
+  }
+
+  const days =
+    Math.floor(hours / 24);
+
+  if(days < 7){
+    return days === 1
+      ? "Yesterday"
+      : `${days} days ago`;
+  }
+
+  return date.toLocaleDateString(
+    undefined,
+    {
+      day:"numeric",
+      month:"short",
+      year:"numeric"
+    }
+  );
+}
+
+
+/* =========================
+   ESCAPE
+========================= */
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+/* =========================
+   UNREAD COUNT
+========================= */
+
+function updateUnreadCount(items){
+
+  const count =
+    items.filter(item => !item.is_read).length;
+
+  const badge =
+    $("headerNotificationCount");
+
+  if(count > 0){
+
+    badge.textContent =
+      count > 99 ? "99+" : count;
+
+    badge.style.display = "flex";
+
+  }else{
+
+    badge.style.display = "none";
+  }
+}
+
+
+/* =========================
+   LOAD
+========================= */
+
+async function loadNotifications(){
+
+  const loading = $("loading");
+  const list = $("notificationList");
+
+  loading.style.display = "block";
+
+  list.innerHTML = "";
+
+  const {
+    data,
+    error
+  } = await db
+    .from("notifications")
+    .select("*")
+    .eq("user_id",currentUser.id)
+    .order("created_at",{ascending:false});
+
+  loading.style.display = "none";
+
+  if(error){
+
+    console.error(error);
+
+    list.innerHTML = `
+      <div class="empty">
+
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 8v5"></path>
+            <path d="M12 16h.01"></path>
+          </svg>
+        </div>
+
+        <h3>Unable to load notifications</h3>
+
+        <p>
+          Please refresh the page and try again.
+        </p>
+
+      </div>
+    `;
+
+    return;
+  }
+
+  updateUnreadCount(data || []);
+
+  if(!data || data.length === 0){
+
+    list.innerHTML = `
+      <div class="empty">
+
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+            <path d="M10 21h4"></path>
+          </svg>
+        </div>
+
+        <h3>No notifications yet</h3>
+
+        <p>
+          Your important TallyBuck updates will appear here.
+        </p>
+
+      </div>
+    `;
+
+    return;
+  }
+
+  list.innerHTML =
+    data.map(item => `
+
+      <div
+        class="notification ${!item.is_read ? "unread" : ""}"
+        data-id="${item.id}"
+      >
+
+        <div class="notification-icon">
+          ${notificationIcon(item.type)}
+        </div>
+
+        <div class="notification-content">
+
+          <div class="notification-title">
+            ${escapeHtml(item.title)}
+          </div>
+
+          <div class="notification-message">
+            ${escapeHtml(item.message)}
+          </div>
+
+          <div class="notification-time">
+            ${formatTime(item.created_at)}
+          </div>
+
+          ${
+            !item.is_read
+            ? `
+              <button
+                class="read-btn"
+                onclick="markAsRead('${item.id}')"
+              >
+                Mark as read
+              </button>
+            `
+            : ""
+          }
+
+        </div>
+
+      </div>
+
+    `).join("");
+}
+
+
+/* =========================
+   MARK ONE
+========================= */
+
+async function markAsRead(id){
+
+  const {error} =
+    await db
+      .from("notifications")
+      .update({
+        is_read:true
+      })
+      .eq("id",id)
+      .eq("user_id",currentUser.id);
+
+  if(error){
+
+    console.error(error);
+
+    showToast("Unable to update notification");
+
+    return;
+  }
+
+  showToast("Notification marked as read");
+
+  await loadNotifications();
+}
+
+
+/* =========================
+   MARK ALL
+========================= */
+
+$("markAllBtn").addEventListener(
+  "click",
+  async()=>{
+
+    const {error} =
+      await db
+        .from("notifications")
+        .update({
+          is_read:true
+        })
+        .eq("user_id",currentUser.id)
+        .eq("is_read",false);
+
+    if(error){
+
+      console.error(error);
+
+      showToast("Unable to update notifications");
+
+      return;
+    }
+
+    showToast("All notifications marked as read");
+
+    await loadNotifications();
+  }
+);
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+$("logoutBtn").addEventListener(
+  "click",
+  async event => {
+
+    event.preventDefault();
+
+    const {error} =
+      await db.auth.signOut();
+
+    if(error){
+
+      showToast("Unable to logout");
+
+      return;
+    }
+
+    window.location.href =
+      "login.html";
+  }
+);
+
+
+/* =========================
+   NOTIFICATION BUTTON
+========================= */
+
+$("notificationBtn").addEventListener(
+  "click",
+  ()=>{
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+  }
+);
+
+
+/* =========================
+   AUTH LISTENER
+========================= */
+
+db.auth.onAuthStateChange(
+  (event)=>{
+    if(event === "SIGNED_OUT"){
+      window.location.href =
+        "login.html";
+    }
+  }
+);
+
+
+/* =========================
+   START
+========================= */
+
+(async()=>{
+
+  const user =
+    await checkAuth();
+
+  if(!user){
+    return;
+  }
+
+  await loadNotifications();
+
+})();
+</script>
+
+</body>
+</html>
