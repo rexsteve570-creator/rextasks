@@ -315,6 +315,56 @@ main{
   opacity:.82;
 }
 
+/* COUNTRY DETECTION */
+
+.country-status{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-top:7px;
+  color:var(--ink-soft);
+  font-size:.7rem;
+  line-height:1.4;
+}
+
+.country-status-dot{
+  width:7px;
+  height:7px;
+  flex:0 0 7px;
+  border-radius:50%;
+  background:#596d62;
+}
+
+.country-status.detecting .country-status-dot{
+  background:#d8b45b;
+  box-shadow:0 0 8px rgba(216,180,91,.4);
+}
+
+.country-status.detected{
+  color:#7be0a5;
+}
+
+.country-status.detected .country-status-dot{
+  background:var(--green-bright);
+  box-shadow:0 0 10px rgba(62,190,121,.6);
+}
+
+.country-status.manual{
+  color:var(--ink-soft);
+}
+
+.country-status.manual .country-status-dot{
+  background:#8b9b92;
+}
+
+.country-status.error{
+  color:#ff9ca8;
+}
+
+.country-status.error .country-status-dot{
+  background:var(--danger);
+}
+
 /* PASSWORD */
 
 .password-toggle{
@@ -954,7 +1004,7 @@ footer{
           <circle cx="12" cy="12" r="9"/>
           <path d="M3 12h18"/>
           <path d="M12 3c2.2 2.4 3.3 5.4 3.3 9s-1.1 6.6-3.3 9"/>
-          <path d="M12 3c-2.2 2.4-3.3 5.4-3.3 9s1.1 6.6 3.3 9"/>
+          <path d="M12 3c-2.2 2.4-3.3 9-3.3 9s1.1 6.6 3.3 9"/>
         </svg>
 
         <select class="form-select" id="country" required>
@@ -991,6 +1041,17 @@ footer{
           <path d="M6 9l6 6 6-6"/>
         </svg>
 
+      </div>
+
+      <div
+        id="countryStatus"
+        class="country-status detecting"
+        aria-live="polite"
+      >
+        <span class="country-status-dot"></span>
+        <span id="countryStatusText">
+          Detecting your country...
+        </span>
       </div>
 
     </div>
@@ -1117,7 +1178,6 @@ footer{
   © 2026 TallyBuck. All rights reserved.
 </footer>
 
-
 <!-- SUCCESS POPUP -->
 
 <div class="popup-overlay" id="successPopup">
@@ -1156,7 +1216,6 @@ footer{
   </div>
 
 </div>
-
 
 <!-- TERMS -->
 
@@ -1243,7 +1302,6 @@ footer{
 
 </div>
 
-
 <!-- PRIVACY -->
 
 <div class="policy-overlay" id="privacyOverlay">
@@ -1322,7 +1380,6 @@ footer{
 
 </div>
 
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
@@ -1356,6 +1413,12 @@ const password =
 
 const country =
   document.getElementById("country");
+
+const countryStatus =
+  document.getElementById("countryStatus");
+
+const countryStatusText =
+  document.getElementById("countryStatusText");
 
 const referral =
   document.getElementById("referral");
@@ -1395,6 +1458,138 @@ const togglePassword =
 
 const eyeIcon =
   document.getElementById("eyeIcon");
+
+
+/* COUNTRY DETECTION */
+
+const countryNames = {
+
+  NG: "Nigeria",
+  GH: "Ghana",
+  KE: "Kenya",
+  ZA: "South Africa",
+  US: "United States",
+  GB: "United Kingdom",
+  CA: "Canada",
+  AU: "Australia",
+  DE: "Germany",
+  FR: "France",
+  IN: "India",
+  PH: "Philippines"
+
+};
+
+
+function setCountryStatus(
+  type,
+  message
+){
+
+  countryStatus.className =
+    "country-status " + type;
+
+  countryStatusText.textContent =
+    message;
+
+}
+
+
+async function detectCountry(){
+
+  setCountryStatus(
+    "detecting",
+    "Detecting your country..."
+  );
+
+  try{
+
+    const response =
+      await fetch(
+        "https://ipapi.co/json/",
+        {
+          method:"GET",
+          headers:{
+            "Accept":"application/json"
+          },
+          cache:"no-store"
+        }
+      );
+
+    if(!response.ok){
+      throw new Error(
+        "Country detection request failed."
+      );
+    }
+
+    const data =
+      await response.json();
+
+    const detectedCode =
+      String(
+        data.country_code ||
+        data.country ||
+        ""
+      )
+      .trim()
+      .toUpperCase();
+
+    if(!detectedCode){
+
+      throw new Error(
+        "Country code was not returned."
+      );
+
+    }
+
+    const option =
+      Array.from(
+        country.options
+      ).find(
+        item =>
+          item.value.toUpperCase() ===
+          detectedCode
+      );
+
+    if(option){
+
+      country.value =
+        detectedCode;
+
+      setCountryStatus(
+        "detected",
+        "Country detected automatically: " +
+        (countryNames[detectedCode] || option.textContent.trim())
+      );
+
+      return;
+
+    }
+
+    setCountryStatus(
+      "manual",
+      "Country detected, but please select your country manually."
+    );
+
+  }catch(error){
+
+    console.warn(
+      "Automatic country detection failed:",
+      error
+    );
+
+    setCountryStatus(
+      "error",
+      "Automatic detection unavailable. Please select your country."
+    );
+
+  }
+
+}
+
+
+/* START COUNTRY DETECTION */
+
+detectCountry();
 
 
 /* REFERRAL CODE */
@@ -1734,16 +1929,6 @@ form.addEventListener(
       if(error){
         throw error;
       }
-
-      /*
-       * IMPORTANT:
-       *
-       * The welcome notification is NOT inserted
-       * from this browser.
-       *
-       * Supabase will create it securely through
-       * the database trigger configured separately.
-       */
 
       showSuccess(
         "Your account has been created successfully."
