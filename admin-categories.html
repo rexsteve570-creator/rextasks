@@ -1,0 +1,2196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TallyBuck — Categories</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+  --bg:#07110d;
+  --sidebar:#08140f;
+  --panel:#0d1914;
+  --panel2:#111f19;
+  --border:#1d3328;
+  --text:#f3f7fa;
+  --muted:#8ea0ad;
+  --green:#079447;
+  --green2:#0bbf61;
+  --green-dark:#063f2d;
+  --red:#ff6474;
+  --gold:#e6b85c;
+  --shadow:0 12px 35px rgba(0,0,0,.25);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,body{
+  min-height:100%;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  overflow-x:hidden;
+}
+
+button,
+input,
+textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar{
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  width:255px;
+  background:var(--sidebar);
+  border-right:1px solid var(--border);
+  z-index:1000;
+  display:flex;
+  flex-direction:column;
+  transition:transform .25s ease;
+}
+
+.brand{
+  height:76px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:0 22px;
+  border-bottom:1px solid var(--border);
+}
+
+.brand-mark{
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  background:linear-gradient(135deg,var(--green),var(--green2));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:21px;
+  font-weight:800;
+  box-shadow:0 8px 20px rgba(7,148,71,.22);
+}
+
+.brand-text{
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:-.4px;
+}
+
+.nav{
+  flex:1;
+  overflow-y:auto;
+  padding:18px 12px;
+}
+
+.nav-section{
+  margin:0 10px 9px;
+  color:#60776b;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+}
+
+.nav-group{
+  margin-bottom:20px;
+}
+
+.nav-link{
+  min-height:42px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 12px;
+  margin-bottom:4px;
+  border-radius:10px;
+  color:#9aaca3;
+  font-size:13px;
+  font-weight:600;
+  transition:.2s ease;
+}
+
+.nav-link:hover{
+  background:rgba(7,148,71,.08);
+  color:#fff;
+}
+
+.nav-link.active{
+  background:rgba(7,148,71,.15);
+  color:#fff;
+  box-shadow:inset 3px 0 0 var(--green2);
+}
+
+.nav-icon{
+  width:19px;
+  height:19px;
+  flex:0 0 19px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.nav-icon svg{
+  width:18px;
+  height:18px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.admin-profile{
+  padding:14px;
+  border-top:1px solid var(--border);
+}
+
+.admin-profile-inner{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px;
+  border-radius:12px;
+  background:var(--panel);
+}
+
+.admin-avatar{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:var(--green-dark);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  font-size:14px;
+  flex:0 0 38px;
+}
+
+.admin-details{
+  min-width:0;
+  flex:1;
+}
+
+.admin-name{
+  color:#fff;
+  font-size:12px;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.admin-role{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:2px;
+}
+
+.logout-btn{
+  width:34px;
+  height:34px;
+  border:0;
+  border-radius:9px;
+  background:transparent;
+  color:#81948b;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.logout-btn:hover{
+  color:var(--red);
+  background:rgba(255,100,116,.08);
+}
+
+.logout-btn svg{
+  width:18px;
+  height:18px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:900;
+}
+
+.overlay.show{
+  display:block;
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main{
+  margin-left:255px;
+  min-height:100vh;
+}
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar{
+  height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 30px;
+  border-bottom:1px solid var(--border);
+  background:rgba(7,17,13,.92);
+  position:sticky;
+  top:0;
+  z-index:500;
+  backdrop-filter:blur(12px);
+}
+
+.topbar-left{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+
+.page-title{
+  font-size:19px;
+  font-weight:800;
+  letter-spacing:-.3px;
+}
+
+.page-subtitle{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
+}
+
+.system-status{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#a9b9b1;
+  font-size:12px;
+  font-weight:600;
+}
+
+.status-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--green2);
+  box-shadow:0 0 0 4px rgba(11,191,97,.08);
+}
+
+.mobile-menu{
+  display:none;
+  width:38px;
+  height:38px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  background:var(--panel);
+  color:#fff;
+  align-items:center;
+  justify-content:center;
+}
+
+.mobile-menu svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content{
+  width:100%;
+  max-width:1500px;
+  margin:0 auto;
+  padding:28px 30px 45px;
+}
+
+.error-box,
+.success-box{
+  display:none;
+  padding:13px 15px;
+  border-radius:11px;
+  margin-bottom:18px;
+  font-size:13px;
+}
+
+.error-box{
+  border:1px solid rgba(255,100,116,.25);
+  background:rgba(255,100,116,.08);
+  color:#ffadb7;
+}
+
+.success-box{
+  border:1px solid rgba(11,191,97,.25);
+  background:rgba(11,191,97,.08);
+  color:#72e9aa;
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+  margin-bottom:20px;
+}
+
+.stat-card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:18px;
+  box-shadow:var(--shadow);
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:11px;
+  font-weight:700;
+}
+
+.stat-value{
+  margin-top:9px;
+  font-size:25px;
+  font-weight:800;
+  letter-spacing:-.6px;
+}
+
+.stat-note{
+  margin-top:7px;
+  color:#71867c;
+  font-size:10px;
+}
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.page-grid{
+  display:grid;
+  grid-template-columns:360px minmax(0,1fr);
+  gap:20px;
+  align-items:start;
+}
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:15px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.card-header{
+  min-height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  padding:18px 20px;
+  border-bottom:1px solid var(--border);
+}
+
+.card-title{
+  font-size:15px;
+  font-weight:800;
+}
+
+.card-subtitle{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:4px;
+}
+
+.card-body{
+  padding:20px;
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.form-group{
+  margin-bottom:16px;
+}
+
+.form-group:last-child{
+  margin-bottom:0;
+}
+
+label{
+  display:block;
+  margin-bottom:7px;
+  color:#b8c6c0;
+  font-size:11px;
+  font-weight:700;
+}
+
+input,
+textarea{
+  width:100%;
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:#fff;
+  border-radius:9px;
+  outline:none;
+  padding:11px 12px;
+  font-size:13px;
+}
+
+input{
+  height:43px;
+}
+
+textarea{
+  min-height:95px;
+  resize:vertical;
+}
+
+input:focus,
+textarea:focus{
+  border-color:var(--green);
+}
+
+input::placeholder,
+textarea::placeholder{
+  color:#62756b;
+}
+
+.form-actions{
+  display:flex;
+  gap:9px;
+  margin-top:18px;
+}
+
+.primary-btn,
+.secondary-btn{
+  min-height:42px;
+  border-radius:9px;
+  padding:0 15px;
+  font-size:12px;
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+}
+
+.primary-btn{
+  flex:1;
+  border:1px solid var(--green);
+  background:var(--green);
+  color:#fff;
+}
+
+.primary-btn:hover{
+  background:var(--green2);
+}
+
+.secondary-btn{
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:#cbd7d2;
+}
+
+.secondary-btn:hover{
+  border-color:var(--green);
+  color:#fff;
+}
+
+/* =========================================================
+   TABLE CONTROLS
+========================================================= */
+
+.list-controls{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:15px 20px;
+  border-bottom:1px solid var(--border);
+}
+
+.search-box{
+  position:relative;
+  flex:1;
+}
+
+.search-box svg{
+  position:absolute;
+  left:12px;
+  top:50%;
+  transform:translateY(-50%);
+  width:17px;
+  height:17px;
+  stroke:#73877e;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  pointer-events:none;
+}
+
+.search-input{
+  padding-left:38px;
+}
+
+.refresh-btn{
+  height:40px;
+  padding:0 13px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  background:var(--panel2);
+  color:#d5dfda;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-size:12px;
+  font-weight:700;
+}
+
+.refresh-btn:hover{
+  border-color:var(--green);
+  color:#fff;
+}
+
+.refresh-btn svg{
+  width:16px;
+  height:16px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrap{
+  width:100%;
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:650px;
+}
+
+thead th{
+  text-align:left;
+  padding:13px 20px;
+  color:#71867c;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.9px;
+  font-weight:800;
+  background:rgba(255,255,255,.015);
+  border-bottom:1px solid var(--border);
+}
+
+tbody td{
+  padding:15px 20px;
+  border-bottom:1px solid rgba(29,51,40,.65);
+  font-size:12px;
+  color:#dce5e1;
+  vertical-align:middle;
+}
+
+tbody tr:last-child td{
+  border-bottom:0;
+}
+
+tbody tr:hover{
+  background:rgba(7,148,71,.035);
+}
+
+.category-name{
+  color:#fff;
+  font-weight:800;
+}
+
+.category-description{
+  color:#879a91;
+  max-width:280px;
+  line-height:1.45;
+}
+
+.status{
+  display:inline-flex;
+  align-items:center;
+  min-height:25px;
+  padding:4px 9px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:800;
+}
+
+.status-active{
+  color:#5de49a;
+  background:rgba(11,191,97,.10);
+  border:1px solid rgba(11,191,97,.18);
+}
+
+.status-inactive{
+  color:#ffb1bb;
+  background:rgba(255,100,116,.09);
+  border:1px solid rgba(255,100,116,.18);
+}
+
+.actions{
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+
+.action-btn{
+  height:33px;
+  padding:0 10px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:#cbd7d2;
+  font-size:10px;
+  font-weight:800;
+}
+
+.action-btn:hover{
+  border-color:var(--green);
+  color:#fff;
+}
+
+.action-btn.danger:hover{
+  border-color:var(--red);
+  color:var(--red);
+}
+
+.empty{
+  padding:55px 20px;
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.empty-icon{
+  width:46px;
+  height:46px;
+  margin:0 auto 13px;
+  border-radius:13px;
+  background:rgba(7,148,71,.08);
+  color:var(--green2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.empty-icon svg{
+  width:22px;
+  height:22px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.7;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.loading{
+  color:var(--muted);
+  padding:40px 20px;
+  text-align:center;
+  font-size:13px;
+}
+
+.table-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  padding:14px 20px;
+  border-top:1px solid var(--border);
+  color:var(--muted);
+  font-size:11px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1050px){
+  .page-grid{
+    grid-template-columns:1fr;
+  }
+
+  .stats{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media(max-width:900px){
+  .sidebar{
+    transform:translateX(-100%);
+    box-shadow:20px 0 50px rgba(0,0,0,.35);
+  }
+
+  .sidebar.open{
+    transform:translateX(0);
+  }
+
+  .main{
+    margin-left:0;
+  }
+
+  .mobile-menu{
+    display:flex;
+  }
+
+  .topbar{
+    height:68px;
+    padding:0 16px;
+  }
+
+  .page-title{
+    font-size:16px;
+  }
+
+  .page-subtitle{
+    display:none;
+  }
+
+  .system-status{
+    display:none;
+  }
+
+  .content{
+    padding:20px 15px 35px;
+  }
+}
+
+@media(max-width:650px){
+  .stats{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+
+  .list-controls{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .search-box{
+    width:100%;
+  }
+
+  .refresh-btn{
+    width:100%;
+    justify-content:center;
+  }
+
+  .card-header{
+    padding:16px;
+  }
+
+  .card-body{
+    padding:16px;
+  }
+
+  .table-footer{
+    padding:13px 16px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar" id="sidebar">
+
+  <div class="brand">
+    <div class="brand-mark">T</div>
+    <div class="brand-text">TallyBuck</div>
+  </div>
+
+  <nav class="nav">
+
+    <div class="nav-group">
+      <div class="nav-section">Overview</div>
+
+      <a class="nav-link" href="admin-dashboard.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+          </svg>
+        </span>
+        Dashboard
+      </a>
+
+      <a class="nav-link" href="admin-users.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </span>
+        Users
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-section">Earning System</div>
+
+      <a class="nav-link" href="tasks.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+            <path d="M8 8h8"></path>
+            <path d="M8 12h8"></path>
+            <path d="M8 16h5"></path>
+          </svg>
+        </span>
+        Offers
+      </a>
+
+      <a class="nav-link" href="admin-tasks.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M9 11l3 3L22 4"></path>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+        </span>
+        Manual Tasks
+      </a>
+
+      <a class="nav-link" href="admin-submissions.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <path d="M8 13h8"></path>
+            <path d="M8 17h5"></path>
+          </svg>
+        </span>
+        Submissions
+      </a>
+
+      <a class="nav-link" href="admin-offers.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-7"></path>
+            <path d="M2 7h20v5H2z"></path>
+            <path d="M12 7v14"></path>
+            <path d="M12 7H7.5a2.5 2.5 0 1 1 0-5C10 2 12 7 12 7z"></path>
+            <path d="M12 7h4.5a2.5 2.5 0 1 0 0-5C14 2 12 7 12 7z"></path>
+          </svg>
+        </span>
+        Offer Completions
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-section">Finance</div>
+
+      <a class="nav-link" href="admin-withdrawals.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2v20"></path>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7H14.5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+        </span>
+        Withdrawals
+      </a>
+
+      <a class="nav-link" href="admin-payments.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+            <path d="M2 10h20"></path>
+            <path d="M6 15h4"></path>
+          </svg>
+        </span>
+        Payments
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-section">Management</div>
+
+      <a class="nav-link active" href="admin-categories.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 5h6v6H4z"></path>
+            <path d="M14 5h6v6h-6z"></path>
+            <path d="M4 15h6v6H4z"></path>
+            <path d="M14 15h6v6h-6z"></path>
+          </svg>
+        </span>
+        Categories
+      </a>
+
+      <a class="nav-link" href="admin-countries.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M3 12h18"></path>
+            <path d="M12 3a14 14 0 0 1 0 18"></path>
+            <path d="M12 3a14 14 0 0 0 0 18"></path>
+          </svg>
+        </span>
+        Countries
+      </a>
+
+      <a class="nav-link" href="notifications.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+            <path d="M10 21h4"></path>
+          </svg>
+        </span>
+        Notifications
+      </a>
+
+      <a class="nav-link" href="admin-settings.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.42 1.42-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1 1.56V20h-2v-.08a1.7 1.7 0 0 0-1-1.56 1.7 1.7 0 0 0-1.88.34l-.06.06-1.42-1.42.06-.06A1.7 1.7 0 0 0 9.4 15a1.7 1.7 0 0 0-1.56-1H7v-2h.84a1.7 1.7 0 0 0 1.56-1 1.7 1.7 0 0 0-.34-1.88L9 9.06l1.42-1.42.06.06a1.7 1.7 0 0 0 1.88.34 1.7 1.7 0 0 0 1-1.56V5h2v.84a1.7 1.7 0 0 0 1 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.06 1.42 1.42-.06.06A1.7 1.7 0 0 0 19.4 11c.17.6.72 1 1.34 1H21v2h-.26c-.62 0-1.17.4-1.34 1z"></path>
+          </svg>
+        </span>
+        Settings
+      </a>
+
+      <a class="nav-link" href="admin-admins.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="4"></circle>
+            <path d="M4 21a8 8 0 0 1 16 0"></path>
+          </svg>
+        </span>
+        Admins
+      </a>
+
+      <a class="nav-link" href="admin-logs.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 4h16v16H4z"></path>
+            <path d="M8 8h8"></path>
+            <path d="M8 12h8"></path>
+            <path d="M8 16h5"></path>
+          </svg>
+        </span>
+        Activity Logs
+      </a>
+
+    </div>
+
+  </nav>
+
+  <div class="admin-profile">
+
+    <div class="admin-profile-inner">
+
+      <div class="admin-avatar" id="adminAvatar">A</div>
+
+      <div class="admin-details">
+        <div class="admin-name" id="adminName">Admin</div>
+        <div class="admin-role">Platform Admin</div>
+      </div>
+
+      <button class="logout-btn" id="logoutBtn" title="Sign out">
+
+        <svg viewBox="0 0 24 24">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+
+      </button>
+
+    </div>
+
+  </div>
+
+</aside>
+
+<div class="overlay" id="overlay"></div>
+
+<main class="main">
+
+  <header class="topbar">
+
+    <div class="topbar-left">
+
+      <button class="mobile-menu" id="mobileMenu">
+
+        <svg viewBox="0 0 24 24">
+          <line x1="4" y1="6" x2="20" y2="6"></line>
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <line x1="4" y1="18" x2="20" y2="18"></line>
+        </svg>
+
+      </button>
+
+      <div>
+        <div class="page-title">Categories</div>
+        <div class="page-subtitle">
+          Manage manual task categories
+        </div>
+      </div>
+
+    </div>
+
+    <div class="system-status">
+      <span class="status-dot"></span>
+      System Online
+    </div>
+
+  </header>
+
+  <section class="content">
+
+    <div class="error-box" id="errorBox"></div>
+    <div class="success-box" id="successBox"></div>
+
+    <div class="stats">
+
+      <div class="stat-card">
+        <div class="stat-label">Total Categories</div>
+        <div class="stat-value" id="totalCategories">0</div>
+        <div class="stat-note">All task categories</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Active</div>
+        <div class="stat-value" id="activeCategories">0</div>
+        <div class="stat-note">Available categories</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-label">Inactive</div>
+        <div class="stat-value" id="inactiveCategories">0</div>
+        <div class="stat-note">Hidden categories</div>
+      </div>
+
+    </div>
+
+    <div class="page-grid">
+
+      <!-- CREATE / EDIT -->
+
+      <div class="card">
+
+        <div class="card-header">
+
+          <div>
+            <div class="card-title" id="formTitle">
+              Add Category
+            </div>
+
+            <div class="card-subtitle">
+              Create a category for manual tasks.
+            </div>
+          </div>
+
+        </div>
+
+        <div class="card-body">
+
+          <form id="categoryForm">
+
+            <input
+              type="hidden"
+              id="categoryId"
+            >
+
+            <div class="form-group">
+
+              <label for="categoryName">
+                Category Name
+              </label>
+
+              <input
+                type="text"
+                id="categoryName"
+                placeholder="e.g. Social Media"
+                maxlength="80"
+                required
+              >
+
+            </div>
+
+            <div class="form-group">
+
+              <label for="categoryDescription">
+                Description
+              </label>
+
+              <textarea
+                id="categoryDescription"
+                placeholder="Brief description of this category..."
+                maxlength="300"
+              ></textarea>
+
+            </div>
+
+            <div class="form-actions">
+
+              <button
+                type="submit"
+                class="primary-btn"
+                id="saveBtn"
+              >
+                Save Category
+              </button>
+
+              <button
+                type="button"
+                class="secondary-btn"
+                id="cancelBtn"
+                style="display:none;"
+              >
+                Cancel
+              </button>
+
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+
+      <!-- CATEGORY LIST -->
+
+      <div class="card">
+
+        <div class="card-header">
+
+          <div>
+            <div class="card-title">
+              Task Categories
+            </div>
+
+            <div class="card-subtitle">
+              Manage category names and availability.
+            </div>
+          </div>
+
+        </div>
+
+        <div class="list-controls">
+
+          <div class="search-box">
+
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="M20 20l-4-4"></path>
+            </svg>
+
+            <input
+              type="search"
+              id="searchInput"
+              class="search-input"
+              placeholder="Search categories..."
+              autocomplete="off"
+            >
+
+          </div>
+
+          <button
+            class="refresh-btn"
+            id="refreshBtn"
+          >
+
+            <svg viewBox="0 0 24 24">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <polyline points="1 20 1 14 7 14"></polyline>
+              <path d="M3.51 9a9 9 0 0 1 14.13-3.36L23 10"></path>
+              <path d="M20.49 15a9 9 0 0 1-14.13 3.36L1 14"></path>
+            </svg>
+
+            Refresh
+
+          </button>
+
+        </div>
+
+        <div id="tableContainer">
+
+          <div class="loading">
+            Loading categories...
+          </div>
+
+        </div>
+
+        <div class="table-footer">
+
+          <span id="categoryCount">
+            0 categories
+          </span>
+
+          <span>
+            TallyBuck Admin System
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+<script>
+const SUPABASE_URL =
+  "https://cetsxdkoauucxwsbdktl.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
+
+const { createClient } = supabase;
+
+const db =
+  createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+let allCategories = [];
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function escapeHTML(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function showError(message){
+
+  const box =
+    document.getElementById(
+      "errorBox"
+    );
+
+  box.textContent =
+    message;
+
+  box.style.display =
+    "block";
+
+  document.getElementById(
+    "successBox"
+  ).style.display =
+    "none";
+}
+
+function showSuccess(message){
+
+  const box =
+    document.getElementById(
+      "successBox"
+    );
+
+  box.textContent =
+    message;
+
+  box.style.display =
+    "block";
+
+  document.getElementById(
+    "errorBox"
+  ).style.display =
+    "none";
+
+  setTimeout(()=>{
+    box.style.display =
+      "none";
+  },3000);
+}
+
+function clearMessages(){
+
+  document.getElementById(
+    "errorBox"
+  ).style.display =
+    "none";
+
+  document.getElementById(
+    "successBox"
+  ).style.display =
+    "none";
+}
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+async function loadAdmin(){
+
+  const {
+    data:{
+      session
+    }
+  } =
+    await db.auth.getSession();
+
+  if(!session){
+
+    window.location.href =
+      "login.html";
+
+    return null;
+  }
+
+  const {
+    data:profile,
+    error
+  } =
+    await db
+      .from("profiles")
+      .select("full_name,role")
+      .eq("id",session.user.id)
+      .maybeSingle();
+
+  if(error){
+    console.error(error);
+  }
+
+  if(
+    !profile ||
+    profile.role !== "admin"
+  ){
+
+    alert("Admin access required.");
+
+    window.location.href =
+      "dashboard.html";
+
+    return null;
+  }
+
+  const name =
+    profile.full_name ||
+    session.user.email ||
+    "Admin";
+
+  document.getElementById(
+    "adminName"
+  ).textContent =
+    name;
+
+  document.getElementById(
+    "adminAvatar"
+  ).textContent =
+    name
+      .trim()
+      .charAt(0)
+      .toUpperCase() || "A";
+
+  return session;
+}
+
+/* =========================================================
+   LOAD CATEGORIES
+========================================================= */
+
+async function loadCategories(){
+
+  clearMessages();
+
+  document.getElementById(
+    "tableContainer"
+  ).innerHTML = `
+    <div class="loading">
+      Loading categories...
+    </div>
+  `;
+
+  const {
+    data,
+    error
+  } =
+    await db
+      .from("task_categories")
+      .select("*")
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+  if(error){
+
+    console.error(
+      "Categories error:",
+      error
+    );
+
+    showError(
+      "Unable to load categories. Check the task_categories table and permissions."
+    );
+
+    document.getElementById(
+      "tableContainer"
+    ).innerHTML = `
+      <div class="empty">
+
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 8v4"></path>
+            <path d="M12 16h.01"></path>
+          </svg>
+        </div>
+
+        Unable to load categories.
+
+      </div>
+    `;
+
+    return;
+  }
+
+  allCategories =
+    Array.isArray(data)
+      ? data
+      : [];
+
+  updateStats();
+  renderCategories();
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function updateStats(){
+
+  const total =
+    allCategories.length;
+
+  const active =
+    allCategories.filter(
+      row => row.is_active === true
+    ).length;
+
+  const inactive =
+    total - active;
+
+  document.getElementById(
+    "totalCategories"
+  ).textContent =
+    total;
+
+  document.getElementById(
+    "activeCategories"
+  ).textContent =
+    active;
+
+  document.getElementById(
+    "inactiveCategories"
+  ).textContent =
+    inactive;
+}
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function renderCategories(){
+
+  const container =
+    document.getElementById(
+      "tableContainer"
+    );
+
+  const search =
+    document
+      .getElementById("searchInput")
+      .value
+      .trim()
+      .toLowerCase();
+
+  const filtered =
+    allCategories.filter(row => {
+
+      if(!search){
+        return true;
+      }
+
+      return (
+        String(row.name || "")
+          .toLowerCase()
+          .includes(search) ||
+
+        String(row.description || "")
+          .toLowerCase()
+          .includes(search)
+      );
+
+    });
+
+  document.getElementById(
+    "categoryCount"
+  ).textContent =
+    `${filtered.length} ${
+      filtered.length === 1
+        ? "category"
+        : "categories"
+    }`;
+
+  if(!filtered.length){
+
+    container.innerHTML = `
+      <div class="empty">
+
+        <div class="empty-icon">
+
+          <svg viewBox="0 0 24 24">
+            <path d="M4 5h6v6H4z"></path>
+            <path d="M14 5h6v6h-6z"></path>
+            <path d="M4 15h6v6H4z"></path>
+            <path d="M14 15h6v6h-6z"></path>
+          </svg>
+
+        </div>
+
+        ${
+          allCategories.length
+            ? "No categories match your search."
+            : "No categories created yet."
+        }
+
+      </div>
+    `;
+
+    return;
+  }
+
+  const rows =
+    filtered.map(row => {
+
+      const active =
+        row.is_active === true;
+
+      return `
+        <tr>
+
+          <td>
+            <div class="category-name">
+              ${escapeHTML(
+                row.name
+              )}
+            </div>
+          </td>
+
+          <td>
+            <div class="category-description">
+              ${escapeHTML(
+                row.description || "No description"
+              )}
+            </div>
+          </td>
+
+          <td>
+
+            <span class="status ${
+              active
+                ? "status-active"
+                : "status-inactive"
+            }">
+
+              ${
+                active
+                  ? "Active"
+                  : "Inactive"
+              }
+
+            </span>
+
+          </td>
+
+          <td>
+
+            <div class="actions">
+
+              <button
+                class="action-btn"
+                onclick="editCategory(${Number(row.id)})"
+              >
+                Edit
+              </button>
+
+              <button
+                class="action-btn"
+                onclick="toggleCategory(${Number(row.id)}, ${active})"
+              >
+                ${
+                  active
+                    ? "Disable"
+                    : "Enable"
+                }
+              </button>
+
+              <button
+                class="action-btn danger"
+                onclick="deleteCategory(${Number(row.id)})"
+              >
+                Delete
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+      `;
+
+    }).join("");
+
+  container.innerHTML = `
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+          ${rows}
+        </tbody>
+
+      </table>
+
+    </div>
+  `;
+}
+
+/* =========================================================
+   ADD / EDIT
+========================================================= */
+
+document
+  .getElementById("categoryForm")
+  .addEventListener(
+    "submit",
+    async event => {
+
+      event.preventDefault();
+
+      clearMessages();
+
+      const id =
+        document
+          .getElementById("categoryId")
+          .value;
+
+      const name =
+        document
+          .getElementById("categoryName")
+          .value
+          .trim();
+
+      const description =
+        document
+          .getElementById("categoryDescription")
+          .value
+          .trim();
+
+      if(!name){
+
+        showError(
+          "Category name is required."
+        );
+
+        return;
+      }
+
+      const saveBtn =
+        document.getElementById(
+          "saveBtn"
+        );
+
+      saveBtn.disabled =
+        true;
+
+      saveBtn.textContent =
+        "Saving...";
+
+      try{
+
+        let result;
+
+        if(id){
+
+          result =
+            await db
+              .from("task_categories")
+              .update({
+                name,
+                description:
+                  description || null
+              })
+              .eq(
+                "id",
+                Number(id)
+              );
+
+        }else{
+
+          result =
+            await db
+              .from("task_categories")
+              .insert({
+                name,
+                description:
+                  description || null,
+                is_active:true
+              });
+
+        }
+
+        if(result.error){
+          throw result.error;
+        }
+
+        showSuccess(
+          id
+            ? "Category updated successfully."
+            : "Category created successfully."
+        );
+
+        resetForm();
+
+        await loadCategories();
+
+      }catch(error){
+
+        console.error(error);
+
+        if(
+          error.code === "23505"
+        ){
+
+          showError(
+            "A category with this name already exists."
+          );
+
+        }else{
+
+          showError(
+            error.message ||
+            "Unable to save category."
+          );
+
+        }
+
+      }finally{
+
+        saveBtn.disabled =
+          false;
+
+        saveBtn.textContent =
+          "Save Category";
+
+      }
+
+    }
+  );
+
+/* =========================================================
+   EDIT
+========================================================= */
+
+function editCategory(id){
+
+  const category =
+    allCategories.find(
+      row =>
+        Number(row.id) ===
+        Number(id)
+    );
+
+  if(!category){
+    return;
+  }
+
+  document.getElementById(
+    "categoryId"
+  ).value =
+    category.id;
+
+  document.getElementById(
+    "categoryName"
+  ).value =
+    category.name || "";
+
+  document.getElementById(
+    "categoryDescription"
+  ).value =
+    category.description || "";
+
+  document.getElementById(
+    "formTitle"
+  ).textContent =
+    "Edit Category";
+
+  document.getElementById(
+    "saveBtn"
+  ).textContent =
+    "Update Category";
+
+  document.getElementById(
+    "cancelBtn"
+  ).style.display =
+    "flex";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+/* =========================================================
+   RESET FORM
+========================================================= */
+
+function resetForm(){
+
+  document.getElementById(
+    "categoryForm"
+  ).reset();
+
+  document.getElementById(
+    "categoryId"
+  ).value =
+    "";
+
+  document.getElementById(
+    "formTitle"
+  ).textContent =
+    "Add Category";
+
+  document.getElementById(
+    "saveBtn"
+  ).textContent =
+    "Save Category";
+
+  document.getElementById(
+    "cancelBtn"
+  ).style.display =
+    "none";
+}
+
+document
+  .getElementById("cancelBtn")
+  .addEventListener(
+    "click",
+    resetForm
+  );
+
+/* =========================================================
+   TOGGLE ACTIVE
+========================================================= */
+
+async function toggleCategory(
+  id,
+  currentlyActive
+){
+
+  clearMessages();
+
+  const action =
+    currentlyActive
+      ? "disable"
+      : "enable";
+
+  const confirmed =
+    confirm(
+      `Are you sure you want to ${action} this category?`
+    );
+
+  if(!confirmed){
+    return;
+  }
+
+  const {
+    error
+  } =
+    await db
+      .from("task_categories")
+      .update({
+        is_active:
+          !currentlyActive
+      })
+      .eq(
+        "id",
+        Number(id)
+      );
+
+  if(error){
+
+    console.error(error);
+
+    showError(
+      error.message ||
+      "Unable to update category."
+    );
+
+    return;
+  }
+
+  showSuccess(
+    currentlyActive
+      ? "Category disabled."
+      : "Category enabled."
+  );
+
+  await loadCategories();
+}
+
+/* =========================================================
+   DELETE
+========================================================= */
+
+async function deleteCategory(id){
+
+  clearMessages();
+
+  const category =
+    allCategories.find(
+      row =>
+        Number(row.id) ===
+        Number(id)
+    );
+
+  if(!category){
+    return;
+  }
+
+  const confirmed =
+    confirm(
+      `Delete the category "${category.name}"? This action cannot be undone.`
+    );
+
+  if(!confirmed){
+    return;
+  }
+
+  const {
+    error
+  } =
+    await db
+      .from("task_categories")
+      .delete()
+      .eq(
+        "id",
+        Number(id)
+      );
+
+  if(error){
+
+    console.error(error);
+
+    showError(
+      error.message ||
+      "Unable to delete category."
+    );
+
+    return;
+  }
+
+  showSuccess(
+    "Category deleted successfully."
+  );
+
+  await loadCategories();
+}
+
+/* =========================================================
+   SEARCH / REFRESH
+========================================================= */
+
+document
+  .getElementById("searchInput")
+  .addEventListener(
+    "input",
+    renderCategories
+  );
+
+document
+  .getElementById("refreshBtn")
+  .addEventListener(
+    "click",
+    loadCategories
+  );
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+function openSidebar(){
+
+  document
+    .getElementById("sidebar")
+    .classList.add("open");
+
+  document
+    .getElementById("overlay")
+    .classList.add("show");
+}
+
+function closeSidebar(){
+
+  document
+    .getElementById("sidebar")
+    .classList.remove("open");
+
+  document
+    .getElementById("overlay")
+    .classList.remove("show");
+}
+
+document
+  .getElementById("mobileMenu")
+  .addEventListener(
+    "click",
+    openSidebar
+  );
+
+document
+  .getElementById("overlay")
+  .addEventListener(
+    "click",
+    closeSidebar
+  );
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+document
+  .getElementById("logoutBtn")
+  .addEventListener(
+    "click",
+    async()=>{
+
+      await db.auth.signOut();
+
+      window.location.href =
+        "login.html";
+
+    }
+  );
+
+/* =========================================================
+   START
+========================================================= */
+
+async function start(){
+
+  try{
+
+    const session =
+      await loadAdmin();
+
+    if(!session){
+      return;
+    }
+
+    await loadCategories();
+
+  }catch(error){
+
+    console.error(
+      "Admin categories error:",
+      error
+    );
+
+    showError(
+      "Unable to load the categories page."
+    );
+
+  }
+
+}
+
+start();
+</script>
+
+</body>
+</html>
