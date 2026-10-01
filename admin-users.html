@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>TallyBuck Admin — Users</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -11,7 +12,6 @@
 :root{
   --bg:#07111d;
   --panel:#0c1826;
-  --panel2:#101f30;
   --border:#1d3043;
   --text:#eef5fb;
   --muted:#8194a7;
@@ -33,8 +33,6 @@ body{
 
 button,input,select{font:inherit}
 button{cursor:pointer}
-
-.layout{min-height:100vh}
 
 .sidebar{
   width:250px;
@@ -289,10 +287,6 @@ select{
   gap:8px;
 }
 
-.refresh-btn:hover{
-  background:#183047;
-}
-
 .table-card{
   background:var(--panel);
   border:1px solid var(--border);
@@ -326,7 +320,7 @@ select{
 table{
   width:100%;
   border-collapse:collapse;
-  min-width:900px;
+  min-width:850px;
 }
 
 th{
@@ -380,11 +374,11 @@ tbody tr:hover{
   color:#f1f6fa;
 }
 
-.user-email{
+.user-id{
   color:#718596;
   margin-top:3px;
-  font-size:11px;
-  max-width:220px;
+  font-size:10px;
+  max-width:190px;
   overflow:hidden;
   text-overflow:ellipsis;
 }
@@ -434,13 +428,6 @@ tbody tr:hover{
   text-align:center;
   padding:55px 20px;
   color:var(--muted);
-}
-
-.empty svg{
-  width:38px;
-  height:38px;
-  margin-bottom:10px;
-  color:#52697b;
 }
 
 .error{
@@ -512,11 +499,6 @@ tbody tr:hover{
     margin-top:10px;
   }
 
-  .stat-icon{
-    width:30px;
-    height:30px;
-  }
-
   .toolbar{
     padding:11px;
     gap:8px;
@@ -548,8 +530,6 @@ tbody tr:hover{
 </head>
 
 <body>
-
-<div class="layout">
 
 <aside class="sidebar">
 
@@ -584,66 +564,34 @@ Users
 </a>
 
 <a href="admin-offers.html" class="nav-item">
-<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7"/>
-<path d="M14 3h7v7"/>
-<path d="M10 14 21 3"/>
-</svg>
 Offers
 </a>
 
 <a href="admin-submissions.html" class="nav-item">
-<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-<polyline points="14 2 14 8 20 8"/>
-<path d="m9 15 2 2 4-4"/>
-</svg>
 Submissions
 </a>
 
 <a href="admin-tasks.html" class="nav-item">
-<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<path d="M9 11l3 3L22 4"/>
-<path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-</svg>
 Manual Tasks
 </a>
 
 <div class="nav-title">Finance</div>
 
 <a href="admin-withdrawals.html" class="nav-item">
-<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<rect x="2" y="5" width="20" height="14" rx="2"/>
-<path d="M16 13h.01"/>
-<path d="M2 10h20"/>
-</svg>
 Withdrawals
 </a>
 
 <div class="nav-title">Management</div>
 
 <a href="notifications.html" class="nav-item">
-<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-<path d="M10 21h4"/>
-</svg>
 Notifications
 </a>
 
 <a href="admin-dashboard.html" class="nav-item">
-<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<circle cx="12" cy="12" r="3"/>
-<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06-1.42 1.42-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21h-2v-.08a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06-1.42-1.42.06-.06A1.65 1.65 0 0 0 8.6 15a1.65 1.65 0 0 0-1.51-1H7v-2h.08a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82L8.2 9.12l1.42-1.42.06.06a1.65 1.65 0 0 0 1.82.33 1.65 1.65 0 0 0 1-1.51V6h2v.08a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06 1.42 1.42-.06.06A1.65 1.65 0 0 0 18.4 11a1.65 1.65 0 0 0 1.51 1H20v2h-.08a1.65 1.65 0 0 0-1.51 1z"/>
-</svg>
 Settings
 </a>
 
 <a href="#" class="nav-item logout" id="logoutBtn">
-<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<path d="M10 17l5-5-5-5"/>
-<path d="M15 12H3"/>
-<path d="M21 3v18"/>
-</svg>
 Logout
 </a>
 
@@ -726,6 +674,7 @@ Logout
 <div class="toolbar">
 
 <div class="search-wrap">
+
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 <circle cx="11" cy="11" r="7"/>
 <path d="m20 20-4-4"/>
@@ -735,8 +684,9 @@ Logout
 id="searchInput"
 class="search"
 type="search"
-placeholder="Search name, email, referral code or user ID..."
+placeholder="Search name, referral code or user ID..."
 >
+
 </div>
 
 <select id="roleFilter">
@@ -746,12 +696,6 @@ placeholder="Search name, email, referral code or user ID..."
 </select>
 
 <button class="refresh-btn" id="refreshBtn">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<path d="M20 11a8.1 8.1 0 0 0-15.5-3"/>
-<path d="M4 4v4h4"/>
-<path d="M4 13a8.1 8.1 0 0 0 15.5 3"/>
-<path d="M20 20v-4h-4"/>
-</svg>
 Refresh
 </button>
 
@@ -761,7 +705,9 @@ Refresh
 
 <div class="table-head">
 <h2>Registered Accounts</h2>
-<div class="result-count" id="resultCount">Loading...</div>
+<div class="result-count" id="resultCount">
+Loading...
+</div>
 </div>
 
 <div class="table-scroll">
@@ -795,8 +741,8 @@ Loading users...
 </div>
 
 </section>
+
 </main>
-</div>
 
 <script>
 
@@ -815,39 +761,49 @@ SUPABASE_KEY
 let allUsers = [];
 
 function escapeHTML(value){
+
 return String(value ?? "")
 .replace(/&/g,"&amp;")
 .replace(/</g,"&lt;")
 .replace(/>/g,"&gt;")
 .replace(/"/g,"&quot;")
 .replace(/'/g,"&#039;");
+
 }
 
 function money(value){
-return "$" + Number(value || 0).toFixed(2);
+
+return "$" +
+Number(value || 0).toFixed(2);
+
 }
 
 function formatDate(value){
 
 if(!value) return "—";
 
-const date = new Date(value);
+const date =
+new Date(value);
 
 if(Number.isNaN(date.getTime())){
 return "—";
 }
 
-return date.toLocaleDateString(undefined,{
+return date.toLocaleDateString(
+undefined,
+{
 year:"numeric",
 month:"short",
 day:"numeric"
-});
+}
+);
+
 }
 
-function initials(name,email){
+function initials(name){
 
 const source =
-String(name || email || "U").trim();
+String(name || "User").trim();
 
 const parts =
 source.split(/\s+/);
@@ -864,29 +820,33 @@ parts[1].charAt(0)
 return source
 .substring(0,2)
 .toUpperCase();
+
 }
 
 function renderUsers(){
 
 const tbody =
-document.getElementById("usersBody");
+document.getElementById(
+"usersBody"
+);
 
 const search =
-document.getElementById("searchInput")
-.value
+document.getElementById(
+"searchInput"
+).value
 .trim()
 .toLowerCase();
 
 const role =
-document.getElementById("roleFilter")
-.value;
+document.getElementById(
+"roleFilter"
+).value;
 
 const filtered =
 allUsers.filter(user => {
 
 const searchable = [
 user.full_name,
-user.email,
 user.referral_code,
 user.id
 ]
@@ -906,49 +866,55 @@ const roleMatch =
 role === "all" ||
 userRole === role;
 
-return searchMatch && roleMatch;
+return searchMatch &&
+roleMatch;
 
 });
 
-document.getElementById("resultCount").textContent =
+document.getElementById(
+"resultCount"
+).textContent =
 filtered.length +
-(filtered.length === 1 ? " account" : " accounts");
+(
+filtered.length === 1
+? " account"
+: " accounts"
+);
 
 if(!filtered.length){
 
 tbody.innerHTML = `
 <tr>
 <td colspan="6">
-<div class="empty">
 
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
-<circle cx="11" cy="11" r="7"/>
-<path d="m20 20-4-4"/>
-</svg>
+<div class="empty">
 
 <div>No users match your search.</div>
 
 </div>
+
 </td>
 </tr>
 `;
 
 return;
+
 }
 
 tbody.innerHTML =
 filtered.map(user => {
 
 const roleName =
-String(user.role || "user").toLowerCase();
+String(
+user.role || "user"
+).toLowerCase();
 
 const name =
-user.full_name || "Unnamed User";
-
-const email =
-user.email || "No email";
+user.full_name ||
+"Unnamed User";
 
 return `
+
 <tr>
 
 <td>
@@ -956,7 +922,9 @@ return `
 <div class="user-cell">
 
 <div class="avatar">
-${escapeHTML(initials(name,email))}
+${escapeHTML(
+initials(name)
+)}
 </div>
 
 <div>
@@ -965,8 +933,8 @@ ${escapeHTML(initials(name,email))}
 ${escapeHTML(name)}
 </div>
 
-<div class="user-email">
-${escapeHTML(email)}
+<div class="user-id">
+${escapeHTML(user.id)}
 </div>
 
 </div>
@@ -982,27 +950,35 @@ roleName === "admin"
 ? "admin"
 : "user"
 }">
+
 ${escapeHTML(roleName)}
+
 </span>
 
 </td>
 
 <td>
+
 <span class="money">
 ${money(user.balance)}
 </span>
+
 </td>
 
 <td>
+
 <span class="money">
 ${money(user.total_earned)}
 </span>
+
 </td>
 
 <td>
 
 <span class="ref-code">
-${escapeHTML(user.referral_code || "—")}
+${escapeHTML(
+user.referral_code || "—"
+)}
 </span>
 
 </td>
@@ -1010,21 +986,27 @@ ${escapeHTML(user.referral_code || "—")}
 <td>
 
 <span class="date">
-${formatDate(user.created_at)}
+${formatDate(
+user.created_at
+)}
 </span>
 
 </td>
 
 </tr>
+
 `;
 
 }).join("");
+
 }
 
 async function loadUsers(){
 
 const tbody =
-document.getElementById("usersBody");
+document.getElementById(
+"usersBody"
+);
 
 tbody.innerHTML = `
 <tr>
@@ -1041,7 +1023,9 @@ data:{
 session
 }
 } =
-await supabaseClient.auth.getSession();
+await supabaseClient
+.auth
+.getSession();
 
 if(!session){
 
@@ -1049,6 +1033,7 @@ window.location.href =
 "login.html";
 
 return;
+
 }
 
 const {
@@ -1065,16 +1050,29 @@ if(profileError){
 throw profileError;
 }
 
-if(!profile ||
-profile.role !== "admin"){
+if(
+!profile ||
+profile.role !== "admin"
+){
 
-alert("Admin access required.");
+alert(
+"Admin access required."
+);
 
 window.location.href =
 "dashboard.html";
 
 return;
+
 }
+
+/*
+  IMPORTANT:
+
+  Email is NOT selected from profiles
+  because your profiles table does not
+  contain an email column.
+*/
 
 const {
 data:profiles,
@@ -1085,14 +1083,16 @@ await supabaseClient
 .select(`
 id,
 full_name,
-email,
 referral_code,
 role,
 created_at
 `)
-.order("created_at",{
+.order(
+"created_at",
+{
 ascending:false
-});
+}
+);
 
 if(profilesError){
 throw profilesError;
@@ -1116,15 +1116,18 @@ throw walletsError;
 
 const walletMap = {};
 
-(wallets || []).forEach(wallet => {
+(wallets || [])
+.forEach(wallet => {
 
-walletMap[wallet.user_id] =
-wallet;
+walletMap[
+wallet.user_id
+] = wallet;
 
 });
 
 allUsers =
-(profiles || []).map(profile => {
+(profiles || [])
+.map(profile => {
 
 const wallet =
 walletMap[profile.id] || {};
@@ -1134,10 +1137,14 @@ return {
 ...profile,
 
 balance:
-Number(wallet.balance || 0),
+Number(
+wallet.balance || 0
+),
 
 total_earned:
-Number(wallet.total_earned || 0)
+Number(
+wallet.total_earned || 0
+)
 
 };
 
@@ -1147,7 +1154,8 @@ updateStats();
 
 renderUsers();
 
-}catch(error){
+}
+catch(error){
 
 console.error(error);
 
@@ -1159,7 +1167,7 @@ tbody.innerHTML = `
 
 Unable to load users.
 
-<br>
+<br><br>
 
 <small>
 ${escapeHTML(
@@ -1178,7 +1186,9 @@ document.getElementById(
 "resultCount"
 ).textContent =
 "Load failed";
+
 }
+
 }
 
 function updateStats(){
@@ -1187,22 +1197,31 @@ const total =
 allUsers.length;
 
 const admins =
-allUsers.filter(user =>
-String(user.role || "")
-.toLowerCase() === "admin"
+allUsers.filter(
+user =>
+String(
+user.role || ""
+).toLowerCase()
+=== "admin"
 ).length;
 
 const balance =
 allUsers.reduce(
 (sum,user) =>
-sum + Number(user.balance || 0),
+sum +
+Number(
+user.balance || 0
+),
 0
 );
 
 const earned =
 allUsers.reduce(
 (sum,user) =>
-sum + Number(user.total_earned || 0),
+sum +
+Number(
+user.total_earned || 0
+),
 0
 );
 
@@ -1225,6 +1244,7 @@ document.getElementById(
 "totalEarned"
 ).textContent =
 money(earned);
+
 }
 
 document
@@ -1256,7 +1276,9 @@ async event => {
 
 event.preventDefault();
 
-await supabaseClient.auth.signOut();
+await supabaseClient
+.auth
+.signOut();
 
 window.location.href =
 "login.html";
