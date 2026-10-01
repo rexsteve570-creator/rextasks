@@ -10,6 +10,7 @@
 <style>
 :root{
   --bg:#07110d;
+  --sidebar:#08140f;
   --panel:#0d1914;
   --panel2:#111f19;
   --border:#1d3328;
@@ -20,12 +21,17 @@
   --danger:#ef4444;
   --warning:#f59e0b;
   --success:#22c55e;
+  --blue:#3b82f6;
 }
 
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 body{
@@ -45,22 +51,34 @@ button{
   cursor:pointer;
 }
 
+button:disabled{
+  cursor:not-allowed;
+  opacity:.6;
+}
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
 .layout{
   display:flex;
   min-height:100vh;
 }
 
-/* SIDEBAR */
+/* =========================================================
+   SIDEBAR
+========================================================= */
 
 .sidebar{
-  width:250px;
-  background:#08140f;
+  width:255px;
+  background:var(--sidebar);
   border-right:1px solid var(--border);
   padding:22px 16px;
   position:fixed;
   inset:0 auto 0 0;
-  z-index:20;
+  z-index:100;
   overflow-y:auto;
+  transition:transform .25s ease;
 }
 
 .brand{
@@ -80,6 +98,7 @@ button{
   display:flex;
   align-items:center;
   justify-content:center;
+  flex:none;
 }
 
 .brand-icon svg{
@@ -107,6 +126,7 @@ button{
   border-radius:10px;
   margin:3px 0;
   font-size:14px;
+  transition:.18s ease;
 }
 
 .nav a:hover,
@@ -122,13 +142,89 @@ button{
   flex:none;
 }
 
+.nav-divider{
+  height:1px;
+  background:var(--border);
+  margin:13px 8px;
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
 .main{
-  margin-left:250px;
-  width:calc(100% - 250px);
+  margin-left:255px;
+  width:calc(100% - 255px);
   padding:28px;
 }
 
-/* TOP */
+/* =========================================================
+   MOBILE HEADER
+========================================================= */
+
+.mobile-header{
+  display:none;
+}
+
+.mobile-menu-btn{
+  width:40px;
+  height:40px;
+  border:1px solid var(--border);
+  background:#102019;
+  color:white;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.mobile-menu-btn svg{
+  width:20px;
+  height:20px;
+}
+
+.mobile-brand{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-weight:800;
+}
+
+.mobile-brand-icon{
+  width:32px;
+  height:32px;
+  border-radius:9px;
+  background:var(--green);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.mobile-brand-icon svg{
+  width:18px;
+  height:18px;
+  stroke:white;
+}
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.sidebar-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.62);
+  z-index:90;
+}
+
+.sidebar-overlay.show{
+  display:block;
+}
+
+/* =========================================================
+   TOPBAR
+========================================================= */
 
 .topbar{
   display:flex;
@@ -148,6 +244,7 @@ button{
   margin-top:6px;
   color:var(--muted);
   font-size:14px;
+  line-height:1.5;
 }
 
 .refresh-btn{
@@ -159,6 +256,7 @@ button{
   display:flex;
   align-items:center;
   gap:8px;
+  transition:.18s ease;
 }
 
 .refresh-btn:hover{
@@ -170,7 +268,9 @@ button{
   height:17px;
 }
 
-/* STATS */
+/* =========================================================
+   STATS
+========================================================= */
 
 .stats{
   display:grid;
@@ -205,7 +305,9 @@ button{
   color:var(--success);
 }
 
-/* FILTERS */
+/* =========================================================
+   FILTERS
+========================================================= */
 
 .filters{
   background:var(--panel);
@@ -230,6 +332,7 @@ button{
   width:17px;
   height:17px;
   stroke:#6f887c;
+  pointer-events:none;
 }
 
 input,
@@ -243,8 +346,16 @@ select{
   outline:none;
 }
 
+select{
+  appearance:auto;
+}
+
 .field input{
   padding-left:39px;
+}
+
+input::placeholder{
+  color:#61776c;
 }
 
 input:focus,
@@ -252,7 +363,9 @@ select:focus{
   border-color:var(--green);
 }
 
-/* TABLE */
+/* =========================================================
+   TABLE
+========================================================= */
 
 .table-card{
   background:var(--panel);
@@ -265,6 +378,7 @@ select:focus{
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:15px;
   padding:17px 18px;
   border-bottom:1px solid var(--border);
 }
@@ -281,6 +395,7 @@ select:focus{
 .table-wrap{
   width:100%;
   overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
 }
 
 table{
@@ -298,6 +413,7 @@ th{
   letter-spacing:.06em;
   background:#0a1611;
   border-bottom:1px solid var(--border);
+  white-space:nowrap;
 }
 
 td{
@@ -313,6 +429,7 @@ tr:last-child td{
 
 .user-name{
   font-weight:700;
+  color:#edf5f1;
 }
 
 .user-id{
@@ -340,6 +457,7 @@ tr:last-child td{
   word-break:break-word;
   color:#a7b8b0;
   font-size:12px;
+  line-height:1.45;
 }
 
 .network{
@@ -355,6 +473,7 @@ tr:last-child td{
   font-size:11px;
   font-weight:750;
   text-transform:capitalize;
+  white-space:nowrap;
 }
 
 .status.pending{
@@ -381,6 +500,7 @@ tr:last-child td{
 .actions{
   display:flex;
   gap:7px;
+  flex-wrap:wrap;
 }
 
 .action-btn{
@@ -390,6 +510,7 @@ tr:last-child td{
   padding:7px 9px;
   border-radius:8px;
   font-size:11px;
+  white-space:nowrap;
 }
 
 .action-btn:hover{
@@ -406,10 +527,15 @@ tr:last-child td{
   border-color:#5a2828;
 }
 
+/* =========================================================
+   EMPTY
+========================================================= */
+
 .empty{
   padding:55px 20px;
   text-align:center;
   color:var(--muted);
+  line-height:1.5;
 }
 
 .empty-icon{
@@ -435,7 +561,9 @@ tr:last-child td{
   margin-bottom:5px;
 }
 
-/* MODAL */
+/* =========================================================
+   MODAL
+========================================================= */
 
 .modal{
   position:fixed;
@@ -445,7 +573,7 @@ tr:last-child td{
   align-items:center;
   justify-content:center;
   padding:20px;
-  z-index:100;
+  z-index:200;
 }
 
 .modal.show{
@@ -498,57 +626,80 @@ tr:last-child td{
   border-color:#7f1d1d;
 }
 
-/* MOBILE */
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
-.mobile-top{
-  display:none;
-}
-
-@media(max-width:900px){
-  .sidebar{
-    width:220px;
-  }
-
-  .main{
-    margin-left:220px;
-    width:calc(100% - 220px);
-    padding:20px;
-  }
+@media(max-width:1100px){
 
   .stats{
     grid-template-columns:repeat(2,1fr);
   }
+
+  .filters{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .filters .field{
+    grid-column:1 / -1;
+  }
 }
 
-@media(max-width:680px){
+@media(max-width:760px){
+
+  body{
+    overflow-x:hidden;
+  }
+
   .sidebar{
-    display:none;
+    transform:translateX(-100%);
+    width:255px;
+  }
+
+  .sidebar.open{
+    transform:translateX(0);
   }
 
   .main{
     margin-left:0;
     width:100%;
     padding:16px;
-    padding-top:72px;
+    padding-top:78px;
   }
 
-  .mobile-top{
-    display:flex;
+  .mobile-header{
     position:fixed;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
     top:0;
     left:0;
     right:0;
-    height:58px;
-    z-index:50;
-    background:#08140f;
-    border-bottom:1px solid var(--border);
-    align-items:center;
+    height:62px;
     padding:0 15px;
-    font-weight:800;
+    background:var(--sidebar);
+    border-bottom:1px solid var(--border);
+    z-index:80;
   }
 
-  .mobile-top span{
-    margin-left:9px;
+  .mobile-header-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .topbar{
+    flex-direction:column;
+    margin-bottom:20px;
+  }
+
+  .page-title{
+    font-size:23px;
+  }
+
+  .refresh-btn{
+    width:100%;
+    justify-content:center;
   }
 
   .stats{
@@ -568,13 +719,52 @@ tr:last-child td{
     grid-template-columns:1fr;
   }
 
-  .topbar{
-    align-items:stretch;
-    flex-direction:column;
+  .filters .field{
+    grid-column:auto;
   }
 
-  .refresh-btn{
-    justify-content:center;
+  .table-head{
+    padding:15px;
+  }
+}
+
+@media(max-width:420px){
+
+  .main{
+    padding-left:12px;
+    padding-right:12px;
+  }
+
+  .stats{
+    gap:8px;
+  }
+
+  .stat{
+    padding:12px;
+  }
+
+  .stat-label{
+    font-size:11px;
+  }
+
+  .stat-value{
+    font-size:18px;
+  }
+
+  .modal{
+    padding:12px;
+  }
+
+  .modal-box{
+    padding:18px;
+  }
+
+  .modal-actions{
+    flex-direction:column-reverse;
+  }
+
+  .modal-btn{
+    width:100%;
   }
 }
 </style>
@@ -582,26 +772,69 @@ tr:last-child td{
 
 <body>
 
-<div class="mobile-top">
-  <div class="brand-icon">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M12 2v20M17 5.5C15.8 4.5 14 4 12 4c-3 0-5 1.4-5 3.5S9 11 12 12s5 2.5 5 4.5S15 20 12 20c-2 0-3.8-.5-5-1.5"/>
-    </svg>
+<!-- =========================================================
+     MOBILE HEADER
+========================================================= -->
+
+<header class="mobile-header">
+
+  <div class="mobile-header-left">
+
+    <button
+      class="mobile-menu-btn"
+      id="mobileMenuBtn"
+      aria-label="Open admin menu"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+
+    <div class="mobile-brand">
+
+      <div class="mobile-brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2v20"/>
+          <path d="M17 5.5C15.8 4.5 14 4 12 4c-3 0-5 1.4-5 3.5S9 11 12 12s5 2.5 5 4.5S15 20 12 20c-2 0-3.8-.5-5-1.5"/>
+        </svg>
+      </div>
+
+      TallyBuck Admin
+
+    </div>
+
   </div>
-  <span>TallyBuck Admin</span>
-</div>
+
+</header>
+
+<!-- =========================================================
+     SIDEBAR OVERLAY
+========================================================= -->
+
+<div
+  class="sidebar-overlay"
+  id="sidebarOverlay"
+></div>
 
 <div class="layout">
 
-  <aside class="sidebar">
+  <!-- =======================================================
+       SIDEBAR
+  ======================================================== -->
+
+  <aside class="sidebar" id="sidebar">
 
     <div class="brand">
+
       <div class="brand-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 2v20M17 5.5C15.8 4.5 14 4 12 4c-3 0-5 1.4-5 3.5S9 11 12 12s5 2.5 5 4.5S15 20 12 20c-2 0-3.8-.5-5-1.5"/>
+          <path d="M12 2v20"/>
+          <path d="M17 5.5C15.8 4.5 14 4 12 4c-3 0-5 1.4-5 3.5S9 11 12 12s5 2.5 5 4.5S15 20 12 20c-2 0-3.8-.5-5-1.5"/>
         </svg>
       </div>
+
       TallyBuck
+
     </div>
 
     <div class="nav-title">Overview</div>
@@ -627,7 +860,7 @@ tr:last-child td{
         Users
       </a>
 
-      <a href="admin-offers.html">
+      <a href="tasks.html">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"/>
           <path d="M2 7h20v5H2z"/>
@@ -636,16 +869,6 @@ tr:last-child td{
           <path d="M12 7h4.5a2.5 2.5 0 1 0 0-5C13 2 12 7 12 7Z"/>
         </svg>
         Offers
-      </a>
-
-      <a href="admin-withdrawals.html" class="active">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M3 7h18"/>
-          <path d="M5 7V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/>
-          <path d="M4 7h16v13H4z"/>
-          <path d="M9 13h6"/>
-        </svg>
-        Withdrawals
       </a>
 
       <a href="admin-tasks.html">
@@ -665,9 +888,101 @@ tr:last-child td{
         Submissions
       </a>
 
+      <a href="admin-offers.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h16v16H4z"/>
+          <path d="M8 8h8M8 12h8M8 16h5"/>
+        </svg>
+        Offer Completions
+      </a>
+
+      <a href="admin-withdrawals.html" class="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 7h18"/>
+          <path d="M5 7V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/>
+          <path d="M4 7h16v13H4z"/>
+          <path d="M9 13h6"/>
+        </svg>
+        Withdrawals
+      </a>
+
+      <a href="admin-payments.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="5" width="18" height="14" rx="2"/>
+          <path d="M3 10h18"/>
+          <path d="M7 15h3"/>
+        </svg>
+        Payments
+      </a>
+
+      <div class="nav-divider"></div>
+
+      <a href="admin-categories.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/>
+        </svg>
+        Categories
+      </a>
+
+      <a href="admin-countries.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M3 12h18M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-5.5-3.5-9S9.5 5.5 12 3Z"/>
+        </svg>
+        Countries
+      </a>
+
+      <a href="notifications.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+          <path d="M10 21h4"/>
+        </svg>
+        Notifications
+      </a>
+
+      <a href="admin-settings.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.5 1.5-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V20h-2.1v-.4a1.7 1.7 0 0 0-1.03-1.56 1.7 1.7 0 0 0-1.88.34l-.06.06-1.5-1.5.06-.06A1.7 1.7 0 0 0 9.4 15a1.7 1.7 0 0 0-1.56-1.03H7v-2.1h.84A1.7 1.7 0 0 0 9.4 10.8a1.7 1.7 0 0 0-.34-1.88L9 8.86l1.5-1.5.06.06a1.7 1.7 0 0 0 1.88.34A1.7 1.7 0 0 0 13.47 6.2V6h2.1v.2a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.06 1.5 1.5-.06.06A1.7 1.7 0 0 0 19.64 10.8a1.7 1.7 0 0 0 1.56 1.03H21v2.1h-.4A1.7 1.7 0 0 0 19.4 15Z"/>
+        </svg>
+        Settings
+      </a>
+
+      <a href="admin-admins.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M3 21v-2a6 6 0 0 1 12 0v2"/>
+          <path d="M16 11h5M18.5 8.5v5"/>
+        </svg>
+        Admins
+      </a>
+
+      <a href="admin-logs.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h16v16H4z"/>
+          <path d="M8 8h8M8 12h8M8 16h5"/>
+        </svg>
+        Activity Logs
+      </a>
+
+      <div class="nav-divider"></div>
+
+      <a href="#" id="logoutLink">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10 17l5-5-5-5"/>
+          <path d="M15 12H3"/>
+          <path d="M21 19V5a2 2 0 0 0-2-2h-6"/>
+        </svg>
+        Sign Out
+      </a>
+
     </nav>
 
   </aside>
+
+  <!-- =======================================================
+       MAIN
+  ======================================================== -->
 
   <main class="main">
 
@@ -675,82 +990,171 @@ tr:last-child td{
 
       <div>
         <div class="page-title">Withdrawal Management</div>
+
         <div class="page-subtitle">
           Review, process and manage user withdrawal requests.
         </div>
       </div>
 
       <button class="refresh-btn" id="refreshBtn">
+
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M20 11a8.1 8.1 0 0 0-14.9-4L3 10"/>
           <path d="M3 4v6h6"/>
           <path d="M4 13a8.1 8.1 0 0 0 14.9 4L21 14"/>
           <path d="M21 20v-6h-6"/>
         </svg>
+
         Refresh
+
       </button>
 
     </div>
 
+    <!-- STATS -->
+
     <section class="stats">
 
       <div class="stat">
-        <div class="stat-label">Pending</div>
-        <div class="stat-value pending" id="pendingCount">0</div>
+
+        <div class="stat-label">
+          Pending
+        </div>
+
+        <div
+          class="stat-value pending"
+          id="pendingCount"
+        >
+          0
+        </div>
+
       </div>
 
       <div class="stat">
-        <div class="stat-label">Pending Amount</div>
-        <div class="stat-value pending" id="pendingAmount">$0.00</div>
+
+        <div class="stat-label">
+          Pending Amount
+        </div>
+
+        <div
+          class="stat-value pending"
+          id="pendingAmount"
+        >
+          $0.00
+        </div>
+
       </div>
 
       <div class="stat">
-        <div class="stat-label">Paid</div>
-        <div class="stat-value paid" id="paidCount">0</div>
+
+        <div class="stat-label">
+          Paid
+        </div>
+
+        <div
+          class="stat-value paid"
+          id="paidCount"
+        >
+          0
+        </div>
+
       </div>
 
       <div class="stat">
-        <div class="stat-label">Paid Amount</div>
-        <div class="stat-value paid" id="paidAmount">$0.00</div>
+
+        <div class="stat-label">
+          Paid Amount
+        </div>
+
+        <div
+          class="stat-value paid"
+          id="paidAmount"
+        >
+          $0.00
+        </div>
+
       </div>
 
     </section>
 
+    <!-- FILTERS -->
+
     <section class="filters">
 
       <div class="field">
+
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="7"/>
           <path d="m20 20-4-4"/>
         </svg>
+
         <input
           id="searchInput"
           type="search"
           placeholder="Search name, user ID or withdrawal ID..."
         >
+
       </div>
 
       <select id="statusFilter">
-        <option value="">All Statuses</option>
-        <option value="pending">Pending</option>
-        <option value="paid">Paid</option>
-        <option value="cancelled">Cancelled</option>
-        <option value="processing">Processing</option>
+
+        <option value="">
+          All Statuses
+        </option>
+
+        <option value="pending">
+          Pending
+        </option>
+
+        <option value="paid">
+          Paid
+        </option>
+
+        <option value="cancelled">
+          Cancelled
+        </option>
+
+        <option value="processing">
+          Processing
+        </option>
+
       </select>
 
       <select id="methodFilter">
-        <option value="">All Methods</option>
-        <option value="bank">Bank</option>
-        <option value="crypto">Crypto</option>
+
+        <option value="">
+          All Methods
+        </option>
+
+        <option value="bank">
+          Bank
+        </option>
+
+        <option value="crypto">
+          Crypto
+        </option>
+
       </select>
 
     </section>
 
+    <!-- TABLE -->
+
     <section class="table-card">
 
       <div class="table-head">
-        <div class="table-title">Withdrawal Requests</div>
-        <div class="count" id="requestCount">0 requests</div>
+
+        <div class="table-title">
+          Withdrawal Requests
+        </div>
+
+        <div
+          class="count"
+          id="requestCount"
+        >
+          0 requests
+        </div>
+
       </div>
 
       <div class="table-wrap">
@@ -758,6 +1162,7 @@ tr:last-child td{
         <table>
 
           <thead>
+
             <tr>
               <th>User</th>
               <th>Amount</th>
@@ -770,6 +1175,7 @@ tr:last-child td{
               <th>Requested</th>
               <th>Actions</th>
             </tr>
+
           </thead>
 
           <tbody id="withdrawalsBody"></tbody>
@@ -784,27 +1190,44 @@ tr:last-child td{
 
 </div>
 
-<!-- CONFIRM MODAL -->
+<!-- =========================================================
+     CONFIRM MODAL
+========================================================= -->
 
-<div class="modal" id="confirmModal">
+<div
+  class="modal"
+  id="confirmModal"
+>
 
   <div class="modal-box">
 
-    <div class="modal-title" id="modalTitle">
+    <div
+      class="modal-title"
+      id="modalTitle"
+    >
       Confirm action
     </div>
 
-    <div class="modal-text" id="modalText">
+    <div
+      class="modal-text"
+      id="modalText"
+    >
       Are you sure?
     </div>
 
     <div class="modal-actions">
 
-      <button class="modal-btn" id="cancelModal">
+      <button
+        class="modal-btn"
+        id="cancelModal"
+      >
         Cancel
       </button>
 
-      <button class="modal-btn confirm" id="confirmAction">
+      <button
+        class="modal-btn confirm"
+        id="confirmAction"
+      >
         Confirm
       </button>
 
@@ -815,6 +1238,10 @@ tr:last-child td{
 </div>
 
 <script>
+/* =========================================================
+   SUPABASE
+========================================================= */
+
 const SUPABASE_URL =
   "https://cetsxdkoauucxwsbdktl.supabase.co";
 
@@ -822,11 +1249,62 @@ const SUPABASE_KEY =
   "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
 
 const supabaseClient =
-  supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
 let withdrawals = [];
 let profiles = {};
 let pendingAction = null;
+
+/* =========================================================
+   MOBILE SIDEBAR
+========================================================= */
+
+const sidebar =
+  document.getElementById("sidebar");
+
+const sidebarOverlay =
+  document.getElementById("sidebarOverlay");
+
+const mobileMenuBtn =
+  document.getElementById("mobileMenuBtn");
+
+function openSidebar(){
+
+  sidebar.classList.add("open");
+  sidebarOverlay.classList.add("show");
+
+}
+
+function closeSidebar(){
+
+  sidebar.classList.remove("open");
+  sidebarOverlay.classList.remove("show");
+
+}
+
+mobileMenuBtn.addEventListener(
+  "click",
+  openSidebar
+);
+
+sidebarOverlay.addEventListener(
+  "click",
+  closeSidebar
+);
+
+document
+  .querySelectorAll(".sidebar a")
+  .forEach(link => {
+
+    link.addEventListener(
+      "click",
+      closeSidebar
+    );
+
+  });
 
 /* =========================================================
    AUTH
@@ -835,24 +1313,37 @@ let pendingAction = null;
 async function requireAdmin(){
 
   const {
-    data: { session },
+    data:{session},
     error
   } = await supabaseClient.auth.getSession();
 
   if(error || !session){
-    window.location.href = "login.html";
+
+    window.location.href =
+      "login.html";
+
     return false;
   }
 
-  const { data: profile } =
+  const {
+    data:profile,
+    error:profileError
+  } =
     await supabaseClient
       .from("profiles")
       .select("role")
-      .eq("id", session.user.id)
+      .eq("id",session.user.id)
       .maybeSingle();
 
-  if(!profile || profile.role !== "admin"){
-    window.location.href = "dashboard.html";
+  if(
+    profileError ||
+    !profile ||
+    profile.role !== "admin"
+  ){
+
+    window.location.href =
+      "dashboard.html";
+
     return false;
   }
 
@@ -860,25 +1351,56 @@ async function requireAdmin(){
 }
 
 /* =========================================================
+   LOGOUT
+========================================================= */
+
+document
+  .getElementById("logoutLink")
+  .addEventListener(
+    "click",
+    async event => {
+
+      event.preventDefault();
+
+      await supabaseClient.auth.signOut();
+
+      window.location.href =
+        "login.html";
+
+    }
+  );
+
+/* =========================================================
    LOAD PROFILES
 ========================================================= */
 
 async function loadProfiles(){
 
-  const { data, error } =
+  const {
+    data,
+    error
+  } =
     await supabaseClient
       .from("profiles")
       .select("id, full_name");
 
   if(error){
-    console.error(error);
+
+    console.error(
+      "Profile loading error:",
+      error
+    );
+
     return;
   }
 
   profiles = {};
 
   (data || []).forEach(profile => {
-    profiles[profile.id] = profile;
+
+    profiles[profile.id] =
+      profile;
+
   });
 }
 
@@ -889,7 +1411,9 @@ async function loadProfiles(){
 async function loadWithdrawals(){
 
   const body =
-    document.getElementById("withdrawalsBody");
+    document.getElementById(
+      "withdrawalsBody"
+    );
 
   body.innerHTML = `
     <tr>
@@ -906,39 +1430,53 @@ async function loadWithdrawals(){
   const {
     data,
     error
-  } = await supabaseClient
-    .from("withdrawals")
-    .select(`
-      id,
-      user_id,
-      amount,
-      fee,
-      net_amount,
-      method,
-      payment_details,
-      status,
-      reviewed_by,
-      created_at,
-      processed_at,
-      network
-    `)
-    .order("created_at", {
-      ascending:false
-    });
+  } =
+    await supabaseClient
+      .from("withdrawals")
+      .select(`
+        id,
+        user_id,
+        amount,
+        fee,
+        net_amount,
+        method,
+        payment_details,
+        status,
+        reviewed_by,
+        created_at,
+        processed_at,
+        network
+      `)
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
 
   if(error){
 
-    console.error(error);
+    console.error(
+      "Withdrawal loading error:",
+      error
+    );
 
     body.innerHTML = `
       <tr>
         <td colspan="10">
+
           <div class="empty">
+
             <div class="empty-title">
               Unable to load withdrawals
             </div>
-            <div>${escapeHtml(error.message)}</div>
+
+            <div>
+              ${escapeHtml(error.message)}
+            </div>
+
           </div>
+
         </td>
       </tr>
     `;
@@ -946,7 +1484,8 @@ async function loadWithdrawals(){
     return;
   }
 
-  withdrawals = data || [];
+  withdrawals =
+    data || [];
 
   updateStats();
   renderWithdrawals();
@@ -960,59 +1499,82 @@ function updateStats(){
 
   const pending =
     withdrawals.filter(
-      row => String(row.status).toLowerCase() === "pending"
+      row =>
+        String(row.status || "")
+          .toLowerCase() === "pending"
     );
 
   const paid =
     withdrawals.filter(
-      row => String(row.status).toLowerCase() === "paid"
+      row =>
+        String(row.status || "")
+          .toLowerCase() === "paid"
     );
 
   const pendingAmount =
     pending.reduce(
-      (sum,row) => sum + Number(row.amount || 0),
+      (sum,row) =>
+        sum + Number(row.amount || 0),
       0
     );
 
   const paidAmount =
     paid.reduce(
-      (sum,row) => sum + Number(row.amount || 0),
+      (sum,row) =>
+        sum + Number(row.amount || 0),
       0
     );
 
-  document.getElementById("pendingCount").textContent =
+  document.getElementById(
+    "pendingCount"
+  ).textContent =
     pending.length;
 
-  document.getElementById("pendingAmount").textContent =
+  document.getElementById(
+    "pendingAmount"
+  ).textContent =
     money(pendingAmount);
 
-  document.getElementById("paidCount").textContent =
+  document.getElementById(
+    "paidCount"
+  ).textContent =
     paid.length;
 
-  document.getElementById("paidAmount").textContent =
+  document.getElementById(
+    "paidAmount"
+  ).textContent =
     money(paidAmount);
 }
 
 /* =========================================================
-   RENDER
+   RENDER WITHDRAWALS
 ========================================================= */
 
 function renderWithdrawals(){
 
   const body =
-    document.getElementById("withdrawalsBody");
+    document.getElementById(
+      "withdrawalsBody"
+    );
 
   const search =
-    document.getElementById("searchInput")
+    document
+      .getElementById("searchInput")
       .value
       .trim()
       .toLowerCase();
 
   const status =
-    document.getElementById("statusFilter").value;
+    document
+      .getElementById("statusFilter")
+      .value
+      .toLowerCase();
 
   const method =
-    document.getElementById("methodFilter").value;
+    document
+      .getElementById("methodFilter")
+      .value
+      .toLowerCase();
 
   const filtered =
     withdrawals.filter(row => {
@@ -1021,19 +1583,29 @@ function renderWithdrawals(){
         profiles[row.user_id] || {};
 
       const name =
-        String(profile.full_name || "").toLowerCase();
+        String(
+          profile.full_name || ""
+        ).toLowerCase();
 
       const userId =
-        String(row.user_id || "").toLowerCase();
+        String(
+          row.user_id || ""
+        ).toLowerCase();
 
       const withdrawalId =
-        String(row.id || "").toLowerCase();
+        String(
+          row.id || ""
+        ).toLowerCase();
 
       const rowStatus =
-        String(row.status || "").toLowerCase();
+        String(
+          row.status || ""
+        ).toLowerCase();
 
       const rowMethod =
-        String(row.method || "").toLowerCase();
+        String(
+          row.method || ""
+        ).toLowerCase();
 
       const matchesSearch =
         !search ||
@@ -1054,25 +1626,37 @@ function renderWithdrawals(){
         matchesStatus &&
         matchesMethod
       );
+
     });
 
-  document.getElementById("requestCount").textContent =
+  document.getElementById(
+    "requestCount"
+  ).textContent =
     `${filtered.length} request${filtered.length === 1 ? "" : "s"}`;
 
   if(!filtered.length){
 
     body.innerHTML = `
       <tr>
+
         <td colspan="10">
+
           <div class="empty">
 
             <div class="empty-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
                 <path d="M3 7h18"/>
                 <path d="M5 7V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/>
                 <path d="M4 7h16v13H4z"/>
                 <path d="M9 13h6"/>
               </svg>
+
             </div>
 
             <div class="empty-title">
@@ -1084,7 +1668,9 @@ function renderWithdrawals(){
             </div>
 
           </div>
+
         </td>
+
       </tr>
     `;
 
@@ -1098,17 +1684,24 @@ function renderWithdrawals(){
         profiles[row.user_id] || {};
 
       const status =
-        String(row.status || "pending")
-          .toLowerCase();
+        String(
+          row.status || "pending"
+        ).toLowerCase();
 
       const method =
-        String(row.method || "—");
+        String(
+          row.method || "—"
+        );
 
       const amount =
-        Number(row.amount || 0);
+        Number(
+          row.amount || 0
+        );
 
       const fee =
-        Number(row.fee || 0);
+        Number(
+          row.fee || 0
+        );
 
       const net =
         row.net_amount !== null &&
@@ -1117,47 +1710,61 @@ function renderWithdrawals(){
           : amount - fee;
 
       const details =
-        row.payment_details || "—";
+        row.payment_details ||
+        "—";
 
       const network =
-        row.network || "—";
+        row.network ||
+        "—";
 
-      const actionButtons =
-        status === "pending"
-          ? `
-            <button
-              class="action-btn paid"
-              onclick="requestAction(${row.id}, 'paid')"
-            >
-              Mark Paid
-            </button>
+      let actionButtons = "—";
 
-            <button
-              class="action-btn cancel"
-              onclick="requestAction(${row.id}, 'cancelled')"
-            >
-              Cancel
-            </button>
-          `
-          : "—";
+      if(status === "pending"){
+
+        actionButtons = `
+          <button
+            class="action-btn paid"
+            onclick="requestAction(${row.id}, 'paid')"
+          >
+            Mark Paid
+          </button>
+
+          <button
+            class="action-btn cancel"
+            onclick="requestAction(${row.id}, 'cancelled')"
+          >
+            Cancel
+          </button>
+        `;
+
+      }
 
       return `
         <tr>
 
           <td>
+
             <div class="user-name">
-              ${escapeHtml(profile.full_name || "Unknown User")}
+              ${escapeHtml(
+                profile.full_name ||
+                "Unknown User"
+              )}
             </div>
 
             <div class="user-id">
-              ${escapeHtml(row.user_id || "")}
+              ${escapeHtml(
+                row.user_id || ""
+              )}
             </div>
+
           </td>
 
           <td>
+
             <span class="amount">
               ${money(amount)}
             </span>
+
           </td>
 
           <td>
@@ -1165,9 +1772,11 @@ function renderWithdrawals(){
           </td>
 
           <td>
+
             <span class="net">
               ${money(net)}
             </span>
+
           </td>
 
           <td>
@@ -1175,31 +1784,41 @@ function renderWithdrawals(){
           </td>
 
           <td>
+
             <div class="details">
               ${escapeHtml(details)}
             </div>
+
           </td>
 
           <td>
+
             <div class="network">
               ${escapeHtml(network)}
             </div>
+
           </td>
 
           <td>
+
             <span class="status ${escapeHtml(status)}">
               ${escapeHtml(status)}
             </span>
+
           </td>
 
           <td>
-            ${formatDate(row.created_at)}
+            ${formatDate(
+              row.created_at
+            )}
           </td>
 
           <td>
+
             <div class="actions">
               ${actionButtons}
             </div>
+
           </td>
 
         </tr>
@@ -1212,11 +1831,16 @@ function renderWithdrawals(){
    ACTION CONFIRMATION
 ========================================================= */
 
-function requestAction(id, action){
+function requestAction(
+  id,
+  action
+){
 
   const row =
     withdrawals.find(
-      item => Number(item.id) === Number(id)
+      item =>
+        Number(item.id) ===
+        Number(id)
     );
 
   if(!row) return;
@@ -1227,16 +1851,24 @@ function requestAction(id, action){
   };
 
   const modal =
-    document.getElementById("confirmModal");
+    document.getElementById(
+      "confirmModal"
+    );
 
   const title =
-    document.getElementById("modalTitle");
+    document.getElementById(
+      "modalTitle"
+    );
 
   const text =
-    document.getElementById("modalText");
+    document.getElementById(
+      "modalText"
+    );
 
   const confirm =
-    document.getElementById("confirmAction");
+    document.getElementById(
+      "confirmAction"
+    );
 
   if(action === "paid"){
 
@@ -1265,9 +1897,12 @@ function requestAction(id, action){
 
     confirm.className =
       "modal-btn danger";
+
   }
 
-  modal.classList.add("show");
+  modal.classList.add(
+    "show"
+  );
 }
 
 /* =========================================================
@@ -1276,7 +1911,8 @@ function requestAction(id, action){
 
 async function processAction(){
 
-  if(!pendingAction) return;
+  if(!pendingAction)
+    return;
 
   const {
     id,
@@ -1284,25 +1920,41 @@ async function processAction(){
   } = pendingAction;
 
   const confirm =
-    document.getElementById("confirmAction");
+    document.getElementById(
+      "confirmAction"
+    );
 
   confirm.disabled = true;
-  confirm.textContent = "Processing...";
+
+  confirm.textContent =
+    "Processing...";
+
+  const {
+    data:{
+      user
+    }
+  } =
+    await supabaseClient.auth.getUser();
 
   const updateData = {
-    status: action,
-    reviewed_by: (
-      await supabaseClient.auth.getUser()
-    ).data.user?.id || null,
-    processed_at: new Date().toISOString()
+
+    status:action,
+
+    reviewed_by:
+      user?.id || null,
+
+    processed_at:
+      new Date().toISOString()
+
   };
 
   const {
     error
-  } = await supabaseClient
-    .from("withdrawals")
-    .update(updateData)
-    .eq("id", id);
+  } =
+    await supabaseClient
+      .from("withdrawals")
+      .update(updateData)
+      .eq("id",id);
 
   confirm.disabled = false;
 
@@ -1330,17 +1982,26 @@ function money(value){
   return "$" +
     Number(value || 0)
       .toFixed(2);
+
 }
 
 function formatDate(value){
 
-  if(!value) return "—";
+  if(!value)
+    return "—";
 
   const date =
     new Date(value);
 
-  if(Number.isNaN(date.getTime()))
+  if(
+    Number.isNaN(
+      date.getTime()
+    )
+  ){
+
     return "—";
+
+  }
 
   return date.toLocaleString(
     undefined,
@@ -1356,12 +2017,30 @@ function formatDate(value){
 
 function escapeHtml(value){
 
-  return String(value ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+  return String(
+    value ?? ""
+  )
+  .replaceAll(
+    "&",
+    "&amp;"
+  )
+  .replaceAll(
+    "<",
+    "&lt;"
+  )
+  .replaceAll(
+    ">",
+    "&gt;"
+  )
+  .replaceAll(
+    '"',
+    "&quot;"
+  )
+  .replaceAll(
+    "'",
+    "&#039;"
+  );
+
 }
 
 /* =========================================================
@@ -1371,36 +2050,50 @@ function escapeHtml(value){
 function closeModal(){
 
   document
-    .getElementById("confirmModal")
-    .classList.remove("show");
+    .getElementById(
+      "confirmModal"
+    )
+    .classList.remove(
+      "show"
+    );
 
   pendingAction = null;
+
 }
 
 document
-  .getElementById("cancelModal")
+  .getElementById(
+    "cancelModal"
+  )
   .addEventListener(
     "click",
     closeModal
   );
 
 document
-  .getElementById("confirmAction")
+  .getElementById(
+    "confirmAction"
+  )
   .addEventListener(
     "click",
     processAction
   );
 
 document
-  .getElementById("confirmModal")
+  .getElementById(
+    "confirmModal"
+  )
   .addEventListener(
     "click",
     event => {
 
       if(
-        event.target.id === "confirmModal"
+        event.target.id ===
+        "confirmModal"
       ){
+
         closeModal();
+
       }
 
     }
@@ -1411,28 +2104,36 @@ document
 ========================================================= */
 
 document
-  .getElementById("searchInput")
+  .getElementById(
+    "searchInput"
+  )
   .addEventListener(
     "input",
     renderWithdrawals
   );
 
 document
-  .getElementById("statusFilter")
+  .getElementById(
+    "statusFilter"
+  )
   .addEventListener(
     "change",
     renderWithdrawals
   );
 
 document
-  .getElementById("methodFilter")
+  .getElementById(
+    "methodFilter"
+  )
   .addEventListener(
     "change",
     renderWithdrawals
   );
 
 document
-  .getElementById("refreshBtn")
+  .getElementById(
+    "refreshBtn"
+  )
   .addEventListener(
     "click",
     loadWithdrawals
@@ -1447,7 +2148,8 @@ document
   const allowed =
     await requireAdmin();
 
-  if(!allowed) return;
+  if(!allowed)
+    return;
 
   await loadWithdrawals();
 
