@@ -455,17 +455,20 @@ main{
   color:var(--green);
 }
 
-.status.pending{
+.status.pending,
+.status.processing{
   background:#fff5d9;
   color:var(--warning);
 }
 
-body.dark .status.pending{
+body.dark .status.pending,
+body.dark .status.processing{
   background:#3b3017;
 }
 
 .status.failed,
 .status.cancelled,
+.status.canceled,
 .status.rejected{
   background:#fdeaea;
   color:var(--danger);
@@ -473,6 +476,7 @@ body.dark .status.pending{
 
 body.dark .status.failed,
 body.dark .status.cancelled,
+body.dark .status.canceled,
 body.dark .status.rejected{
   background:#3a1717;
 }
@@ -539,6 +543,7 @@ body.dark .status.rejected{
 /* RESPONSIVE */
 
 @media(max-width:480px){
+
   main{
     padding-left:13px;
     padding-right:13px;
@@ -592,7 +597,11 @@ body.dark .status.rejected{
 
   <div class="header-right">
 
-    <button class="icon-btn" onclick="location.href='notifications.html'" aria-label="Notifications">
+    <button
+      class="icon-btn"
+      onclick="location.href='notifications.html'"
+      aria-label="Notifications"
+    >
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
         <path d="M10 21h4"/>
@@ -706,6 +715,7 @@ body.dark .status.rejected{
 <main>
 
   <h1 class="page-title">History</h1>
+
   <p class="page-subtitle">
     View your earnings, rewards, and withdrawal activity.
   </p>
@@ -743,6 +753,7 @@ body.dark .status.rejected{
         <option value="all">All status</option>
         <option value="completed">Completed</option>
         <option value="pending">Pending</option>
+        <option value="processing">Processing</option>
         <option value="failed">Failed</option>
         <option value="cancelled">Cancelled</option>
         <option value="rejected">Rejected</option>
@@ -816,26 +827,41 @@ body.dark .status.rejected{
 </div>
 
 <script>
-const SUPABASE_URL = "https://cetsxdkoauucxwsbdktl.supabase.co";
-const SUPABASE_KEY = "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
+const SUPABASE_URL =
+  "https://cetsxdkoauucxwsbdktl.supabase.co";
 
-const db = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+const SUPABASE_KEY =
+  "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
 
-const THEME_KEY = "tallybuck-theme";
+const db =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+const THEME_KEY =
+  "tallybuck-theme";
 
 let currentUser = null;
 let allHistory = [];
 
-const historyList = document.getElementById("historyList");
-const typeFilter = document.getElementById("typeFilter");
-const statusFilter = document.getElementById("statusFilter");
+const historyList =
+  document.getElementById("historyList");
 
-const totalEarnedEl = document.getElementById("totalEarned");
-const totalWithdrawnEl = document.getElementById("totalWithdrawn");
-const transactionCountEl = document.getElementById("transactionCount");
+const typeFilter =
+  document.getElementById("typeFilter");
+
+const statusFilter =
+  document.getElementById("statusFilter");
+
+const totalEarnedEl =
+  document.getElementById("totalEarned");
+
+const totalWithdrawnEl =
+  document.getElementById("totalWithdrawn");
+
+const transactionCountEl =
+  document.getElementById("transactionCount");
 
 /* =========================================================
    THEME
@@ -846,78 +872,146 @@ function applyTheme(theme){
   let finalTheme = theme;
 
   if(theme === "system"){
-    finalTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
+
+    finalTheme =
+      window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches
+        ? "dark"
+        : "light";
   }
 
-  document.body.classList.toggle("dark", finalTheme === "dark");
+  document.body.classList.toggle(
+    "dark",
+    finalTheme === "dark"
+  );
 }
 
 function setTheme(theme){
-  localStorage.setItem(THEME_KEY, theme);
+
+  localStorage.setItem(
+    THEME_KEY,
+    theme
+  );
+
   applyTheme(theme);
-  document.getElementById("themeMenu").classList.remove("show");
+
+  document
+    .getElementById("themeMenu")
+    .classList.remove("show");
 }
 
-const savedTheme = localStorage.getItem(THEME_KEY) || "system";
+const savedTheme =
+  localStorage.getItem(THEME_KEY) ||
+  "system";
+
 applyTheme(savedTheme);
 
-document.getElementById("themeBtn").addEventListener("click", function(e){
-  e.stopPropagation();
-  document.getElementById("themeMenu").classList.toggle("show");
-});
+document
+  .getElementById("themeBtn")
+  .addEventListener("click", function(e){
 
-document.querySelectorAll(".theme-option").forEach(function(button){
-  button.addEventListener("click", function(){
-    setTheme(this.dataset.theme);
+    e.stopPropagation();
+
+    document
+      .getElementById("themeMenu")
+      .classList.toggle("show");
   });
-});
 
-document.addEventListener("click", function(e){
-  if(!e.target.closest(".theme-wrap")){
-    document.getElementById("themeMenu").classList.remove("show");
+document
+  .querySelectorAll(".theme-option")
+  .forEach(function(button){
+
+    button.addEventListener(
+      "click",
+      function(){
+
+        setTheme(
+          this.dataset.theme
+        );
+      }
+    );
+  });
+
+document.addEventListener(
+  "click",
+  function(e){
+
+    if(!e.target.closest(".theme-wrap")){
+
+      document
+        .getElementById("themeMenu")
+        .classList.remove("show");
+    }
   }
-});
+);
 
-window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function(){
-  const theme = localStorage.getItem(THEME_KEY) || "system";
+window
+  .matchMedia(
+    "(prefers-color-scheme: dark)"
+  )
+  .addEventListener(
+    "change",
+    function(){
 
-  if(theme === "system"){
-    applyTheme("system");
-  }
-});
+      const theme =
+        localStorage.getItem(THEME_KEY) ||
+        "system";
+
+      if(theme === "system"){
+        applyTheme("system");
+      }
+    }
+  );
 
 /* =========================================================
    SIDE MENU
 ========================================================= */
 
-const menuBtn = document.getElementById("menuBtn");
-const sideMenu = document.getElementById("sideMenu");
-const menuOverlay = document.getElementById("menuOverlay");
+const menuBtn =
+  document.getElementById("menuBtn");
+
+const sideMenu =
+  document.getElementById("sideMenu");
+
+const menuOverlay =
+  document.getElementById("menuOverlay");
 
 function openMenu(){
+
   sideMenu.classList.add("open");
   menuOverlay.classList.add("show");
 }
 
 function closeMenu(){
+
   sideMenu.classList.remove("open");
   menuOverlay.classList.remove("show");
 }
 
-menuBtn.addEventListener("click", openMenu);
-menuOverlay.addEventListener("click", closeMenu);
+menuBtn.addEventListener(
+  "click",
+  openMenu
+);
+
+menuOverlay.addEventListener(
+  "click",
+  closeMenu
+);
 
 /* =========================================================
    HELPERS
 ========================================================= */
 
 function money(value){
-  return "$" + Number(value || 0).toFixed(2);
+
+  return "$" +
+    Number(value || 0)
+      .toFixed(2);
 }
 
 function escapeHtml(value){
+
   return String(value ?? "")
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
@@ -927,21 +1021,26 @@ function escapeHtml(value){
 }
 
 function formatDate(date){
+
   if(!date) return "";
 
-  const d = new Date(date);
+  const d =
+    new Date(date);
 
   if(Number.isNaN(d.getTime())){
     return "";
   }
 
-  return d.toLocaleString([], {
-    year:"numeric",
-    month:"short",
-    day:"numeric",
-    hour:"numeric",
-    minute:"2-digit"
-  });
+  return d.toLocaleString(
+    [],
+    {
+      year:"numeric",
+      month:"short",
+      day:"numeric",
+      hour:"numeric",
+      minute:"2-digit"
+    }
+  );
 }
 
 /* =========================================================
@@ -950,20 +1049,32 @@ function formatDate(date){
 
 async function checkUser(){
 
-  const { data, error } = await db.auth.getSession();
+  const {
+    data,
+    error
+  } =
+    await db.auth.getSession();
 
   if(error){
+
     console.error(error);
-    location.href = "login.html";
+
+    location.href =
+      "login.html";
+
     return;
   }
 
   if(!data.session){
-    location.href = "login.html";
+
+    location.href =
+      "login.html";
+
     return;
   }
 
-  currentUser = data.session.user;
+  currentUser =
+    data.session.user;
 
   await loadHistory();
 }
@@ -982,23 +1093,59 @@ async function loadHistory(){
     const [
       transactionsResult,
       withdrawalsResult
-    ] = await Promise.all([
+    ] =
+      await Promise.all([
 
-      db
-        .from("wallet_transactions")
-        .select("*")
-        .eq("user_id", currentUser.id)
-        .order("created_at", { ascending:false })
-        .limit(100),
+        db
+          .from("wallet_transactions")
+          .select(`
+            id,
+            user_id,
+            type,
+            amount,
+            reference_type,
+            reference_id,
+            description,
+            created_at
+          `)
+          .eq(
+            "user_id",
+            currentUser.id
+          )
+          .order(
+            "created_at",
+            {
+              ascending:false
+            }
+          )
+          .limit(100),
 
-      db
-        .from("withdrawals")
-        .select("id,amount,fee,net_amount,method,network,status,created_at")
-        .eq("user_id", currentUser.id)
-        .order("created_at", { ascending:false })
-        .limit(100)
+        db
+          .from("withdrawals")
+          .select(`
+            id,
+            amount,
+            fee,
+            net_amount,
+            method,
+            network,
+            status,
+            created_at,
+            processed_at
+          `)
+          .eq(
+            "user_id",
+            currentUser.id
+          )
+          .order(
+            "created_at",
+            {
+              ascending:false
+            }
+          )
+          .limit(100)
 
-    ]);
+      ]);
 
     if(transactionsResult.error){
       throw transactionsResult.error;
@@ -1008,79 +1155,174 @@ async function loadHistory(){
       throw withdrawalsResult.error;
     }
 
-    const transactions = transactionsResult.data || [];
-    const withdrawals = withdrawalsResult.data || [];
+    const transactions =
+      transactionsResult.data || [];
+
+    const withdrawals =
+      withdrawalsResult.data || [];
 
     allHistory = [];
 
+    /*
+      Wallet transactions represent actual wallet movements.
+
+      Withdrawal records are handled separately because their
+      status belongs to the withdrawals table.
+
+      Therefore withdrawal-related wallet transaction rows are
+      intentionally excluded here to prevent duplicate history.
+    */
+
     transactions.forEach(function(item){
 
-      const amount = Number(item.amount || 0);
+      const type =
+        String(item.type || "")
+          .toLowerCase();
 
-      let title = "Wallet transaction";
-
-      if(item.description){
-        title = item.description;
-      }else if(item.type){
-        title = formatTransactionType(item.type);
+      if(
+        type === "withdrawal_pending" ||
+        type === "withdrawal_paid" ||
+        type === "withdrawal_cancelled" ||
+        type === "withdrawal_canceled"
+      ){
+        return;
       }
 
-      const status =
-        item.status ||
-        "completed";
+      const amount =
+        Number(item.amount || 0);
+
+      let title =
+        "Wallet transaction";
+
+      if(item.description){
+
+        title =
+          item.description;
+
+      }else if(item.type){
+
+        title =
+          formatTransactionType(
+            item.type
+          );
+      }
 
       allHistory.push({
-        id:"transaction-" + item.id,
-        type:"earning",
-        title:title,
-        amount:amount,
-        status:status,
-        created_at:item.created_at,
-        positive:amount >= 0
+
+        id:
+          "transaction-" +
+          item.id,
+
+        type:
+          "earning",
+
+        title:
+          title,
+
+        amount:
+          amount,
+
+        status:
+          "completed",
+
+        created_at:
+          item.created_at,
+
+        positive:
+          amount >= 0
       });
 
     });
 
+    /*
+      Withdrawals get their real status directly from
+      public.withdrawals.
+    */
+
     withdrawals.forEach(function(item){
 
-      const amount = Number(item.amount || 0);
+      const amount =
+        Number(item.amount || 0);
 
-      let title = "Withdrawal";
+      let title =
+        "Withdrawal";
 
-      if(item.method === "bank"){
-        title = "Nigeria Bank withdrawal";
-      }
+      const method =
+        String(item.method || "")
+          .toLowerCase();
 
-      if(item.method === "crypto"){
-        title = "Crypto withdrawal";
+      if(method === "bank"){
+
+        title =
+          "Nigeria Bank withdrawal";
+
+      }else if(method === "crypto"){
+
+        title =
+          "Crypto withdrawal";
 
         if(item.network){
-          title += " · " + item.network;
+
+          title +=
+            " · " +
+            item.network;
         }
       }
 
       allHistory.push({
-        id:"withdrawal-" + item.id,
-        type:"withdrawal",
-        title:title,
-        amount:-Math.abs(amount),
-        status:item.status || "pending",
-        created_at:item.created_at,
-        positive:false
+
+        id:
+          "withdrawal-" +
+          item.id,
+
+        type:
+          "withdrawal",
+
+        title:
+          title,
+
+        amount:
+          -Math.abs(amount),
+
+        status:
+          normalizeStatus(
+            item.status || "pending"
+          ),
+
+        created_at:
+          item.created_at,
+
+        processed_at:
+          item.processed_at,
+
+        positive:
+          false
       });
 
     });
 
-    allHistory.sort(function(a,b){
-      return new Date(b.created_at) - new Date(a.created_at);
-    });
+    allHistory.sort(
+      function(a,b){
+
+        return new Date(
+          b.created_at
+        ) -
+        new Date(
+          a.created_at
+        );
+      }
+    );
 
     updateSummary();
+
     renderHistory();
 
   }catch(error){
 
-    console.error("History error:", error);
+    console.error(
+      "History error:",
+      error
+    );
 
     historyList.innerHTML =
       '<div class="error-message">' +
@@ -1095,15 +1337,19 @@ async function loadHistory(){
 
 function formatTransactionType(type){
 
-  const value = String(type || "")
-    .replace(/_/g," ")
-    .trim();
+  const value =
+    String(type || "")
+      .replace(/_/g," ")
+      .trim();
 
   if(!value){
     return "Wallet transaction";
   }
 
-  return value.charAt(0).toUpperCase() + value.slice(1);
+  return (
+    value.charAt(0).toUpperCase() +
+    value.slice(1)
+  );
 }
 
 /* =========================================================
@@ -1117,19 +1363,46 @@ function updateSummary(){
 
   allHistory.forEach(function(item){
 
-    if(item.type === "earning" && item.amount > 0){
-      totalEarned += item.amount;
+    /*
+      Earnings are positive wallet rewards.
+    */
+
+    if(
+      item.type === "earning" &&
+      item.amount > 0
+    ){
+
+      totalEarned +=
+        item.amount;
     }
 
-    if(item.type === "withdrawal"){
-      totalWithdrawn += Math.abs(item.amount);
+    /*
+      Only PAID withdrawals count as
+      actually withdrawn.
+
+      Pending and cancelled withdrawals
+      do not count here.
+    */
+
+    if(
+      item.type === "withdrawal" &&
+      normalizeStatus(item.status) === "completed"
+    ){
+
+      totalWithdrawn +=
+        Math.abs(item.amount);
     }
 
   });
 
-  totalEarnedEl.textContent = money(totalEarned);
-  totalWithdrawnEl.textContent = money(totalWithdrawn);
-  transactionCountEl.textContent = allHistory.length;
+  totalEarnedEl.textContent =
+    money(totalEarned);
+
+  totalWithdrawnEl.textContent =
+    money(totalWithdrawn);
+
+  transactionCountEl.textContent =
+    allHistory.length;
 }
 
 /* =========================================================
@@ -1138,98 +1411,140 @@ function updateSummary(){
 
 function renderHistory(){
 
-  const typeValue = typeFilter.value;
-  const statusValue = statusFilter.value;
+  const typeValue =
+    typeFilter.value;
 
-  const filtered = allHistory.filter(function(item){
+  const statusValue =
+    statusFilter.value;
 
-    const typeMatch =
-      typeValue === "all" ||
-      item.type === typeValue;
+  const filtered =
+    allHistory.filter(
+      function(item){
 
-    const statusMatch =
-      statusValue === "all" ||
-      normalizeStatus(item.status) === statusValue;
+        const typeMatch =
+          typeValue === "all" ||
+          item.type === typeValue;
 
-    return typeMatch && statusMatch;
-  });
+        const statusMatch =
+          statusValue === "all" ||
+          normalizeStatus(
+            item.status
+          ) === statusValue;
+
+        return (
+          typeMatch &&
+          statusMatch
+        );
+      }
+    );
 
   if(filtered.length === 0){
 
     historyList.innerHTML =
-      '<div class="empty">No transactions found.</div>';
+      '<div class="empty">' +
+      'No transactions found.' +
+      '</div>';
 
     return;
   }
 
-  historyList.innerHTML = filtered.map(function(item){
+  historyList.innerHTML =
+    filtered.map(
+      function(item){
 
-    const isWithdrawal = item.type === "withdrawal";
+        const isWithdrawal =
+          item.type === "withdrawal";
 
-    const icon = isWithdrawal
-      ? `
-        <svg viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2">
-          <path d="M12 5v14"/>
-          <path d="M7 14l5 5 5-5"/>
-        </svg>
-      `
-      : `
-        <svg viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2">
-          <path d="M12 3v18"/>
-          <path d="M7 8l5-5 5 5"/>
-          <path d="M7 16l5 5 5-5"/>
-        </svg>
-      `;
+        const icon =
+          isWithdrawal
 
-    const status = normalizeStatus(item.status);
+          ? `
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M12 5v14"/>
+              <path d="M7 14l5 5 5-5"/>
+            </svg>
+          `
 
-    const amountClass =
-      item.amount >= 0
-        ? "positive"
-        : "negative";
+          : `
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M12 21V3"/>
+              <path d="M7 8l5-5 5 5"/>
+            </svg>
+          `;
 
-    const amountText =
-      item.amount >= 0
-        ? "+" + money(item.amount)
-        : "-" + money(Math.abs(item.amount));
+        const status =
+          normalizeStatus(
+            item.status
+          );
 
-    return `
-      <div class="history-item">
+        const amountClass =
+          item.amount >= 0
+            ? "positive"
+            : "negative";
 
-        <div class="history-icon">
-          ${icon}
-        </div>
+        const amountText =
+          item.amount >= 0
+            ? "+" +
+              money(item.amount)
+            : "-" +
+              money(
+                Math.abs(
+                  item.amount
+                )
+              );
 
-        <div class="history-content">
+        return `
+          <div class="history-item">
 
-          <div class="history-title">
-            ${escapeHtml(item.title)}
+            <div class="history-icon">
+              ${icon}
+            </div>
+
+            <div class="history-content">
+
+              <div class="history-title">
+                ${escapeHtml(
+                  item.title
+                )}
+              </div>
+
+              <div class="history-date">
+                ${escapeHtml(
+                  formatDate(
+                    item.created_at
+                  )
+                )}
+              </div>
+
+            </div>
+
+            <div class="history-right">
+
+              <div class="history-amount ${amountClass}">
+                ${amountText}
+              </div>
+
+              <span class="status ${escapeHtml(status)}">
+                ${escapeHtml(status)}
+              </span>
+
+            </div>
+
           </div>
+        `;
 
-          <div class="history-date">
-            ${escapeHtml(formatDate(item.created_at))}
-          </div>
-
-        </div>
-
-        <div class="history-right">
-
-          <div class="history-amount ${amountClass}">
-            ${amountText}
-          </div>
-
-          <span class="status ${escapeHtml(status)}">
-            ${escapeHtml(status)}
-          </span>
-
-        </div>
-
-      </div>
-    `;
-
-  }).join("");
+      }
+    ).join("");
 }
 
 /* =========================================================
@@ -1238,14 +1553,55 @@ function renderHistory(){
 
 function normalizeStatus(status){
 
-  const value = String(status || "completed").toLowerCase();
+  const value =
+    String(
+      status || "completed"
+    ).toLowerCase();
 
   if(
     value === "success" ||
     value === "successful" ||
-    value === "approved"
+    value === "approved" ||
+    value === "paid"
   ){
+
     return "completed";
+  }
+
+  if(value === "canceled"){
+    return "cancelled";
+  }
+
+  if(value === "processing"){
+    return "processing";
+  }
+
+  if(
+    value === "pending"
+  ){
+
+    return "pending";
+  }
+
+  if(
+    value === "failed"
+  ){
+
+    return "failed";
+  }
+
+  if(
+    value === "rejected"
+  ){
+
+    return "rejected";
+  }
+
+  if(
+    value === "cancelled"
+  ){
+
+    return "cancelled";
   }
 
   return value;
@@ -1255,29 +1611,51 @@ function normalizeStatus(status){
    FILTERS
 ========================================================= */
 
-typeFilter.addEventListener("change", renderHistory);
-statusFilter.addEventListener("change", renderHistory);
+typeFilter.addEventListener(
+  "change",
+  renderHistory
+);
+
+statusFilter.addEventListener(
+  "change",
+  renderHistory
+);
 
 /* =========================================================
    LOGOUT
 ========================================================= */
 
-document.getElementById("logoutBtn").addEventListener("click", async function(){
+document
+  .getElementById("logoutBtn")
+  .addEventListener(
+    "click",
+    async function(){
 
-  const button = this;
+      const button =
+        this;
 
-  button.disabled = true;
+      button.disabled =
+        true;
 
-  const { error } = await db.auth.signOut();
+      const {
+        error
+      } =
+        await db.auth.signOut();
 
-  if(error){
-    console.error(error);
-    button.disabled = false;
-    return;
-  }
+      if(error){
 
-  location.href = "login.html";
-});
+        console.error(error);
+
+        button.disabled =
+          false;
+
+        return;
+      }
+
+      location.href =
+        "login.html";
+    }
+  );
 
 /* =========================================================
    START
