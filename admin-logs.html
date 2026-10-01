@@ -14,15 +14,14 @@
   --panel:#0d1914;
   --panel2:#111f19;
   --border:#1d3328;
+  --text:#f3f7fa;
+  --muted:#8ea0ad;
   --green:#079447;
   --green2:#0bbf61;
   --green-dark:#063f2d;
-  --text:#f2f7f4;
-  --muted:#8ea399;
-  --danger:#ef4444;
-  --warning:#f59e0b;
-  --blue:#3b82f6;
-  --white:#ffffff;
+  --red:#ff6474;
+  --gold:#e6b85c;
+  --shadow:0 12px 35px rgba(0,0,0,.25);
 }
 
 *{
@@ -31,11 +30,15 @@
   padding:0;
 }
 
+html,body{
+  min-height:100%;
+}
+
 body{
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   background:var(--bg);
   color:var(--text);
-  min-height:100vh;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  overflow-x:hidden;
 }
 
 button,
@@ -53,9 +56,9 @@ a{
   text-decoration:none;
 }
 
-/* =========================
+/* =========================================================
    SIDEBAR
-========================= */
+========================================================= */
 
 .sidebar{
   position:fixed;
@@ -65,76 +68,97 @@ a{
   width:255px;
   background:var(--sidebar);
   border-right:1px solid var(--border);
-  padding:22px 14px;
   z-index:1000;
-  overflow-y:auto;
-}
-
-.logo{
   display:flex;
-  align-items:center;
-  gap:10px;
-  padding:4px 12px 25px;
-  font-size:22px;
-  font-weight:800;
-  color:#fff;
+  flex-direction:column;
+  transition:transform .25s ease;
 }
 
-.logo-mark{
-  width:34px;
-  height:34px;
-  border-radius:10px;
-  background:var(--green);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 8px 24px rgba(7,148,71,.22);
-}
-
-.logo-mark svg{
-  width:20px;
-  height:20px;
-  stroke:#fff;
-  fill:none;
-  stroke-width:2;
-}
-
-.nav-section{
-  margin:18px 10px 8px;
-  color:#53665c;
-  font-size:10px;
-  font-weight:800;
-  text-transform:uppercase;
-  letter-spacing:.09em;
-}
-
-.nav-link{
+.brand{
+  height:76px;
   display:flex;
   align-items:center;
   gap:12px;
-  padding:11px 12px;
-  margin:3px 0;
-  border-radius:9px;
-  color:#91a39a;
+  padding:0 22px;
+  border-bottom:1px solid var(--border);
+}
+
+.brand-mark{
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  background:linear-gradient(135deg,var(--green),var(--green2));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:21px;
+  font-weight:800;
+  box-shadow:0 8px 20px rgba(7,148,71,.22);
+}
+
+.brand-text{
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:-.4px;
+}
+
+.nav{
+  flex:1;
+  overflow-y:auto;
+  padding:18px 12px;
+}
+
+.nav-section{
+  margin:0 10px 9px;
+  color:#60776b;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+}
+
+.nav-group{
+  margin-bottom:20px;
+}
+
+.nav-link{
+  min-height:42px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 12px;
+  margin-bottom:4px;
+  border-radius:10px;
+  color:#9aaca3;
   font-size:13px;
   font-weight:600;
-  transition:.18s ease;
+  transition:.2s ease;
 }
 
 .nav-link:hover{
-  background:#102019;
+  background:rgba(7,148,71,.08);
   color:#fff;
 }
 
 .nav-link.active{
-  background:rgba(7,148,71,.16);
-  color:#43d77f;
+  background:rgba(7,148,71,.15);
+  color:#fff;
+  box-shadow:inset 3px 0 0 var(--green2);
 }
 
-.nav-link svg{
+.nav-icon{
+  width:19px;
+  height:19px;
+  flex:0 0 19px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.nav-icon svg{
   width:18px;
   height:18px;
-  flex:none;
   stroke:currentColor;
   fill:none;
   stroke-width:1.8;
@@ -142,177 +166,244 @@ a{
   stroke-linejoin:round;
 }
 
-.logout{
-  margin-top:18px;
+.admin-profile{
+  padding:14px;
   border-top:1px solid var(--border);
-  padding-top:16px;
 }
 
-/* =========================
-   MOBILE HEADER
-========================= */
-
-.mobile-header{
-  display:none;
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  height:64px;
-  background:rgba(8,20,15,.96);
-  border-bottom:1px solid var(--border);
-  z-index:900;
+.admin-profile-inner{
+  display:flex;
   align-items:center;
-  justify-content:space-between;
-  padding:0 16px;
-  backdrop-filter:blur(12px);
-}
-
-.mobile-title{
-  font-size:17px;
-  font-weight:800;
-}
-
-.menu-btn{
-  width:40px;
-  height:40px;
-  border:1px solid var(--border);
+  gap:10px;
+  padding:10px;
+  border-radius:12px;
   background:var(--panel);
+}
+
+.admin-avatar{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:var(--green-dark);
   color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  font-size:14px;
+  flex:0 0 38px;
+}
+
+.admin-details{
+  min-width:0;
+  flex:1;
+}
+
+.admin-name{
+  color:#fff;
+  font-size:12px;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.admin-role{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:2px;
+}
+
+.logout-btn{
+  width:34px;
+  height:34px;
+  border:0;
   border-radius:9px;
+  background:transparent;
+  color:#81948b;
   display:flex;
   align-items:center;
   justify-content:center;
 }
 
-.menu-btn svg{
-  width:20px;
-  height:20px;
-  stroke:currentColor;
-  fill:none;
-  stroke-width:2;
+.logout-btn:hover{
+  color:var(--red);
+  background:rgba(255,100,116,.08);
 }
 
-/* =========================
-   OVERLAY
-========================= */
+.logout-btn svg{
+  width:18px;
+  height:18px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+/* =========================================================
+   MOBILE OVERLAY
+========================================================= */
 
 .overlay{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.62);
-  z-index:950;
+  background:rgba(0,0,0,.55);
+  z-index:900;
 }
 
 .overlay.show{
   display:block;
 }
 
-/* =========================
+/* =========================================================
    MAIN
-========================= */
+========================================================= */
 
 .main{
   margin-left:255px;
   min-height:100vh;
-  padding:28px;
 }
 
+/* =========================================================
+   TOPBAR
+========================================================= */
+
 .topbar{
+  height:76px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:20px;
-  margin-bottom:26px;
+  padding:0 30px;
+  border-bottom:1px solid var(--border);
+  background:rgba(7,17,13,.92);
+  position:sticky;
+  top:0;
+  z-index:500;
+  backdrop-filter:blur(12px);
 }
 
-.page-title h1{
-  font-size:27px;
-  line-height:1.15;
+.topbar-left{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+
+.page-title{
+  font-size:19px;
   font-weight:800;
+  letter-spacing:-.3px;
 }
 
-.page-title p{
+.page-subtitle{
   color:var(--muted);
-  font-size:13px;
-  margin-top:7px;
+  font-size:12px;
+  margin-top:3px;
 }
 
 .system-status{
   display:flex;
   align-items:center;
   gap:8px;
-  border:1px solid var(--border);
-  background:var(--panel);
-  border-radius:999px;
-  padding:8px 13px;
-  color:#a7b8af;
+  color:#a9b9b1;
   font-size:12px;
   font-weight:600;
 }
 
 .status-dot{
-  width:7px;
-  height:7px;
-  background:#18c56a;
+  width:8px;
+  height:8px;
   border-radius:50%;
-  box-shadow:0 0 0 4px rgba(24,197,106,.1);
+  background:var(--green2);
+  box-shadow:0 0 0 4px rgba(11,191,97,.08);
 }
 
-/* =========================
-   STATS
-========================= */
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:14px;
-  margin-bottom:20px;
+.mobile-menu{
+  display:none;
+  width:38px;
+  height:38px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  background:var(--panel);
+  color:#fff;
+  align-items:center;
+  justify-content:center;
 }
 
-.stat{
+.mobile-menu svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content{
+  width:100%;
+  max-width:1500px;
+  margin:0 auto;
+  padding:28px 30px 45px;
+}
+
+.error-box{
+  display:none;
+  padding:13px 15px;
+  border:1px solid rgba(255,100,116,.25);
+  background:rgba(255,100,116,.08);
+  color:#ffadb7;
+  border-radius:11px;
+  margin-bottom:18px;
+  font-size:13px;
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.card{
   background:var(--panel);
   border:1px solid var(--border);
-  border-radius:13px;
-  padding:18px;
+  border-radius:15px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
 }
 
-.stat-label{
+.card-header{
+  min-height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  padding:18px 20px;
+  border-bottom:1px solid var(--border);
+}
+
+.card-title{
+  font-size:15px;
+  font-weight:800;
+}
+
+.card-subtitle{
   color:var(--muted);
   font-size:12px;
-  font-weight:600;
+  margin-top:4px;
 }
 
-.stat-value{
-  margin-top:8px;
-  font-size:25px;
-  font-weight:800;
-  letter-spacing:-.02em;
+.card-body{
+  padding:20px;
 }
 
-.stat-value.green{
-  color:#36d879;
-}
+/* =========================================================
+   LOG CONTROLS
+========================================================= */
 
-.stat-value.blue{
-  color:#60a5fa;
-}
-
-.stat-value.warning{
-  color:#fbbf24;
-}
-
-/* =========================
-   TOOLBAR
-========================= */
-
-.toolbar{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:13px;
-  padding:14px;
-  margin-bottom:16px;
+.controls{
   display:flex;
   align-items:center;
   gap:10px;
@@ -320,8 +411,6 @@ a{
 }
 
 .search-box{
-  flex:1;
-  min-width:220px;
   position:relative;
 }
 
@@ -332,54 +421,56 @@ a{
   transform:translateY(-50%);
   width:17px;
   height:17px;
-  stroke:#71847a;
+  stroke:#73877e;
   fill:none;
-  stroke-width:2;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  pointer-events:none;
 }
 
-.search-box input{
-  width:100%;
-  height:42px;
-  padding:0 13px 0 39px;
-  border-radius:9px;
+.search-input,
+.filter-select{
+  height:40px;
   border:1px solid var(--border);
   background:var(--panel2);
   color:#fff;
-  outline:none;
-}
-
-.search-box input:focus,
-select:focus{
-  border-color:#287f55;
-}
-
-select{
-  height:42px;
-  border:1px solid var(--border);
-  background:var(--panel2);
-  color:#dce8e1;
   border-radius:9px;
-  padding:0 12px;
   outline:none;
+}
+
+.search-input{
+  width:240px;
+  padding:0 12px 0 38px;
+}
+
+.filter-select{
+  padding:0 12px;
   min-width:145px;
 }
 
+.search-input:focus,
+.filter-select:focus{
+  border-color:var(--green);
+}
+
 .refresh-btn{
-  height:42px;
-  padding:0 14px;
+  height:40px;
+  padding:0 13px;
   border:1px solid var(--border);
-  background:var(--panel2);
-  color:#dce8e1;
   border-radius:9px;
+  background:var(--panel2);
+  color:#d5dfda;
   display:flex;
   align-items:center;
-  gap:8px;
+  gap:7px;
   font-size:12px;
   font-weight:700;
 }
 
 .refresh-btn:hover{
-  background:#172820;
+  border-color:var(--green);
+  color:#fff;
 }
 
 .refresh-btn svg{
@@ -387,166 +478,111 @@ select{
   height:16px;
   stroke:currentColor;
   fill:none;
-  stroke-width:2;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 
-/* =========================
+/* =========================================================
    TABLE
-========================= */
-
-.table-card{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:13px;
-  overflow:hidden;
-}
-
-.table-header{
-  padding:17px 18px;
-  border-bottom:1px solid var(--border);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-}
-
-.table-header h2{
-  font-size:15px;
-  font-weight:800;
-}
-
-.table-header span{
-  color:var(--muted);
-  font-size:12px;
-}
+========================================================= */
 
 .table-wrap{
+  width:100%;
   overflow-x:auto;
 }
 
 table{
   width:100%;
   border-collapse:collapse;
-  min-width:950px;
+  min-width:760px;
 }
 
-th{
+thead th{
   text-align:left;
-  color:#74877d;
+  padding:13px 20px;
+  color:#71867c;
   font-size:10px;
   text-transform:uppercase;
-  letter-spacing:.06em;
+  letter-spacing:.9px;
   font-weight:800;
-  padding:13px 16px;
-  background:#0b1712;
+  background:rgba(255,255,255,.015);
   border-bottom:1px solid var(--border);
-  white-space:nowrap;
 }
 
-td{
-  padding:15px 16px;
+tbody td{
+  padding:15px 20px;
   border-bottom:1px solid rgba(29,51,40,.65);
   font-size:12px;
-  color:#d9e5df;
-  vertical-align:top;
+  color:#dce5e1;
+  vertical-align:middle;
+}
+
+tbody tr:last-child td{
+  border-bottom:0;
 }
 
 tbody tr:hover{
-  background:rgba(255,255,255,.018);
+  background:rgba(7,148,71,.035);
 }
 
-.action-badge{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  padding:5px 8px;
-  border-radius:7px;
-  font-size:10px;
-  font-weight:800;
+.action-cell{
+  color:#fff;
+  font-weight:700;
+}
+
+.target-cell{
+  color:#9eafa7;
+}
+
+.date-cell{
+  color:#83958d;
   white-space:nowrap;
 }
 
-.action-badge.paid{
-  color:#4ade80;
-  background:rgba(34,197,94,.11);
-}
-
-.action-badge.cancelled{
-  color:#f87171;
-  background:rgba(239,68,68,.11);
-}
-
-.action-badge.task{
-  color:#60a5fa;
-  background:rgba(59,130,246,.11);
-}
-
-.action-badge.default{
-  color:#c4d0ca;
-  background:rgba(148,163,184,.1);
-}
-
-.admin-cell{
-  display:flex;
-  flex-direction:column;
-  gap:3px;
-}
-
-.admin-id{
-  color:#e8f0eb;
-  font-weight:700;
-}
-
-.sub-text{
-  color:#71847a;
+.status{
+  display:inline-flex;
+  align-items:center;
+  min-height:25px;
+  padding:4px 9px;
+  border-radius:999px;
   font-size:10px;
-  word-break:break-all;
-}
-
-.description{
-  max-width:360px;
-  line-height:1.55;
-  color:#c5d3cb;
-}
-
-.target{
-  display:flex;
-  flex-direction:column;
-  gap:3px;
-}
-
-.target-type{
-  color:#dce8e1;
-  font-weight:700;
+  font-weight:800;
   text-transform:capitalize;
 }
 
-.metadata-btn{
-  border:0;
-  background:transparent;
-  color:#42d87f;
-  font-size:11px;
-  font-weight:700;
-  padding:0;
-  margin-top:5px;
+.status-success{
+  color:#5de49a;
+  background:rgba(11,191,97,.10);
+  border:1px solid rgba(11,191,97,.18);
 }
 
-.metadata-btn:hover{
-  text-decoration:underline;
+.status-danger{
+  color:#ff8795;
+  background:rgba(255,100,116,.09);
+  border:1px solid rgba(255,100,116,.18);
+}
+
+.status-neutral{
+  color:#aab8b2;
+  background:rgba(142,160,173,.08);
+  border:1px solid rgba(142,160,173,.14);
 }
 
 .empty{
   padding:55px 20px;
   text-align:center;
-  color:#71847a;
+  color:var(--muted);
+  font-size:13px;
 }
 
 .empty-icon{
   width:46px;
   height:46px;
-  margin:0 auto 12px;
-  border-radius:12px;
-  background:#102019;
+  margin:0 auto 13px;
+  border-radius:13px;
+  background:rgba(7,148,71,.08);
+  color:var(--green2);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -555,257 +591,140 @@ tbody tr:hover{
 .empty-icon svg{
   width:22px;
   height:22px;
-  stroke:#597066;
+  stroke:currentColor;
   fill:none;
-  stroke-width:1.8;
+  stroke-width:1.7;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+/* =========================================================
+   FOOTER / COUNT
+========================================================= */
+
+.table-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  padding:14px 20px;
+  border-top:1px solid var(--border);
+  color:var(--muted);
+  font-size:11px;
 }
 
 .loading{
-  padding:50px;
+  color:var(--muted);
+  padding:40px 20px;
   text-align:center;
-  color:#71847a;
+  font-size:13px;
 }
 
-/* =========================
-   PAGINATION
-========================= */
-
-.pagination{
-  padding:13px 16px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  border-top:1px solid var(--border);
-}
-
-.page-info{
-  color:#74877d;
-  font-size:11px;
-}
-
-.page-buttons{
-  display:flex;
-  gap:7px;
-}
-
-.page-btn{
-  min-width:34px;
-  height:34px;
-  border-radius:8px;
-  border:1px solid var(--border);
-  background:var(--panel2);
-  color:#b8c8bf;
-  font-size:11px;
-  font-weight:700;
-}
-
-.page-btn:hover:not(:disabled){
-  background:#172820;
-}
-
-.page-btn:disabled{
-  opacity:.4;
-  cursor:not-allowed;
-}
-
-.page-btn.active{
-  background:var(--green);
-  border-color:var(--green);
-  color:#fff;
-}
-
-/* =========================
-   MODAL
-========================= */
-
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.68);
-  z-index:2000;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.modal.show{
-  display:flex;
-}
-
-.modal-box{
-  width:100%;
-  max-width:650px;
-  max-height:85vh;
-  overflow:auto;
-  background:#0d1914;
-  border:1px solid var(--border);
-  border-radius:15px;
-  box-shadow:0 30px 80px rgba(0,0,0,.45);
-}
-
-.modal-head{
-  padding:18px;
-  border-bottom:1px solid var(--border);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-}
-
-.modal-head h3{
-  font-size:15px;
-}
-
-.close-btn{
-  width:34px;
-  height:34px;
-  border:1px solid var(--border);
-  background:var(--panel2);
-  color:#a9b8b0;
-  border-radius:8px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.close-btn svg{
-  width:17px;
-  height:17px;
-  stroke:currentColor;
-  fill:none;
-  stroke-width:2;
-}
-
-.modal-body{
-  padding:18px;
-}
-
-.json-view{
-  margin:0;
-  background:#07110d;
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:15px;
-  color:#a8e8bd;
-  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
-  font-size:11px;
-  line-height:1.6;
-  white-space:pre-wrap;
-  word-break:break-word;
-}
-
-/* =========================
-   TOAST
-========================= */
-
-.toast{
-  position:fixed;
-  right:22px;
-  bottom:22px;
-  z-index:3000;
-  background:#102019;
-  border:1px solid var(--border);
-  color:#e7f1eb;
-  padding:12px 15px;
-  border-radius:10px;
-  font-size:12px;
-  font-weight:600;
-  box-shadow:0 15px 40px rgba(0,0,0,.35);
-  transform:translateY(20px);
-  opacity:0;
-  pointer-events:none;
-  transition:.2s ease;
-}
-
-.toast.show{
-  transform:translateY(0);
-  opacity:1;
-}
-
-/* =========================
+/* =========================================================
    RESPONSIVE
-========================= */
+========================================================= */
 
-@media(max-width:1100px){
-  .stats{
-    grid-template-columns:repeat(2,1fr);
+@media(max-width:1050px){
+  .content{
+    padding:25px 22px 40px;
+  }
+
+  .topbar{
+    padding:0 22px;
   }
 }
 
 @media(max-width:800px){
-
   .sidebar{
     transform:translateX(-100%);
-    transition:transform .22s ease;
-    box-shadow:20px 0 60px rgba(0,0,0,.35);
+    box-shadow:20px 0 50px rgba(0,0,0,.35);
   }
 
   .sidebar.open{
     transform:translateX(0);
   }
 
-  .mobile-header{
+  .main{
+    margin-left:0;
+  }
+
+  .mobile-menu{
     display:flex;
   }
 
-  .main{
-    margin-left:0;
-    padding:88px 15px 25px;
+  .topbar{
+    height:68px;
+    padding:0 16px;
   }
 
-  .topbar{
+  .page-title{
+    font-size:16px;
+  }
+
+  .page-subtitle{
     display:none;
   }
 
-  .stats{
-    grid-template-columns:repeat(2,1fr);
+  .system-status{
+    display:none;
   }
 
-  .toolbar{
-    align-items:stretch;
+  .content{
+    padding:20px 15px 35px;
   }
 
-  .search-box{
-    min-width:100%;
-  }
-
-  select,
-  .refresh-btn{
-    flex:1;
-  }
-
-}
-
-@media(max-width:480px){
-
-  .stats{
-    grid-template-columns:1fr 1fr;
-    gap:9px;
-  }
-
-  .stat{
-    padding:14px;
-  }
-
-  .stat-value{
-    font-size:20px;
-  }
-
-  .toolbar{
-    padding:11px;
-  }
-
-  .pagination{
+  .card-header{
     align-items:flex-start;
     flex-direction:column;
   }
 
-  .toast{
-    left:15px;
-    right:15px;
-    bottom:15px;
+  .controls{
+    width:100%;
+  }
+
+  .search-box{
+    width:100%;
+  }
+
+  .search-input{
+    width:100%;
+  }
+
+  .filter-select{
+    flex:1;
+    min-width:0;
+  }
+
+  .refresh-btn{
+    flex:0 0 auto;
+  }
+}
+
+@media(max-width:500px){
+  .card{
+    border-radius:13px;
+  }
+
+  .card-header{
+    padding:16px;
+  }
+
+  .card-body{
+    padding:16px;
+  }
+
+  .table-footer{
+    padding:13px 16px;
+  }
+
+  .filter-select{
+    width:100%;
+    flex:1 1 100%;
+  }
+
+  .refresh-btn{
+    width:100%;
+    justify-content:center;
   }
 }
 </style>
@@ -813,321 +732,310 @@ tbody tr:hover{
 
 <body>
 
-<!-- =========================
+<!-- =======================================================
      SIDEBAR
-========================= -->
+======================================================== -->
 
 <aside class="sidebar" id="sidebar">
 
-  <div class="logo">
-    <div class="logo-mark">
-      <svg viewBox="0 0 24 24">
-        <path d="M6 5h12M6 9h12M6 13h8M6 17h6"/>
-      </svg>
-    </div>
-    <span>TallyBuck</span>
+  <div class="brand">
+    <div class="brand-mark">T</div>
+    <div class="brand-text">TallyBuck</div>
   </div>
 
-  <div class="nav-section">Main</div>
+  <nav class="nav">
 
-  <a class="nav-link" href="admin.html">
-    <svg viewBox="0 0 24 24">
-      <rect x="3" y="3" width="7" height="7" rx="1"/>
-      <rect x="14" y="3" width="7" height="7" rx="1"/>
-      <rect x="3" y="14" width="7" height="7" rx="1"/>
-      <rect x="14" y="14" width="7" height="7" rx="1"/>
-    </svg>
-    Dashboard
-  </a>
+    <div class="nav-group">
+      <div class="nav-section">Overview</div>
 
-  <a class="nav-link" href="admin-users.html">
-    <svg viewBox="0 0 24 24">
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-      <circle cx="9" cy="7" r="4"/>
-      <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-    </svg>
-    Users
-  </a>
+      <a class="nav-link" href="admin-dashboard.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+          </svg>
+        </span>
+        Dashboard
+      </a>
 
-  <a class="nav-link" href="tasks.html">
-    <svg viewBox="0 0 24 24">
-      <path d="M9 11l3 3L22 4"/>
-      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-    </svg>
-    Offers
-  </a>
+      <a class="nav-link" href="admin-users.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </span>
+        Users
+      </a>
+    </div>
 
-  <a class="nav-link" href="admin-tasks.html">
-    <svg viewBox="0 0 24 24">
-      <path d="M8 6h13"/>
-      <path d="M8 12h13"/>
-      <path d="M8 18h13"/>
-      <path d="M3 6h.01"/>
-      <path d="M3 12h.01"/>
-      <path d="M3 18h.01"/>
-    </svg>
-    Manual Tasks
-  </a>
+    <div class="nav-group">
+      <div class="nav-section">Earning System</div>
 
-  <a class="nav-link" href="admin-submissions.html">
-    <svg viewBox="0 0 24 24">
-      <path d="M4 4h16v16H4z"/>
-      <path d="M8 9h8"/>
-      <path d="M8 13h6"/>
-      <path d="M8 17h4"/>
-    </svg>
-    Submissions
-  </a>
+      <a class="nav-link" href="tasks.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+            <path d="M8 8h8"></path>
+            <path d="M8 12h8"></path>
+            <path d="M8 16h5"></path>
+          </svg>
+        </span>
+        Offers
+      </a>
 
-  <a class="nav-link" href="admin-offers.html">
-    <svg viewBox="0 0 24 24">
-      <path d="M4 5h16v14H4z"/>
-      <path d="M8 9h8"/>
-      <path d="M8 13h5"/>
-    </svg>
-    Offer Completions
-  </a>
+      <a class="nav-link" href="admin-tasks.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M9 11l3 3L22 4"></path>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+        </span>
+        Manual Tasks
+      </a>
 
-  <a class="nav-link" href="admin-withdrawals.html">
-    <svg viewBox="0 0 24 24">
-      <rect x="3" y="5" width="18" height="14" rx="2"/>
-      <path d="M3 10h18"/>
-      <path d="M7 15h4"/>
-    </svg>
-    Withdrawals
-  </a>
+      <a class="nav-link" href="admin-submissions.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <path d="M8 13h8"></path>
+            <path d="M8 17h5"></path>
+          </svg>
+        </span>
+        Submissions
+      </a>
 
-  <div class="nav-section">Management</div>
+      <a class="nav-link" href="admin-offers.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-7"></path>
+            <path d="M2 7h20v5H2z"></path>
+            <path d="M12 7v14"></path>
+            <path d="M12 7H7.5a2.5 2.5 0 1 1 0-5C10 2 12 7 12 7z"></path>
+            <path d="M12 7h4.5a2.5 2.5 0 1 0 0-5C14 2 12 7 12 7z"></path>
+          </svg>
+        </span>
+        Offer Completions
+      </a>
+    </div>
 
-  <a class="nav-link" href="admin-payments.html">
-    <svg viewBox="0 0 24 24">
-      <rect x="2" y="5" width="20" height="14" rx="2"/>
-      <path d="M2 10h20"/>
-    </svg>
-    Payments
-  </a>
+    <div class="nav-group">
+      <div class="nav-section">Finance</div>
 
-  <a class="nav-link" href="admin-categories.html">
-    <svg viewBox="0 0 24 24">
-      <circle cx="8" cy="8" r="3"/>
-      <circle cx="16" cy="16" r="3"/>
-      <path d="M10.5 10.5l3 3"/>
-    </svg>
-    Categories
-  </a>
+      <a class="nav-link" href="admin-withdrawals.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2v20"></path>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7H14.5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+        </span>
+        Withdrawals
+      </a>
 
-  <a class="nav-link" href="admin-countries.html">
-    <svg viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="9"/>
-      <path d="M3 12h18"/>
-      <path d="M12 3c3 3 4 6 4 9s-1 6-4 9"/>
-      <path d="M12 3c-3 3-4 6-4 9s1 6 4 9"/>
-    </svg>
-    Countries
-  </a>
+      <a class="nav-link" href="admin-payments.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+            <path d="M2 10h20"></path>
+            <path d="M6 15h4"></path>
+          </svg>
+        </span>
+        Payments
+      </a>
+    </div>
 
-  <a class="nav-link" href="notifications.html">
-    <svg viewBox="0 0 24 24">
-      <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-      <path d="M10 21h4"/>
-    </svg>
-    Notifications
-  </a>
+    <div class="nav-group">
+      <div class="nav-section">Management</div>
 
-  <a class="nav-link" href="admin-settings.html">
-    <svg viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="3"/>
-      <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.41 1.41-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.04 1.56V20h-2v-.49a1.7 1.7 0 0 0-1.04-1.56 1.7 1.7 0 0 0-1.88.34l-.06.06-1.41-1.41.06-.06A1.7 1.7 0 0 0 9.4 15a1.7 1.7 0 0 0-1.56-1.04H7v-2h.84A1.7 1.7 0 0 0 9.4 10.9a1.7 1.7 0 0 0-.34-1.88L9 8.96l1.41-1.41.06.06a1.7 1.7 0 0 0 1.88.34A1.7 1.7 0 0 0 13.4 6.4V6h2v.4a1.7 1.7 0 0 0 1.04 1.55 1.7 1.7 0 0 0 1.88-.34l.06-.06 1.41 1.41-.06.06a1.7 1.7 0 0 0-.34 1.88A1.7 1.7 0 0 0 20.96 12H21v2h-.49A1.7 1.7 0 0 0 19.4 15z"/>
-    </svg>
-    Settings
-  </a>
+      <a class="nav-link" href="admin-categories.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 5h6v6H4z"></path>
+            <path d="M14 5h6v6h-6z"></path>
+            <path d="M4 15h6v6H4z"></path>
+            <path d="M14 15h6v6h-6z"></path>
+          </svg>
+        </span>
+        Categories
+      </a>
 
-  <a class="nav-link" href="admin-admins.html">
-    <svg viewBox="0 0 24 24">
-      <path d="M12 2l7 4v6c0 5-3 8-7 10-4-2-7-5-7-10V6z"/>
-      <path d="M9 12l2 2 4-4"/>
-    </svg>
-    Admins
-  </a>
+      <a class="nav-link" href="admin-countries.html">
+        <span class="nav-icon">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M3 12h18"></path>
+          <path d="M12 3a14 14 0 0 1 0 18"></path>
+          <path d="M12 3a14 14 0 0 0 0 18"></path>
+        </svg>
+        </span>
+        Countries
+      </a>
 
-  <a class="nav-link active" href="admin-logs.html">
-    <svg viewBox="0 0 24 24">
-      <path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/>
-      <path d="M7 8h10"/>
-      <path d="M7 12h10"/>
-      <path d="M7 16h6"/>
-    </svg>
-    Activity Logs
-  </a>
+      <a class="nav-link" href="notifications.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+            <path d="M10 21h4"></path>
+          </svg>
+        </span>
+        Notifications
+      </a>
 
-  <div class="logout">
-    <button class="nav-link" id="logoutBtn" style="width:100%;border:0;background:transparent;text-align:left;">
-      <svg viewBox="0 0 24 24">
-        <path d="M10 17l5-5-5-5"/>
-        <path d="M15 12H3"/>
-        <path d="M21 19V5a2 2 0 0 0-2-2h-6"/>
-      </svg>
-      Sign Out
-    </button>
+      <a class="nav-link" href="admin-settings.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.42 1.42-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1 1.56V20h-2v-.08a1.7 1.7 0 0 0-1-1.56 1.7 1.7 0 0 0-1.88.34l-.06.06-1.42-1.42.06-.06A1.7 1.7 0 0 0 9.4 15a1.7 1.7 0 0 0-1.56-1H7v-2h.84a1.7 1.7 0 0 0 1.56-1 1.7 1.7 0 0 0-.34-1.88L9 9.06l1.42-1.42.06.06a1.7 1.7 0 0 0 1.88.34 1.7 1.7 0 0 0 1-1.56V5h2v.84a1.7 1.7 0 0 0 1 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.06 1.42 1.42-.06.06A1.7 1.7 0 0 0 19.4 11c.17.6.72 1 1.34 1H21v2h-.26c-.62 0-1.17.4-1.34 1z"></path>
+          </svg>
+        </span>
+        Settings
+      </a>
+
+      <a class="nav-link" href="admin-admins.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="4"></circle>
+            <path d="M4 21a8 8 0 0 1 16 0"></path>
+          </svg>
+        </span>
+        Admins
+      </a>
+
+      <a class="nav-link active" href="admin-logs.html">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 4h16v16H4z"></path>
+            <path d="M8 8h8"></path>
+            <path d="M8 12h8"></path>
+            <path d="M8 16h5"></path>
+          </svg>
+        </span>
+        Activity Logs
+      </a>
+    </div>
+
+  </nav>
+
+  <div class="admin-profile">
+    <div class="admin-profile-inner">
+      <div class="admin-avatar" id="adminAvatar">A</div>
+
+      <div class="admin-details">
+        <div class="admin-name" id="adminName">Admin</div>
+        <div class="admin-role">Platform Admin</div>
+      </div>
+
+      <button class="logout-btn" id="logoutBtn" title="Sign out">
+        <svg viewBox="0 0 24 24">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+      </button>
+    </div>
   </div>
 
 </aside>
 
 <div class="overlay" id="overlay"></div>
 
-<!-- =========================
-     MOBILE HEADER
-========================= -->
-
-<header class="mobile-header">
-  <div class="mobile-title">Activity Logs</div>
-
-  <button class="menu-btn" id="menuBtn" aria-label="Open menu">
-    <svg viewBox="0 0 24 24">
-      <path d="M4 6h16"/>
-      <path d="M4 12h16"/>
-      <path d="M4 18h16"/>
-    </svg>
-  </button>
-</header>
-
-<!-- =========================
+<!-- =======================================================
      MAIN
-========================= -->
+======================================================== -->
 
 <main class="main">
 
-  <div class="topbar">
-    <div class="page-title">
-      <h1>Activity Logs</h1>
-      <p>Track important administrative actions across TallyBuck.</p>
+  <header class="topbar">
+
+    <div class="topbar-left">
+
+      <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">
+        <svg viewBox="0 0 24 24">
+          <line x1="4" y1="6" x2="20" y2="6"></line>
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <line x1="4" y1="18" x2="20" y2="18"></line>
+        </svg>
+      </button>
+
+      <div>
+        <div class="page-title">Activity Logs</div>
+        <div class="page-subtitle">TallyBuck platform administration history</div>
+      </div>
+
     </div>
 
     <div class="system-status">
       <span class="status-dot"></span>
       System Online
     </div>
-  </div>
 
-  <!-- STATS -->
+  </header>
 
-  <section class="stats">
+  <section class="content">
 
-    <div class="stat">
-      <div class="stat-label">Total Logs</div>
-      <div class="stat-value" id="totalLogs">—</div>
-    </div>
+    <div class="error-box" id="errorBox"></div>
 
-    <div class="stat">
-      <div class="stat-label">Today</div>
-      <div class="stat-value green" id="todayLogs">—</div>
-    </div>
+    <div class="card">
 
-    <div class="stat">
-      <div class="stat-label">Paid Withdrawals</div>
-      <div class="stat-value blue" id="paidLogs">—</div>
-    </div>
+      <div class="card-header">
 
-    <div class="stat">
-      <div class="stat-label">Cancelled Withdrawals</div>
-      <div class="stat-value warning" id="cancelledLogs">—</div>
-    </div>
-
-  </section>
-
-  <!-- TOOLBAR -->
-
-  <section class="toolbar">
-
-    <div class="search-box">
-      <svg viewBox="0 0 24 24">
-        <circle cx="11" cy="11" r="7"/>
-        <path d="M20 20l-4-4"/>
-      </svg>
-
-      <input
-        type="text"
-        id="searchInput"
-        placeholder="Search action, description, target ID..."
-        autocomplete="off"
-      >
-    </div>
-
-    <select id="actionFilter">
-      <option value="all">All Actions</option>
-      <option value="withdrawal_paid">Withdrawal Paid</option>
-      <option value="withdrawal_cancelled">Withdrawal Cancelled</option>
-    </select>
-
-    <button class="refresh-btn" id="refreshBtn">
-      <svg viewBox="0 0 24 24">
-        <path d="M20 11a8.1 8.1 0 0 0-14.9-4"/>
-        <path d="M4 4v5h5"/>
-        <path d="M4 13a8.1 8.1 0 0 0 14.9 4"/>
-        <path d="M20 20v-5h-5"/>
-      </svg>
-      Refresh
-    </button>
-
-  </section>
-
-  <!-- TABLE -->
-
-  <section class="table-card">
-
-    <div class="table-header">
-      <h2>Administrative Activity</h2>
-      <span id="resultCount">0 records</span>
-    </div>
-
-    <div class="table-wrap">
-
-      <div class="loading" id="loading">
-        Loading activity logs...
-      </div>
-
-      <table id="logsTable" style="display:none;">
-
-        <thead>
-          <tr>
-            <th>Admin</th>
-            <th>Action</th>
-            <th>Target</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>Details</th>
-          </tr>
-        </thead>
-
-        <tbody id="logsBody"></tbody>
-
-      </table>
-
-      <div class="empty" id="emptyState" style="display:none;">
-
-        <div class="empty-icon">
-          <svg viewBox="0 0 24 24">
-            <path d="M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/>
-            <path d="M7 8h10"/>
-            <path d="M7 12h10"/>
-            <path d="M7 16h6"/>
-          </svg>
+        <div>
+          <div class="card-title">Admin Activity Logs</div>
+          <div class="card-subtitle">
+            Review administrative actions performed across the platform.
+          </div>
         </div>
 
-        <div>No activity logs found.</div>
+        <div class="controls">
+
+          <div class="search-box">
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="M20 20l-4-4"></path>
+            </svg>
+
+            <input
+              type="search"
+              id="searchInput"
+              class="search-input"
+              placeholder="Search logs..."
+              autocomplete="off"
+            >
+          </div>
+
+          <select id="actionFilter" class="filter-select">
+            <option value="">All actions</option>
+          </select>
+
+          <button class="refresh-btn" id="refreshBtn">
+            <svg viewBox="0 0 24 24">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <polyline points="1 20 1 14 7 14"></polyline>
+              <path d="M3.51 9a9 9 0 0 1 14.13-3.36L23 10"></path>
+              <path d="M20.49 15a9 9 0 0 1-14.13 3.36L1 14"></path>
+            </svg>
+            Refresh
+          </button>
+
+        </div>
 
       </div>
 
-    </div>
+      <div id="tableContainer">
 
-    <div class="pagination" id="pagination" style="display:none;">
+        <div class="loading">
+          Loading activity logs...
+        </div>
 
-      <div class="page-info" id="pageInfo"></div>
+      </div>
 
-      <div class="page-buttons">
-        <button class="page-btn" id="prevBtn">Previous</button>
-        <button class="page-btn" id="nextBtn">Next</button>
+      <div class="table-footer">
+        <span id="logCount">0 records</span>
+        <span>TallyBuck Admin System</span>
       </div>
 
     </div>
@@ -1136,78 +1044,20 @@ tbody tr:hover{
 
 </main>
 
-<!-- =========================
-     METADATA MODAL
-========================= -->
-
-<div class="modal" id="metadataModal">
-
-  <div class="modal-box">
-
-    <div class="modal-head">
-
-      <h3>Activity Details</h3>
-
-      <button class="close-btn" id="closeModal">
-        <svg viewBox="0 0 24 24">
-          <path d="M6 6l12 12"/>
-          <path d="M18 6L6 18"/>
-        </svg>
-      </button>
-
-    </div>
-
-    <div class="modal-body">
-      <pre class="json-view" id="metadataContent">{}</pre>
-    </div>
-
-  </div>
-
-</div>
-
-<div class="toast" id="toast"></div>
-
 <script>
-/* =========================================================
-   SUPABASE
-========================================================= */
+const SUPABASE_URL = "https://cetsxdkoauucxwsbdktl.supabase.co";
+const SUPABASE_KEY = "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
 
-const SUPABASE_URL =
-  "https://cetsxdkoauucxwsbdktl.supabase.co";
-
-const SUPABASE_KEY =
-  "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
-
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
-
-
-/* =========================================================
-   STATE
-========================================================= */
+const { createClient } = supabase;
+const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 let allLogs = [];
-let filteredLogs = [];
-
-let currentPage = 1;
-
-const pageSize = 25;
-
 
 /* =========================================================
    HELPERS
 ========================================================= */
 
-function $(id){
-  return document.getElementById(id);
-}
-
-
-function escapeHtml(value){
-
+function escapeHTML(value){
   return String(value ?? "")
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
@@ -1216,72 +1066,66 @@ function escapeHtml(value){
     .replace(/'/g,"&#039;");
 }
 
-
 function formatDate(value){
-
   if(!value) return "—";
 
   const date = new Date(value);
 
-  return date.toLocaleString(
-    undefined,
-    {
-      year:"numeric",
-      month:"short",
-      day:"numeric",
-      hour:"2-digit",
-      minute:"2-digit"
-    }
-  );
-}
-
-
-function formatAction(action){
-
-  if(!action) return "Unknown";
-
-  return action
-    .replace(/_/g," ")
-    .replace(/\b\w/g,char => char.toUpperCase());
-}
-
-
-function actionClass(action){
-
-  if(action === "withdrawal_paid"){
-    return "paid";
+  if(Number.isNaN(date.getTime())){
+    return "—";
   }
 
-  if(action === "withdrawal_cancelled"){
-    return "cancelled";
+  return date.toLocaleString(undefined,{
+    year:"numeric",
+    month:"short",
+    day:"numeric",
+    hour:"2-digit",
+    minute:"2-digit"
+  });
+}
+
+function showError(message){
+  const box = document.getElementById("errorBox");
+
+  box.textContent = message;
+  box.style.display = "block";
+}
+
+function clearError(){
+  const box = document.getElementById("errorBox");
+
+  box.textContent = "";
+  box.style.display = "none";
+}
+
+function getStatusClass(action){
+  const value = String(action || "").toLowerCase();
+
+  if(
+    value.includes("delete") ||
+    value.includes("deny") ||
+    value.includes("reject") ||
+    value.includes("cancel")
+  ){
+    return "status-danger";
   }
 
   if(
-    action.includes("task") ||
-    action.includes("submission")
+    value.includes("approve") ||
+    value.includes("paid") ||
+    value.includes("create") ||
+    value.includes("update") ||
+    value.includes("login") ||
+    value.includes("add")
   ){
-    return "task";
+    return "status-success";
   }
 
-  return "default";
+  return "status-neutral";
 }
-
-
-function showToast(message){
-
-  const toast = $("toast");
-
-  toast.textContent = message;
-  toast.classList.add("show");
-
-  setTimeout(() => {
-    toast.classList.remove("show");
-  },3000);
-}
-
 
 /* =========================================================
-   AUTH
+   ADMIN AUTH
 ========================================================= */
 
 async function loadAdmin(){
@@ -1289,42 +1133,50 @@ async function loadAdmin(){
   const {
     data:{
       session
-    },
-    error
-  } =
-    await supabaseClient.auth.getSession();
+    }
+  } = await db.auth.getSession();
 
-  if(error || !session){
+  if(!session){
 
     window.location.href = "login.html";
-    return false;
+
+    return null;
   }
 
   const {
     data:profile,
-    error:profileError
-  } =
-    await supabaseClient
-      .from("profiles")
-      .select("id, role")
-      .eq("id",session.user.id)
-      .single();
+    error
+  } = await db
+    .from("profiles")
+    .select("full_name,role")
+    .eq("id",session.user.id)
+    .maybeSingle();
 
-  if(
-    profileError ||
-    !profile ||
-    profile.role !== "admin"
-  ){
-
-    await supabaseClient.auth.signOut();
-
-    window.location.href = "login.html";
-    return false;
+  if(error){
+    console.error(error);
   }
 
-  return true;
-}
+  if(!profile || profile.role !== "admin"){
 
+    alert("Admin access required.");
+
+    window.location.href = "dashboard.html";
+
+    return null;
+  }
+
+  const name =
+    profile.full_name ||
+    session.user.email ||
+    "Admin";
+
+  document.getElementById("adminName").textContent = name;
+
+  document.getElementById("adminAvatar").textContent =
+    name.trim().charAt(0).toUpperCase() || "A";
+
+  return session;
+}
 
 /* =========================================================
    LOAD LOGS
@@ -1332,555 +1184,356 @@ async function loadAdmin(){
 
 async function loadLogs(){
 
-  $("loading").style.display = "block";
-  $("logsTable").style.display = "none";
-  $("emptyState").style.display = "none";
-  $("pagination").style.display = "none";
+  clearError();
+
+  const container = document.getElementById("tableContainer");
+
+  container.innerHTML = `
+    <div class="loading">
+      Loading activity logs...
+    </div>
+  `;
 
   const {
     data,
     error
-  } =
-    await supabaseClient
-      .from("admin_activity_logs")
-      .select(`
-        id,
-        admin_id,
-        action,
-        target_type,
-        target_id,
-        description,
-        metadata,
-        created_at
-      `)
-      .order(
-        "created_at",
-        {
-          ascending:false
-        }
-      );
+  } = await db
+    .from("admin_activity_logs")
+    .select("*")
+    .order("created_at",{ascending:false});
 
   if(error){
 
-    console.error(error);
+    console.error("Activity logs error:",error);
 
-    $("loading").innerHTML =
-      "Unable to load activity logs.";
-
-    showToast(
-      error.message || "Failed to load logs."
+    showError(
+      "Unable to load activity logs. Make sure the admin_activity_logs table and its permissions are configured correctly."
     );
+
+    container.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 8v4"></path>
+            <path d="M12 16h.01"></path>
+          </svg>
+        </div>
+        Unable to load activity logs.
+      </div>
+    `;
+
+    document.getElementById("logCount").textContent = "0 records";
 
     return;
   }
 
-  allLogs = data || [];
+  allLogs = Array.isArray(data) ? data : [];
 
-  updateStats();
+  populateActionFilter();
 
-  applyFilters();
+  renderLogs();
+
 }
 
-
 /* =========================================================
-   STATS
+   ACTION FILTER
 ========================================================= */
 
-function updateStats(){
+function populateActionFilter(){
 
-  const todayStart =
-    new Date();
+  const select = document.getElementById("actionFilter");
 
-  todayStart.setHours(
-    0,
-    0,
-    0,
-    0
+  const current = select.value;
+
+  const actions = [
+    ...new Set(
+      allLogs
+        .map(row => row.action)
+        .filter(Boolean)
+        .map(value => String(value))
+    )
+  ].sort((a,b) =>
+    a.localeCompare(b)
   );
 
-  let today = 0;
-  let paid = 0;
-  let cancelled = 0;
+  select.innerHTML = `
+    <option value="">All actions</option>
+  `;
 
-  allLogs.forEach(log => {
+  actions.forEach(action => {
 
-    const date =
-      new Date(log.created_at);
+    const option = document.createElement("option");
 
-    if(date >= todayStart){
-      today++;
-    }
+    option.value = action;
+    option.textContent = action;
 
-    if(
-      log.action ===
-      "withdrawal_paid"
-    ){
-      paid++;
-    }
-
-    if(
-      log.action ===
-      "withdrawal_cancelled"
-    ){
-      cancelled++;
-    }
+    select.appendChild(option);
 
   });
 
-  $("totalLogs").textContent =
-    allLogs.length;
+  if(actions.includes(current)){
+    select.value = current;
+  }
 
-  $("todayLogs").textContent =
-    today;
-
-  $("paidLogs").textContent =
-    paid;
-
-  $("cancelledLogs").textContent =
-    cancelled;
 }
 
-
 /* =========================================================
-   FILTERS
+   RENDER LOGS
 ========================================================= */
 
-function applyFilters(){
+function renderLogs(){
+
+  const container = document.getElementById("tableContainer");
 
   const search =
-    $("searchInput")
+    document
+      .getElementById("searchInput")
       .value
       .trim()
       .toLowerCase();
 
   const action =
-    $("actionFilter").value;
+    document
+      .getElementById("actionFilter")
+      .value;
 
-  filteredLogs =
-    allLogs.filter(log => {
+  const filtered = allLogs.filter(row => {
 
-      if(
-        action !== "all" &&
-        log.action !== action
-      ){
-        return false;
-      }
+    const actionText =
+      String(row.action || "").toLowerCase();
 
-      if(!search){
-        return true;
-      }
+    const targetType =
+      String(row.target_type || "").toLowerCase();
 
-      const searchable = [
-        log.admin_id,
-        log.action,
-        log.target_type,
-        log.target_id,
-        log.description
-      ]
-      .filter(Boolean)
-      .join(" ")
-      .toLowerCase();
+    const adminId =
+      String(row.admin_id || "").toLowerCase();
 
-      return searchable.includes(search);
-    });
+    const targetId =
+      String(
+        row.target_id ??
+        row.target_id_value ??
+        row.record_id ??
+        ""
+      ).toLowerCase();
 
-  currentPage = 1;
+    const searchMatch =
+      !search ||
+      actionText.includes(search) ||
+      targetType.includes(search) ||
+      adminId.includes(search) ||
+      targetId.includes(search);
 
-  renderLogs();
-}
+    const actionMatch =
+      !action ||
+      String(row.action || "") === action;
 
+    return searchMatch && actionMatch;
 
-/* =========================================================
-   RENDER
-========================================================= */
+  });
 
-function renderLogs(){
+  document.getElementById("logCount").textContent =
+    `${filtered.length} ${filtered.length === 1 ? "record" : "records"}`;
 
-  $("loading").style.display = "none";
+  if(!filtered.length){
 
-  $("resultCount").textContent =
-    `${filteredLogs.length} ${
-      filteredLogs.length === 1
-        ? "record"
-        : "records"
-    }`;
+    container.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 4h16v16H4z"></path>
+            <path d="M8 8h8"></path>
+            <path d="M8 12h8"></path>
+            <path d="M8 16h5"></path>
+          </svg>
+        </div>
 
-  if(filteredLogs.length === 0){
-
-    $("logsTable").style.display = "none";
-    $("pagination").style.display = "none";
-    $("emptyState").style.display = "block";
-
-    return;
-  }
-
-  $("emptyState").style.display = "none";
-  $("logsTable").style.display = "table";
-
-  const start =
-    (currentPage - 1) * pageSize;
-
-  const end =
-    start + pageSize;
-
-  const pageLogs =
-    filteredLogs.slice(
-      start,
-      end
-    );
-
-  $("logsBody").innerHTML =
-    pageLogs.map(log => {
-
-      const action =
-        escapeHtml(
-          formatAction(log.action)
-        );
-
-      const badgeClass =
-        actionClass(log.action);
-
-      const targetType =
-        escapeHtml(
-          log.target_type || "—"
-        );
-
-      const targetId =
-        escapeHtml(
-          log.target_id || "—"
-        );
-
-      const adminId =
-        escapeHtml(
-          log.admin_id || "—"
-        );
-
-      const description =
-        escapeHtml(
-          log.description || "—"
-        );
-
-      const metadata =
-        log.metadata || null;
-
-      return `
-        <tr>
-
-          <td>
-            <div class="admin-cell">
-              <div class="admin-id">
-                ${adminId}
-              </div>
-            </div>
-          </td>
-
-          <td>
-            <span class="action-badge ${badgeClass}">
-              ${action}
-            </span>
-          </td>
-
-          <td>
-            <div class="target">
-              <div class="target-type">
-                ${targetType}
-              </div>
-
-              <div class="sub-text">
-                #${targetId}
-              </div>
-            </div>
-          </td>
-
-          <td>
-            <div class="description">
-              ${description}
-            </div>
-          </td>
-
-          <td>
-            ${escapeHtml(
-              formatDate(log.created_at)
-            )}
-          </td>
-
-          <td>
-            ${
-              metadata
-                ? `
-                  <button
-                    class="metadata-btn"
-                    onclick="showMetadata(${Number(log.id)})"
-                  >
-                    View details
-                  </button>
-                `
-                : "—"
-            }
-          </td>
-
-        </tr>
-      `;
-
-    }).join("");
-
-  renderPagination();
-}
-
-
-/* =========================================================
-   PAGINATION
-========================================================= */
-
-function renderPagination(){
-
-  const totalPages =
-    Math.ceil(
-      filteredLogs.length /
-      pageSize
-    );
-
-  if(totalPages <= 1){
-
-    $("pagination").style.display =
-      "none";
+        No activity logs found.
+      </div>
+    `;
 
     return;
   }
 
-  $("pagination").style.display =
-    "flex";
+  const rows = filtered.map(row => {
 
-  const start =
-    ((currentPage - 1) * pageSize) + 1;
+    const action =
+      row.action || "Unknown";
 
-  const end =
-    Math.min(
-      currentPage * pageSize,
-      filteredLogs.length
-    );
+    const targetType =
+      row.target_type || "—";
 
-  $("pageInfo").textContent =
-    `Showing ${start}-${end} of ${filteredLogs.length}`;
+    const targetId =
+      row.target_id ??
+      row.target_id_value ??
+      row.record_id ??
+      "—";
 
-  $("prevBtn").disabled =
-    currentPage <= 1;
+    const adminId =
+      row.admin_id || "—";
 
-  $("nextBtn").disabled =
-    currentPage >= totalPages;
+    const createdAt =
+      row.created_at ||
+      row.timestamp ||
+      row.logged_at;
+
+    const statusClass =
+      getStatusClass(action);
+
+    return `
+      <tr>
+
+        <td class="action-cell">
+          <span class="status ${statusClass}">
+            ${escapeHTML(action)}
+          </span>
+        </td>
+
+        <td class="target-cell">
+          ${escapeHTML(targetType)}
+        </td>
+
+        <td class="target-cell">
+          ${escapeHTML(targetId)}
+        </td>
+
+        <td class="target-cell">
+          ${escapeHTML(adminId)}
+        </td>
+
+        <td class="date-cell">
+          ${escapeHTML(formatDate(createdAt))}
+        </td>
+
+      </tr>
+    `;
+
+  }).join("");
+
+  container.innerHTML = `
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>Target Type</th>
+            <th>Target ID</th>
+            <th>Admin ID</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          ${rows}
+        </tbody>
+
+      </table>
+
+    </div>
+  `;
+
 }
-
-
-/* =========================================================
-   METADATA
-========================================================= */
-
-window.showMetadata = function(id){
-
-  const log =
-    allLogs.find(
-      item =>
-        Number(item.id) ===
-        Number(id)
-    );
-
-  if(!log) return;
-
-  $("metadataContent").textContent =
-    JSON.stringify(
-      log.metadata || {},
-      null,
-      2
-    );
-
-  $("metadataModal")
-    .classList
-    .add("show");
-};
-
-
-/* =========================================================
-   CLOSE MODAL
-========================================================= */
-
-function closeModal(){
-
-  $("metadataModal")
-    .classList
-    .remove("show");
-}
-
 
 /* =========================================================
    MOBILE MENU
 ========================================================= */
 
-function openMenu(){
+function openSidebar(){
 
-  $("sidebar")
-    .classList
-    .add("open");
+  document
+    .getElementById("sidebar")
+    .classList.add("open");
 
-  $("overlay")
-    .classList
-    .add("show");
+  document
+    .getElementById("overlay")
+    .classList.add("show");
+
 }
 
+function closeSidebar(){
 
-function closeMenu(){
+  document
+    .getElementById("sidebar")
+    .classList.remove("open");
 
-  $("sidebar")
-    .classList
-    .remove("open");
+  document
+    .getElementById("overlay")
+    .classList.remove("show");
 
-  $("overlay")
-    .classList
-    .remove("show");
 }
 
+document
+  .getElementById("mobileMenu")
+  .addEventListener("click",openSidebar);
+
+document
+  .getElementById("overlay")
+  .addEventListener("click",closeSidebar);
+
+/* =========================================================
+   FILTER EVENTS
+========================================================= */
+
+document
+  .getElementById("searchInput")
+  .addEventListener("input",renderLogs);
+
+document
+  .getElementById("actionFilter")
+  .addEventListener("change",renderLogs);
+
+document
+  .getElementById("refreshBtn")
+  .addEventListener("click",loadLogs);
 
 /* =========================================================
    LOGOUT
 ========================================================= */
 
-async function logout(){
+document
+  .getElementById("logoutBtn")
+  .addEventListener("click",async()=>{
 
-  await supabaseClient.auth.signOut();
+    await db.auth.signOut();
 
-  window.location.href =
-    "login.html";
+    window.location.href = "login.html";
+
+  });
+
+/* =========================================================
+   START
+========================================================= */
+
+async function start(){
+
+  try{
+
+    const session = await loadAdmin();
+
+    if(!session){
+      return;
+    }
+
+    await loadLogs();
+
+  }catch(error){
+
+    console.error(
+      "Admin logs error:",
+      error
+    );
+
+    showError(
+      "Unable to load the activity logs. Check the browser console for details."
+    );
+
+  }
+
 }
 
-
-/* =========================================================
-   EVENTS
-========================================================= */
-
-$("searchInput")
-  .addEventListener(
-    "input",
-    applyFilters
-  );
-
-
-$("actionFilter")
-  .addEventListener(
-    "change",
-    applyFilters
-  );
-
-
-$("refreshBtn")
-  .addEventListener(
-    "click",
-    async () => {
-
-      $("refreshBtn").disabled = true;
-
-      await loadLogs();
-
-      $("refreshBtn").disabled = false;
-    }
-  );
-
-
-$("prevBtn")
-  .addEventListener(
-    "click",
-    () => {
-
-      if(currentPage > 1){
-
-        currentPage--;
-
-        renderLogs();
-      }
-    }
-  );
-
-
-$("nextBtn")
-  .addEventListener(
-    "click",
-    () => {
-
-      const totalPages =
-        Math.ceil(
-          filteredLogs.length /
-          pageSize
-        );
-
-      if(
-        currentPage <
-        totalPages
-      ){
-
-        currentPage++;
-
-        renderLogs();
-      }
-    }
-  );
-
-
-$("closeModal")
-  .addEventListener(
-    "click",
-    closeModal
-  );
-
-
-$("metadataModal")
-  .addEventListener(
-    "click",
-    event => {
-
-      if(
-        event.target ===
-        $("metadataModal")
-      ){
-        closeModal();
-      }
-
-    }
-  );
-
-
-$("menuBtn")
-  .addEventListener(
-    "click",
-    openMenu
-  );
-
-
-$("overlay")
-  .addEventListener(
-    "click",
-    closeMenu
-  );
-
-
-$("logoutBtn")
-  .addEventListener(
-    "click",
-    logout
-  );
-
-
-/* =========================================================
-   INIT
-========================================================= */
-
-(async function(){
-
-  const isAdmin =
-    await loadAdmin();
-
-  if(!isAdmin) return;
-
-  await loadLogs();
-
-})();
+start();
 </script>
 
 </body>
