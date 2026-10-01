@@ -28,7 +28,7 @@
   --shadow:0 8px 30px rgba(20,50,35,.06);
 }
 
-body.dark{
+html.dark{
   --bg:#06130d;
   --card:#0b2117;
   --text:#effaf4;
@@ -40,6 +40,11 @@ body.dark{
   --danger:#ff7373;
   --warning:#f3c45f;
   --shadow:0 8px 30px rgba(0,0,0,.25);
+}
+
+html,
+body{
+  min-height:100%;
 }
 
 body{
@@ -63,19 +68,28 @@ button{
   padding-bottom:78px;
 }
 
-/* HEADER */
+/* =========================================================
+   HEADER
+========================================================= */
 
 .header{
-  height:64px;
+  height:68px;
   background:var(--card);
   border-bottom:1px solid var(--border);
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 16px;
+  padding:0 18px;
   position:sticky;
   top:0;
   z-index:50;
+}
+
+.header-brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
 }
 
 .logo{
@@ -83,22 +97,27 @@ button{
   height:36px;
   border-radius:11px;
   background:var(--green);
-  color:white;
+  color:#fff;
   display:flex;
   align-items:center;
   justify-content:center;
   font-size:20px;
   font-weight:800;
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
+  flex:none;
+}
+
+.brand-name{
+  font-size:18px;
+  font-weight:800;
+  color:var(--text);
+  white-space:nowrap;
 }
 
 .header-right{
   margin-left:auto;
   display:flex;
   align-items:center;
-  gap:8px;
+  gap:5px;
 }
 
 .icon-btn{
@@ -111,6 +130,7 @@ button{
   display:flex;
   align-items:center;
   justify-content:center;
+  position:relative;
 }
 
 .icon-btn:hover{
@@ -122,7 +142,28 @@ button{
   height:21px;
 }
 
-/* THEME */
+.notification-badge{
+  position:absolute;
+  top:5px;
+  right:5px;
+  min-width:15px;
+  height:15px;
+  padding:0 4px;
+  border-radius:20px;
+  background:var(--danger);
+  color:#fff;
+  font-size:9px;
+  font-weight:800;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  line-height:1;
+  border:2px solid var(--card);
+}
+
+/* =========================================================
+   THEME
+========================================================= */
 
 .theme-wrap{
   position:relative;
@@ -181,7 +222,9 @@ button{
   background:var(--lightgreen);
 }
 
-/* SIDE MENU */
+/* =========================================================
+   SIDE MENU
+========================================================= */
 
 .menu-overlay{
   position:fixed;
@@ -198,19 +241,20 @@ button{
 .side-menu{
   position:fixed;
   top:0;
-  left:-290px;
+  right:-290px;
+  left:auto;
   width:280px;
   height:100vh;
   background:var(--card);
-  border-right:1px solid var(--border);
+  border-left:1px solid var(--border);
   z-index:90;
-  transition:left .25s ease;
+  transition:right .25s ease;
   padding:20px 14px;
   overflow-y:auto;
 }
 
 .side-menu.open{
-  left:0;
+  right:0;
 }
 
 .menu-logo{
@@ -226,7 +270,7 @@ button{
   width:38px;
   height:38px;
   background:var(--green);
-  color:white;
+  color:#fff;
   border-radius:11px;
   display:flex;
   align-items:center;
@@ -272,7 +316,9 @@ button{
   margin:12px 8px;
 }
 
-/* MAIN */
+/* =========================================================
+   MAIN
+========================================================= */
 
 main{
   width:100%;
@@ -294,7 +340,9 @@ main{
   margin-bottom:22px;
 }
 
-/* SUMMARY */
+/* =========================================================
+   SUMMARY
+========================================================= */
 
 .summary-grid{
   display:grid;
@@ -322,7 +370,9 @@ main{
   font-weight:800;
 }
 
-/* FILTER */
+/* =========================================================
+   FILTER
+========================================================= */
 
 .filter-card{
   background:var(--card);
@@ -353,7 +403,9 @@ main{
   border-color:var(--green);
 }
 
-/* HISTORY */
+/* =========================================================
+   HISTORY
+========================================================= */
 
 .history-card{
   background:var(--card);
@@ -461,8 +513,8 @@ main{
   color:var(--warning);
 }
 
-body.dark .status.pending,
-body.dark .status.processing{
+html.dark .status.pending,
+html.dark .status.processing{
   background:#3b3017;
 }
 
@@ -474,10 +526,10 @@ body.dark .status.processing{
   color:var(--danger);
 }
 
-body.dark .status.failed,
-body.dark .status.cancelled,
-body.dark .status.canceled,
-body.dark .status.rejected{
+html.dark .status.failed,
+html.dark .status.cancelled,
+html.dark .status.canceled,
+html.dark .status.rejected{
   background:#3a1717;
 }
 
@@ -502,7 +554,9 @@ body.dark .status.rejected{
   text-align:center;
 }
 
-/* BOTTOM NAV */
+/* =========================================================
+   BOTTOM NAV
+========================================================= */
 
 .bottom-nav{
   position:fixed;
@@ -540,9 +594,19 @@ body.dark .status.rejected{
   color:var(--green);
 }
 
-/* RESPONSIVE */
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media(max-width:480px){
+
+  .header{
+    padding:0 13px;
+  }
+
+  .brand-name{
+    font-size:17px;
+  }
 
   main{
     padding-left:13px;
@@ -587,134 +651,327 @@ body.dark .status.rejected{
 
 <header class="header">
 
-  <button class="icon-btn" id="menuBtn" aria-label="Menu">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M4 6h16M4 12h16M4 18h16"/>
-    </svg>
-  </button>
+  <div class="header-brand">
 
-  <div class="logo">T</div>
+    <div class="logo">T</div>
+
+    <div class="brand-name">
+      TallyBuck
+    </div>
+
+  </div>
 
   <div class="header-right">
 
     <button
       class="icon-btn"
-      onclick="location.href='notifications.html'"
+      id="notificationBtn"
       aria-label="Notifications"
     >
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
         <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
         <path d="M10 21h4"/>
       </svg>
+
+      <span
+        class="notification-badge"
+        id="notificationBadge"
+      ></span>
     </button>
 
     <div class="theme-wrap">
 
-      <button class="theme-btn" id="themeBtn" aria-label="Theme">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <button
+        class="theme-btn"
+        id="themeBtn"
+        aria-label="Theme"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
           <circle cx="12" cy="12" r="4"/>
-          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          <path d="M12 2v2M12 20v2"/>
+          <path d="M4.93 4.93l1.41 1.41"/>
+          <path d="M17.66 17.66l1.41 1.41"/>
+          <path d="M2 12h2M20 12h2"/>
+          <path d="M4.93 19.07l1.41-1.41"/>
+          <path d="M17.66 6.34l1.41-1.41"/>
         </svg>
       </button>
 
-      <div class="theme-menu" id="themeMenu">
-        <button class="theme-option" data-theme="light">Light</button>
-        <button class="theme-option" data-theme="dark">Dark</button>
-        <button class="theme-option" data-theme="system">System</button>
+      <div
+        class="theme-menu"
+        id="themeMenu"
+      >
+        <button
+          class="theme-option"
+          data-theme="light"
+        >
+          Light
+        </button>
+
+        <button
+          class="theme-option"
+          data-theme="dark"
+        >
+          Dark
+        </button>
+
+        <button
+          class="theme-option"
+          data-theme="system"
+        >
+          System
+        </button>
       </div>
 
     </div>
+
+    <button
+      class="icon-btn"
+      id="menuBtn"
+      aria-label="Menu"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
 
   </div>
 
 </header>
 
-<div class="menu-overlay" id="menuOverlay"></div>
+<div
+  class="menu-overlay"
+  id="menuOverlay"
+></div>
 
-<aside class="side-menu" id="sideMenu">
+<aside
+  class="side-menu"
+  id="sideMenu"
+>
 
   <div class="menu-logo">
-    <div class="menu-logo-mark">T</div>
-    <div class="menu-logo-text">TallyBuck</div>
+
+    <div class="menu-logo-mark">
+      T
+    </div>
+
+    <div class="menu-logo-text">
+      TallyBuck
+    </div>
+
   </div>
 
-  <button class="menu-link" onclick="location.href='dashboard.html'">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <button
+    class="menu-link"
+    onclick="location.href='dashboard.html'"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
       <path d="M3 11.5L12 4l9 7.5"/>
       <path d="M5 10v10h14V10"/>
     </svg>
     Dashboard
   </button>
 
-  <button class="menu-link" onclick="location.href='tasks.html'">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <rect x="3" y="4" width="18" height="16" rx="2"/>
+  <button
+    class="menu-link"
+    onclick="location.href='tasks.html'"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <rect
+        x="3"
+        y="4"
+        width="18"
+        height="16"
+        rx="2"
+      />
       <path d="M7 8h10M7 12h10M7 16h6"/>
     </svg>
     Earn Tasks
   </button>
 
-  <button class="menu-link" onclick="location.href='referrals.html'">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="9" cy="8" r="3"/>
-      <circle cx="17" cy="9" r="2.5"/>
+  <button
+    class="menu-link"
+    onclick="location.href='referrals.html'"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <circle
+        cx="9"
+        cy="8"
+        r="3"
+      />
+      <circle
+        cx="17"
+        cy="9"
+        r="2.5"
+      />
       <path d="M3 19c0-3 2.5-5 6-5s6 2 6 5"/>
       <path d="M15 14c3 0 5 1.7 5 4"/>
     </svg>
     Referrals
   </button>
 
-  <button class="menu-link" onclick="location.href='withdraw.html'">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <rect x="3" y="5" width="18" height="14" rx="2"/>
+  <button
+    class="menu-link"
+    onclick="location.href='withdraw.html'"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <rect
+        x="3"
+        y="5"
+        width="18"
+        height="14"
+        rx="2"
+      />
       <path d="M3 10h18"/>
-      <circle cx="8" cy="14" r="1"/>
+      <circle
+        cx="8"
+        cy="14"
+        r="1"
+      />
     </svg>
-    Wallet / Withdraw
+    Withdraw
   </button>
 
   <button class="menu-link active">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
       <path d="M6 3h12"/>
       <path d="M6 21h12"/>
       <path d="M7 3v5l5 4-5 4v5"/>
       <path d="M17 3v5l-5 4 5 4v5"/>
     </svg>
+
     History
+
   </button>
 
-  <button class="menu-link" onclick="location.href='profile.html'">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="12" cy="8" r="4"/>
-      <path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/>
-    </svg>
-    Profile
-  </button>
-
-  <button class="menu-link" onclick="location.href='notifications.html'">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <button
+    class="menu-link"
+    onclick="location.href='notifications.html'"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
       <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
       <path d="M10 21h4"/>
     </svg>
     Notifications
   </button>
 
+  <button
+    class="menu-link"
+    onclick="location.href='profile.html'"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <circle
+        cx="12"
+        cy="8"
+        r="4"
+      />
+      <path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/>
+    </svg>
+    Profile
+  </button>
+
   <div class="menu-divider"></div>
 
-  <button class="menu-link" id="logoutBtn">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <button
+    class="menu-link"
+    id="menuThemeBtn"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <circle
+        cx="12"
+        cy="12"
+        r="4"
+      />
+      <path d="M12 2v2M12 20v2"/>
+      <path d="M4.93 4.93l1.41 1.41"/>
+      <path d="M17.66 17.66l1.41 1.41"/>
+      <path d="M2 12h2M20 12h2"/>
+      <path d="M4.93 19.07l1.41-1.41"/>
+      <path d="M17.66 6.34l1.41-1.41"/>
+    </svg>
+    Toggle Theme
+  </button>
+
+  <button
+    class="menu-link"
+    id="logoutBtn"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
       <path d="M10 17l5-5-5-5"/>
       <path d="M15 12H3"/>
       <path d="M21 3v18"/>
     </svg>
-    Logout
+    Sign Out
   </button>
 
 </aside>
 
 <main>
 
-  <h1 class="page-title">History</h1>
+  <h1 class="page-title">
+    History
+  </h1>
 
   <p class="page-subtitle">
     View your earnings, rewards, and withdrawal activity.
@@ -723,18 +980,48 @@ body.dark .status.rejected{
   <section class="summary-grid">
 
     <div class="summary-card">
-      <div class="summary-label">Total Earned</div>
-      <div class="summary-value" id="totalEarned">$0.00</div>
+
+      <div class="summary-label">
+        Total Earned
+      </div>
+
+      <div
+        class="summary-value"
+        id="totalEarned"
+      >
+        $0.00
+      </div>
+
     </div>
 
     <div class="summary-card">
-      <div class="summary-label">Withdrawn</div>
-      <div class="summary-value" id="totalWithdrawn">$0.00</div>
+
+      <div class="summary-label">
+        Withdrawn
+      </div>
+
+      <div
+        class="summary-value"
+        id="totalWithdrawn"
+      >
+        $0.00
+      </div>
+
     </div>
 
     <div class="summary-card">
-      <div class="summary-label">Transactions</div>
-      <div class="summary-value" id="transactionCount">0</div>
+
+      <div class="summary-label">
+        Transactions
+      </div>
+
+      <div
+        class="summary-value"
+        id="transactionCount"
+      >
+        0
+      </div>
+
     </div>
 
   </section>
@@ -743,20 +1030,54 @@ body.dark .status.rejected{
 
     <div class="filter-row">
 
-      <select class="filter-select" id="typeFilter">
-        <option value="all">All activity</option>
-        <option value="earning">Earnings</option>
-        <option value="withdrawal">Withdrawals</option>
+      <select
+        class="filter-select"
+        id="typeFilter"
+      >
+        <option value="all">
+          All activity
+        </option>
+
+        <option value="earning">
+          Earnings
+        </option>
+
+        <option value="withdrawal">
+          Withdrawals
+        </option>
       </select>
 
-      <select class="filter-select" id="statusFilter">
-        <option value="all">All status</option>
-        <option value="completed">Completed</option>
-        <option value="pending">Pending</option>
-        <option value="processing">Processing</option>
-        <option value="failed">Failed</option>
-        <option value="cancelled">Cancelled</option>
-        <option value="rejected">Rejected</option>
+      <select
+        class="filter-select"
+        id="statusFilter"
+      >
+        <option value="all">
+          All status
+        </option>
+
+        <option value="completed">
+          Completed
+        </option>
+
+        <option value="pending">
+          Pending
+        </option>
+
+        <option value="processing">
+          Processing
+        </option>
+
+        <option value="failed">
+          Failed
+        </option>
+
+        <option value="cancelled">
+          Cancelled
+        </option>
+
+        <option value="rejected">
+          Rejected
+        </option>
       </select>
 
     </div>
@@ -769,8 +1090,13 @@ body.dark .status.rejected{
       Activity history
     </div>
 
-    <div class="history-list" id="historyList">
-      <div class="loading">Loading history...</div>
+    <div
+      class="history-list"
+      id="historyList"
+    >
+      <div class="loading">
+        Loading history...
+      </div>
     </div>
 
   </section>
@@ -779,44 +1105,85 @@ body.dark .status.rejected{
 
 <nav class="bottom-nav">
 
-  <button class="bottom-link" onclick="location.href='dashboard.html'">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <button
+    class="bottom-link"
+    onclick="location.href='dashboard.html'"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
       <path d="M3 11.5L12 4l9 7.5"/>
       <path d="M5 10v10h14V10"/>
     </svg>
     Home
   </button>
 
-  <button class="bottom-link" onclick="location.href='tasks.html'">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <rect x="3" y="4" width="18" height="16" rx="2"/>
+  <button
+    class="bottom-link"
+    onclick="location.href='tasks.html'"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <rect
+        x="3"
+        y="4"
+        width="18"
+        height="16"
+        rx="2"
+      />
       <path d="M7 8h10M7 12h10M7 16h6"/>
     </svg>
-    Tasks
+    Earn
   </button>
 
-  <button class="bottom-link" onclick="location.href='withdraw.html'">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <rect x="3" y="5" width="18" height="14" rx="2"/>
-      <path d="M3 10h18"/>
-      <circle cx="8" cy="14" r="1"/>
+  <button
+    class="bottom-link"
+    onclick="location.href='referrals.html'"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <circle
+        cx="9"
+        cy="8"
+        r="3"
+      />
+      <circle
+        cx="17"
+        cy="9"
+        r="2.5"
+      />
+      <path d="M3 19c0-3 2.5-5 6-5s6 2 6 5"/>
+      <path d="M15 14c3 0 5 1.7 5 4"/>
     </svg>
-    Wallet
+    Referrals
   </button>
 
-  <button class="bottom-link active">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M6 3h12"/>
-      <path d="M6 21h12"/>
-      <path d="M7 3v5l5 4-5 4v5"/>
-      <path d="M17 3v5l-5 4 5 4v5"/>
-    </svg>
-    History
-  </button>
-
-  <button class="bottom-link" onclick="location.href='profile.html'">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="12" cy="8" r="4"/>
+  <button
+    class="bottom-link"
+    onclick="location.href='profile.html'"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <circle
+        cx="12"
+        cy="8"
+        r="4"
+      />
       <path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/>
     </svg>
     Profile
@@ -863,6 +1230,9 @@ const totalWithdrawnEl =
 const transactionCountEl =
   document.getElementById("transactionCount");
 
+const notificationBadge =
+  document.getElementById("notificationBadge");
+
 /* =========================================================
    THEME
 ========================================================= */
@@ -881,7 +1251,7 @@ function applyTheme(theme){
         : "light";
   }
 
-  document.body.classList.toggle(
+  document.documentElement.classList.toggle(
     "dark",
     finalTheme === "dark"
   );
@@ -909,14 +1279,17 @@ applyTheme(savedTheme);
 
 document
   .getElementById("themeBtn")
-  .addEventListener("click", function(e){
+  .addEventListener(
+    "click",
+    function(e){
 
-    e.stopPropagation();
+      e.stopPropagation();
 
-    document
-      .getElementById("themeMenu")
-      .classList.toggle("show");
-  });
+      document
+        .getElementById("themeMenu")
+        .classList.toggle("show");
+    }
+  );
 
 document
   .querySelectorAll(".theme-option")
@@ -932,6 +1305,33 @@ document
       }
     );
   });
+
+document
+  .getElementById("menuThemeBtn")
+  .addEventListener(
+    "click",
+    function(){
+
+      const current =
+        localStorage.getItem(THEME_KEY) ||
+        "system";
+
+      let next =
+        "light";
+
+      if(current === "light"){
+        next = "dark";
+      }else if(current === "dark"){
+        next = "system";
+      }else{
+        next = "light";
+      }
+
+      setTheme(next);
+
+      closeMenu();
+    }
+  );
 
 document.addEventListener(
   "click",
@@ -980,12 +1380,14 @@ const menuOverlay =
 function openMenu(){
 
   sideMenu.classList.add("open");
+
   menuOverlay.classList.add("show");
 }
 
 function closeMenu(){
 
   sideMenu.classList.remove("open");
+
   menuOverlay.classList.remove("show");
 }
 
@@ -1044,6 +1446,90 @@ function formatDate(date){
 }
 
 /* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+async function loadNotificationBadge(){
+
+  if(!currentUser){
+    return;
+  }
+
+  try{
+
+    const {
+      count,
+      error
+    } =
+      await db
+        .from("notifications")
+        .select(
+          "id",
+          {
+            count:"exact",
+            head:true
+          }
+        )
+        .eq(
+          "user_id",
+          currentUser.id
+        )
+        .eq(
+          "is_read",
+          false
+        );
+
+    if(error){
+      console.error(
+        "Notification badge error:",
+        error
+      );
+      return;
+    }
+
+    const unread =
+      Number(count || 0);
+
+    if(unread > 0){
+
+      notificationBadge.textContent =
+        unread > 99
+          ? "99+"
+          : String(unread);
+
+      notificationBadge.style.display =
+        "flex";
+
+    }else{
+
+      notificationBadge.textContent =
+        "";
+
+      notificationBadge.style.display =
+        "none";
+    }
+
+  }catch(error){
+
+    console.error(
+      "Notification badge error:",
+      error
+    );
+  }
+}
+
+document
+  .getElementById("notificationBtn")
+  .addEventListener(
+    "click",
+    function(){
+
+      location.href =
+        "notifications.html";
+    }
+  );
+
+/* =========================================================
    AUTH
 ========================================================= */
 
@@ -1076,7 +1562,10 @@ async function checkUser(){
   currentUser =
     data.session.user;
 
-  await loadHistory();
+  await Promise.all([
+    loadHistory(),
+    loadNotificationBadge()
+  ]);
 }
 
 /* =========================================================
@@ -1576,31 +2065,19 @@ function normalizeStatus(status){
     return "processing";
   }
 
-  if(
-    value === "pending"
-  ){
-
+  if(value === "pending"){
     return "pending";
   }
 
-  if(
-    value === "failed"
-  ){
-
+  if(value === "failed"){
     return "failed";
   }
 
-  if(
-    value === "rejected"
-  ){
-
+  if(value === "rejected"){
     return "rejected";
   }
 
-  if(
-    value === "cancelled"
-  ){
-
+  if(value === "cancelled"){
     return "cancelled";
   }
 
