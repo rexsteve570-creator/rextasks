@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#ffffff">
 
   <title>TallyBuck — Earn Tasks</title>
 
@@ -20,19 +19,8 @@
       --muted:#718078;
       --border:#e5ebe8;
       --danger:#dc3545;
+      --warning:#d97706;
       --shadow:0 8px 25px rgba(6,63,45,.06);
-    }
-
-    body.dark{
-      --green:#59e696;
-      --green-dark:#052d20;
-      --green-soft:#142d22;
-      --bg:#0c1210;
-      --card:#121a17;
-      --text:#f1f6f3;
-      --muted:#94a39b;
-      --border:#24332d;
-      --shadow:0 8px 25px rgba(0,0,0,.20);
     }
 
     *{
@@ -41,16 +29,21 @@
       padding:0;
     }
 
-    html{
-      scroll-behavior:smooth;
-    }
-
     body{
-      min-height:100vh;
+      font-family:Inter,Arial,sans-serif;
       background:var(--bg);
       color:var(--text);
-      font-family:Inter,Arial,Helvetica,sans-serif;
-      transition:background .2s ease,color .2s ease;
+      min-height:100vh;
+    }
+
+    body.dark{
+      --bg:#0c1210;
+      --card:#121a17;
+      --text:#f1f6f3;
+      --muted:#94a39b;
+      --border:#24332d;
+      --green-soft:#142d22;
+      --shadow:0 8px 25px rgba(0,0,0,.2);
     }
 
     a{
@@ -60,21 +53,18 @@
 
     button{
       font-family:inherit;
-      -webkit-tap-highlight-color:transparent;
     }
 
     .app{
-      width:100%;
       max-width:760px;
-      min-height:100vh;
       margin:0 auto;
+      min-height:100vh;
       padding-bottom:90px;
     }
 
-
-    /* =====================================================
+    /* =========================================================
        HEADER
-    ===================================================== */
+    ========================================================= */
 
     .topbar{
       position:sticky;
@@ -93,9 +83,9 @@
       display:flex;
       align-items:center;
       gap:10px;
-      color:var(--green);
       font-size:20px;
       font-weight:800;
+      color:var(--green);
     }
 
     .brand-mark{
@@ -117,7 +107,6 @@
     }
 
     .icon-btn{
-      position:relative;
       width:40px;
       height:40px;
       border:1px solid var(--border);
@@ -128,10 +117,7 @@
       align-items:center;
       justify-content:center;
       cursor:pointer;
-    }
-
-    .icon-btn:active{
-      transform:scale(.95);
+      position:relative;
     }
 
     .icon-btn svg{
@@ -145,237 +131,44 @@
       right:7px;
       width:7px;
       height:7px;
-      border-radius:50%;
       background:#ef4444;
+      border-radius:50%;
       border:2px solid var(--card);
     }
 
-
-    /* =====================================================
-       SIDE MENU
-    ===================================================== */
-
-    .menu-overlay{
-      display:none;
-      position:fixed;
-      inset:0;
-      z-index:200;
-      background:rgba(0,0,0,.42);
-    }
-
-    .menu-overlay.show{
-      display:block;
-    }
-
-    .side-menu{
-      position:fixed;
-      z-index:201;
-      top:0;
-      right:-310px;
-      width:290px;
-      max-width:85%;
-      height:100vh;
-      overflow-y:auto;
-      background:var(--card);
-      box-shadow:-8px 0 30px rgba(0,0,0,.16);
-      transition:right .25s ease;
-    }
-
-    .side-menu.show{
-      right:0;
-    }
-
-    .side-header{
-      height:72px;
-      padding:0 18px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      background:var(--green-dark);
-      color:#fff;
-    }
-
-    .side-brand{
-      display:flex;
-      align-items:center;
-      gap:9px;
-      font-size:19px;
-      font-weight:800;
-    }
-
-    .side-brand-mark{
-      width:32px;
-      height:32px;
-      border-radius:9px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:rgba(255,255,255,.12);
-      color:#5ee696;
-      font-weight:900;
-    }
-
-    .side-close{
-      width:38px;
-      height:38px;
-      border:0;
-      border-radius:10px;
-      background:rgba(255,255,255,.10);
-      color:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      cursor:pointer;
-    }
-
-    .side-close svg{
-      width:19px;
-      height:19px;
-    }
-
-    .side-user{
-      padding:17px 18px;
-      border-bottom:1px solid var(--border);
-    }
-
-    .side-user strong{
-      display:block;
-      font-size:14px;
-    }
-
-    .side-user span{
-      display:block;
-      margin-top:4px;
-      overflow:hidden;
-      color:var(--muted);
-      font-size:11px;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-    }
-
-    .side-links{
-      padding:10px;
-    }
-
-    .side-link{
-      width:100%;
-      border:0;
-      border-radius:10px;
-      background:transparent;
-      color:var(--text);
-      display:flex;
-      align-items:center;
-      gap:12px;
-      padding:12px 10px;
-      text-align:left;
-      font-size:13px;
-      cursor:pointer;
-    }
-
-    .side-link:hover{
-      background:var(--green-soft);
-      color:var(--green);
-    }
-
-    .side-link svg{
-      width:19px;
-      height:19px;
-      flex:none;
-    }
-
-    .side-link.active{
-      background:var(--green-soft);
-      color:var(--green);
-      font-weight:700;
-    }
-
-    .side-link.logout{
-      color:var(--danger);
-    }
-
-
-    /* =====================================================
-       MAIN CONTENT
-    ===================================================== */
+    /* =========================================================
+       CONTENT
+    ========================================================= */
 
     .content{
       padding:18px;
     }
 
-    .page-heading{
+    .page-header{
       margin-bottom:18px;
     }
 
-    .page-heading h1{
-      margin-bottom:5px;
+    .page-header h1{
       font-size:24px;
+      margin-bottom:5px;
     }
 
-    .page-heading p{
+    .page-header p{
       color:var(--muted);
       font-size:14px;
-      line-height:1.45;
+      line-height:1.5;
     }
 
-
-    /* =====================================================
-       AVAILABILITY CARD
-    ===================================================== */
-
-    .availability-card{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin-bottom:18px;
-      padding:15px;
-      border:1px solid var(--border);
-      border-radius:17px;
-      background:var(--green-soft);
-    }
-
-    .availability-icon{
-      width:40px;
-      height:40px;
-      flex:none;
-      border-radius:12px;
-      background:var(--card);
-      color:var(--green);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .availability-icon svg{
-      width:20px;
-      height:20px;
-    }
-
-    .availability-info{
-      min-width:0;
-    }
-
-    .availability-info strong{
-      display:block;
-      margin-bottom:3px;
-      font-size:13px;
-    }
-
-    .availability-info span{
-      display:block;
-      color:var(--muted);
-      font-size:11px;
-    }
-
-
-    /* =====================================================
+    /* =========================================================
        FILTERS
-    ===================================================== */
+    ========================================================= */
 
     .filters{
       display:flex;
       gap:8px;
       overflow-x:auto;
-      padding:1px 0 16px;
+      padding-bottom:4px;
+      margin-bottom:18px;
       scrollbar-width:none;
     }
 
@@ -383,32 +176,27 @@
       display:none;
     }
 
-    .filter{
+    .filter-btn{
       flex:none;
-      padding:9px 14px;
       border:1px solid var(--border);
-      border-radius:999px;
       background:var(--card);
       color:var(--muted);
-      font-size:11px;
+      padding:9px 14px;
+      border-radius:10px;
+      font-size:12px;
       font-weight:700;
       cursor:pointer;
     }
 
-    .filter:active{
-      transform:scale(.97);
-    }
-
-    .filter.active{
-      border-color:var(--green);
+    .filter-btn.active{
       background:var(--green);
+      border-color:var(--green);
       color:#fff;
     }
 
-
-    /* =====================================================
+    /* =========================================================
        SECTION HEADER
-    ===================================================== */
+    ========================================================= */
 
     .section-header{
       display:flex;
@@ -422,129 +210,140 @@
       font-weight:800;
     }
 
-    .offer-count{
+    .task-count{
       color:var(--muted);
-      font-size:11px;
-      font-weight:600;
+      font-size:12px;
     }
 
+    /* =========================================================
+       TASK CARD
+    ========================================================= */
 
-    /* =====================================================
-       OFFER GRID
-    ===================================================== */
-
-    .offer-grid{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:12px;
+    .task-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
     }
 
-    .offer-card{
-      min-width:0;
-      padding:15px;
+    .task-card{
+      background:var(--card);
       border:1px solid var(--border);
       border-radius:17px;
-      background:var(--card);
+      padding:16px;
       box-shadow:var(--shadow);
     }
 
-    .offer-icon{
-      width:43px;
-      height:43px;
-      margin-bottom:11px;
+    .task-top{
+      display:flex;
+      align-items:flex-start;
+      gap:13px;
+    }
+
+    .task-image{
+      width:48px;
+      height:48px;
       border-radius:13px;
-      overflow:hidden;
       background:var(--green-soft);
-      color:var(--green);
       display:flex;
       align-items:center;
       justify-content:center;
+      flex:none;
+      overflow:hidden;
+      color:var(--green);
     }
 
-    .offer-icon svg{
-      width:21px;
-      height:21px;
-    }
-
-    .offer-icon img{
+    .task-image img{
       width:100%;
       height:100%;
       object-fit:cover;
     }
 
-    .offer-category{
-      display:inline-flex;
-      align-items:center;
-      margin-bottom:7px;
-      padding:4px 7px;
-      border-radius:7px;
-      background:var(--green-soft);
-      color:var(--green);
-      font-size:9px;
-      font-weight:800;
+    .task-image svg{
+      width:23px;
+      height:23px;
     }
 
-    .offer-title{
-      min-height:35px;
-      font-size:13px;
+    .task-info{
+      flex:1;
+      min-width:0;
+    }
+
+    .task-title{
+      font-size:14px;
       font-weight:800;
       line-height:1.35;
+      margin-bottom:5px;
     }
 
-    .offer-description{
-      min-height:29px;
-      margin-top:6px;
+    .task-description{
       color:var(--muted);
-      font-size:10px;
+      font-size:12px;
       line-height:1.45;
-      display:-webkit-box;
-      -webkit-line-clamp:2;
-      -webkit-box-orient:vertical;
-      overflow:hidden;
     }
 
-    .offer-reward{
-      margin-top:9px;
+    .task-reward{
       color:var(--green);
       font-size:14px;
       font-weight:800;
+      white-space:nowrap;
     }
 
-    .offer-button{
-      width:100%;
-      margin-top:11px;
-      padding:10px;
+    .task-bottom{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-top:14px;
+      padding-top:13px;
+      border-top:1px solid var(--border);
+    }
+
+    .task-type{
+      display:inline-flex;
+      align-items:center;
+      gap:5px;
+      color:var(--muted);
+      font-size:11px;
+      font-weight:600;
+      text-transform:capitalize;
+    }
+
+    .task-type svg{
+      width:14px;
+      height:14px;
+    }
+
+    .start-btn{
       border:0;
-      border-radius:10px;
       background:var(--green);
       color:#fff;
-      font-size:11px;
+      padding:9px 15px;
+      border-radius:10px;
+      font-size:12px;
       font-weight:800;
       cursor:pointer;
     }
 
-    .offer-button:active{
-      transform:scale(.97);
+    .start-btn:active{
+      transform:scale(.98);
     }
 
+    /* =========================================================
+       STATES
+    ========================================================= */
 
-    /* =====================================================
-       EMPTY / ERROR
-    ===================================================== */
-
-    .state{
-      grid-column:1 / -1;
-      padding:32px 18px;
+    .state-card{
+      background:var(--card);
       border:1px solid var(--border);
       border-radius:17px;
-      background:var(--card);
-      box-shadow:var(--shadow);
+      padding:30px 20px;
       text-align:center;
+      box-shadow:var(--shadow);
     }
 
     .state-icon{
-      width:50px;
-      height:50px;
+      width:48px;
+      height:48px;
       margin:0 auto 12px;
       border-radius:14px;
       background:var(--green-soft);
@@ -559,89 +358,122 @@
       height:23px;
     }
 
-    .state h3{
-      margin-bottom:6px;
+    .state-title{
       font-size:15px;
+      font-weight:800;
+      margin-bottom:5px;
     }
 
-    .state p{
-      max-width:310px;
-      margin:0 auto;
+    .state-text{
       color:var(--muted);
-      font-size:11px;
+      font-size:12px;
       line-height:1.5;
     }
 
-    .retry-button{
-      margin-top:13px;
-      padding:10px 18px;
-      border:0;
+    .retry-btn{
+      margin-top:14px;
+      border:1px solid var(--green);
+      background:var(--card);
+      color:var(--green);
+      padding:9px 15px;
       border-radius:10px;
-      background:var(--green);
-      color:#fff;
-      font-size:11px;
+      font-size:12px;
       font-weight:800;
       cursor:pointer;
     }
 
-
-    /* =====================================================
+    /* =========================================================
        SKELETON
-    ===================================================== */
+    ========================================================= */
 
-    .skeleton{
-      height:205px;
+    .skeleton-card{
+      background:var(--card);
+      border:1px solid var(--border);
       border-radius:17px;
-      background:
-        linear-gradient(
-          90deg,
-          var(--green-soft) 25%,
-          var(--card) 50%,
-          var(--green-soft) 75%
-        );
-      background-size:200% 100%;
-      animation:loading 1.3s infinite;
+      padding:16px;
     }
 
-    @keyframes loading{
-      from{
+    .skeleton{
+      background:linear-gradient(
+        90deg,
+        var(--border) 25%,
+        var(--green-soft) 50%,
+        var(--border) 75%
+      );
+      background-size:200% 100%;
+      animation:skeletonMove 1.4s infinite;
+      border-radius:8px;
+    }
+
+    .skeleton-row{
+      display:flex;
+      gap:13px;
+    }
+
+    .skeleton-image{
+      width:48px;
+      height:48px;
+      border-radius:13px;
+      flex:none;
+    }
+
+    .skeleton-content{
+      flex:1;
+    }
+
+    .skeleton-title{
+      height:13px;
+      width:65%;
+      margin-bottom:9px;
+    }
+
+    .skeleton-text{
+      height:10px;
+      width:90%;
+      margin-bottom:6px;
+    }
+
+    .skeleton-text.small{
+      width:60%;
+    }
+
+    .skeleton-button{
+      height:34px;
+      width:80px;
+      margin-top:14px;
+      margin-left:auto;
+    }
+
+    @keyframes skeletonMove{
+      0%{
         background-position:200% 0;
       }
-
-      to{
+      100%{
         background-position:-200% 0;
       }
     }
 
-
-    /* =====================================================
-       BOTTOM NAVIGATION
-    ===================================================== */
+    /* =========================================================
+       BOTTOM NAV
+    ========================================================= */
 
     .bottom-nav{
       position:fixed;
       z-index:90;
       left:50%;
+      transform:translateX(-50%);
       bottom:0;
       width:100%;
       max-width:760px;
       height:72px;
-      padding:7px 8px;
-      transform:translateX(-50%);
-      border-top:1px solid var(--border);
       background:var(--card);
-    }
-
-    .bottom-inner{
-      height:100%;
+      border-top:1px solid var(--border);
       display:grid;
       grid-template-columns:repeat(4,1fr);
-      align-items:center;
+      padding:7px 8px;
     }
 
     .nav-item{
-      position:relative;
-      height:100%;
       display:flex;
       flex-direction:column;
       align-items:center;
@@ -661,20 +493,75 @@
       color:var(--green);
     }
 
-    .nav-item.active::after{
-      content:"";
-      position:absolute;
-      bottom:1px;
-      width:26px;
-      height:3px;
-      border-radius:5px;
-      background:var(--green);
+    /* =========================================================
+       SIDE MENU
+    ========================================================= */
+
+    .menu-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.4);
+      z-index:200;
     }
 
+    .menu-overlay.show{
+      display:block;
+    }
 
-    /* =====================================================
-       RESPONSIVE
-    ===================================================== */
+    .side-menu{
+      position:fixed;
+      z-index:201;
+      top:0;
+      right:-310px;
+      width:290px;
+      max-width:85%;
+      height:100vh;
+      background:var(--card);
+      transition:right .25s ease;
+      padding:20px;
+      overflow-y:auto;
+    }
+
+    .side-menu.show{
+      right:0;
+    }
+
+    .menu-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:22px;
+    }
+
+    .menu-header strong{
+      font-size:18px;
+    }
+
+    .menu-item{
+      width:100%;
+      border:0;
+      background:none;
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:13px 8px;
+      border-radius:10px;
+      cursor:pointer;
+      text-align:left;
+      font-size:14px;
+    }
+
+    .menu-item:hover{
+      background:var(--green-soft);
+    }
+
+    .menu-item svg{
+      width:19px;
+      height:19px;
+      color:var(--green);
+    }
 
     @media(max-width:420px){
 
@@ -682,1849 +569,1611 @@
         padding:15px;
       }
 
-      .offer-grid{
-        gap:9px;
-      }
-
-      .offer-card{
-        padding:13px;
-      }
-
-      .page-heading h1{
+      .page-header h1{
         font-size:22px;
       }
 
-    }
-
-    @media(max-width:350px){
-
-      .offer-grid{
-        grid-template-columns:1fr;
+      .task-card{
+        padding:14px;
       }
 
-      .offer-title{
-        min-height:auto;
+      .task-reward{
+        font-size:13px;
       }
 
-      .offer-description{
-        min-height:auto;
+      .start-btn{
+        padding:8px 12px;
       }
-
     }
   </style>
 </head>
 
 <body>
 
-  <!-- =====================================================
-       MENU OVERLAY
-  ===================================================== -->
+<div class="app">
 
-  <div class="menu-overlay" id="menuOverlay"></div>
+  <!-- HEADER -->
+  <header class="topbar">
 
+    <a href="dashboard.html" class="brand">
 
-  <!-- =====================================================
-       SIDE MENU
-  ===================================================== -->
+      <span class="brand-mark">T</span>
 
-  <aside class="side-menu" id="sideMenu">
+      <span>TallyBuck</span>
 
-    <div class="side-header">
+    </a>
 
-      <div class="side-brand">
+    <div class="header-actions">
 
-        <span class="side-brand-mark">
-          T
-        </span>
+      <a
+        href="notifications.html"
+        class="icon-btn"
+        aria-label="Notifications"
+      >
 
-        <span>
-          TallyBuck
-        </span>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+        </svg>
 
-      </div>
+        <span
+          id="notificationDot"
+          class="notification-dot"
+          style="display:none;"
+        ></span>
 
+      </a>
 
       <button
-        class="side-close"
-        id="closeMenu"
-        aria-label="Close menu">
+        class="icon-btn"
+        id="menuBtn"
+        aria-label="Menu"
+      >
 
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
-
-          <path d="M6 6l12 12"/>
-          <path d="M18 6L6 18"/>
-
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <line x1="4" y1="6" x2="20" y2="6"></line>
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <line x1="4" y1="18" x2="20" y2="18"></line>
         </svg>
 
       </button>
 
     </div>
 
-
-    <div class="side-user">
-
-      <strong id="sideName">
-        User
-      </strong>
-
-      <span id="sideEmail">
-        Loading...
-      </span>
-
-    </div>
+  </header>
 
 
-    <div class="side-links">
+  <!-- CONTENT -->
+  <main class="content">
 
-      <a
-        class="side-link"
-        href="dashboard.html">
+    <section class="page-header">
 
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
+      <h1>Earn Tasks</h1>
 
-          <path d="m3 11 9-8 9 8"/>
-          <path d="M5 10v10h14V10"/>
+      <p>
+        Complete available tasks and offers to earn verified rewards.
+      </p>
 
-        </svg>
-
-        Dashboard
-
-      </a>
+    </section>
 
 
-      <a
-        class="side-link active"
-        href="tasks.html">
-
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
-
-          <rect x="5" y="3"
-                width="14"
-                height="18"
-                rx="2"/>
-
-          <path d="M8 8h8"/>
-          <path d="M8 12h8"/>
-          <path d="M8 16h5"/>
-
-        </svg>
-
-        Earn Tasks
-
-      </a>
-
-
-      <a
-        class="side-link"
-        href="referrals.html">
-
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
-
-          <circle cx="9" cy="7" r="4"/>
-          <path d="M3 21v-2a6 6 0 0 1 12 0v2"/>
-          <path d="M16 11a4 4 0 1 0 0-8"/>
-          <path d="M21 21v-2a6 6 0 0 0-4-5.65"/>
-
-        </svg>
-
-        Referrals
-
-      </a>
-
-
-      <a
-        class="side-link"
-        href="withdraw.html">
-
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
-
-          <path d="M3 7h18"/>
-          <path d="M5 7V5h14v2"/>
-          <rect x="3" y="7"
-                width="18"
-                height="12"
-                rx="2"/>
-
-          <path d="M7 13h4"/>
-
-        </svg>
-
-        Wallet / Withdraw
-
-      </a>
-
-
-      <a
-        class="side-link"
-        href="history.html">
-
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
-
-          <path d="M3 12a9 9 0 1 0 3-6.7"/>
-          <path d="M3 4v6h6"/>
-          <path d="M12 7v5l3 2"/>
-
-        </svg>
-
-        History
-
-      </a>
-
-
-      <a
-        class="side-link"
-        href="notifications.html">
-
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
-
-          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-          <path d="M13.7 21a2 2 0 0 1-3.4 0"/>
-
-        </svg>
-
-        Notifications
-
-      </a>
-
-
-      <a
-        class="side-link"
-        href="profile.html">
-
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
-
-          <circle cx="12" cy="8" r="4"/>
-          <path d="M4 21a8 8 0 0 1 16 0"/>
-
-        </svg>
-
-        Profile
-
-      </a>
-
+    <!-- FILTERS -->
+    <div class="filters">
 
       <button
-        class="side-link logout"
-        id="logoutBtn">
+        class="filter-btn active"
+        data-filter="all"
+      >
+        All
+      </button>
 
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
+      <button
+        class="filter-btn"
+        data-filter="survey"
+      >
+        Surveys
+      </button>
 
-          <path d="M10 17l5-5-5-5"/>
-          <path d="M15 12H3"/>
-          <path d="M21 19V5a2 2 0 0 0-2-2h-6"/>
+      <button
+        class="filter-btn"
+        data-filter="offer"
+      >
+        Offers
+      </button>
 
-        </svg>
-
-        Sign Out
-
+      <button
+        class="filter-btn"
+        data-filter="app"
+      >
+        App Installs
       </button>
 
     </div>
 
-  </aside>
 
+    <!-- TASK SECTION -->
+    <section>
 
-  <!-- =====================================================
-       APPLICATION
-  ===================================================== -->
+      <div class="section-header">
 
-  <div class="app">
-
-
-    <!-- ===================================================
-         HEADER
-    ==================================================== -->
-
-    <header class="topbar">
-
-      <div class="brand">
-
-        <span class="brand-mark">
-          T
-        </span>
-
-        <span>
-          TallyBuck
-        </span>
-
-      </div>
-
-
-      <div class="header-actions">
-
-        <a
-          href="notifications.html"
-          class="icon-btn"
-          aria-label="Notifications">
-
-          <svg viewBox="0 0 24 24"
-               fill="none"
-               stroke="currentColor"
-               stroke-width="2">
-
-            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-
-          </svg>
-
-          <span
-            class="notification-dot"
-            id="notificationDot"
-            style="display:none;">
-          </span>
-
-        </a>
-
-
-        <button
-          class="icon-btn"
-          id="menuBtn"
-          aria-label="Open menu">
-
-          <svg viewBox="0 0 24 24"
-               fill="none"
-               stroke="currentColor"
-               stroke-width="2">
-
-            <line x1="4" y1="6"
-                  x2="20" y2="6"/>
-
-            <line x1="4" y1="12"
-                  x2="20" y2="12"/>
-
-            <line x1="4" y1="18"
-                  x2="20" y2="18"/>
-
-          </svg>
-
-        </button>
-
-      </div>
-
-    </header>
-
-
-    <!-- ===================================================
-         CONTENT
-    ==================================================== -->
-
-    <main class="content">
-
-      <section class="page-heading">
-
-        <h1>
-          Earn Tasks
-        </h1>
-
-        <p>
-          Complete available opportunities and earn verified rewards.
-        </p>
-
-      </section>
-
-
-      <!-- AVAILABILITY -->
-
-      <section class="availability-card">
-
-        <div class="availability-icon">
-
-          <svg viewBox="0 0 24 24"
-               fill="none"
-               stroke="currentColor"
-               stroke-width="2">
-
-            <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/>
-            <circle cx="12" cy="10" r="2.5"/>
-
-          </svg>
-
+        <div class="section-title">
+          Available Opportunities
         </div>
-
-
-        <div class="availability-info">
-
-          <strong>
-            Available in your location
-          </strong>
-
-          <span id="availabilityText">
-            Finding tasks available to you...
-          </span>
-
-        </div>
-
-      </section>
-
-
-      <!-- FILTERS -->
-
-      <div class="filters">
-
-        <button
-          class="filter active"
-          data-category="all">
-
-          All
-
-        </button>
-
-
-        <button
-          class="filter"
-          data-category="survey">
-
-          Surveys
-
-        </button>
-
-
-        <button
-          class="filter"
-          data-category="offer">
-
-          Offers
-
-        </button>
-
-
-        <button
-          class="filter"
-          data-category="app">
-
-          App Installs
-
-        </button>
-
-      </div>
-
-
-      <!-- TASKS -->
-
-      <section>
-
-        <div class="section-header">
-
-          <div class="section-title">
-            Available Tasks
-          </div>
-
-          <div
-            class="offer-count"
-            id="offerCount">
-
-            Loading...
-
-          </div>
-
-        </div>
-
 
         <div
-          class="offer-grid"
-          id="content">
+          class="task-count"
+          id="taskCount"
+        >
+          Loading...
+        </div>
 
-          <div class="skeleton"></div>
-          <div class="skeleton"></div>
+      </div>
+
+
+      <div
+        class="task-list"
+        id="taskList"
+      >
+
+        <!-- SKELETON -->
+        <div class="skeleton-card">
+
+          <div class="skeleton-row">
+
+            <div class="skeleton skeleton-image"></div>
+
+            <div class="skeleton-content">
+
+              <div class="skeleton skeleton-title"></div>
+
+              <div class="skeleton skeleton-text"></div>
+
+              <div class="skeleton skeleton-text small"></div>
+
+            </div>
+
+          </div>
+
+          <div class="skeleton skeleton-button"></div>
 
         </div>
 
-      </section>
 
-    </main>
+        <div class="skeleton-card">
+
+          <div class="skeleton-row">
+
+            <div class="skeleton skeleton-image"></div>
+
+            <div class="skeleton-content">
+
+              <div class="skeleton skeleton-title"></div>
+
+              <div class="skeleton skeleton-text"></div>
+
+              <div class="skeleton skeleton-text small"></div>
+
+            </div>
+
+          </div>
+
+          <div class="skeleton skeleton-button"></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+
+    <a
+      href="dashboard.html"
+      class="nav-item"
+    >
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="m3 11 9-8 9 8"></path>
+        <path d="M5 10v10h14V10"></path>
+      </svg>
+
+      Home
+
+    </a>
+
+
+    <a
+      href="tasks.html"
+      class="nav-item active"
+    >
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M4 4h16v16H4z"></path>
+        <path d="M8 8h8"></path>
+        <path d="M8 12h8"></path>
+        <path d="M8 16h5"></path>
+      </svg>
+
+      Earn
+
+    </a>
+
+
+    <a
+      href="referrals.html"
+      class="nav-item"
+    >
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <circle cx="9" cy="7" r="4"></circle>
+        <path d="M3 21v-2a6 6 0 0 1 12 0v2"></path>
+        <path d="M16 11a4 4 0 1 0 0-8"></path>
+        <path d="M21 21v-2a6 6 0 0 0-4-5.65"></path>
+      </svg>
+
+      Referrals
+
+    </a>
+
+
+    <a
+      href="profile.html"
+      class="nav-item"
+    >
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <circle cx="12" cy="8" r="4"></circle>
+        <path d="M4 21a8 8 0 0 1 16 0"></path>
+      </svg>
+
+      Profile
+
+    </a>
+
+  </nav>
+
+</div>
+
+
+<!-- SIDE MENU -->
+<div
+  class="menu-overlay"
+  id="menuOverlay"
+></div>
+
+
+<aside
+  class="side-menu"
+  id="sideMenu"
+>
+
+  <div class="menu-header">
+
+    <strong>TallyBuck</strong>
+
+    <button
+      class="icon-btn"
+      id="closeMenu"
+    >
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+      </svg>
+
+    </button>
 
   </div>
 
 
-  <!-- =====================================================
-       BOTTOM NAVIGATION
-  ===================================================== -->
+  <button
+    class="menu-item"
+    onclick="location.href='dashboard.html'"
+  >
 
-  <nav class="bottom-nav">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="m3 11 9-8 9 8"></path>
+      <path d="M5 10v10h14V10"></path>
+    </svg>
 
-    <div class="bottom-inner">
+    Dashboard
 
-
-      <!-- HOME -->
-
-      <a
-        href="dashboard.html"
-        class="nav-item">
-
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
-
-          <path d="m3 11 9-8 9 8"/>
-          <path d="M5 10v10h14V10"/>
-
-        </svg>
-
-        Home
-
-      </a>
+  </button>
 
 
-      <!-- EARN -->
+  <button
+    class="menu-item"
+    onclick="location.href='tasks.html'"
+  >
 
-      <a
-        href="tasks.html"
-        class="nav-item active">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M4 4h16v16H4z"></path>
+      <path d="M8 8h8"></path>
+      <path d="M8 12h8"></path>
+      <path d="M8 16h5"></path>
+    </svg>
 
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
+    Earn Tasks
 
-          <rect x="5" y="3"
-                width="14"
-                height="18"
-                rx="2"/>
-
-          <path d="M8 8h8"/>
-          <path d="M8 12h8"/>
-          <path d="M8 16h5"/>
-
-        </svg>
-
-        Earn
-
-      </a>
+  </button>
 
 
-      <!-- REFERRALS -->
+  <button
+    class="menu-item"
+    onclick="location.href='referrals.html'"
+  >
 
-      <a
-        href="referrals.html"
-        class="nav-item">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <circle cx="9" cy="7" r="4"></circle>
+      <path d="M3 21v-2a6 6 0 0 1 12 0v2"></path>
+      <path d="M16 11a4 4 0 1 0 0-8"></path>
+      <path d="M21 21v-2a6 6 0 0 0-4-5.65"></path>
+    </svg>
 
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
+    Referrals
 
-          <circle cx="9" cy="7" r="4"/>
-
-          <path d="M3 21v-2a6 6 0 0 1 12 0v2"/>
-
-          <path d="M16 11a4 4 0 1 0 0-8"/>
-
-          <path d="M21 21v-2a6 6 0 0 0-4-5.65"/>
-
-        </svg>
-
-        Referrals
-
-      </a>
+  </button>
 
 
-      <!-- PROFILE -->
+  <button
+    class="menu-item"
+    onclick="location.href='withdraw.html'"
+  >
 
-      <a
-        href="profile.html"
-        class="nav-item">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M12 3v14"></path>
+      <path d="m7 12 5 5 5-5"></path>
+      <path d="M5 21h14"></path>
+    </svg>
 
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
+    Withdraw
 
-          <circle cx="12" cy="8" r="4"/>
-
-          <path d="M4 21a8 8 0 0 1 16 0"/>
-
-        </svg>
-
-        Profile
-
-      </a>
-
-    </div>
-
-  </nav>
+  </button>
 
 
-  <script>
+  <button
+    class="menu-item"
+    onclick="location.href='history.html'"
+  >
 
-    /* =====================================================
-       SUPABASE
-    ===================================================== */
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M3 12a9 9 0 1 0 3-6.7"></path>
+      <path d="M3 4v5h5"></path>
+      <path d="M12 7v5l3 2"></path>
+    </svg>
 
-    const SUPABASE_URL =
-      "https://cetsxdkoauucxwsbdktl.supabase.co";
+    History
 
-    const SUPABASE_KEY =
-      "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
+  </button>
 
-    const OFFERS_FUNCTION =
-      "https://cetsxdkoauucxwsbdktl.supabase.co/functions/v1/get-offers";
 
-    const db =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
+  <button
+    class="menu-item"
+    onclick="location.href='notifications.html'"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+      <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+    </svg>
+
+    Notifications
+
+  </button>
+
+
+  <button
+    class="menu-item"
+    onclick="location.href='profile.html'"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <circle cx="12" cy="8" r="4"></circle>
+      <path d="M4 21a8 8 0 0 1 16 0"></path>
+    </svg>
+
+    Profile
+
+  </button>
+
+
+  <button
+    class="menu-item"
+    id="themeBtn"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2v2"></path>
+      <path d="M12 20v2"></path>
+      <path d="m4.93 4.93 1.41 1.41"></path>
+      <path d="m17.66 17.66 1.41 1.41"></path>
+      <path d="M2 12h2"></path>
+      <path d="M20 12h2"></path>
+      <path d="m6.34 17.66-1.41 1.41"></path>
+      <path d="m19.07 4.93-1.41 1.41"></path>
+    </svg>
+
+    Toggle Theme
+
+  </button>
+
+
+  <button
+    class="menu-item"
+    id="logoutBtn"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M10 17l5-5-5-5"></path>
+      <path d="M15 12H3"></path>
+      <path d="M21 19V5a2 2 0 0 0-2-2h-6"></path>
+    </svg>
+
+    Sign Out
+
+  </button>
+
+</aside>
+
+
+<script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+  "https://cetsxdkoauucxwsbdktl.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
+
+const OFFERS_FUNCTION =
+  "https://cetsxdkoauucxwsbdktl.supabase.co/functions/v1/get-offers";
+
+
+const db =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function $(id){
+  return document.getElementById(id);
+}
+
+
+function escapeHtml(value){
+
+  return String(value || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+function normalizeCategory(value){
+
+  const category =
+    String(value || "")
+      .toLowerCase()
+      .trim();
+
+  if(
+    category.includes("survey")
+  ){
+    return "survey";
+  }
+
+  if(
+    category.includes("app") ||
+    category.includes("install")
+  ){
+    return "app";
+  }
+
+  return "offer";
+}
+
+
+function categoryLabel(category){
+
+  if(category === "survey"){
+    return "Survey";
+  }
+
+  if(category === "app"){
+    return "App Install";
+  }
+
+  return "Offer";
+}
+
+
+function categoryIcon(category){
+
+  if(category === "survey"){
+
+    return `
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M4 4h16v16H4z"></path>
+        <path d="M8 8h8"></path>
+        <path d="M8 12h6"></path>
+        <path d="M8 16h4"></path>
+      </svg>
+    `;
+  }
+
+
+  if(category === "app"){
+
+    return `
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <rect
+          x="6"
+          y="2"
+          width="12"
+          height="20"
+          rx="2"
+        ></rect>
+        <path d="M10 18h4"></path>
+      </svg>
+    `;
+  }
+
+
+  return `
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <circle cx="12" cy="12" r="9"></circle>
+      <path d="M8 12h8"></path>
+      <path d="M12 8v8"></path>
+    </svg>
+  `;
+}
+
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+let currentUser = null;
+
+
+/* =========================================================
+   OFFERS
+========================================================= */
+
+let allOffers = [];
+
+let currentFilter = "all";
+
+
+/* =========================================================
+   COUNTRY
+========================================================= */
+
+async function detectCountry(){
+
+  try{
+
+    const response =
+      await fetch(
+        "https://ipapi.co/json/"
       );
 
-
-    /* =====================================================
-       ELEMENTS
-    ===================================================== */
-
-    const menuBtn =
-      document.getElementById("menuBtn");
-
-    const closeMenu =
-      document.getElementById("closeMenu");
-
-    const sideMenu =
-      document.getElementById("sideMenu");
-
-    const menuOverlay =
-      document.getElementById("menuOverlay");
-
-    const logoutBtn =
-      document.getElementById("logoutBtn");
-
-    const content =
-      document.getElementById("content");
-
-    const offerCount =
-      document.getElementById("offerCount");
-
-    const availabilityText =
-      document.getElementById("availabilityText");
-
-    const notificationDot =
-      document.getElementById("notificationDot");
-
-
-    /* =====================================================
-       MENU
-    ===================================================== */
-
-    function openMenu(){
-
-      sideMenu.classList.add("show");
-
-      menuOverlay.classList.add("show");
-
-    }
-
-
-    function closeSideMenu(){
-
-      sideMenu.classList.remove("show");
-
-      menuOverlay.classList.remove("show");
-
-    }
-
-
-    menuBtn.addEventListener(
-      "click",
-      openMenu
-    );
-
-
-    closeMenu.addEventListener(
-      "click",
-      closeSideMenu
-    );
-
-
-    menuOverlay.addEventListener(
-      "click",
-      closeSideMenu
-    );
-
-
-    /* =====================================================
-       THEME
-    ===================================================== */
-
-    function applyTheme(){
-
-      const saved =
-        localStorage.getItem(
-          "tallybuck-theme"
-        );
-
-
-      if(saved === "dark"){
-
-        document.body.classList.add("dark");
-
-        return;
-
-      }
-
-
-      if(saved === "light"){
-
-        document.body.classList.remove("dark");
-
-        return;
-
-      }
-
-
-      const prefersDark =
-        window.matchMedia &&
-        window.matchMedia(
-          "(prefers-color-scheme: dark)"
-        ).matches;
-
-
-      document.body.classList.toggle(
-        "dark",
-        prefersDark
-      );
-
-    }
-
-
-    applyTheme();
-
-
-    /* =====================================================
-       LOGOUT
-    ===================================================== */
-
-    logoutBtn.addEventListener(
-      "click",
-      async function(){
-
-        const confirmed =
-          confirm(
-            "Are you sure you want to log out?"
-          );
-
-
-        if(!confirmed){
-          return;
-        }
-
-
-        await db.auth.signOut();
-
-        window.location.href =
-          "login.html";
-
-      }
-    );
-
-
-    /* =====================================================
-       PROFILE
-    ===================================================== */
-
-    async function loadProfile(){
-
-      try{
-
-        const {
-          data:{
-            session
-          }
-        } =
-          await db.auth.getSession();
-
-
-        if(!session){
-
-          window.location.href =
-            "login.html";
-
-          return;
-
-        }
-
-
-        const user =
-          session.user;
-
-
-        const {
-          data:profile
-        } =
-          await db
-            .from("profiles")
-            .select("full_name")
-            .eq(
-              "id",
-              user.id
-            )
-            .maybeSingle();
-
-
-        const fullName =
-          profile?.full_name ||
-          user.user_metadata?.full_name ||
-          user.email?.split("@")[0] ||
-          "User";
-
-
-        document.getElementById(
-          "sideName"
-        ).textContent =
-          fullName;
-
-
-        document.getElementById(
-          "sideEmail"
-        ).textContent =
-          user.email || "";
-
-      }catch(error){
-
-        console.error(
-          "Profile error:",
-          error
-        );
-
-      }
-
-    }
-
-
-    /* =====================================================
-       NOTIFICATION BADGE
-    ===================================================== */
-
-    async function loadNotificationBadge(){
-
-      try{
-
-        const {
-          data:{
-            user
-          }
-        } =
-          await db.auth.getUser();
-
-
-        if(!user){
-          return;
-        }
-
-
-        const {
-          count,
-          error
-        } =
-          await db
-            .from("notifications")
-            .select(
-              "id",
-              {
-                count:"exact",
-                head:true
-              }
-            )
-            .eq(
-              "user_id",
-              user.id
-            )
-            .eq(
-              "is_read",
-              false
-            );
-
-
-        if(error){
-
-          console.error(
-            "Notification badge error:",
-            error
-          );
-
-          return;
-
-        }
-
-
-        notificationDot.style.display =
-          count && count > 0
-          ? "block"
-          : "none";
-
-      }catch(error){
-
-        console.error(
-          "Notification badge error:",
-          error
-        );
-
-      }
-
-    }
-
-
-    /* =====================================================
-       COUNTRY
-    ===================================================== */
-
-    async function detectCountry(){
-
-      try{
-
-        const response =
-          await fetch(
-            "https://ipapi.co/json/",
-            {
-              cache:"no-store"
-            }
-          );
-
-
-        if(!response.ok){
-          throw new Error();
-        }
-
-
-        const data =
-          await response.json();
-
-
-        if(data?.country_name){
-
-          availabilityText.textContent =
-            `Tasks available for ${data.country_name}`;
-
-          return;
-
-        }
-
-      }catch(error){
-
-        console.error(
-          "Country detection error:",
-          error
-        );
-
-      }
-
-
-      availabilityText.textContent =
-        "Tasks available to you";
-
-    }
-
-
-    /* =====================================================
-       CATEGORY
-    ===================================================== */
-
-    function normalizeCategory(value){
-
-      const category =
-        String(value || "")
-          .trim()
-          .toLowerCase();
-
-
-      if(
-        category === "survey" ||
-        category === "surveys" ||
-        category.includes("survey")
-      ){
-
-        return "survey";
-
-      }
-
-
-      if(
-        category === "app" ||
-        category === "apps" ||
-        category === "app install" ||
-        category === "app installs" ||
-        category.includes("mobile install") ||
-        category.includes("app install")
-      ){
-
-        return "app";
-
-      }
-
-
-      return "offer";
-
-    }
-
-
-    function categoryLabel(category){
-
-      if(category === "survey"){
-        return "Survey";
-      }
-
-
-      if(category === "app"){
-        return "App Install";
-      }
-
-
-      return "Offer";
-
-    }
-
-
-    function categoryIcon(category){
-
-      if(category === "survey"){
-
-        return `
-          <svg viewBox="0 0 24 24"
-               fill="none"
-               stroke="currentColor"
-               stroke-width="2">
-
-            <rect x="4" y="4"
-                  width="16"
-                  height="16"
-                  rx="3"/>
-
-            <path d="M8 9h8"/>
-            <path d="M8 13h8"/>
-            <path d="M8 17h5"/>
-
-          </svg>
-        `;
-
-      }
-
-
-      if(category === "app"){
-
-        return `
-          <svg viewBox="0 0 24 24"
-               fill="none"
-               stroke="currentColor"
-               stroke-width="2">
-
-            <rect x="6" y="2"
-                  width="12"
-                  height="20"
-                  rx="2"/>
-
-            <path d="M10 18h4"/>
-
-          </svg>
-        `;
-
-      }
-
-
-      return `
-        <svg viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2">
-
-          <rect x="4" y="4"
-                width="16"
-                height="16"
-                rx="3"/>
-
-          <path d="M8 9h8"/>
-          <path d="M8 13h5"/>
-          <path d="M8 17h4"/>
-
-        </svg>
-      `;
-
-    }
-
-
-    /* =====================================================
-       ESCAPE HTML
-    ===================================================== */
-
-    function escapeHtml(value){
-
-      return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-    }
-
-
-    /* =====================================================
-       URL
-    ===================================================== */
-
-    function normalizeUrl(value){
-
-      if(!value){
-        return "";
-      }
-
-
-      const url =
-        String(value).trim();
-
-
-      if(
-        /^https?:\/\//i.test(url)
-      ){
-
-        return url;
-
-      }
-
-
+    if(!response.ok){
       return "";
-
     }
 
+    const data =
+      await response.json();
 
-    /* =====================================================
-       OFFER NORMALIZATION
-    ===================================================== */
-
-    function normalizeOffer(raw){
-
-      if(
-        !raw ||
-        typeof raw !== "object"
-      ){
+    return (
+      data.country_code ||
+      data.country ||
+      ""
+    );
 
-        return null;
+  }catch(error){
 
-      }
+    console.error(
+      "Country detection error:",
+      error
+    );
 
+    return "";
+  }
+}
 
-      const id =
-        raw.id ??
-        raw.offer_id ??
-        raw.offerId ??
-        raw.campaign_id ??
-        raw.campaignId ??
-        raw.offerID ??
-        raw.cid;
 
+/* =========================================================
+   NORMALIZE OFFER
+========================================================= */
 
-      const title =
-        raw.title ??
-        raw.name ??
-        raw.offer_name ??
-        raw.offerName ??
-        raw.campaign_name ??
-        raw.campaignName;
+function normalizeOffer(raw){
 
+  if(!raw){
+    return null;
+  }
 
-      const description =
-        raw.description ??
-        raw.desc ??
-        raw.instructions ??
-        raw.instruction ??
-        raw.offer_description ??
-        "";
 
+  const id =
+    raw.id ??
+    raw.offer_id ??
+    raw.offerId ??
+    raw.external_id;
 
-      const url =
-        raw.url ??
-        raw.link ??
-        raw.click_url ??
-        raw.clickUrl ??
-        raw.offer_url ??
-        raw.offerUrl ??
-        raw.tracking_url ??
-        raw.trackingUrl;
 
+  const title =
+    raw.title ??
+    raw.name ??
+    raw.offer_title ??
+    raw.offer_name ??
+    "Available Opportunity";
 
-      const rewardValue =
-        raw.reward ??
-        raw.user_reward ??
-        raw.userReward ??
-        raw.amount ??
-        raw.payout ??
-        raw.revenue ??
-        raw.value ??
-        0;
 
+  const description =
+    raw.description ??
+    raw.short_description ??
+    raw.desc ??
+    "Complete this opportunity to earn a verified reward.";
 
-      const reward =
-        Number(
-          String(rewardValue)
-            .replace(/[$,]/g,"")
-        );
 
+  const url =
+    raw.url ??
+    raw.click_url ??
+    raw.offer_url ??
+    raw.link ??
+    raw.tracking_url;
 
-      const image =
-        raw.image ??
-        raw.image_url ??
-        raw.imageUrl ??
-        raw.icon ??
-        raw.icon_url ??
-        raw.thumbnail ??
-        "";
 
+  const reward =
+    Number(
+      raw.reward ??
+      raw.payout ??
+      raw.amount ??
+      raw.user_reward ??
+      0
+    );
 
-      const category =
-        normalizeCategory(
-          raw.category ??
-          raw.offer_type ??
-          raw.offerType ??
-          raw.type ??
-          raw.offer_category ??
-          raw.offerCategory
-        );
 
+  const image =
+    raw.image ??
+    raw.image_url ??
+    raw.icon ??
+    raw.thumbnail ??
+    "";
 
-      const normalizedUrl =
-        normalizeUrl(url);
 
+  const category =
+    normalizeCategory(
+      raw.category ??
+      raw.type ??
+      raw.offer_type ??
+      raw.vertical
+    );
 
-      if(
-        !id ||
-        !title ||
-        !normalizedUrl
-      ){
 
-        return null;
+  if(
+    !id ||
+    !url ||
+    !Number.isFinite(reward) ||
+    reward <= 0
+  ){
+    return null;
+  }
 
-      }
 
+  return {
 
-      if(
-        !Number.isFinite(reward) ||
-        reward <= 0
-      ){
+    id:String(id),
 
-        return null;
+    title:String(title),
 
-      }
+    description:String(description),
 
+    url:String(url),
 
-      return {
+    reward:reward,
 
-        id:String(id),
+    image:String(image),
 
-        title:String(title),
+    category:category
 
-        description:
-          String(
-            description || ""
-          ),
+  };
+}
 
-        category,
 
-        reward,
+/* =========================================================
+   EXTRACT OFFERS
+========================================================= */
 
-        url:normalizedUrl,
+function extractOffers(data){
 
-        image:
-          normalizeUrl(image)
+  if(Array.isArray(data)){
+    return data;
+  }
 
-      };
 
-    }
+  if(!data || typeof data !== "object"){
+    return [];
+  }
 
 
-    /* =====================================================
-       OFFER STATE
-    ===================================================== */
+  if(Array.isArray(data.offers)){
+    return data.offers;
+  }
 
-    let allOffers = [];
 
-    let activeCategory = "all";
+  if(Array.isArray(data.data)){
+    return data.data;
+  }
 
 
-    /* =====================================================
-       OPEN OFFER
-    ===================================================== */
+  if(
+    data.data &&
+    Array.isArray(data.data.offers)
+  ){
+    return data.data.offers;
+  }
 
-    function openOffer(url){
 
-      const safeUrl =
-        normalizeUrl(url);
+  if(Array.isArray(data.results)){
+    return data.results;
+  }
 
 
-      if(!safeUrl){
-        return;
-      }
+  return [];
+}
 
 
-      window.location.href =
-        safeUrl;
+/* =========================================================
+   LOAD OFFERS
+========================================================= */
 
-    }
+async function loadOffers(){
 
+  const taskList =
+    $("taskList");
 
-    /* =====================================================
-       RENDER OFFERS
-    ===================================================== */
 
-    function renderOffers(){
+  taskList.innerHTML = `
+    <div class="skeleton-card">
 
-      let filtered =
-        allOffers;
+      <div class="skeleton-row">
 
+        <div class="skeleton skeleton-image"></div>
 
-      if(
-        activeCategory !== "all"
-      ){
+        <div class="skeleton-content">
 
-        filtered =
-          allOffers.filter(
-            function(offer){
+          <div class="skeleton skeleton-title"></div>
 
-              return (
-                offer.category ===
-                activeCategory
-              );
+          <div class="skeleton skeleton-text"></div>
 
-            }
-          );
-
-      }
-
-
-      offerCount.textContent =
-        `${filtered.length} available`;
-
-
-      if(!filtered.length){
-
-        content.innerHTML = `
-
-          <div class="state">
-
-            <div class="state-icon">
-
-              <svg viewBox="0 0 24 24"
-                   fill="none"
-                   stroke="currentColor"
-                   stroke-width="2">
-
-                <circle cx="11"
-                        cy="11"
-                        r="7"/>
-
-                <path d="m20 20-4-4"/>
-
-              </svg>
-
-            </div>
-
-            <h3>
-              No tasks available
-            </h3>
-
-            <p>
-              There are no tasks in this category right now.
-              Check back later for new opportunities.
-            </p>
-
-          </div>
-
-        `;
-
-        return;
-
-      }
-
-
-      content.innerHTML =
-        filtered
-          .map(
-            function(offer){
-
-              const reward =
-                Number(
-                  offer.reward
-                ).toFixed(2);
-
-
-              const category =
-                normalizeCategory(
-                  offer.category
-                );
-
-
-              const image =
-                offer.image
-                ? `
-                    <img
-                      src="${escapeHtml(offer.image)}"
-                      alt=""
-                      loading="lazy"
-                      onerror="this.style.display='none'">
-                  `
-                : categoryIcon(
-                    category
-                  );
-
-
-              return `
-
-                <article class="offer-card">
-
-                  <div class="offer-icon">
-
-                    ${image}
-
-                  </div>
-
-
-                  <div class="offer-category">
-
-                    ${categoryLabel(category)}
-
-                  </div>
-
-
-                  <div class="offer-title">
-
-                    ${escapeHtml(
-                      offer.title
-                    )}
-
-                  </div>
-
-
-                  ${
-                    offer.description
-                    ? `
-                        <div class="offer-description">
-
-                          ${escapeHtml(
-                            offer.description
-                          )}
-
-                        </div>
-                      `
-                    : `
-                        <div class="offer-description">
-
-                          Complete this opportunity
-                          to receive your reward.
-
-                        </div>
-                      `
-                  }
-
-
-                  <div class="offer-reward">
-
-                    +$${reward}
-
-                  </div>
-
-
-                  <button
-                    type="button"
-                    class="offer-button"
-                    data-url="${escapeHtml(
-                      offer.url
-                    )}">
-
-                    Start Task
-
-                  </button>
-
-                </article>
-
-              `;
-
-            }
-          )
-          .join("");
-
-
-      content
-        .querySelectorAll(
-          ".offer-button"
-        )
-        .forEach(
-          function(button){
-
-            button.addEventListener(
-              "click",
-              function(){
-
-                openOffer(
-                  button.dataset.url
-                );
-
-              }
-            );
-
-          }
-        );
-
-    }
-
-
-    /* =====================================================
-       LOADING
-    ===================================================== */
-
-    function showLoading(){
-
-      content.innerHTML = `
-
-        <div class="skeleton"></div>
-        <div class="skeleton"></div>
-
-      `;
-
-
-      offerCount.textContent =
-        "Loading...";
-
-    }
-
-
-    /* =====================================================
-       ERROR
-    ===================================================== */
-
-    function showError(message){
-
-      offerCount.textContent =
-        "Unavailable";
-
-
-      content.innerHTML = `
-
-        <div class="state">
-
-          <div class="state-icon">
-
-            <svg viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="2">
-
-              <circle cx="12"
-                      cy="12"
-                      r="9"/>
-
-              <path d="M12 8v5"/>
-              <path d="M12 16h.01"/>
-
-            </svg>
-
-          </div>
-
-
-          <h3>
-            We couldn't load tasks
-          </h3>
-
-
-          <p>
-            ${escapeHtml(
-              message ||
-              "Please try again."
-            )}
-          </p>
-
-
-          <button
-            class="retry-button"
-            id="retryButton"
-            type="button">
-
-            Try Again
-
-          </button>
+          <div class="skeleton skeleton-text small"></div>
 
         </div>
 
-      `;
+      </div>
+
+      <div class="skeleton skeleton-button"></div>
+
+    </div>
+
+    <div class="skeleton-card">
+
+      <div class="skeleton-row">
+
+        <div class="skeleton skeleton-image"></div>
+
+        <div class="skeleton-content">
+
+          <div class="skeleton skeleton-title"></div>
+
+          <div class="skeleton skeleton-text"></div>
+
+          <div class="skeleton skeleton-text small"></div>
+
+        </div>
+
+      </div>
+
+      <div class="skeleton skeleton-button"></div>
+
+    </div>
+  `;
 
 
-      const retryButton =
-        document.getElementById(
-          "retryButton"
-        );
+  $("taskCount").textContent =
+    "Loading...";
 
 
-      if(retryButton){
+  try{
 
-        retryButton.addEventListener(
-          "click",
-          loadOffers
-        );
+    const country =
+      await detectCountry();
 
+
+    const {
+      data:{
+        session
       }
+    } =
+      await db.auth.getSession();
+
+
+    if(!session){
+
+      window.location.href =
+        "login.html";
+
+      return;
+    }
+
+
+    const requestUrl =
+      new URL(
+        OFFERS_FUNCTION
+      );
+
+
+    if(country){
+
+      requestUrl.searchParams.set(
+        "country",
+        country
+      );
 
     }
 
 
-    /* =====================================================
-       LOAD OFFERS
-    ===================================================== */
+    const response =
+      await fetch(
+        requestUrl.toString(),
+        {
+          method:"GET",
 
-    async function loadOffers(){
+          headers:{
+            "Authorization":
+              "Bearer " +
+              session.access_token,
 
-      showLoading();
+            "apikey":
+              SUPABASE_KEY,
 
-
-      try{
-
-        const {
-          data:{
-            session
-          },
-          error:sessionError
-        } =
-          await db.auth.getSession();
-
-
-        if(
-          sessionError ||
-          !session
-        ){
-
-          window.location.href =
-            "login.html";
-
-          return;
-
+            "Content-Type":
+              "application/json"
+          }
         }
+      );
 
 
-        const response =
-          await fetch(
-            OFFERS_FUNCTION,
-            {
-              method:"GET",
+    if(!response.ok){
 
-              headers:{
-                "Authorization":
-                  `Bearer ${session.access_token}`,
-
-                "apikey":
-                  SUPABASE_KEY,
-
-                "Content-Type":
-                  "application/json"
-              },
-
-              cache:"no-store"
-            }
-          );
-
-
-        let result;
-
-
-        try{
-
-          result =
-            await response.json();
-
-        }catch(error){
-
-          throw new Error(
-            "The task service returned an invalid response."
-          );
-
-        }
-
-
-        console.log(
-          "TallyBuck get-offers response:",
-          result
-        );
-
-
-        if(
-          !response.ok ||
-          !result?.success
-        ){
-
-          throw new Error(
-            result?.error ||
-            "Unable to load available tasks."
-          );
-
-        }
-
-
-        const rawOffers =
-          Array.isArray(
-            result.offers
-          )
-          ? result.offers
-          : [];
-
-
-        allOffers =
-          rawOffers
-            .map(normalizeOffer)
-            .filter(Boolean);
-
-
-        console.log(
-          "TallyBuck normalized offers:",
-          allOffers
-        );
-
-
-        renderOffers();
-
-      }catch(error){
-
-        console.error(
-          "Offer loading error:",
-          error
-        );
-
-
-        showError(
-          error?.message ||
-          "Unable to load available tasks."
-        );
-
-      }
+      throw new Error(
+        "Unable to load earning opportunities."
+      );
 
     }
 
 
-    /* =====================================================
-       FILTERS
-    ===================================================== */
-
-    document
-      .querySelectorAll(".filter")
-      .forEach(
-        function(button){
-
-          button.addEventListener(
-            "click",
-            function(){
-
-              document
-                .querySelectorAll(".filter")
-                .forEach(
-                  function(item){
-
-                    item.classList.remove(
-                      "active"
-                    );
-
-                  }
-                );
+    const data =
+      await response.json();
 
 
-              button.classList.add(
-                "active"
-              );
+    const rawOffers =
+      extractOffers(data);
 
 
-              activeCategory =
-                button.dataset.category ||
-                "all";
+    allOffers =
+      rawOffers
+        .map(normalizeOffer)
+        .filter(Boolean);
 
 
-              renderOffers();
+    renderOffers();
 
-            }
+
+  }catch(error){
+
+    console.error(
+      "Offer loading error:",
+      error
+    );
+
+
+    $("taskCount").textContent =
+      "Unable to load";
+
+
+    taskList.innerHTML = `
+
+      <div class="state-card">
+
+        <div class="state-icon">
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 8v4"></path>
+            <path d="M12 16h.01"></path>
+          </svg>
+
+        </div>
+
+        <div class="state-title">
+          Unable to load tasks
+        </div>
+
+        <div class="state-text">
+          We could not load the available opportunities right now. Please try again.
+        </div>
+
+        <button
+          class="retry-btn"
+          onclick="loadOffers()"
+        >
+          Try Again
+        </button>
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =========================================================
+   RENDER OFFERS
+========================================================= */
+
+function renderOffers(){
+
+  const taskList =
+    $("taskList");
+
+
+  let offers =
+    allOffers;
+
+
+  if(currentFilter !== "all"){
+
+    offers =
+      allOffers.filter(
+        function(offer){
+
+          return (
+            offer.category ===
+            currentFilter
           );
 
         }
       );
 
+  }
 
-    /* =====================================================
-       AUTH
-    ===================================================== */
 
-    db.auth.onAuthStateChange(
-      function(event,session){
+  $("taskCount").textContent =
+    offers.length +
+    (
+      offers.length === 1
+        ? " available"
+        : " available"
+    );
 
-        if(
-          event === "SIGNED_OUT" ||
-          !session
-        ){
 
-          window.location.href =
-            "login.html";
+  if(offers.length === 0){
 
-        }
+    let message =
+      "There are no opportunities available right now.";
 
+
+    if(
+      currentFilter === "survey"
+    ){
+      message =
+        "There are no surveys available right now.";
+    }
+
+
+    if(
+      currentFilter === "offer"
+    ){
+      message =
+        "There are no offers available right now.";
+    }
+
+
+    if(
+      currentFilter === "app"
+    ){
+      message =
+        "There are no app install opportunities available right now.";
+    }
+
+
+    taskList.innerHTML = `
+
+      <div class="state-card">
+
+        <div class="state-icon">
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M4 4h16v16H4z"></path>
+            <path d="M8 8h8"></path>
+            <path d="M8 12h6"></path>
+            <path d="M8 16h4"></path>
+          </svg>
+
+        </div>
+
+        <div class="state-title">
+          No tasks available
+        </div>
+
+        <div class="state-text">
+          ${escapeHtml(message)}
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  taskList.innerHTML =
+    offers.map(
+      function(offer){
+
+        const imageHtml =
+          offer.image
+            ? `
+              <img
+                src="${escapeHtml(offer.image)}"
+                alt=""
+                loading="lazy"
+                onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+              >
+
+              <span style="display:none;">
+                ${categoryIcon(offer.category)}
+              </span>
+            `
+            : categoryIcon(
+                offer.category
+              );
+
+
+        return `
+
+          <article
+            class="task-card"
+          >
+
+            <div class="task-top">
+
+              <div class="task-image">
+
+                ${imageHtml}
+
+              </div>
+
+
+              <div class="task-info">
+
+                <div class="task-title">
+                  ${escapeHtml(offer.title)}
+                </div>
+
+                <div class="task-description">
+                  ${escapeHtml(offer.description)}
+                </div>
+
+              </div>
+
+
+              <div class="task-reward">
+                +$${offer.reward.toFixed(2)}
+              </div>
+
+            </div>
+
+
+            <div class="task-bottom">
+
+              <div class="task-type">
+
+                ${categoryIcon(offer.category)}
+
+                ${escapeHtml(
+                  categoryLabel(
+                    offer.category
+                  )
+                )}
+
+              </div>
+
+
+              <button
+                class="start-btn"
+                type="button"
+                onclick="openOffer('${encodeURIComponent(offer.id)}')"
+              >
+                Start
+              </button>
+
+            </div>
+
+          </article>
+
+        `;
+
+      }
+    )
+    .join("");
+
+}
+
+
+/* =========================================================
+   OPEN OFFER
+========================================================= */
+
+function openOffer(encodedId){
+
+  const id =
+    decodeURIComponent(
+      encodedId
+    );
+
+
+  const offer =
+    allOffers.find(
+      function(item){
+        return item.id === id;
       }
     );
 
 
-    /* =====================================================
-       SYSTEM THEME
-    ===================================================== */
+  if(!offer){
+    return;
+  }
 
-    window
-      .matchMedia(
-        "(prefers-color-scheme: dark)"
-      )
-      .addEventListener(
-        "change",
+
+  if(!offer.url){
+    return;
+  }
+
+
+  window.open(
+    offer.url,
+    "_blank",
+    "noopener,noreferrer"
+  );
+
+}
+
+
+/* =========================================================
+   FILTERS
+========================================================= */
+
+document
+  .querySelectorAll(".filter-btn")
+  .forEach(
+    function(button){
+
+      button.addEventListener(
+        "click",
         function(){
 
-          const saved =
-            localStorage.getItem(
-              "tallybuck-theme"
+          document
+            .querySelectorAll(".filter-btn")
+            .forEach(
+              function(item){
+
+                item.classList.remove(
+                  "active"
+                );
+
+              }
             );
 
 
-          if(!saved){
+          button.classList.add(
+            "active"
+          );
 
-            applyTheme();
 
-          }
+          currentFilter =
+            button.dataset.filter ||
+            "all";
+
+
+          renderOffers();
 
         }
       );
 
+    }
+  );
 
-    /* =====================================================
-       START
-    ===================================================== */
 
-    loadProfile();
+/* =========================================================
+   NOTIFICATION BADGE
+========================================================= */
 
-    detectCountry();
+async function loadNotificationBadge(){
 
-    loadNotificationBadge();
+  if(!currentUser){
+    return;
+  }
 
-    loadOffers();
 
-  </script>
+  const {
+    count,
+    error
+  } =
+    await db
+      .from("notifications")
+      .select(
+        "id",
+        {
+          count:"exact",
+          head:true
+        }
+      )
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+      .eq(
+        "is_read",
+        false
+      );
+
+
+  if(error){
+
+    console.error(
+      "Notification count error:",
+      error
+    );
+
+    return;
+  }
+
+
+  if(
+    count &&
+    count > 0
+  ){
+
+    $("notificationDot").style.display =
+      "block";
+
+  }else{
+
+    $("notificationDot").style.display =
+      "none";
+
+  }
+
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function applyTheme(){
+
+  const saved =
+    localStorage.getItem(
+      "tallybuck-theme"
+    );
+
+
+  if(saved === "dark"){
+
+    document.body.classList.add(
+      "dark"
+    );
+
+  }else if(saved === "light"){
+
+    document.body.classList.remove(
+      "dark"
+    );
+
+  }else{
+
+    const dark =
+      window.matchMedia &&
+      window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+
+
+    document.body.classList.toggle(
+      "dark",
+      dark
+    );
+
+  }
+
+}
+
+
+function toggleTheme(){
+
+  const isDark =
+    document.body.classList.contains(
+      "dark"
+    );
+
+
+  document.body.classList.toggle(
+    "dark",
+    !isDark
+  );
+
+
+  localStorage.setItem(
+    "tallybuck-theme",
+    !isDark
+      ? "dark"
+      : "light"
+  );
+
+}
+
+
+/* =========================================================
+   MENU
+========================================================= */
+
+function openMenu(){
+
+  $("sideMenu")
+    .classList
+    .add("show");
+
+
+  $("menuOverlay")
+    .classList
+    .add("show");
+
+}
+
+
+function closeMenu(){
+
+  $("sideMenu")
+    .classList
+    .remove("show");
+
+
+  $("menuOverlay")
+    .classList
+    .remove("show");
+
+}
+
+
+/* =========================================================
+   MENU EVENTS
+========================================================= */
+
+$("menuBtn")
+  .addEventListener(
+    "click",
+    openMenu
+  );
+
+
+$("closeMenu")
+  .addEventListener(
+    "click",
+    closeMenu
+  );
+
+
+$("menuOverlay")
+  .addEventListener(
+    "click",
+    closeMenu
+  );
+
+
+$("themeBtn")
+  .addEventListener(
+    "click",
+    function(){
+
+      toggleTheme();
+
+    }
+  );
+
+
+$("logoutBtn")
+  .addEventListener(
+    "click",
+    async function(){
+
+      await db.auth.signOut();
+
+      window.location.href =
+        "login.html";
+
+    }
+  );
+
+
+/* =========================================================
+   AUTH CHECK + START
+========================================================= */
+
+async function startPage(){
+
+  applyTheme();
+
+
+  const {
+    data:{
+      user
+    },
+    error
+  } =
+    await db.auth.getUser();
+
+
+  if(error || !user){
+
+    window.location.href =
+      "login.html";
+
+    return;
+  }
+
+
+  currentUser =
+    user;
+
+
+  await loadNotificationBadge();
+
+
+  await loadOffers();
+
+}
+
+
+startPage();
+
+</script>
 
 </body>
 </html>
