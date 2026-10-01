@@ -1,23 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TallyBuck Admin — Withdrawals</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
+<title>TallyBuck Admin — Withdrawals</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
 :root{
   --bg:#07110d;
   --sidebar:#08140f;
   --panel:#0d1914;
   --panel2:#111f19;
+  --panel3:#0a1611;
   --border:#1d3328;
+  --border-soft:#16281f;
   --green:#079447;
   --green2:#0bbf61;
+  --green-dark:#063f2d;
   --text:#f3f7f5;
   --muted:#8ea39a;
+  --muted2:#6f887c;
   --danger:#ef4444;
   --warning:#f59e0b;
   --success:#22c55e;
@@ -53,7 +52,7 @@ button{
 
 button:disabled{
   cursor:not-allowed;
-  opacity:.6;
+  opacity:.55;
 }
 
 /* =========================================================
@@ -88,6 +87,7 @@ button:disabled{
   padding:6px 10px 25px;
   font-size:20px;
   font-weight:800;
+  letter-spacing:-.02em;
 }
 
 .brand-icon{
@@ -99,6 +99,7 @@ button:disabled{
   align-items:center;
   justify-content:center;
   flex:none;
+  box-shadow:0 7px 20px rgba(7,148,71,.16);
 }
 
 .brand-icon svg{
@@ -126,13 +127,21 @@ button:disabled{
   border-radius:10px;
   margin:3px 0;
   font-size:14px;
-  transition:.18s ease;
+  transition:
+    background .18s ease,
+    color .18s ease,
+    transform .18s ease;
 }
 
-.nav a:hover,
-.nav a.active{
+.nav a:hover{
   background:#10251b;
   color:white;
+}
+
+.nav a.active{
+  background:rgba(7,148,71,.16);
+  color:#ffffff;
+  box-shadow:inset 3px 0 0 var(--green);
 }
 
 .nav svg{
@@ -188,6 +197,7 @@ button:disabled{
   align-items:center;
   gap:9px;
   font-weight:800;
+  letter-spacing:-.02em;
 }
 
 .mobile-brand-icon{
@@ -237,7 +247,7 @@ button:disabled{
 .page-title{
   font-size:27px;
   font-weight:800;
-  letter-spacing:-.02em;
+  letter-spacing:-.025em;
 }
 
 .page-subtitle{
@@ -257,10 +267,12 @@ button:disabled{
   align-items:center;
   gap:8px;
   transition:.18s ease;
+  white-space:nowrap;
 }
 
 .refresh-btn:hover{
   background:var(--panel2);
+  border-color:#2b4739;
 }
 
 .refresh-btn svg{
@@ -284,6 +296,7 @@ button:disabled{
   border:1px solid var(--border);
   border-radius:14px;
   padding:18px;
+  min-height:100px;
 }
 
 .stat-label{
@@ -295,6 +308,7 @@ button:disabled{
 .stat-value{
   font-size:24px;
   font-weight:800;
+  letter-spacing:-.02em;
 }
 
 .stat-value.pending{
@@ -361,10 +375,11 @@ input::placeholder{
 input:focus,
 select:focus{
   border-color:var(--green);
+  box-shadow:0 0 0 3px rgba(7,148,71,.08);
 }
 
 /* =========================================================
-   TABLE
+   TABLE CARD
 ========================================================= */
 
 .table-card{
@@ -411,16 +426,24 @@ th{
   color:#71887d;
   text-transform:uppercase;
   letter-spacing:.06em;
-  background:#0a1611;
+  background:var(--panel3);
   border-bottom:1px solid var(--border);
   white-space:nowrap;
 }
 
 td{
   padding:15px;
-  border-bottom:1px solid #16281f;
+  border-bottom:1px solid var(--border-soft);
   font-size:13px;
   vertical-align:top;
+}
+
+tbody tr{
+  transition:background .15s ease;
+}
+
+tbody tr:hover{
+  background:rgba(255,255,255,.015);
 }
 
 tr:last-child td{
@@ -511,6 +534,7 @@ tr:last-child td{
   border-radius:8px;
   font-size:11px;
   white-space:nowrap;
+  transition:.18s ease;
 }
 
 .action-btn:hover{
@@ -522,13 +546,21 @@ tr:last-child td{
   border-color:#245c3b;
 }
 
+.action-btn.paid:hover{
+  background:rgba(34,197,94,.08);
+}
+
 .action-btn.cancel{
   color:#f87171;
   border-color:#5a2828;
 }
 
+.action-btn.cancel:hover{
+  background:rgba(239,68,68,.08);
+}
+
 /* =========================================================
-   EMPTY
+   EMPTY / LOADING
 ========================================================= */
 
 .empty{
@@ -568,7 +600,7 @@ tr:last-child td{
 .modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.7);
+  background:rgba(0,0,0,.72);
   display:none;
   align-items:center;
   justify-content:center;
@@ -586,7 +618,7 @@ tr:last-child td{
   border:1px solid var(--border);
   border-radius:16px;
   padding:22px;
-  box-shadow:0 25px 80px rgba(0,0,0,.45);
+  box-shadow:0 25px 80px rgba(0,0,0,.5);
 }
 
 .modal-title{
@@ -621,9 +653,52 @@ tr:last-child td{
   border-color:var(--green);
 }
 
+.modal-btn.confirm:hover{
+  background:#087d3e;
+}
+
 .modal-btn.danger{
   background:#7f1d1d;
   border-color:#7f1d1d;
+}
+
+.modal-btn.danger:hover{
+  background:#991b1b;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  z-index:300;
+  background:#102019;
+  border:1px solid var(--border);
+  color:#e9f4ef;
+  border-radius:11px;
+  padding:12px 15px;
+  font-size:13px;
+  box-shadow:0 15px 40px rgba(0,0,0,.35);
+  transform:translateY(20px);
+  opacity:0;
+  pointer-events:none;
+  transition:.22s ease;
+}
+
+.toast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+
+.toast.success{
+  border-color:#245c3b;
+}
+
+.toast.error{
+  border-color:#5a2828;
 }
 
 /* =========================================================
@@ -726,6 +801,12 @@ tr:last-child td{
   .table-head{
     padding:15px;
   }
+
+  .toast{
+    left:14px;
+    right:14px;
+    bottom:14px;
+  }
 }
 
 @media(max-width:420px){
@@ -767,477 +848,383 @@ tr:last-child td{
     width:100%;
   }
 }
-</style>
-</head>
-
-<body>
-
-<!-- =========================================================
+</style></head><body><!-- =========================================================
      MOBILE HEADER
-========================================================= -->
+========================================================= --><header class="mobile-header">  <div class="mobile-header-left"><button
+  class="mobile-menu-btn"
+  id="mobileMenuBtn"
+  aria-label="Open admin menu"
+>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M4 6h16M4 12h16M4 18h16"/>
+  </svg>
+</button>
 
-<header class="mobile-header">
+<div class="mobile-brand">
 
-  <div class="mobile-header-left">
-
-    <button
-      class="mobile-menu-btn"
-      id="mobileMenuBtn"
-      aria-label="Open admin menu"
-    >
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M4 6h16M4 12h16M4 18h16"/>
-      </svg>
-    </button>
-
-    <div class="mobile-brand">
-
-      <div class="mobile-brand-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 2v20"/>
-          <path d="M17 5.5C15.8 4.5 14 4 12 4c-3 0-5 1.4-5 3.5S9 11 12 12s5 2.5 5 4.5S15 20 12 20c-2 0-3.8-.5-5-1.5"/>
-        </svg>
-      </div>
-
-      TallyBuck Admin
-
-    </div>
-
+  <div class="mobile-brand-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 2v20"/>
+      <path d="M17 5.5C15.8 4.5 14 4 12 4c-3 0-5 1.4-5 3.5S9 11 12 12s5 2.5 5 4.5S15 20 12 20c-2 0-3.8-.5-5-1.5"/>
+    </svg>
   </div>
 
-</header>
+  TallyBuck Admin
 
-<!-- =========================================================
-     SIDEBAR OVERLAY
-========================================================= -->
+</div>
 
-<div
+  </div></header><div
   class="sidebar-overlay"
   id="sidebarOverlay"
-></div>
-
-<div class="layout">
-
-  <!-- =======================================================
+></div><div class="layout">  <!-- =======================================================
        SIDEBAR
-  ======================================================== -->
-
-  <aside class="sidebar" id="sidebar">
-
-    <div class="brand">
-
-      <div class="brand-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 2v20"/>
-          <path d="M17 5.5C15.8 4.5 14 4 12 4c-3 0-5 1.4-5 3.5S9 11 12 12s5 2.5 5 4.5S15 20 12 20c-2 0-3.8-.5-5-1.5"/>
-        </svg>
-      </div>
-
-      TallyBuck
-
-    </div>
-
-    <div class="nav-title">Overview</div>
-
-    <nav class="nav">
-
-      <a href="admin-dashboard.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="3" width="7" height="7"/>
-          <rect x="14" y="3" width="7" height="7"/>
-          <rect x="3" y="14" width="7" height="7"/>
-          <rect x="14" y="14" width="7" height="7"/>
-        </svg>
-        Dashboard
-      </a>
-
-      <a href="admin-users.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-          <circle cx="9" cy="7" r="4"/>
-          <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-        </svg>
-        Users
-      </a>
-
-      <a href="tasks.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"/>
-          <path d="M2 7h20v5H2z"/>
-          <path d="M12 22V7"/>
-          <path d="M12 7H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7Z"/>
-          <path d="M12 7h4.5a2.5 2.5 0 1 0 0-5C13 2 12 7 12 7Z"/>
-        </svg>
-        Offers
-      </a>
-
-      <a href="admin-tasks.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M9 11l3 3L22 4"/>
-          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-        </svg>
-        Manual Tasks
-      </a>
-
-      <a href="admin-submissions.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-          <path d="M14 2v6h6"/>
-          <path d="M8 13h8M8 17h5"/>
-        </svg>
-        Submissions
-      </a>
-
-      <a href="admin-offers.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M4 4h16v16H4z"/>
-          <path d="M8 8h8M8 12h8M8 16h5"/>
-        </svg>
-        Offer Completions
-      </a>
-
-      <a href="admin-withdrawals.html" class="active">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M3 7h18"/>
-          <path d="M5 7V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/>
-          <path d="M4 7h16v13H4z"/>
-          <path d="M9 13h6"/>
-        </svg>
-        Withdrawals
-      </a>
-
-      <a href="admin-payments.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="5" width="18" height="14" rx="2"/>
-          <path d="M3 10h18"/>
-          <path d="M7 15h3"/>
-        </svg>
-        Payments
-      </a>
-
-      <div class="nav-divider"></div>
-
-      <a href="admin-categories.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/>
-        </svg>
-        Categories
-      </a>
-
-      <a href="admin-countries.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="9"/>
-          <path d="M3 12h18M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-5.5-3.5-9S9.5 5.5 12 3Z"/>
-        </svg>
-        Countries
-      </a>
-
-      <a href="notifications.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-          <path d="M10 21h4"/>
-        </svg>
-        Notifications
-      </a>
-
-      <a href="admin-settings.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="3"/>
-          <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.5 1.5-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V20h-2.1v-.4a1.7 1.7 0 0 0-1.03-1.56 1.7 1.7 0 0 0-1.88.34l-.06.06-1.5-1.5.06-.06A1.7 1.7 0 0 0 9.4 15a1.7 1.7 0 0 0-1.56-1.03H7v-2.1h.84A1.7 1.7 0 0 0 9.4 10.8a1.7 1.7 0 0 0-.34-1.88L9 8.86l1.5-1.5.06.06a1.7 1.7 0 0 0 1.88.34A1.7 1.7 0 0 0 13.47 6.2V6h2.1v.2a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.06 1.5 1.5-.06.06A1.7 1.7 0 0 0 19.64 10.8a1.7 1.7 0 0 0 1.56 1.03H21v2.1h-.4A1.7 1.7 0 0 0 19.4 15Z"/>
-        </svg>
-        Settings
-      </a>
-
-      <a href="admin-admins.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="9" cy="7" r="4"/>
-          <path d="M3 21v-2a6 6 0 0 1 12 0v2"/>
-          <path d="M16 11h5M18.5 8.5v5"/>
-        </svg>
-        Admins
-      </a>
-
-      <a href="admin-logs.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M4 4h16v16H4z"/>
-          <path d="M8 8h8M8 12h8M8 16h5"/>
-        </svg>
-        Activity Logs
-      </a>
-
-      <div class="nav-divider"></div>
-
-      <a href="#" id="logoutLink">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M10 17l5-5-5-5"/>
-          <path d="M15 12H3"/>
-          <path d="M21 19V5a2 2 0 0 0-2-2h-6"/>
-        </svg>
-        Sign Out
-      </a>
-
-    </nav>
-
-  </aside>
-
-  <!-- =======================================================
-       MAIN
-  ======================================================== -->
-
-  <main class="main">
-
-    <div class="topbar">
-
-      <div>
-        <div class="page-title">Withdrawal Management</div>
-
-        <div class="page-subtitle">
-          Review, process and manage user withdrawal requests.
-        </div>
-      </div>
-
-      <button class="refresh-btn" id="refreshBtn">
-
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M20 11a8.1 8.1 0 0 0-14.9-4L3 10"/>
-          <path d="M3 4v6h6"/>
-          <path d="M4 13a8.1 8.1 0 0 0 14.9 4L21 14"/>
-          <path d="M21 20v-6h-6"/>
-        </svg>
-
-        Refresh
-
-      </button>
-
-    </div>
-
-    <!-- STATS -->
-
-    <section class="stats">
-
-      <div class="stat">
-
-        <div class="stat-label">
-          Pending
-        </div>
-
-        <div
-          class="stat-value pending"
-          id="pendingCount"
-        >
-          0
-        </div>
-
-      </div>
-
-      <div class="stat">
-
-        <div class="stat-label">
-          Pending Amount
-        </div>
-
-        <div
-          class="stat-value pending"
-          id="pendingAmount"
-        >
-          $0.00
-        </div>
-
-      </div>
-
-      <div class="stat">
-
-        <div class="stat-label">
-          Paid
-        </div>
-
-        <div
-          class="stat-value paid"
-          id="paidCount"
-        >
-          0
-        </div>
-
-      </div>
-
-      <div class="stat">
-
-        <div class="stat-label">
-          Paid Amount
-        </div>
-
-        <div
-          class="stat-value paid"
-          id="paidAmount"
-        >
-          $0.00
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- FILTERS -->
-
-    <section class="filters">
-
-      <div class="field">
-
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="7"/>
-          <path d="m20 20-4-4"/>
-        </svg>
-
-        <input
-          id="searchInput"
-          type="search"
-          placeholder="Search name, user ID or withdrawal ID..."
-        >
-
-      </div>
-
-      <select id="statusFilter">
-
-        <option value="">
-          All Statuses
-        </option>
-
-        <option value="pending">
-          Pending
-        </option>
-
-        <option value="paid">
-          Paid
-        </option>
-
-        <option value="cancelled">
-          Cancelled
-        </option>
-
-        <option value="processing">
-          Processing
-        </option>
-
-      </select>
-
-      <select id="methodFilter">
-
-        <option value="">
-          All Methods
-        </option>
-
-        <option value="bank">
-          Bank
-        </option>
-
-        <option value="crypto">
-          Crypto
-        </option>
-
-      </select>
-
-    </section>
-
-    <!-- TABLE -->
-
-    <section class="table-card">
-
-      <div class="table-head">
-
-        <div class="table-title">
-          Withdrawal Requests
-        </div>
-
-        <div
-          class="count"
-          id="requestCount"
-        >
-          0 requests
-        </div>
-
-      </div>
-
-      <div class="table-wrap">
-
-        <table>
-
-          <thead>
-
-            <tr>
-              <th>User</th>
-              <th>Amount</th>
-              <th>Fee</th>
-              <th>Net Amount</th>
-              <th>Method</th>
-              <th>Payment Details</th>
-              <th>Network</th>
-              <th>Status</th>
-              <th>Requested</th>
-              <th>Actions</th>
-            </tr>
-
-          </thead>
-
-          <tbody id="withdrawalsBody"></tbody>
-
-        </table>
-
-      </div>
-
-    </section>
-
-  </main>
+  ======================================================== -->  <aside class="sidebar" id="sidebar"><div class="brand">
+
+  <div class="brand-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 2v20"/>
+      <path d="M17 5.5C15.8 4.5 14 4 12 4c-3 0-5 1.4-5 3.5S9 11 12 12s5 2.5 5 4.5S15 20 12 20c-2 0-3.8-.5-5-1.5"/>
+    </svg>
+  </div>
+
+  TallyBuck
 
 </div>
 
-<!-- =========================================================
-     CONFIRM MODAL
-========================================================= -->
+<div class="nav-title">Overview</div>
 
-<div
-  class="modal"
-  id="confirmModal"
->
+<nav class="nav">
 
-  <div class="modal-box">
+  <a href="admin-dashboard.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="3" y="3" width="7" height="7"/>
+      <rect x="14" y="3" width="7" height="7"/>
+      <rect x="3" y="14" width="7" height="7"/>
+      <rect x="14" y="14" width="7" height="7"/>
+    </svg>
+    Dashboard
+  </a>
+
+  <a href="admin-users.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+    </svg>
+    Users
+  </a>
+
+  <a href="tasks.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"/>
+      <path d="M2 7h20v5H2z"/>
+      <path d="M12 22V7"/>
+      <path d="M12 7H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7Z"/>
+      <path d="M12 7h4.5a2.5 2.5 0 1 0 0-5C13 2 12 7 12 7Z"/>
+    </svg>
+    Offers
+  </a>
+
+  <a href="admin-tasks.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M9 11l3 3L22 4"/>
+      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+    </svg>
+    Manual Tasks
+  </a>
+
+  <a href="admin-submissions.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <path d="M14 2v6h6"/>
+      <path d="M8 13h8M8 17h5"/>
+    </svg>
+    Submissions
+  </a>
+
+  <a href="admin-offers.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 4h16v16H4z"/>
+      <path d="M8 8h8M8 12h8M8 16h5"/>
+    </svg>
+    Offer Completions
+  </a>
+
+  <a href="admin-withdrawals.html" class="active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M3 7h18"/>
+      <path d="M5 7V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/>
+      <path d="M4 7h16v13H4z"/>
+      <path d="M9 13h6"/>
+    </svg>
+    Withdrawals
+  </a>
+
+  <a href="admin-payments.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="3" y="5" width="18" height="14" rx="2"/>
+      <path d="M3 10h18"/>
+      <path d="M7 15h3"/>
+    </svg>
+    Payments
+  </a>
+
+  <div class="nav-divider"></div>
+
+  <a href="admin-categories.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/>
+    </svg>
+    Categories
+  </a>
+
+  <a href="admin-countries.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M3 12h18M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-5.5-3.5-9S9.5 5.5 12 3Z"/>
+    </svg>
+    Countries
+  </a>
+
+  <a href="notifications.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+      <path d="M10 21h4"/>
+    </svg>
+    Notifications
+  </a>
+
+  <a href="admin-settings.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.5 1.5-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V20h-2.1v-.4a1.7 1.7 0 0 0-1.03-1.56 1.7 1.7 0 0 0-1.88.34l-.06.06-1.5-1.5.06-.06A1.7 1.7 0 0 0 9.4 15a1.7 1.7 0 0 0-1.56-1.03H7v-2.1h.84A1.7 1.7 0 0 0 9.4 10.8a1.7 1.7 0 0 0-.34-1.88L9 8.86l1.5-1.5.06.06a1.7 1.7 0 0 0 1.88.34A1.7 1.7 0 0 0 13.47 6.2V6h2.1v.2a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.06 1.5 1.5-.06.06A1.7 1.7 0 0 0 19.64 10.8a1.7 1.7 0 0 0 1.56 1.03H21v2.1h-.4A1.7 1.7 0 0 0 19.4 15Z"/>
+    </svg>
+    Settings
+  </a>
+
+  <a href="admin-admins.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M3 21v-2a6 6 0 0 1 12 0v2"/>
+      <path d="M16 11h5M18.5 8.5v5"/>
+    </svg>
+    Admins
+  </a>
+
+  <a href="admin-logs.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 4h16v16H4z"/>
+      <path d="M8 8h8M8 12h8M8 16h5"/>
+    </svg>
+    Activity Logs
+  </a>
+
+  <div class="nav-divider"></div>
+
+  <a href="#" id="logoutLink">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M10 17l5-5-5-5"/>
+      <path d="M15 12H3"/>
+      <path d="M21 19V5a2 2 0 0 0-2-2h-6"/>
+    </svg>
+    Sign Out
+  </a>
+
+</nav>
+
+  </aside>  <!-- =======================================================
+       MAIN
+  ======================================================== -->  <main class="main"><div class="topbar">
+
+  <div>
+    <div class="page-title">Withdrawal Management</div>
+
+    <div class="page-subtitle">
+      Review, process and manage user withdrawal requests.
+    </div>
+  </div>
+
+  <button class="refresh-btn" id="refreshBtn">
+
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M20 11a8.1 8.1 0 0 0-14.9-4L3 10"/>
+      <path d="M3 4v6h6"/>
+      <path d="M4 13a8.1 8.1 0 0 0 14.9 4L21 14"/>
+      <path d="M21 20v-6h-6"/>
+    </svg>
+
+    Refresh
+
+  </button>
+
+</div>
+
+<section class="stats">
+
+  <div class="stat">
+    <div class="stat-label">Pending</div>
 
     <div
-      class="modal-title"
-      id="modalTitle"
+      class="stat-value pending"
+      id="pendingCount"
     >
-      Confirm action
+      0
+    </div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-label">Pending Amount</div>
+
+    <div
+      class="stat-value pending"
+      id="pendingAmount"
+    >
+      $0.00
+    </div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-label">Paid</div>
+
+    <div
+      class="stat-value paid"
+      id="paidCount"
+    >
+      0
+    </div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-label">Paid Amount</div>
+
+    <div
+      class="stat-value paid"
+      id="paidAmount"
+    >
+      $0.00
+    </div>
+  </div>
+
+</section>
+
+<section class="filters">
+
+  <div class="field">
+
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="7"/>
+      <path d="m20 20-4-4"/>
+    </svg>
+
+    <input
+      id="searchInput"
+      type="search"
+      placeholder="Search name, user ID or withdrawal ID..."
+    >
+
+  </div>
+
+  <select id="statusFilter">
+    <option value="">All Statuses</option>
+    <option value="pending">Pending</option>
+    <option value="paid">Paid</option>
+    <option value="cancelled">Cancelled</option>
+    <option value="processing">Processing</option>
+  </select>
+
+  <select id="methodFilter">
+    <option value="">All Methods</option>
+    <option value="bank">Bank</option>
+    <option value="crypto">Crypto</option>
+  </select>
+
+</section>
+
+<section class="table-card">
+
+  <div class="table-head">
+
+    <div class="table-title">
+      Withdrawal Requests
     </div>
 
     <div
-      class="modal-text"
-      id="modalText"
+      class="count"
+      id="requestCount"
     >
-      Are you sure?
-    </div>
-
-    <div class="modal-actions">
-
-      <button
-        class="modal-btn"
-        id="cancelModal"
-      >
-        Cancel
-      </button>
-
-      <button
-        class="modal-btn confirm"
-        id="confirmAction"
-      >
-        Confirm
-      </button>
-
+      0 requests
     </div>
 
   </div>
 
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Amount</th>
+          <th>Fee</th>
+          <th>Net Amount</th>
+          <th>Method</th>
+          <th>Payment Details</th>
+          <th>Network</th>
+          <th>Status</th>
+          <th>Requested</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody id="withdrawalsBody"></tbody>
+
+    </table>
+
+  </div>
+
+</section>
+
+  </main></div><!-- =========================================================
+     CONFIRM MODAL
+========================================================= --><div
+  class="modal"
+  id="confirmModal"
+>  <div class="modal-box"><div
+  class="modal-title"
+  id="modalTitle"
+>
+  Confirm action
 </div>
 
-<script>
+<div
+  class="modal-text"
+  id="modalText"
+>
+  Are you sure?
+</div>
+
+<div class="modal-actions">
+
+  <button
+    class="modal-btn"
+    id="cancelModal"
+  >
+    Cancel
+  </button>
+
+  <button
+    class="modal-btn confirm"
+    id="confirmAction"
+  >
+    Confirm
+  </button>
+
+</div>
+
+  </div></div><div
+  class="toast"
+  id="toast"
+></div><script>
 /* =========================================================
    SUPABASE
 ========================================================= */
@@ -1272,17 +1259,13 @@ const mobileMenuBtn =
   document.getElementById("mobileMenuBtn");
 
 function openSidebar(){
-
   sidebar.classList.add("open");
   sidebarOverlay.classList.add("show");
-
 }
 
 function closeSidebar(){
-
   sidebar.classList.remove("open");
   sidebarOverlay.classList.remove("show");
-
 }
 
 mobileMenuBtn.addEventListener(
@@ -1760,11 +1743,9 @@ function renderWithdrawals(){
           </td>
 
           <td>
-
             <span class="amount">
               ${money(amount)}
             </span>
-
           </td>
 
           <td>
@@ -1772,11 +1753,9 @@ function renderWithdrawals(){
           </td>
 
           <td>
-
             <span class="net">
               ${money(net)}
             </span>
-
           </td>
 
           <td>
@@ -1784,41 +1763,31 @@ function renderWithdrawals(){
           </td>
 
           <td>
-
             <div class="details">
               ${escapeHtml(details)}
             </div>
-
           </td>
 
           <td>
-
             <div class="network">
               ${escapeHtml(network)}
             </div>
-
           </td>
 
           <td>
-
             <span class="status ${escapeHtml(status)}">
               ${escapeHtml(status)}
             </span>
-
           </td>
 
           <td>
-            ${formatDate(
-              row.created_at
-            )}
+            ${formatDate(row.created_at)}
           </td>
 
           <td>
-
             <div class="actions">
               ${actionButtons}
             </div>
-
           </td>
 
         </tr>
@@ -1843,7 +1812,21 @@ function requestAction(
         Number(id)
     );
 
-  if(!row) return;
+  if(!row)
+    return;
+
+  if(
+    String(row.status || "")
+      .toLowerCase() !== "pending"
+  ){
+
+    showToast(
+      "This withdrawal has already been processed.",
+      "error"
+    );
+
+    return;
+  }
 
   pendingAction = {
     id,
@@ -1890,7 +1873,7 @@ function requestAction(
       "Cancel withdrawal?";
 
     text.textContent =
-      `This will mark withdrawal #${id} as cancelled.`;
+      `This will cancel withdrawal #${id} and refund the full withdrawal amount to the user's wallet.`;
 
     confirm.textContent =
       "Cancel Withdrawal";
@@ -1900,9 +1883,7 @@ function requestAction(
 
   }
 
-  modal.classList.add(
-    "show"
-  );
+  modal.classList.add("show");
 }
 
 /* =========================================================
@@ -1929,46 +1910,62 @@ async function processAction(){
   confirm.textContent =
     "Processing...";
 
-  const {
-    data:{
-      user
-    }
-  } =
-    await supabaseClient.auth.getUser();
+  /*
+    IMPORTANT:
+    Do not directly update withdrawals here.
 
-  const updateData = {
-
-    status:action,
-
-    reviewed_by:
-      user?.id || null,
-
-    processed_at:
-      new Date().toISOString()
-
-  };
+    The Supabase RPC performs the complete secure
+    operation and checks that the current user is
+    an administrator.
+  */
 
   const {
+    data,
     error
   } =
-    await supabaseClient
-      .from("withdrawals")
-      .update(updateData)
-      .eq("id",id);
+    await supabaseClient.rpc(
+      "admin_process_withdrawal",
+      {
+        p_withdrawal_id:Number(id),
+        p_action:action
+      }
+    );
 
   confirm.disabled = false;
 
   if(error){
 
-    alert(
-      "Unable to update withdrawal: " +
-      error.message
+    console.error(
+      "Withdrawal RPC error:",
+      error
+    );
+
+    showToast(
+      error.message ||
+      "Unable to process withdrawal.",
+      "error"
     );
 
     return;
   }
 
   closeModal();
+
+  if(action === "paid"){
+
+    showToast(
+      "Withdrawal marked as paid.",
+      "success"
+    );
+
+  }else{
+
+    showToast(
+      "Withdrawal cancelled and wallet refunded.",
+      "success"
+    );
+
+  }
 
   await loadWithdrawals();
 }
@@ -2041,6 +2038,45 @@ function escapeHtml(value){
     "&#039;"
   );
 
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer = null;
+
+function showToast(
+  message,
+  type = "success"
+){
+
+  const toast =
+    document.getElementById(
+      "toast"
+    );
+
+  toast.textContent =
+    message;
+
+  toast.className =
+    `toast show ${type}`;
+
+  clearTimeout(
+    toastTimer
+  );
+
+  toastTimer =
+    setTimeout(
+      () => {
+
+        toast.classList.remove(
+          "show"
+        );
+
+      },
+      3500
+    );
 }
 
 /* =========================================================
@@ -2154,7 +2190,5 @@ document
   await loadWithdrawals();
 
 })();
-</script>
-
-</body>
+</script></body>
 </html>
