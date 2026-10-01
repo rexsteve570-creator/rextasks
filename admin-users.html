@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TallyBuck Admin — Users</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+  --bg:#07111d;
+  --panel:#0c1826;
+  --panel2:#101f30;
+  --border:#1d3043;
+  --text:#eef5fb;
+  --muted:#8194a7;
+  --green:#25d98a;
+  --gold:#f5b942;
+  --blue:#5da9ff;
+  --red:#ff6262;
+  --shadow:0 16px 45px rgba(0,0,0,.25);
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,Arial,sans-serif;
+}
+
+button,input,select{font:inherit}
+button{cursor:pointer}
+
+.layout{min-height:100vh}
+
+.sidebar{
+  width:250px;
+  min-height:100vh;
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  background:#081522;
+  border-right:1px solid var(--border);
+  padding:22px 14px;
+  overflow-y:auto;
+  z-index:100;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:5px 10px 25px;
+}
+
+.brand-icon{
+  width:40px;
+  height:40px;
+  border-radius:11px;
+  background:var(--green);
+  color:#04130d;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  font-weight:900;
+}
+
+.brand-text strong{
+  display:block;
+  font-size:18px;
+}
+
+.brand-text span{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:2px;
+}
+
+.nav-title{
+  color:#53687b;
+  font-size:10px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:1.3px;
+  padding:10px 12px 7px;
+}
+
+.nav-item{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  color:#9badbd;
+  text-decoration:none;
+  padding:11px 12px;
+  border-radius:9px;
+  margin-bottom:3px;
+  font-size:13px;
+}
+
+.nav-item:hover{
+  background:#102235;
+  color:#fff;
+}
+
+.nav-item.active{
+  background:rgba(37,217,138,.12);
+  color:var(--green);
+}
+
+.nav-icon{
+  width:18px;
+  height:18px;
+  flex-shrink:0;
+}
+
+.logout{
+  margin-top:25px;
+  color:#ff7777;
+}
+
+.main{
+  margin-left:250px;
+  width:calc(100% - 250px);
+  min-height:100vh;
+}
+
+.topbar{
+  height:72px;
+  border-bottom:1px solid var(--border);
+  background:rgba(7,17,29,.94);
+  backdrop-filter:blur(12px);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 28px;
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+
+.page-title h1{
+  margin:0;
+  font-size:21px;
+}
+
+.page-title p{
+  margin:4px 0 0;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.admin-badge{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid var(--border);
+  background:var(--panel);
+  padding:8px 12px;
+  border-radius:9px;
+  color:#b8c8d7;
+  font-size:12px;
+}
+
+.admin-dot{
+  width:7px;
+  height:7px;
+  background:var(--green);
+  border-radius:50%;
+}
+
+.content{
+  padding:28px;
+  max-width:1500px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  margin-bottom:22px;
+}
+
+.stat{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:19px;
+  box-shadow:var(--shadow);
+}
+
+.stat-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.stat-icon{
+  width:35px;
+  height:35px;
+  border-radius:9px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(37,217,138,.1);
+  color:var(--green);
+}
+
+.stat-value{
+  font-size:25px;
+  font-weight:800;
+  margin-top:14px;
+}
+
+.toolbar{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:15px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+.search-wrap{
+  flex:1;
+  min-width:220px;
+  position:relative;
+}
+
+.search-wrap svg{
+  position:absolute;
+  width:17px;
+  height:17px;
+  left:13px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#6e8294;
+}
+
+.search{
+  width:100%;
+  height:42px;
+  border:1px solid var(--border);
+  background:#091624;
+  color:var(--text);
+  border-radius:9px;
+  outline:none;
+  padding:0 13px 0 40px;
+}
+
+.search:focus,
+select:focus{
+  border-color:var(--green);
+}
+
+select{
+  height:42px;
+  background:#091624;
+  color:#cdd8e2;
+  border:1px solid var(--border);
+  border-radius:9px;
+  padding:0 12px;
+  outline:none;
+  min-width:125px;
+}
+
+.refresh-btn{
+  height:42px;
+  border:1px solid var(--border);
+  background:#122438;
+  color:#dce7ef;
+  border-radius:9px;
+  padding:0 15px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.refresh-btn:hover{
+  background:#183047;
+}
+
+.table-card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+
+.table-head{
+  padding:18px 20px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.table-head h2{
+  margin:0;
+  font-size:15px;
+}
+
+.result-count{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.table-scroll{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:900px;
+}
+
+th{
+  text-align:left;
+  color:#73889b;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  font-weight:800;
+  padding:13px 18px;
+  background:#091725;
+  border-bottom:1px solid var(--border);
+  white-space:nowrap;
+}
+
+td{
+  padding:15px 18px;
+  border-bottom:1px solid rgba(29,48,67,.75);
+  font-size:12px;
+  color:#d5e0e8;
+  vertical-align:middle;
+}
+
+tbody tr:hover{
+  background:rgba(255,255,255,.018);
+}
+
+.user-cell{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  min-width:190px;
+}
+
+.avatar{
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  background:#153128;
+  border:1px solid #244b3b;
+  color:var(--green);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  flex-shrink:0;
+}
+
+.user-name{
+  font-weight:700;
+  color:#f1f6fa;
+}
+
+.user-email{
+  color:#718596;
+  margin-top:3px;
+  font-size:11px;
+  max-width:220px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.role{
+  display:inline-flex;
+  align-items:center;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:10px;
+  font-weight:800;
+  text-transform:uppercase;
+}
+
+.role.admin{
+  color:#f6c85f;
+  background:rgba(245,185,66,.1);
+  border:1px solid rgba(245,185,66,.18);
+}
+
+.role.user{
+  color:#76baff;
+  background:rgba(93,169,255,.09);
+  border:1px solid rgba(93,169,255,.15);
+}
+
+.money{
+  font-weight:700;
+  color:var(--green);
+}
+
+.ref-code{
+  font-family:monospace;
+  color:#9db0c0;
+  background:#091624;
+  border:1px solid var(--border);
+  padding:5px 7px;
+  border-radius:6px;
+}
+
+.date{
+  color:#899baa;
+  white-space:nowrap;
+}
+
+.empty{
+  text-align:center;
+  padding:55px 20px;
+  color:var(--muted);
+}
+
+.empty svg{
+  width:38px;
+  height:38px;
+  margin-bottom:10px;
+  color:#52697b;
+}
+
+.error{
+  padding:30px;
+  text-align:center;
+  color:#ff8585;
+}
+
+.loading{
+  text-align:center;
+  padding:45px;
+  color:var(--muted);
+}
+
+@media(max-width:1000px){
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:760px){
+
+  .sidebar{
+    display:none;
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+  }
+
+  .topbar{
+    height:65px;
+    padding:0 16px;
+  }
+
+  .page-title h1{
+    font-size:18px;
+  }
+
+  .page-title p{
+    display:none;
+  }
+
+  .admin-badge{
+    padding:7px 9px;
+  }
+
+  .admin-badge span{
+    display:none;
+  }
+
+  .content{
+    padding:18px 13px 30px;
+  }
+
+  .stats{
+    gap:10px;
+    margin-bottom:15px;
+  }
+
+  .stat{
+    padding:14px;
+    border-radius:11px;
+  }
+
+  .stat-value{
+    font-size:20px;
+    margin-top:10px;
+  }
+
+  .stat-icon{
+    width:30px;
+    height:30px;
+  }
+
+  .toolbar{
+    padding:11px;
+    gap:8px;
+  }
+
+  .search-wrap{
+    min-width:100%;
+  }
+
+  select{
+    flex:1;
+    min-width:0;
+  }
+
+  .refresh-btn{
+    flex:1;
+    justify-content:center;
+  }
+
+  .table-card{
+    border-radius:11px;
+  }
+
+  .table-head{
+    padding:15px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+<div class="brand">
+  <div class="brand-icon">T</div>
+  <div class="brand-text">
+    <strong>TallyBuck</strong>
+    <span>ADMIN CONTROL</span>
+  </div>
+</div>
+
+<div class="nav-title">Overview</div>
+
+<a href="admin-dashboard.html" class="nav-item">
+<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="3" y="3" width="7" height="7"/>
+<rect x="14" y="3" width="7" height="7"/>
+<rect x="3" y="14" width="7" height="7"/>
+<rect x="14" y="14" width="7" height="7"/>
+</svg>
+Dashboard
+</a>
+
+<a href="admin-users.html" class="nav-item active">
+<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+<circle cx="9" cy="7" r="4"/>
+<path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+<path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+</svg>
+Users
+</a>
+
+<a href="admin-offers.html" class="nav-item">
+<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7"/>
+<path d="M14 3h7v7"/>
+<path d="M10 14 21 3"/>
+</svg>
+Offers
+</a>
+
+<a href="admin-submissions.html" class="nav-item">
+<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+<polyline points="14 2 14 8 20 8"/>
+<path d="m9 15 2 2 4-4"/>
+</svg>
+Submissions
+</a>
+
+<a href="admin-tasks.html" class="nav-item">
+<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M9 11l3 3L22 4"/>
+<path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+</svg>
+Manual Tasks
+</a>
+
+<div class="nav-title">Finance</div>
+
+<a href="admin-withdrawals.html" class="nav-item">
+<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<rect x="2" y="5" width="20" height="14" rx="2"/>
+<path d="M16 13h.01"/>
+<path d="M2 10h20"/>
+</svg>
+Withdrawals
+</a>
+
+<div class="nav-title">Management</div>
+
+<a href="notifications.html" class="nav-item">
+<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+<path d="M10 21h4"/>
+</svg>
+Notifications
+</a>
+
+<a href="admin-dashboard.html" class="nav-item">
+<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="12" cy="12" r="3"/>
+<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06-1.42 1.42-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21h-2v-.08a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06-1.42-1.42.06-.06A1.65 1.65 0 0 0 8.6 15a1.65 1.65 0 0 0-1.51-1H7v-2h.08a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82L8.2 9.12l1.42-1.42.06.06a1.65 1.65 0 0 0 1.82.33 1.65 1.65 0 0 0 1-1.51V6h2v.08a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06 1.42 1.42-.06.06A1.65 1.65 0 0 0 18.4 11a1.65 1.65 0 0 0 1.51 1H20v2h-.08a1.65 1.65 0 0 0-1.51 1z"/>
+</svg>
+Settings
+</a>
+
+<a href="#" class="nav-item logout" id="logoutBtn">
+<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M10 17l5-5-5-5"/>
+<path d="M15 12H3"/>
+<path d="M21 3v18"/>
+</svg>
+Logout
+</a>
+
+</aside>
+
+<main class="main">
+
+<header class="topbar">
+
+<div class="page-title">
+<h1>User Management</h1>
+<p>View registered TallyBuck accounts and account information.</p>
+</div>
+
+<div class="admin-badge">
+<span class="admin-dot"></span>
+<span>Administrator</span>
+</div>
+
+</header>
+
+<section class="content">
+
+<div class="stats">
+
+<div class="stat">
+<div class="stat-top">
+<div class="stat-label">Total Users</div>
+<div class="stat-icon">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+<circle cx="9" cy="7" r="4"/>
+</svg>
+</div>
+</div>
+<div class="stat-value" id="totalUsers">—</div>
+</div>
+
+<div class="stat">
+<div class="stat-top">
+<div class="stat-label">Administrators</div>
+<div class="stat-icon">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M12 2l7 4v5c0 5-3 9-7 11-4-2-7-6-7-11V6l7-4z"/>
+<path d="M9 12l2 2 4-4"/>
+</svg>
+</div>
+</div>
+<div class="stat-value" id="adminUsers">—</div>
+</div>
+
+<div class="stat">
+<div class="stat-top">
+<div class="stat-label">Total Balance</div>
+<div class="stat-icon">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M12 2v20"/>
+<path d="M17 5H9.5a3.5 3.5 0 0 0 0 7H14a3.5 3.5 0 0 1 0 7H6"/>
+</svg>
+</div>
+</div>
+<div class="stat-value" id="totalBalance">—</div>
+</div>
+
+<div class="stat">
+<div class="stat-top">
+<div class="stat-label">Total Earned</div>
+<div class="stat-icon">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M3 3v18h18"/>
+<path d="m7 16 4-5 3 3 5-7"/>
+</svg>
+</div>
+</div>
+<div class="stat-value" id="totalEarned">—</div>
+</div>
+
+</div>
+
+<div class="toolbar">
+
+<div class="search-wrap">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<circle cx="11" cy="11" r="7"/>
+<path d="m20 20-4-4"/>
+</svg>
+
+<input
+id="searchInput"
+class="search"
+type="search"
+placeholder="Search name, email, referral code or user ID..."
+>
+</div>
+
+<select id="roleFilter">
+<option value="all">All Roles</option>
+<option value="user">Users</option>
+<option value="admin">Administrators</option>
+</select>
+
+<button class="refresh-btn" id="refreshBtn">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M20 11a8.1 8.1 0 0 0-15.5-3"/>
+<path d="M4 4v4h4"/>
+<path d="M4 13a8.1 8.1 0 0 0 15.5 3"/>
+<path d="M20 20v-4h-4"/>
+</svg>
+Refresh
+</button>
+
+</div>
+
+<div class="table-card">
+
+<div class="table-head">
+<h2>Registered Accounts</h2>
+<div class="result-count" id="resultCount">Loading...</div>
+</div>
+
+<div class="table-scroll">
+
+<table>
+
+<thead>
+<tr>
+<th>User</th>
+<th>Role</th>
+<th>Balance</th>
+<th>Total Earned</th>
+<th>Referral Code</th>
+<th>Joined</th>
+</tr>
+</thead>
+
+<tbody id="usersBody">
+
+<tr>
+<td colspan="6" class="loading">
+Loading users...
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+</div>
+
+</section>
+</main>
+</div>
+
+<script>
+
+const SUPABASE_URL =
+"https://cetsxdkoauucxwsbdktl.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
+
+const supabaseClient =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+let allUsers = [];
+
+function escapeHTML(value){
+return String(value ?? "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+}
+
+function money(value){
+return "$" + Number(value || 0).toFixed(2);
+}
+
+function formatDate(value){
+
+if(!value) return "—";
+
+const date = new Date(value);
+
+if(Number.isNaN(date.getTime())){
+return "—";
+}
+
+return date.toLocaleDateString(undefined,{
+year:"numeric",
+month:"short",
+day:"numeric"
+});
+}
+
+function initials(name,email){
+
+const source =
+String(name || email || "U").trim();
+
+const parts =
+source.split(/\s+/);
+
+if(parts.length >= 2){
+
+return (
+parts[0].charAt(0) +
+parts[1].charAt(0)
+).toUpperCase();
+
+}
+
+return source
+.substring(0,2)
+.toUpperCase();
+}
+
+function renderUsers(){
+
+const tbody =
+document.getElementById("usersBody");
+
+const search =
+document.getElementById("searchInput")
+.value
+.trim()
+.toLowerCase();
+
+const role =
+document.getElementById("roleFilter")
+.value;
+
+const filtered =
+allUsers.filter(user => {
+
+const searchable = [
+user.full_name,
+user.email,
+user.referral_code,
+user.id
+]
+.filter(Boolean)
+.join(" ")
+.toLowerCase();
+
+const searchMatch =
+!search ||
+searchable.includes(search);
+
+const userRole =
+String(user.role || "user")
+.toLowerCase();
+
+const roleMatch =
+role === "all" ||
+userRole === role;
+
+return searchMatch && roleMatch;
+
+});
+
+document.getElementById("resultCount").textContent =
+filtered.length +
+(filtered.length === 1 ? " account" : " accounts");
+
+if(!filtered.length){
+
+tbody.innerHTML = `
+<tr>
+<td colspan="6">
+<div class="empty">
+
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+<circle cx="11" cy="11" r="7"/>
+<path d="m20 20-4-4"/>
+</svg>
+
+<div>No users match your search.</div>
+
+</div>
+</td>
+</tr>
+`;
+
+return;
+}
+
+tbody.innerHTML =
+filtered.map(user => {
+
+const roleName =
+String(user.role || "user").toLowerCase();
+
+const name =
+user.full_name || "Unnamed User";
+
+const email =
+user.email || "No email";
+
+return `
+<tr>
+
+<td>
+
+<div class="user-cell">
+
+<div class="avatar">
+${escapeHTML(initials(name,email))}
+</div>
+
+<div>
+
+<div class="user-name">
+${escapeHTML(name)}
+</div>
+
+<div class="user-email">
+${escapeHTML(email)}
+</div>
+
+</div>
+
+</div>
+
+</td>
+
+<td>
+
+<span class="role ${
+roleName === "admin"
+? "admin"
+: "user"
+}">
+${escapeHTML(roleName)}
+</span>
+
+</td>
+
+<td>
+<span class="money">
+${money(user.balance)}
+</span>
+</td>
+
+<td>
+<span class="money">
+${money(user.total_earned)}
+</span>
+</td>
+
+<td>
+
+<span class="ref-code">
+${escapeHTML(user.referral_code || "—")}
+</span>
+
+</td>
+
+<td>
+
+<span class="date">
+${formatDate(user.created_at)}
+</span>
+
+</td>
+
+</tr>
+`;
+
+}).join("");
+}
+
+async function loadUsers(){
+
+const tbody =
+document.getElementById("usersBody");
+
+tbody.innerHTML = `
+<tr>
+<td colspan="6" class="loading">
+Loading users...
+</td>
+</tr>
+`;
+
+try{
+
+const {
+data:{
+session
+}
+} =
+await supabaseClient.auth.getSession();
+
+if(!session){
+
+window.location.href =
+"login.html";
+
+return;
+}
+
+const {
+data:profile,
+error:profileError
+} =
+await supabaseClient
+.from("profiles")
+.select("id,role")
+.eq("id",session.user.id)
+.single();
+
+if(profileError){
+throw profileError;
+}
+
+if(!profile ||
+profile.role !== "admin"){
+
+alert("Admin access required.");
+
+window.location.href =
+"dashboard.html";
+
+return;
+}
+
+const {
+data:profiles,
+error:profilesError
+} =
+await supabaseClient
+.from("profiles")
+.select(`
+id,
+full_name,
+email,
+referral_code,
+role,
+created_at
+`)
+.order("created_at",{
+ascending:false
+});
+
+if(profilesError){
+throw profilesError;
+}
+
+const {
+data:wallets,
+error:walletsError
+} =
+await supabaseClient
+.from("wallets")
+.select(`
+user_id,
+balance,
+total_earned
+`);
+
+if(walletsError){
+throw walletsError;
+}
+
+const walletMap = {};
+
+(wallets || []).forEach(wallet => {
+
+walletMap[wallet.user_id] =
+wallet;
+
+});
+
+allUsers =
+(profiles || []).map(profile => {
+
+const wallet =
+walletMap[profile.id] || {};
+
+return {
+
+...profile,
+
+balance:
+Number(wallet.balance || 0),
+
+total_earned:
+Number(wallet.total_earned || 0)
+
+};
+
+});
+
+updateStats();
+
+renderUsers();
+
+}catch(error){
+
+console.error(error);
+
+tbody.innerHTML = `
+<tr>
+<td colspan="6">
+
+<div class="error">
+
+Unable to load users.
+
+<br>
+
+<small>
+${escapeHTML(
+error.message ||
+"Unknown error"
+)}
+</small>
+
+</div>
+
+</td>
+</tr>
+`;
+
+document.getElementById(
+"resultCount"
+).textContent =
+"Load failed";
+}
+}
+
+function updateStats(){
+
+const total =
+allUsers.length;
+
+const admins =
+allUsers.filter(user =>
+String(user.role || "")
+.toLowerCase() === "admin"
+).length;
+
+const balance =
+allUsers.reduce(
+(sum,user) =>
+sum + Number(user.balance || 0),
+0
+);
+
+const earned =
+allUsers.reduce(
+(sum,user) =>
+sum + Number(user.total_earned || 0),
+0
+);
+
+document.getElementById(
+"totalUsers"
+).textContent =
+total.toLocaleString();
+
+document.getElementById(
+"adminUsers"
+).textContent =
+admins.toLocaleString();
+
+document.getElementById(
+"totalBalance"
+).textContent =
+money(balance);
+
+document.getElementById(
+"totalEarned"
+).textContent =
+money(earned);
+}
+
+document
+.getElementById("searchInput")
+.addEventListener(
+"input",
+renderUsers
+);
+
+document
+.getElementById("roleFilter")
+.addEventListener(
+"change",
+renderUsers
+);
+
+document
+.getElementById("refreshBtn")
+.addEventListener(
+"click",
+loadUsers
+);
+
+document
+.getElementById("logoutBtn")
+.addEventListener(
+"click",
+async event => {
+
+event.preventDefault();
+
+await supabaseClient.auth.signOut();
+
+window.location.href =
+"login.html";
+
+}
+);
+
+loadUsers();
+
+</script>
+
+</body>
+</html>
