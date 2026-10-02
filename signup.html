@@ -38,7 +38,12 @@ body{
   font-family:'Manrope',sans-serif;
   color:var(--ink);
   background:
-    radial-gradient(circle at 50% -10%,#16482f 0%,var(--forest-deep) 48%,#030d08 100%);
+    radial-gradient(
+      circle at 50% -10%,
+      #16482f 0%,
+      var(--forest-deep) 48%,
+      #030d08 100%
+    );
   display:flex;
   flex-direction:column;
 }
@@ -57,8 +62,6 @@ a{
   color:inherit;
   text-decoration:none;
 }
-
-/* NAV */
 
 nav{
   width:100%;
@@ -106,8 +109,6 @@ nav{
   color:var(--green-bright);
 }
 
-/* MAIN */
-
 main{
   flex:1;
   display:flex;
@@ -124,8 +125,6 @@ main{
   gap:70px;
   align-items:center;
 }
-
-/* INTRO */
 
 .intro{
   max-width:510px;
@@ -172,8 +171,6 @@ main{
   margin-bottom:32px;
 }
 
-/* BENEFITS */
-
 .benefits{
   display:grid;
   gap:15px;
@@ -214,13 +211,16 @@ main{
   font-size:.8rem;
 }
 
-/* CARD */
-
 .signup-card{
   width:100%;
   padding:32px;
   border-radius:24px;
-  background:linear-gradient(145deg,rgba(21,63,43,.96),rgba(9,35,24,.98));
+  background:
+    linear-gradient(
+      145deg,
+      rgba(21,63,43,.96),
+      rgba(9,35,24,.98)
+    );
   border:1px solid var(--border);
   box-shadow:
     0 30px 80px rgba(0,0,0,.45),
@@ -241,8 +241,6 @@ main{
   color:var(--ink-soft);
   font-size:.88rem;
 }
-
-/* FORM */
 
 .form-group{
   margin-bottom:17px;
@@ -291,6 +289,11 @@ main{
   padding-right:42px;
 }
 
+.form-select option{
+  background:#0b2117;
+  color:#e4f0e8;
+}
+
 .select-arrow{
   position:absolute;
   right:15px;
@@ -310,12 +313,6 @@ main{
   background:rgba(6,26,18,.9);
   box-shadow:0 0 0 3px rgba(62,190,121,.09);
 }
-
-.form-input:read-only{
-  opacity:.82;
-}
-
-/* COUNTRY DETECTION */
 
 .country-status{
   display:flex;
@@ -365,8 +362,6 @@ main{
   background:var(--danger);
 }
 
-/* PASSWORD */
-
 .password-toggle{
   position:absolute;
   right:12px;
@@ -391,8 +386,6 @@ main{
   font-size:.72rem;
   margin-top:6px;
 }
-
-/* SECURITY */
 
 .security-box{
   padding:13px 14px;
@@ -435,8 +428,6 @@ main{
   box-shadow:0 0 10px rgba(62,190,121,.6);
 }
 
-/* TERMS */
-
 .terms{
   display:flex;
   align-items:flex-start;
@@ -465,14 +456,17 @@ main{
   font-size:inherit;
 }
 
-/* SUBMIT */
-
 .submit-btn{
   width:100%;
   min-height:52px;
   border:none;
   border-radius:12px;
-  background:linear-gradient(135deg,var(--green-bright),var(--green));
+  background:
+    linear-gradient(
+      135deg,
+      var(--green-bright),
+      var(--green)
+    );
   color:var(--forest-deep);
   font-size:.95rem;
   font-weight:800;
@@ -491,8 +485,6 @@ main{
   transform:none;
 }
 
-/* LOGIN */
-
 .login-link{
   text-align:center;
   color:var(--ink-soft);
@@ -504,8 +496,6 @@ main{
   color:var(--green-bright);
   font-weight:800;
 }
-
-/* MESSAGES */
 
 .message{
   display:none;
@@ -532,8 +522,6 @@ main{
   color:#7be0a5;
 }
 
-/* POPUP */
-
 .popup-overlay,
 .policy-overlay{
   position:fixed;
@@ -558,7 +546,12 @@ main{
   padding:32px;
   border-radius:22px;
   text-align:center;
-  background:linear-gradient(145deg,#153F2B,#081d14);
+  background:
+    linear-gradient(
+      145deg,
+      #153F2B,
+      #081d14
+    );
   border:1px solid rgba(62,190,121,.18);
   box-shadow:0 30px 80px rgba(0,0,0,.6);
 }
@@ -603,8 +596,6 @@ main{
   color:var(--forest-deep);
   font-weight:800;
 }
-
-/* POLICY */
 
 .policy{
   width:min(700px,100%);
@@ -667,8 +658,6 @@ main{
   font-weight:800;
 }
 
-/* FOOTER */
-
 footer{
   padding:25px 20px;
   border-top:1px solid rgba(228,240,232,.07);
@@ -677,8 +666,6 @@ footer{
   text-align:center;
 }
 
-/* HONEYPOT */
-
 .hp-field{
   position:absolute !important;
   left:-9999px !important;
@@ -686,8 +673,6 @@ footer{
   height:1px !important;
   opacity:0 !important;
 }
-
-/* RESPONSIVE */
 
 @media(max-width:900px){
 
@@ -862,6 +847,7 @@ footer{
 
 </section>
 
+
 <section class="signup-card">
 
   <div class="card-head">
@@ -874,9 +860,11 @@ footer{
 
   </div>
 
+
   <div id="errorMessage" class="message error"></div>
 
   <div id="successMessage" class="message success"></div>
+
 
   <form id="signupForm" novalidate>
 
@@ -888,6 +876,7 @@ footer{
       autocomplete="off"
     >
 
+
     <div class="form-group">
 
       <label class="form-label" for="fullName">
@@ -896,9 +885,16 @@ footer{
 
       <div class="input-wrap">
 
-        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <svg class="input-icon"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="1.8">
+
           <circle cx="12" cy="8" r="4"/>
+
           <path d="M4 21c.8-4 3.4-6 8-6s7.2 2 8 6"/>
+
         </svg>
 
         <input
@@ -915,6 +911,7 @@ footer{
 
     </div>
 
+
     <div class="form-group">
 
       <label class="form-label" for="email">
@@ -923,9 +920,16 @@ footer{
 
       <div class="input-wrap">
 
-        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <svg class="input-icon"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="1.8">
+
           <rect x="3" y="5" width="18" height="14" rx="2"/>
+
           <path d="M3 7l9 6 9-6"/>
+
         </svg>
 
         <input
@@ -942,6 +946,7 @@ footer{
 
     </div>
 
+
     <div class="form-group">
 
       <label class="form-label" for="password">
@@ -950,9 +955,16 @@ footer{
 
       <div class="input-wrap">
 
-        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <svg class="input-icon"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="1.8">
+
           <rect x="4" y="10" width="16" height="11" rx="2"/>
+
           <path d="M8 10V7a4 4 0 018 0v3"/>
+
         </svg>
 
         <input
@@ -982,8 +994,11 @@ footer{
             stroke="currentColor"
             stroke-width="1.8"
           >
+
             <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/>
+
             <circle cx="12" cy="12" r="2.5"/>
+
           </svg>
 
         </button>
@@ -991,6 +1006,7 @@ footer{
       </div>
 
     </div>
+
 
     <div class="form-group">
 
@@ -1000,34 +1016,35 @@ footer{
 
       <div class="input-wrap">
 
-        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <svg class="input-icon"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="1.8">
+
           <circle cx="12" cy="12" r="9"/>
+
           <path d="M3 12h18"/>
+
           <path d="M12 3c2.2 2.4 3.3 5.4 3.3 9s-1.1 6.6-3.3 9"/>
+
           <path d="M12 3c-2.2 2.4-3.3 9-3.3 9s1.1 6.6 3.3 9"/>
+
         </svg>
 
-        <select class="form-select" id="country" required>
+
+        <select
+          class="form-select"
+          id="country"
+          required
+        >
 
           <option value="">
-            Select your country
+            Detecting country...
           </option>
 
-          <option value="NG">Nigeria</option>
-          <option value="GH">Ghana</option>
-          <option value="KE">Kenya</option>
-          <option value="ZA">South Africa</option>
-          <option value="US">United States</option>
-          <option value="GB">United Kingdom</option>
-          <option value="CA">Canada</option>
-          <option value="AU">Australia</option>
-          <option value="DE">Germany</option>
-          <option value="FR">France</option>
-          <option value="IN">India</option>
-          <option value="PH">Philippines</option>
-          <option value="OTHER">Other</option>
-
         </select>
+
 
         <svg
           class="select-arrow"
@@ -1038,23 +1055,30 @@ footer{
           stroke="currentColor"
           stroke-width="2"
         >
+
           <path d="M6 9l6 6 6-6"/>
+
         </svg>
 
       </div>
+
 
       <div
         id="countryStatus"
         class="country-status detecting"
         aria-live="polite"
       >
+
         <span class="country-status-dot"></span>
+
         <span id="countryStatusText">
-          Detecting your country...
+          Loading country list...
         </span>
+
       </div>
 
     </div>
+
 
     <div class="form-group">
 
@@ -1070,11 +1094,20 @@ footer{
 
       <div class="input-wrap">
 
-        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <svg class="input-icon"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="1.8">
+
           <circle cx="9" cy="7" r="3"/>
+
           <path d="M3 20c.5-3.5 2.5-5 6-5"/>
+
           <path d="M16 12v8"/>
+
           <path d="M12 16h8"/>
+
         </svg>
 
         <input
@@ -1093,6 +1126,7 @@ footer{
       </div>
 
     </div>
+
 
     <div class="form-group">
 
@@ -1122,6 +1156,7 @@ footer{
 
     </div>
 
+
     <div class="terms">
 
       <input
@@ -1134,19 +1169,26 @@ footer{
 
         I agree to the
 
-        <button type="button" onclick="openPolicy('terms')">
+        <button
+          type="button"
+          onclick="openPolicy('terms')"
+        >
           Terms of Service
         </button>
 
         and
 
-        <button type="button" onclick="openPolicy('privacy')">
+        <button
+          type="button"
+          onclick="openPolicy('privacy')"
+        >
           Privacy Policy
         </button>.
 
       </label>
 
     </div>
+
 
     <button
       type="submit"
@@ -1155,6 +1197,7 @@ footer{
     >
       Create free account
     </button>
+
 
     <div class="login-link">
 
@@ -1174,11 +1217,11 @@ footer{
 
 </main>
 
+
 <footer>
   © 2026 TallyBuck. All rights reserved.
 </footer>
 
-<!-- SUCCESS POPUP -->
 
 <div class="popup-overlay" id="successPopup">
 
@@ -1192,7 +1235,9 @@ footer{
         stroke="currentColor"
         stroke-width="2"
       >
+
         <path d="M20 6L9 17l-5-5"/>
+
       </svg>
 
     </div>
@@ -1217,7 +1262,6 @@ footer{
 
 </div>
 
-<!-- TERMS -->
 
 <div class="policy-overlay" id="termsOverlay">
 
@@ -1239,20 +1283,27 @@ footer{
 
     </div>
 
+
     <p>
       By creating and using a TallyBuck account, you agree to use
       the platform lawfully and follow the requirements attached to
       each activity.
     </p>
 
-    <h3>1. Account</h3>
+
+    <h3>
+      1. Account
+    </h3>
 
     <p>
       You are responsible for providing accurate information and
       maintaining the security of your account.
     </p>
 
-    <h3>2. Tasks and activities</h3>
+
+    <h3>
+      2. Tasks and activities
+    </h3>
 
     <p>
       Tasks and reward opportunities may have individual eligibility
@@ -1260,35 +1311,47 @@ footer{
       reward until the applicable requirements have been verified.
     </p>
 
-    <h3>3. Rewards</h3>
+
+    <h3>
+      3. Rewards
+    </h3>
 
     <p>
       Rewards may be reviewed before being credited. Fraudulent,
       incomplete, duplicated or invalid activity may be rejected.
     </p>
 
-    <h3>4. Withdrawals</h3>
+
+    <h3>
+      4. Withdrawals
+    </h3>
 
     <p>
       Withdrawals are subject to the minimum withdrawal requirement,
       applicable fees, account status and administrative review.
     </p>
 
-    <h3>5. Prohibited activity</h3>
+
+    <h3>
+      5. Prohibited activity
+    </h3>
 
     <p>
       Fraud, abuse, automated manipulation, duplicate accounts,
-      false information and attempts to exploit the platform are
-      prohibited.
+      false information and attempts to exploit the platform are prohibited.
     </p>
 
-    <h3>6. Changes</h3>
+
+    <h3>
+      6. Changes
+    </h3>
 
     <p>
       TallyBuck may update these terms when necessary. Continued
       use of the platform after an update constitutes acceptance
       of the updated terms.
     </p>
+
 
     <div class="policy-footer">
 
@@ -1302,7 +1365,6 @@ footer{
 
 </div>
 
-<!-- PRIVACY -->
 
 <div class="policy-overlay" id="privacyOverlay">
 
@@ -1324,20 +1386,26 @@ footer{
 
     </div>
 
+
     <p>
       TallyBuck uses information necessary to operate your account,
-      provide eligible activities, verify rewards and process
-      withdrawals.
+      provide eligible activities, verify rewards and process withdrawals.
     </p>
 
-    <h3>1. Information we collect</h3>
+
+    <h3>
+      1. Information we collect
+    </h3>
 
     <p>
       This may include your name, email address, country, account
       information, activity information and withdrawal information.
     </p>
 
-    <h3>2. How information is used</h3>
+
+    <h3>
+      2. How information is used
+    </h3>
 
     <p>
       Information may be used to operate your account, provide
@@ -1345,7 +1413,10 @@ footer{
       process withdrawals and communicate important account updates.
     </p>
 
-    <h3>3. Third-party services</h3>
+
+    <h3>
+      3. Third-party services
+    </h3>
 
     <p>
       Some activities may be provided by third-party survey,
@@ -1353,20 +1424,26 @@ footer{
       information according to their own policies.
     </p>
 
-    <h3>4. Security</h3>
+
+    <h3>
+      4. Security
+    </h3>
 
     <p>
       We use reasonable measures to protect account information.
       However, no internet service can guarantee absolute security.
     </p>
 
-    <h3>5. Contact</h3>
+
+    <h3>
+      5. Contact
+    </h3>
 
     <p>
       For privacy questions or account-related concerns, contact
-      TallyBuck support through the support channel provided on
-      the platform.
+      TallyBuck support through the support channel provided on the platform.
     </p>
+
 
     <div class="policy-footer">
 
@@ -1380,9 +1457,15 @@ footer{
 
 </div>
 
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 <script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
 
 const SUPABASE_URL =
   "https://cetsxdkoauucxwsbdktl.supabase.co";
@@ -1397,7 +1480,9 @@ const db =
   );
 
 
-/* ELEMENTS */
+/* =========================================================
+   ELEMENTS
+========================================================= */
 
 const form =
   document.getElementById("signupForm");
@@ -1460,25 +1545,282 @@ const eyeIcon =
   document.getElementById("eyeIcon");
 
 
-/* COUNTRY DETECTION */
+/* =========================================================
+   COMPLETE COUNTRY LIST
+========================================================= */
 
-const countryNames = {
+const countries = [
 
-  NG: "Nigeria",
-  GH: "Ghana",
-  KE: "Kenya",
-  ZA: "South Africa",
-  US: "United States",
-  GB: "United Kingdom",
-  CA: "Canada",
-  AU: "Australia",
-  DE: "Germany",
-  FR: "France",
-  IN: "India",
-  PH: "Philippines"
+  ["AF","Afghanistan"],
+  ["AL","Albania"],
+  ["DZ","Algeria"],
+  ["AD","Andorra"],
+  ["AO","Angola"],
+  ["AG","Antigua and Barbuda"],
+  ["AR","Argentina"],
+  ["AM","Armenia"],
+  ["AU","Australia"],
+  ["AT","Austria"],
+  ["AZ","Azerbaijan"],
 
-};
+  ["BS","Bahamas"],
+  ["BH","Bahrain"],
+  ["BD","Bangladesh"],
+  ["BB","Barbados"],
+  ["BY","Belarus"],
+  ["BE","Belgium"],
+  ["BZ","Belize"],
+  ["BJ","Benin"],
+  ["BT","Bhutan"],
+  ["BO","Bolivia"],
+  ["BA","Bosnia and Herzegovina"],
+  ["BW","Botswana"],
+  ["BR","Brazil"],
+  ["BN","Brunei"],
+  ["BG","Bulgaria"],
+  ["BF","Burkina Faso"],
+  ["BI","Burundi"],
 
+  ["CV","Cabo Verde"],
+  ["KH","Cambodia"],
+  ["CM","Cameroon"],
+  ["CA","Canada"],
+  ["CF","Central African Republic"],
+  ["TD","Chad"],
+  ["CL","Chile"],
+  ["CN","China"],
+  ["CO","Colombia"],
+  ["KM","Comoros"],
+  ["CG","Congo"],
+  ["CD","Democratic Republic of the Congo"],
+  ["CR","Costa Rica"],
+  ["CI","Côte d'Ivoire"],
+  ["HR","Croatia"],
+  ["CU","Cuba"],
+  ["CY","Cyprus"],
+  ["CZ","Czechia"],
+
+  ["DK","Denmark"],
+  ["DJ","Djibouti"],
+  ["DM","Dominica"],
+  ["DO","Dominican Republic"],
+
+  ["EC","Ecuador"],
+  ["EG","Egypt"],
+  ["SV","El Salvador"],
+  ["GQ","Equatorial Guinea"],
+  ["ER","Eritrea"],
+  ["EE","Estonia"],
+  ["SZ","Eswatini"],
+  ["ET","Ethiopia"],
+
+  ["FJ","Fiji"],
+  ["FI","Finland"],
+  ["FR","France"],
+
+  ["GA","Gabon"],
+  ["GM","Gambia"],
+  ["GE","Georgia"],
+  ["DE","Germany"],
+  ["GH","Ghana"],
+  ["GR","Greece"],
+  ["GD","Grenada"],
+  ["GT","Guatemala"],
+  ["GN","Guinea"],
+  ["GW","Guinea-Bissau"],
+  ["GY","Guyana"],
+
+  ["HT","Haiti"],
+  ["HN","Honduras"],
+  ["HU","Hungary"],
+
+  ["IS","Iceland"],
+  ["IN","India"],
+  ["ID","Indonesia"],
+  ["IR","Iran"],
+  ["IQ","Iraq"],
+  ["IE","Ireland"],
+  ["IL","Israel"],
+  ["IT","Italy"],
+
+  ["JM","Jamaica"],
+  ["JP","Japan"],
+  ["JO","Jordan"],
+
+  ["KZ","Kazakhstan"],
+  ["KE","Kenya"],
+  ["KI","Kiribati"],
+  ["KP","North Korea"],
+  ["KR","South Korea"],
+  ["KW","Kuwait"],
+  ["KG","Kyrgyzstan"],
+
+  ["LA","Laos"],
+  ["LV","Latvia"],
+  ["LB","Lebanon"],
+  ["LS","Lesotho"],
+  ["LR","Liberia"],
+  ["LY","Libya"],
+  ["LI","Liechtenstein"],
+  ["LT","Lithuania"],
+  ["LU","Luxembourg"],
+
+  ["MG","Madagascar"],
+  ["MW","Malawi"],
+  ["MY","Malaysia"],
+  ["MV","Maldives"],
+  ["ML","Mali"],
+  ["MT","Malta"],
+  ["MH","Marshall Islands"],
+  ["MR","Mauritania"],
+  ["MU","Mauritius"],
+  ["MX","Mexico"],
+  ["FM","Micronesia"],
+  ["MD","Moldova"],
+  ["MC","Monaco"],
+  ["MN","Mongolia"],
+  ["ME","Montenegro"],
+  ["MA","Morocco"],
+  ["MZ","Mozambique"],
+  ["MM","Myanmar"],
+
+  ["NA","Namibia"],
+  ["NR","Nauru"],
+  ["NP","Nepal"],
+  ["NL","Netherlands"],
+  ["NZ","New Zealand"],
+  ["NI","Nicaragua"],
+  ["NE","Niger"],
+  ["NG","Nigeria"],
+  ["MK","North Macedonia"],
+  ["NO","Norway"],
+
+  ["OM","Oman"],
+
+  ["PK","Pakistan"],
+  ["PW","Palau"],
+  ["PA","Panama"],
+  ["PG","Papua New Guinea"],
+  ["PY","Paraguay"],
+  ["PE","Peru"],
+  ["PH","Philippines"],
+  ["PL","Poland"],
+  ["PT","Portugal"],
+
+  ["QA","Qatar"],
+
+  ["RO","Romania"],
+  ["RU","Russia"],
+  ["RW","Rwanda"],
+
+  ["KN","Saint Kitts and Nevis"],
+  ["LC","Saint Lucia"],
+  ["VC","Saint Vincent and the Grenadines"],
+  ["WS","Samoa"],
+  ["SM","San Marino"],
+  ["ST","Sao Tome and Principe"],
+  ["SA","Saudi Arabia"],
+  ["SN","Senegal"],
+  ["RS","Serbia"],
+  ["SC","Seychelles"],
+  ["SL","Sierra Leone"],
+  ["SG","Singapore"],
+  ["SK","Slovakia"],
+  ["SI","Slovenia"],
+  ["SB","Solomon Islands"],
+  ["SO","Somalia"],
+  ["ZA","South Africa"],
+  ["SS","South Sudan"],
+  ["ES","Spain"],
+  ["LK","Sri Lanka"],
+  ["SD","Sudan"],
+  ["SR","Suriname"],
+  ["SE","Sweden"],
+  ["CH","Switzerland"],
+  ["SY","Syria"],
+
+  ["TW","Taiwan"],
+  ["TJ","Tajikistan"],
+  ["TZ","Tanzania"],
+  ["TH","Thailand"],
+  ["TL","Timor-Leste"],
+  ["TG","Togo"],
+  ["TO","Tonga"],
+  ["TT","Trinidad and Tobago"],
+  ["TN","Tunisia"],
+  ["TR","Turkey"],
+  ["TM","Turkmenistan"],
+  ["TV","Tuvalu"],
+
+  ["UG","Uganda"],
+  ["UA","Ukraine"],
+  ["AE","United Arab Emirates"],
+  ["GB","United Kingdom"],
+  ["US","United States"],
+  ["UY","Uruguay"],
+  ["UZ","Uzbekistan"],
+
+  ["VU","Vanuatu"],
+  ["VA","Vatican City"],
+  ["VE","Venezuela"],
+  ["VN","Vietnam"],
+
+  ["YE","Yemen"],
+
+  ["ZM","Zambia"],
+  ["ZW","Zimbabwe"]
+
+];
+
+
+/* =========================================================
+   POPULATE COUNTRY DROPDOWN
+========================================================= */
+
+function populateCountries(){
+
+  country.innerHTML = "";
+
+  const defaultOption =
+    document.createElement("option");
+
+  defaultOption.value = "";
+
+  defaultOption.textContent =
+    "Select your country";
+
+  country.appendChild(
+    defaultOption
+  );
+
+
+  countries.forEach(
+    ([code,name])=>{
+
+      const option =
+        document.createElement("option");
+
+      option.value =
+        code;
+
+      option.textContent =
+        name;
+
+      country.appendChild(
+        option
+      );
+
+    }
+  );
+
+}
+
+populateCountries();
+
+
+/* =========================================================
+   COUNTRY STATUS
+========================================================= */
 
 function setCountryStatus(
   type,
@@ -1494,12 +1836,17 @@ function setCountryStatus(
 }
 
 
+/* =========================================================
+   AUTOMATIC COUNTRY DETECTION
+========================================================= */
+
 async function detectCountry(){
 
   setCountryStatus(
     "detecting",
     "Detecting your country..."
   );
+
 
   try{
 
@@ -1515,14 +1862,19 @@ async function detectCountry(){
         }
       );
 
+
     if(!response.ok){
+
       throw new Error(
         "Country detection request failed."
       );
+
     }
+
 
     const data =
       await response.json();
+
 
     const detectedCode =
       String(
@@ -1533,6 +1885,15 @@ async function detectCountry(){
       .trim()
       .toUpperCase();
 
+
+    const detectedName =
+      String(
+        data.country_name ||
+        ""
+      )
+      .trim();
+
+
     if(!detectedCode){
 
       throw new Error(
@@ -1540,6 +1901,7 @@ async function detectCountry(){
       );
 
     }
+
 
     const option =
       Array.from(
@@ -1550,25 +1912,38 @@ async function detectCountry(){
           detectedCode
       );
 
+
     if(option){
 
       country.value =
         detectedCode;
 
+
       setCountryStatus(
         "detected",
         "Country detected automatically: " +
-        (countryNames[detectedCode] || option.textContent.trim())
+        (
+          detectedName ||
+          option.textContent.trim()
+        )
       );
+
 
       return;
 
     }
 
+
     setCountryStatus(
       "manual",
-      "Country detected, but please select your country manually."
+      "Country detected as " +
+      (
+        detectedName ||
+        detectedCode
+      ) +
+      ". Please select your country."
     );
+
 
   }catch(error){
 
@@ -1576,6 +1951,7 @@ async function detectCountry(){
       "Automatic country detection failed:",
       error
     );
+
 
     setCountryStatus(
       "error",
@@ -1587,12 +1963,53 @@ async function detectCountry(){
 }
 
 
-/* START COUNTRY DETECTION */
-
 detectCountry();
 
 
-/* REFERRAL CODE */
+/* =========================================================
+   MANUAL COUNTRY CHANGE
+========================================================= */
+
+country.addEventListener(
+  "change",
+  ()=>{
+
+    if(!country.value){
+
+      setCountryStatus(
+        "manual",
+        "Please select your country."
+      );
+
+      return;
+
+    }
+
+
+    const selected =
+      countries.find(
+        item =>
+          item[0] === country.value
+      );
+
+
+    if(selected){
+
+      setCountryStatus(
+        "detected",
+        "Country selected: " +
+        selected[1]
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   REFERRAL CODE
+========================================================= */
 
 function loadReferralCode(){
 
@@ -1601,34 +2018,43 @@ function loadReferralCode(){
       window.location.search
     );
 
+
   const ref =
     params.get("ref");
+
 
   if(!ref){
     return;
   }
+
 
   const cleanRef =
     ref
       .trim()
       .slice(0,50);
 
+
   if(!cleanRef){
     return;
   }
 
+
   referral.value =
     cleanRef;
+
 
   referral.readOnly =
     true;
 
 }
 
+
 loadReferralCode();
 
 
-/* PASSWORD VISIBILITY */
+/* =========================================================
+   PASSWORD TOGGLE
+========================================================= */
 
 togglePassword.addEventListener(
   "click",
@@ -1637,10 +2063,12 @@ togglePassword.addEventListener(
     const showing =
       password.type === "text";
 
+
     password.type =
       showing
         ? "password"
         : "text";
+
 
     togglePassword.setAttribute(
       "aria-label",
@@ -1649,18 +2077,15 @@ togglePassword.addEventListener(
         : "Hide password"
     );
 
+
     eyeIcon.innerHTML =
       showing
-
       ?
-
       `
       <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/>
       <circle cx="12" cy="12" r="2.5"/>
       `
-
       :
-
       `
       <path d="M3 3l18 18"/>
       <path d="M10.6 10.6a2 2 0 102.8 2.8"/>
@@ -1672,7 +2097,9 @@ togglePassword.addEventListener(
 );
 
 
-/* SECURITY CHECK */
+/* =========================================================
+   SECURITY CHECK
+========================================================= */
 
 securityCheck.addEventListener(
   "change",
@@ -1687,7 +2114,9 @@ securityCheck.addEventListener(
 );
 
 
-/* MESSAGES */
+/* =========================================================
+   MESSAGES
+========================================================= */
 
 function clearMessages(){
 
@@ -1701,18 +2130,22 @@ function clearMessages(){
 
 }
 
+
 function showError(message){
 
   successMessage.classList.remove(
     "show"
   );
 
+
   errorMessage.textContent =
     message;
+
 
   errorMessage.classList.add(
     "show"
   );
+
 
   window.scrollTo({
     top:0,
@@ -1721,14 +2154,17 @@ function showError(message){
 
 }
 
+
 function showSuccess(message){
 
   errorMessage.classList.remove(
     "show"
   );
 
+
   successMessage.textContent =
     message;
+
 
   successMessage.classList.add(
     "show"
@@ -1737,7 +2173,9 @@ function showSuccess(message){
 }
 
 
-/* VALIDATION */
+/* =========================================================
+   VALIDATION
+========================================================= */
 
 function validateForm(){
 
@@ -1750,6 +2188,7 @@ function validateForm(){
   const pass =
     password.value;
 
+
   if(!name){
 
     showError(
@@ -1759,7 +2198,9 @@ function validateForm(){
     fullName.focus();
 
     return false;
+
   }
+
 
   if(name.length < 2){
 
@@ -1770,18 +2211,9 @@ function validateForm(){
     fullName.focus();
 
     return false;
+
   }
 
-  if(name.length > 100){
-
-    showError(
-      "Your full name is too long."
-    );
-
-    fullName.focus();
-
-    return false;
-  }
 
   if(!mail){
 
@@ -1792,7 +2224,9 @@ function validateForm(){
     email.focus();
 
     return false;
+
   }
+
 
   if(!email.validity.valid){
 
@@ -1803,7 +2237,9 @@ function validateForm(){
     email.focus();
 
     return false;
+
   }
+
 
   if(pass.length < 8){
 
@@ -1814,7 +2250,9 @@ function validateForm(){
     password.focus();
 
     return false;
+
   }
+
 
   if(!country.value){
 
@@ -1825,7 +2263,9 @@ function validateForm(){
     country.focus();
 
     return false;
+
   }
+
 
   if(!securityCheck.checked){
 
@@ -1836,7 +2276,9 @@ function validateForm(){
     securityCheck.focus();
 
     return false;
+
   }
+
 
   if(!terms.checked){
 
@@ -1847,7 +2289,9 @@ function validateForm(){
     terms.focus();
 
     return false;
+
   }
+
 
   if(website.value.trim() !== ""){
 
@@ -1856,14 +2300,18 @@ function validateForm(){
     );
 
     return false;
+
   }
+
 
   return true;
 
 }
 
 
-/* SIGNUP */
+/* =========================================================
+   SIGNUP
+========================================================= */
 
 form.addEventListener(
   "submit",
@@ -1871,23 +2319,39 @@ form.addEventListener(
 
     event.preventDefault();
 
+
     clearMessages();
+
 
     if(!validateForm()){
       return;
     }
 
+
     submitBtn.disabled =
       true;
 
+
     submitBtn.textContent =
       "Creating account...";
+
 
     try{
 
       const redirectUrl =
         window.location.origin +
         "/dashboard.html";
+
+
+      /*
+        The country value is the ISO-2 code.
+
+        Example:
+        NG = Nigeria
+        GH = Ghana
+        US = United States
+        GB = United Kingdom
+      */
 
       const metadata = {
 
@@ -1901,6 +2365,7 @@ form.addEventListener(
           referral.value.trim() || null
 
       };
+
 
       const {
         data,
@@ -1926,13 +2391,18 @@ form.addEventListener(
 
         });
 
+
       if(error){
+
         throw error;
+
       }
+
 
       showSuccess(
         "Your account has been created successfully."
       );
+
 
       if(
         data &&
@@ -1949,9 +2419,11 @@ form.addEventListener(
 
       }
 
+
       successPopup.classList.add(
         "show"
       );
+
 
     }catch(error){
 
@@ -1960,13 +2432,19 @@ form.addEventListener(
         error
       );
 
+
       let message =
         "Unable to create your account. Please try again.";
 
-      if(error && error.message){
+
+      if(
+        error &&
+        error.message
+      ){
 
         const text =
           error.message.toLowerCase();
+
 
         if(
           text.includes("already registered") ||
@@ -2007,12 +2485,17 @@ form.addEventListener(
 
       }
 
-      showError(message);
+
+      showError(
+        message
+      );
+
 
     }finally{
 
       submitBtn.disabled =
         false;
+
 
       submitBtn.textContent =
         "Create free account";
@@ -2023,7 +2506,9 @@ form.addEventListener(
 );
 
 
-/* SUCCESS POPUP */
+/* =========================================================
+   SUCCESS POPUP
+========================================================= */
 
 popupButton.addEventListener(
   "click",
@@ -2032,6 +2517,7 @@ popupButton.addEventListener(
     successPopup.classList.remove(
       "show"
     );
+
 
     window.location.href =
       "login.html";
@@ -2045,7 +2531,8 @@ successPopup.addEventListener(
   (event)=>{
 
     if(
-      event.target === successPopup
+      event.target ===
+      successPopup
     ){
 
       successPopup.classList.remove(
@@ -2058,7 +2545,9 @@ successPopup.addEventListener(
 );
 
 
-/* POLICY */
+/* =========================================================
+   TERMS / PRIVACY
+========================================================= */
 
 function openPolicy(type){
 
@@ -2067,9 +2556,11 @@ function openPolicy(type){
       ? "termsOverlay"
       : "privacyOverlay";
 
+
   document
     .getElementById(id)
     .classList.add("show");
+
 
   document.body.style.overflow =
     "hidden";
@@ -2084,9 +2575,11 @@ function closePolicy(type){
       ? "termsOverlay"
       : "privacyOverlay";
 
+
   document
     .getElementById(id)
     .classList.remove("show");
+
 
   document.body.style.overflow =
     "";
@@ -2094,36 +2587,34 @@ function closePolicy(type){
 }
 
 
-/* POLICY BACKDROP */
-
 document
   .querySelectorAll(".policy-overlay")
-  .forEach(overlay=>{
+  .forEach(
+    overlay=>{
 
-    overlay.addEventListener(
-      "click",
-      (event)=>{
+      overlay.addEventListener(
+        "click",
+        (event)=>{
 
-        if(
-          event.target === overlay
-        ){
+          if(
+            event.target === overlay
+          ){
 
-          overlay.classList.remove(
-            "show"
-          );
+            overlay.classList.remove(
+              "show"
+            );
 
-          document.body.style.overflow =
-            "";
+            document.body.style.overflow =
+              "";
+
+          }
 
         }
+      );
 
-      }
-    );
+    }
+  );
 
-  });
-
-
-/* ESCAPE */
 
 document.addEventListener(
   "keydown",
@@ -2135,17 +2626,21 @@ document.addEventListener(
       return;
     }
 
+
     document
       .querySelectorAll(
         ".policy-overlay.show"
       )
-      .forEach(overlay=>{
+      .forEach(
+        overlay=>{
 
-        overlay.classList.remove(
-          "show"
-        );
+          overlay.classList.remove(
+            "show"
+          );
 
-      });
+        }
+      );
+
 
     document.body.style.overflow =
       "";
@@ -2154,7 +2649,9 @@ document.addEventListener(
 );
 
 
-/* EXISTING SESSION */
+/* =========================================================
+   EXISTING SESSION CHECK
+========================================================= */
 
 async function checkExistingSession(){
 
@@ -2166,9 +2663,11 @@ async function checkExistingSession(){
     } =
       await db.auth.getSession();
 
+
     if(error){
       return;
     }
+
 
     if(
       data &&
@@ -2190,6 +2689,7 @@ async function checkExistingSession(){
   }
 
 }
+
 
 checkExistingSession();
 
