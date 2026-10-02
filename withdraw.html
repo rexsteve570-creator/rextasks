@@ -2,29 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>TallyBuck — Withdraw</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     :root{
-      --bg:#07111c;
-      --bg2:#0a1624;
-      --panel:#0d1927;
-      --panel2:#111f2f;
-      --panel3:#142538;
-      --border:#203448;
-      --text:#f3f7fa;
-      --muted:#8ea0ad;
       --green:#079447;
-      --green2:#0bbf61;
       --green-dark:#063f2d;
-      --red:#ff6474;
-      --gold:#e6b85c;
-      --blue:#4da3ff;
-      --shadow:0 14px 40px rgba(0,0,0,.28);
-      --radius:16px;
+      --green-soft:#eaf8f1;
+      --bg:#f5f7f6;
+      --card:#ffffff;
+      --text:#15231d;
+      --muted:#718078;
+      --border:#e5ebe8;
+      --danger:#dc3545;
+      --warning:#d97706;
+      --shadow:0 8px 25px rgba(6,63,45,.06);
     }
 
     *{
@@ -33,23 +29,32 @@
       padding:0;
     }
 
-    html{
-      scroll-behavior:smooth;
+    body{
+      font-family:Inter,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
     }
 
-    body{
-      min-height:100vh;
-      background:
-        radial-gradient(circle at top right, rgba(7,148,71,.08), transparent 32%),
-        var(--bg);
-      color:var(--text);
-      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    body.dark{
+      --bg:#0c1210;
+      --card:#121a17;
+      --text:#f1f6f3;
+      --muted:#94a39b;
+      --border:#24332d;
+      --green-soft:#142d22;
+      --shadow:0 8px 25px rgba(0,0,0,.2);
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
     }
 
     button,
     input,
     select{
-      font:inherit;
+      font-family:inherit;
     }
 
     button{
@@ -57,26 +62,24 @@
     }
 
     .app{
-      width:100%;
       max-width:760px;
-      min-height:100vh;
       margin:0 auto;
-      position:relative;
+      min-height:100vh;
+      padding-bottom:90px;
     }
 
     /* HEADER */
 
-    .header{
+    .topbar{
       position:sticky;
       top:0;
-      z-index:30;
+      z-index:100;
       height:68px;
       display:flex;
       align-items:center;
       justify-content:space-between;
       padding:0 18px;
-      background:rgba(7,17,28,.94);
-      backdrop-filter:blur(16px);
+      background:var(--card);
       border-bottom:1px solid var(--border);
     }
 
@@ -84,30 +87,21 @@
       display:flex;
       align-items:center;
       gap:10px;
-      min-width:0;
+      font-size:20px;
+      font-weight:800;
+      color:var(--green);
     }
 
-    .brand-logo{
-      width:36px;
-      height:36px;
+    .brand-mark{
+      width:34px;
+      height:34px;
       border-radius:10px;
-      background:linear-gradient(145deg,var(--green2),var(--green));
       display:flex;
       align-items:center;
       justify-content:center;
-      box-shadow:0 8px 22px rgba(7,148,71,.22);
-    }
-
-    .brand-logo svg{
-      width:20px;
-      height:20px;
-      stroke:#fff;
-    }
-
-    .brand-name{
-      font-size:18px;
-      font-weight:800;
-      letter-spacing:-.3px;
+      background:var(--green);
+      color:#fff;
+      font-weight:900;
     }
 
     .header-actions{
@@ -120,127 +114,112 @@
       width:40px;
       height:40px;
       border:1px solid var(--border);
-      background:var(--panel);
       border-radius:12px;
+      background:var(--card);
       color:var(--text);
       display:flex;
       align-items:center;
       justify-content:center;
+      cursor:pointer;
       position:relative;
     }
 
     .icon-btn svg{
-      width:19px;
-      height:19px;
-      stroke:currentColor;
+      width:20px;
+      height:20px;
     }
 
     .notification-dot{
       position:absolute;
+      top:7px;
+      right:7px;
       width:7px;
       height:7px;
+      background:#ef4444;
       border-radius:50%;
-      background:var(--green2);
-      top:8px;
-      right:8px;
-      box-shadow:0 0 0 3px var(--panel);
+      border:2px solid var(--card);
     }
 
     /* CONTENT */
 
     .content{
-      padding:20px 16px 40px;
+      padding:18px;
     }
 
-    .page-title{
+    .welcome{
       margin-bottom:18px;
     }
 
-    .page-title h1{
-      font-size:25px;
-      line-height:1.15;
-      letter-spacing:-.6px;
-      margin-bottom:6px;
+    .welcome h1{
+      font-size:24px;
+      margin-bottom:5px;
     }
 
-    .page-title p{
+    .welcome p{
       color:var(--muted);
       font-size:14px;
-      line-height:1.5;
     }
 
-    /* BALANCE */
+    /* WALLET */
 
-    .balance-card{
-      border:1px solid var(--border);
-      background:
-        linear-gradient(145deg,rgba(7,148,71,.13),transparent 60%),
-        var(--panel);
-      border-radius:var(--radius);
-      padding:19px;
+    .wallet-card{
+      background:linear-gradient(135deg,#079447,#063f2d);
+      color:#fff;
+      border-radius:22px;
+      padding:22px;
       box-shadow:var(--shadow);
+      margin-bottom:16px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .wallet-card::after{
+      content:"";
+      position:absolute;
+      width:180px;
+      height:180px;
+      right:-80px;
+      top:-80px;
+      border-radius:50%;
+      background:rgba(255,255,255,.08);
+    }
+
+    .wallet-label{
+      font-size:13px;
+      opacity:.8;
+      margin-bottom:8px;
+    }
+
+    .wallet-balance{
+      font-size:36px;
+      font-weight:800;
+      letter-spacing:-1px;
       margin-bottom:18px;
     }
 
-    .balance-label{
-      color:var(--muted);
-      font-size:13px;
-      margin-bottom:7px;
-    }
-
-    .balance-value{
-      font-size:32px;
-      font-weight:800;
-      letter-spacing:-1px;
-      margin-bottom:14px;
-    }
-
-    .balance-stats{
-      display:grid;
-      grid-template-columns:1fr 1fr;
+    .wallet-actions{
+      display:flex;
       gap:10px;
     }
 
-    .stat{
-      background:rgba(255,255,255,.025);
-      border:1px solid var(--border);
+    .wallet-action{
+      flex:1;
+      border:0;
       border-radius:12px;
-      padding:11px;
+      padding:12px;
+      background:rgba(255,255,255,.14);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:7px;
+      cursor:pointer;
+      font-weight:700;
     }
 
-    .stat span{
-      display:block;
-      color:var(--muted);
-      font-size:11px;
-      margin-bottom:4px;
-    }
-
-    .stat strong{
-      font-size:14px;
-    }
-
-    /* SETTINGS NOTICE */
-
-    .notice{
-      display:none;
-      border:1px solid rgba(230,184,92,.28);
-      background:rgba(230,184,92,.07);
-      color:#ead8a7;
-      border-radius:13px;
-      padding:12px 13px;
-      font-size:13px;
-      line-height:1.5;
-      margin-bottom:16px;
-    }
-
-    .notice.show{
-      display:block;
-    }
-
-    .notice.error{
-      border-color:rgba(255,100,116,.3);
-      background:rgba(255,100,116,.07);
-      color:#ffb0b9;
+    .wallet-action svg{
+      width:17px;
+      height:17px;
     }
 
     /* SECTION */
@@ -249,24 +228,56 @@
       margin-top:20px;
     }
 
-    .section-head{
+    .section-header{
       display:flex;
       align-items:center;
       justify-content:space-between;
       margin-bottom:11px;
     }
 
-    .section-head h2{
-      font-size:15px;
-      font-weight:750;
+    .section-title{
+      font-size:17px;
+      font-weight:800;
     }
 
-    .minimum-label{
+    .section-link{
+      color:var(--green);
+      font-size:13px;
+      font-weight:700;
+    }
+
+    /* INFO CARD */
+
+    .info-card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:17px;
+      padding:16px;
+      box-shadow:var(--shadow);
+    }
+
+    .info-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:7px 0;
+    }
+
+    .info-row span{
       color:var(--muted);
-      font-size:12px;
+      font-size:13px;
     }
 
-    /* CRYPTO GRID */
+    .info-row strong{
+      font-size:13px;
+    }
+
+    .info-row + .info-row{
+      border-top:1px solid var(--border);
+    }
+
+    /* CRYPTO */
 
     .crypto-grid{
       display:grid;
@@ -276,130 +287,154 @@
 
     .crypto-card{
       position:relative;
-      min-height:82px;
+      background:var(--card);
       border:1px solid var(--border);
-      border-radius:15px;
-      background:
-        linear-gradient(145deg,rgba(255,255,255,.035),transparent),
-        var(--panel);
-      padding:13px;
+      border-radius:17px;
+      padding:15px;
+      box-shadow:var(--shadow);
       display:flex;
       align-items:center;
-      gap:11px;
-      color:var(--text);
+      gap:12px;
       text-align:left;
+      color:var(--text);
       transition:.18s ease;
       overflow:hidden;
     }
 
-    .crypto-card::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(120deg,transparent,rgba(255,255,255,.025),transparent);
-      pointer-events:none;
-    }
-
     .crypto-card:hover{
-      border-color:#31516a;
-      transform:translateY(-1px);
+      border-color:var(--green);
     }
 
     .crypto-card.selected{
-      border-color:var(--green2);
-      background:
-        linear-gradient(145deg,rgba(7,148,71,.15),transparent),
-        var(--panel);
-      box-shadow:0 0 0 1px rgba(11,191,97,.12);
+      border-color:var(--green);
+      background:var(--green-soft);
+      box-shadow:0 0 0 1px var(--green);
     }
 
-    .coin-icon{
-      width:42px;
-      height:42px;
-      min-width:42px;
+    .crypto-icon{
+      width:44px;
+      height:44px;
+      min-width:44px;
       border-radius:13px;
       display:flex;
       align-items:center;
       justify-content:center;
-      background:var(--panel3);
-      border:1px solid var(--border);
-      font-weight:900;
+      background:var(--green-soft);
+      color:var(--green);
       font-size:15px;
+      font-weight:900;
     }
 
-    .coin-icon.btc{
+    .crypto-icon.btc{
       color:#f7931a;
+      background:#fff7ed;
     }
 
-    .coin-icon.eth{
-      color:#9ba9ff;
+    .crypto-icon.eth{
+      color:#6875f5;
+      background:#eef0ff;
     }
 
-    .coin-icon.usdt{
+    .crypto-icon.usdt{
       color:#26a17b;
+      background:#eaf8f1;
     }
 
-    .coin-icon.usdc{
+    .crypto-icon.usdc{
       color:#2775ca;
+      background:#edf5ff;
     }
 
-    .coin-icon.bnb{
-      color:#f3ba2f;
+    .crypto-icon.bnb{
+      color:#c89500;
+      background:#fff8df;
     }
 
-    .coin-icon.sol{
-      color:#b58cff;
+    .crypto-icon.sol{
+      color:#7c3aed;
+      background:#f3edff;
     }
 
-    .coin-icon.ton{
-      color:#2ca5e0;
+    .crypto-icon.ton{
+      color:#168dcc;
+      background:#eaf6fc;
     }
 
-    .coin-info{
+    body.dark .crypto-icon.btc{
+      background:#2b2114;
+    }
+
+    body.dark .crypto-icon.eth{
+      background:#20243d;
+    }
+
+    body.dark .crypto-icon.usdt{
+      background:#142d22;
+    }
+
+    body.dark .crypto-icon.usdc{
+      background:#15263b;
+    }
+
+    body.dark .crypto-icon.bnb{
+      background:#302814;
+    }
+
+    body.dark .crypto-icon.sol{
+      background:#281e3b;
+    }
+
+    body.dark .crypto-icon.ton{
+      background:#142b38;
+    }
+
+    .crypto-info{
       min-width:0;
     }
 
-    .coin-name{
+    .crypto-info strong{
+      display:block;
       font-size:14px;
-      font-weight:750;
       margin-bottom:3px;
     }
 
-    .coin-symbol{
-      color:var(--muted);
+    .crypto-info span{
+      display:block;
       font-size:11px;
+      color:var(--muted);
     }
 
-    .selected-mark{
+    .crypto-check{
       position:absolute;
       right:10px;
       top:10px;
       width:18px;
       height:18px;
       border-radius:50%;
-      background:var(--green2);
+      background:var(--green);
+      color:#fff;
       display:none;
       align-items:center;
       justify-content:center;
     }
 
-    .crypto-card.selected .selected-mark{
+    .crypto-card.selected .crypto-check{
       display:flex;
     }
 
-    .selected-mark svg{
+    .crypto-check svg{
       width:11px;
       height:11px;
-      stroke:#fff;
     }
 
     /* FORM */
 
     .form-card{
+      background:var(--card);
       border:1px solid var(--border);
-      background:var(--panel);
-      border-radius:var(--radius);
+      border-radius:17px;
       padding:16px;
+      box-shadow:var(--shadow);
     }
 
     .form-group{
@@ -410,16 +445,11 @@
       margin-bottom:0;
     }
 
-    label{
+    .form-label{
       display:block;
       font-size:12px;
-      color:#c8d2d9;
+      font-weight:700;
       margin-bottom:7px;
-      font-weight:600;
-    }
-
-    .input-wrap{
-      position:relative;
     }
 
     input,
@@ -428,54 +458,56 @@
       height:48px;
       border:1px solid var(--border);
       border-radius:12px;
-      background:var(--bg2);
+      background:var(--bg);
       color:var(--text);
       outline:none;
       padding:0 13px;
-      transition:.18s;
+      font-size:14px;
     }
 
     input:focus,
     select:focus{
-      border-color:var(--green2);
-      box-shadow:0 0 0 3px rgba(11,191,97,.08);
+      border-color:var(--green);
+      box-shadow:0 0 0 3px rgba(7,148,71,.08);
     }
 
     input::placeholder{
-      color:#617383;
+      color:var(--muted);
     }
 
-    .amount-input{
-      padding-right:60px;
-      font-size:16px;
-      font-weight:650;
+    .amount-wrap{
+      position:relative;
     }
 
-    .amount-currency{
+    .amount-wrap input{
+      padding-right:55px;
+    }
+
+    .currency{
       position:absolute;
-      right:13px;
+      right:14px;
       top:50%;
       transform:translateY(-50%);
-      color:var(--muted);
       font-size:12px;
-      font-weight:700;
+      font-weight:800;
+      color:var(--muted);
     }
 
     .field-note{
-      color:var(--muted);
-      font-size:11px;
-      line-height:1.5;
       margin-top:6px;
+      font-size:11px;
+      color:var(--muted);
+      line-height:1.45;
     }
 
     /* SUMMARY */
 
     .summary{
-      border:1px solid var(--border);
-      background:var(--bg2);
-      border-radius:13px;
-      padding:13px;
       margin-top:15px;
+      padding:13px;
+      border-radius:13px;
+      background:var(--green-soft);
+      border:1px solid var(--border);
     }
 
     .summary-row{
@@ -492,17 +524,17 @@
     }
 
     .summary-row strong{
-      font-weight:700;
+      font-weight:800;
     }
 
-    .summary-row.total{
-      margin-top:7px;
-      padding-top:11px;
+    .summary-total{
       border-top:1px solid var(--border);
+      margin-top:7px;
+      padding-top:10px;
     }
 
-    .summary-row.total strong{
-      color:var(--green2);
+    .summary-total strong{
+      color:var(--green);
       font-size:15px;
     }
 
@@ -512,335 +544,294 @@
       width:100%;
       height:50px;
       border:0;
-      border-radius:13px;
-      margin-top:14px;
-      background:linear-gradient(135deg,var(--green2),var(--green));
+      border-radius:12px;
+      background:var(--green);
       color:#fff;
       font-weight:800;
       font-size:14px;
-      box-shadow:0 10px 25px rgba(7,148,71,.2);
-      transition:.18s;
+      margin-top:14px;
+      cursor:pointer;
     }
 
     .withdraw-btn:hover{
-      filter:brightness(1.06);
+      background:var(--green-dark);
     }
 
     .withdraw-btn:disabled{
+      opacity:.5;
       cursor:not-allowed;
-      opacity:.45;
-      box-shadow:none;
     }
 
-    /* MESSAGE */
+    /* NOTICE */
 
-    .message{
+    .notice{
       display:none;
-      padding:12px 13px;
+      padding:13px;
+      margin-top:15px;
       border-radius:12px;
       font-size:13px;
-      line-height:1.5;
-      margin-top:14px;
+      line-height:1.45;
     }
 
-    .message.show{
+    .notice.show{
       display:block;
     }
 
-    .message.success{
-      color:#9ce9bd;
-      background:rgba(11,191,97,.08);
-      border:1px solid rgba(11,191,97,.2);
+    .notice.error{
+      background:#fff1f2;
+      border:1px solid #fecdd3;
+      color:#be123c;
     }
 
-    .message.error{
-      color:#ffadb6;
-      background:rgba(255,100,116,.08);
-      border:1px solid rgba(255,100,116,.2);
+    .notice.success{
+      background:var(--green-soft);
+      border:1px solid #bde7d1;
+      color:var(--green-dark);
+    }
+
+    body.dark .notice.error{
+      background:#29171a;
+      border-color:#4c252b;
+      color:#ff9ca8;
+    }
+
+    body.dark .notice.success{
+      background:#142d22;
+      border-color:#24543e;
+      color:#9ce9bd;
     }
 
     /* HISTORY */
 
-    .history{
-      display:flex;
-      flex-direction:column;
-      gap:9px;
+    .history-list{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:17px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
     }
 
     .history-item{
-      border:1px solid var(--border);
-      background:var(--panel);
-      border-radius:14px;
-      padding:13px;
-    }
-
-    .history-top{
       display:flex;
       align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom:8px;
+      gap:12px;
+      padding:15px;
+      border-bottom:1px solid var(--border);
     }
 
-    .history-coin{
-      display:flex;
-      align-items:center;
-      gap:9px;
-      min-width:0;
+    .history-item:last-child{
+      border-bottom:0;
     }
 
     .history-icon{
-      width:34px;
-      height:34px;
-      border-radius:10px;
-      background:var(--panel3);
-      border:1px solid var(--border);
+      width:40px;
+      height:40px;
+      border-radius:12px;
+      background:var(--green-soft);
+      color:var(--green);
       display:flex;
       align-items:center;
       justify-content:center;
+      flex:none;
       font-size:11px;
       font-weight:800;
+    }
+
+    .history-info{
+      flex:1;
+      min-width:0;
     }
 
     .history-name{
       font-size:13px;
       font-weight:700;
+      margin-bottom:3px;
     }
 
     .history-date{
       color:var(--muted);
-      font-size:10px;
-      margin-top:2px;
-    }
-
-    .history-amount{
-      font-weight:800;
-      font-size:13px;
-      white-space:nowrap;
-    }
-
-    .history-bottom{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      color:var(--muted);
       font-size:11px;
     }
 
-    .status{
+    .history-right{
+      text-align:right;
+      flex:none;
+    }
+
+    .history-amount{
+      font-size:13px;
+      font-weight:800;
+      margin-bottom:4px;
+    }
+
+    .history-status{
+      font-size:10px;
       font-weight:700;
     }
 
-    .status.pending{
-      color:var(--gold);
+    .history-status.pending{
+      color:var(--warning);
     }
 
-    .status.paid,
-    .status.completed{
-      color:var(--green2);
+    .history-status.paid,
+    .history-status.completed{
+      color:var(--green);
     }
 
-    .status.cancelled,
-    .status.rejected,
-    .status.failed{
-      color:var(--red);
+    .history-status.cancelled,
+    .history-status.rejected,
+    .history-status.failed{
+      color:var(--danger);
     }
 
     .empty{
+      padding:28px 18px;
       text-align:center;
-      border:1px dashed var(--border);
-      border-radius:14px;
-      padding:24px 15px;
       color:var(--muted);
       font-size:13px;
     }
 
     .loading{
       color:var(--muted);
-      font-size:13px;
       text-align:center;
-      padding:18px;
+      padding:25px;
+      font-size:13px;
     }
 
     /* BOTTOM NAV */
 
     .bottom-nav{
-      position:sticky;
+      position:fixed;
+      z-index:90;
+      left:50%;
+      transform:translateX(-50%);
       bottom:0;
-      z-index:20;
-      margin-top:15px;
-      padding:9px 10px calc(9px + env(safe-area-inset-bottom));
-      background:rgba(7,17,28,.96);
-      backdrop-filter:blur(18px);
+      width:100%;
+      max-width:760px;
+      height:72px;
+      background:var(--card);
       border-top:1px solid var(--border);
       display:grid;
       grid-template-columns:repeat(4,1fr);
-      gap:5px;
+      padding:7px 8px;
     }
 
-    .nav-btn{
-      border:0;
-      background:transparent;
-      color:var(--muted);
-      padding:8px 4px;
-      border-radius:10px;
+    .nav-item{
       display:flex;
       flex-direction:column;
       align-items:center;
+      justify-content:center;
       gap:4px;
+      color:var(--muted);
       font-size:10px;
+      font-weight:600;
     }
 
-    .nav-btn.active{
-      color:var(--green2);
-      background:rgba(7,148,71,.08);
+    .nav-item svg{
+      width:20px;
+      height:20px;
     }
 
-    .nav-btn svg{
-      width:19px;
-      height:19px;
-      stroke:currentColor;
+    .nav-item.active{
+      color:var(--green);
     }
 
-    /* DRAWER */
+    /* MENU */
 
-    .overlay{
+    .menu-overlay{
+      display:none;
       position:fixed;
       inset:0;
-      z-index:50;
-      background:rgba(0,0,0,.58);
-      display:none;
+      background:rgba(0,0,0,.4);
+      z-index:200;
     }
 
-    .overlay.show{
+    .menu-overlay.show{
       display:block;
     }
 
-    .drawer{
+    .side-menu{
       position:fixed;
+      z-index:201;
       top:0;
-      left:0;
-      bottom:0;
-      z-index:60;
-      width:min(310px,84vw);
-      background:#08131f;
-      border-right:1px solid var(--border);
-      transform:translateX(-105%);
-      transition:.22s ease;
-      padding:18px;
+      right:-310px;
+      width:290px;
+      max-width:85%;
+      height:100vh;
+      background:var(--card);
+      transition:right .25s ease;
+      padding:20px;
       overflow-y:auto;
     }
 
-    .drawer.show{
-      transform:translateX(0);
+    .side-menu.show{
+      right:0;
     }
 
-    .drawer-head{
+    .menu-header{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      margin-bottom:25px;
+      margin-bottom:22px;
     }
 
-    .drawer-brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight:800;
+    .menu-header strong{
+      font-size:18px;
     }
 
-    .drawer-close{
-      width:38px;
-      height:38px;
-      border:1px solid var(--border);
-      border-radius:11px;
-      background:var(--panel);
+    .menu-item{
+      width:100%;
+      border:0;
+      background:none;
       color:var(--text);
       display:flex;
       align-items:center;
-      justify-content:center;
-    }
-
-    .drawer-close svg{
-      width:18px;
-      height:18px;
-      stroke:currentColor;
-    }
-
-    .menu{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-    }
-
-    .menu a,
-    .menu button{
-      width:100%;
-      min-height:45px;
-      display:flex;
-      align-items:center;
-      gap:11px;
-      border:0;
-      border-radius:11px;
-      padding:0 12px;
-      background:transparent;
-      color:#b9c5ce;
-      text-decoration:none;
-      font-size:13px;
+      gap:12px;
+      padding:13px 8px;
+      border-radius:10px;
+      cursor:pointer;
       text-align:left;
+      font-size:14px;
     }
 
-    .menu a:hover,
-    .menu button:hover,
-    .menu a.active{
-      color:#fff;
-      background:rgba(7,148,71,.11);
+    .menu-item:hover{
+      background:var(--green-soft);
     }
 
-    .menu svg{
-      width:18px;
-      height:18px;
-      stroke:currentColor;
-      flex:none;
+    .menu-item svg{
+      width:19px;
+      height:19px;
+      color:var(--green);
     }
 
-    .menu-separator{
-      height:1px;
-      background:var(--border);
-      margin:10px 0;
-    }
-
-    /* RESPONSIVE */
-
-    @media(max-width:480px){
-      .content{
-        padding:18px 13px 35px;
-      }
+    @media(max-width:500px){
 
       .crypto-grid{
         grid-template-columns:1fr 1fr;
       }
 
-      .crypto-card{
-        padding:11px;
-      }
-
-      .coin-icon{
-        width:38px;
-        height:38px;
-        min-width:38px;
-      }
-
-      .balance-value{
-        font-size:29px;
-      }
     }
 
-    @media(min-width:700px){
-      .app{
-        border-left:1px solid var(--border);
-        border-right:1px solid var(--border);
+    @media(max-width:420px){
+
+      .content{
+        padding:15px;
       }
+
+      .wallet-balance{
+        font-size:32px;
+      }
+
+      .crypto-card{
+        padding:13px 11px;
+      }
+
+      .crypto-icon{
+        width:40px;
+        height:40px;
+        min-width:40px;
+      }
+
     }
   </style>
 </head>
@@ -849,191 +840,574 @@
 
 <div class="app">
 
-  <header class="header">
-    <div class="brand">
-      <button class="icon-btn" id="menuBtn" aria-label="Open menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-          <path d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
+  <!-- HEADER -->
 
-      <div class="brand-logo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M7 5h10M7 9h7a4 4 0 0 1 0 8H7V5Z"/>
-          <path d="M7 13h6"/>
-        </svg>
-      </div>
+  <header class="topbar">
 
-      <div class="brand-name">TallyBuck</div>
-    </div>
+    <a href="dashboard.html" class="brand">
+      <span class="brand-mark">T</span>
+      <span>TallyBuck</span>
+    </a>
 
     <div class="header-actions">
-      <button class="icon-btn" id="notificationBtn" aria-label="Notifications">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-          <path d="M10 21h4"/>
+
+      <a
+        href="notifications.html"
+        class="icon-btn"
+        aria-label="Notifications"
+      >
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
         </svg>
-        <span class="notification-dot" id="notificationDot" style="display:none;"></span>
+
+        <span
+          id="notificationDot"
+          class="notification-dot"
+          style="display:none;"
+        ></span>
+
+      </a>
+
+      <button
+        class="icon-btn"
+        id="menuBtn"
+        aria-label="Menu"
+      >
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <line x1="4" y1="6" x2="20" y2="6"></line>
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <line x1="4" y1="18" x2="20" y2="18"></line>
+        </svg>
+
       </button>
+
     </div>
+
   </header>
+
 
   <main class="content">
 
-    <div class="page-title">
+    <!-- TITLE -->
+
+    <section class="welcome">
+
       <h1>Withdraw</h1>
-      <p>Choose a cryptocurrency and enter your withdrawal details.</p>
-    </div>
 
-    <section class="balance-card">
-      <div class="balance-label">Available balance</div>
-      <div class="balance-value" id="balance">$0.00</div>
+      <p>
+        Withdraw your available earnings using cryptocurrency.
+      </p>
 
-      <div class="balance-stats">
-        <div class="stat">
-          <span>Total earned</span>
-          <strong id="totalEarned">$0.00</strong>
-        </div>
-
-        <div class="stat">
-          <span>Total withdrawn</span>
-          <strong id="totalWithdrawn">$0.00</strong>
-        </div>
-      </div>
     </section>
 
-    <div class="notice" id="settingsNotice"></div>
+
+    <!-- WALLET -->
+
+    <section class="wallet-card">
+
+      <div class="wallet-label">
+        Available Balance
+      </div>
+
+      <div
+        class="wallet-balance"
+        id="balance"
+      >
+        $0.00
+      </div>
+
+      <div class="wallet-actions">
+
+        <a
+          href="dashboard.html"
+          class="wallet-action"
+        >
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="m3 11 9-8 9 8"></path>
+            <path d="M5 10v10h14V10"></path>
+          </svg>
+
+          Dashboard
+
+        </a>
+
+        <a
+          href="history.html"
+          class="wallet-action"
+        >
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M3 12a9 9 0 1 0 3-6.7"></path>
+            <path d="M3 4v5h5"></path>
+            <path d="M12 7v5l3 2"></path>
+          </svg>
+
+          History
+
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- WITHDRAWAL INFO -->
 
     <section class="section">
-      <div class="section-head">
-        <h2>Select cryptocurrency</h2>
-        <span class="minimum-label" id="minimumLabel">Minimum $10</span>
+
+      <div class="section-header">
+
+        <div class="section-title">
+          Withdrawal Information
+        </div>
+
       </div>
+
+      <div class="info-card">
+
+        <div class="info-row">
+
+          <span>
+            Minimum withdrawal
+          </span>
+
+          <strong id="minimumWithdrawal">
+            $10.00
+          </strong>
+
+        </div>
+
+        <div class="info-row">
+
+          <span>
+            Processing fee
+          </span>
+
+          <strong>
+            10%
+          </strong>
+
+        </div>
+
+        <div class="info-row">
+
+          <span>
+            Payment method
+          </span>
+
+          <strong>
+            Cryptocurrency
+          </strong>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- CRYPTOCURRENCY -->
+
+    <section class="section">
+
+      <div class="section-header">
+
+        <div class="section-title">
+          Select Cryptocurrency
+        </div>
+
+      </div>
+
 
       <div class="crypto-grid">
 
-        <button class="crypto-card" data-coin="USDT" data-name="Tether">
-          <div class="coin-icon usdt">₮</div>
-          <div class="coin-info">
-            <div class="coin-name">Tether</div>
-            <div class="coin-symbol">USDT</div>
+        <!-- USDT -->
+
+        <button
+          class="crypto-card"
+          data-coin="USDT"
+          data-name="Tether"
+        >
+
+          <div class="crypto-icon usdt">
+            ₮
           </div>
-          <span class="selected-mark">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="3">
-              <path d="m5 12 4 4L19 6"/>
+
+          <div class="crypto-info">
+
+            <strong>
+              Tether
+            </strong>
+
+            <span>
+              USDT
+            </span>
+
+          </div>
+
+          <span class="crypto-check">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+            >
+              <path d="m5 12 4 4L19 6"></path>
             </svg>
+
           </span>
+
         </button>
 
-        <button class="crypto-card" data-coin="USDC" data-name="USD Coin">
-          <div class="coin-icon usdc">$</div>
-          <div class="coin-info">
-            <div class="coin-name">USD Coin</div>
-            <div class="coin-symbol">USDC</div>
+
+        <!-- USDC -->
+
+        <button
+          class="crypto-card"
+          data-coin="USDC"
+          data-name="USD Coin"
+        >
+
+          <div class="crypto-icon usdc">
+            $
           </div>
-          <span class="selected-mark">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="3">
-              <path d="m5 12 4 4L19 6"/>
+
+          <div class="crypto-info">
+
+            <strong>
+              USD Coin
+            </strong>
+
+            <span>
+              USDC
+            </span>
+
+          </div>
+
+          <span class="crypto-check">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+            >
+              <path d="m5 12 4 4L19 6"></path>
             </svg>
+
           </span>
+
         </button>
 
-        <button class="crypto-card" data-coin="BTC" data-name="Bitcoin">
-          <div class="coin-icon btc">₿</div>
-          <div class="coin-info">
-            <div class="coin-name">Bitcoin</div>
-            <div class="coin-symbol">BTC</div>
+
+        <!-- BTC -->
+
+        <button
+          class="crypto-card"
+          data-coin="BTC"
+          data-name="Bitcoin"
+        >
+
+          <div class="crypto-icon btc">
+            ₿
           </div>
-          <span class="selected-mark">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="3">
-              <path d="m5 12 4 4L19 6"/>
+
+          <div class="crypto-info">
+
+            <strong>
+              Bitcoin
+            </strong>
+
+            <span>
+              BTC
+            </span>
+
+          </div>
+
+          <span class="crypto-check">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+            >
+              <path d="m5 12 4 4L19 6"></path>
             </svg>
+
           </span>
+
         </button>
 
-        <button class="crypto-card" data-coin="ETH" data-name="Ethereum">
-          <div class="coin-icon eth">Ξ</div>
-          <div class="coin-info">
-            <div class="coin-name">Ethereum</div>
-            <div class="coin-symbol">ETH</div>
+
+        <!-- ETH -->
+
+        <button
+          class="crypto-card"
+          data-coin="ETH"
+          data-name="Ethereum"
+        >
+
+          <div class="crypto-icon eth">
+            Ξ
           </div>
-          <span class="selected-mark">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="3">
-              <path d="m5 12 4 4L19 6"/>
+
+          <div class="crypto-info">
+
+            <strong>
+              Ethereum
+            </strong>
+
+            <span>
+              ETH
+            </span>
+
+          </div>
+
+          <span class="crypto-check">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+            >
+              <path d="m5 12 4 4L19 6"></path>
             </svg>
+
           </span>
+
         </button>
 
-        <button class="crypto-card" data-coin="BNB" data-name="BNB">
-          <div class="coin-icon bnb">BNB</div>
-          <div class="coin-info">
-            <div class="coin-name">BNB</div>
-            <div class="coin-symbol">BNB</div>
+
+        <!-- BNB -->
+
+        <button
+          class="crypto-card"
+          data-coin="BNB"
+          data-name="BNB"
+        >
+
+          <div class="crypto-icon bnb">
+            BNB
           </div>
-          <span class="selected-mark">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="3">
-              <path d="m5 12 4 4L19 6"/>
+
+          <div class="crypto-info">
+
+            <strong>
+              BNB
+            </strong>
+
+            <span>
+              BNB
+            </span>
+
+          </div>
+
+          <span class="crypto-check">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+            >
+              <path d="m5 12 4 4L19 6"></path>
             </svg>
+
           </span>
+
         </button>
 
-        <button class="crypto-card" data-coin="SOL" data-name="Solana">
-          <div class="coin-icon sol">SOL</div>
-          <div class="coin-info">
-            <div class="coin-name">Solana</div>
-            <div class="coin-symbol">SOL</div>
+
+        <!-- SOL -->
+
+        <button
+          class="crypto-card"
+          data-coin="SOL"
+          data-name="Solana"
+        >
+
+          <div class="crypto-icon sol">
+            SOL
           </div>
-          <span class="selected-mark">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="3">
-              <path d="m5 12 4 4L19 6"/>
+
+          <div class="crypto-info">
+
+            <strong>
+              Solana
+            </strong>
+
+            <span>
+              SOL
+            </span>
+
+          </div>
+
+          <span class="crypto-check">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+            >
+              <path d="m5 12 4 4L19 6"></path>
             </svg>
+
           </span>
+
         </button>
 
-        <button class="crypto-card" data-coin="TON" data-name="Toncoin">
-          <div class="coin-icon ton">TON</div>
-          <div class="coin-info">
-            <div class="coin-name">Toncoin</div>
-            <div class="coin-symbol">TON</div>
+
+        <!-- TON -->
+
+        <button
+          class="crypto-card"
+          data-coin="TON"
+          data-name="Toncoin"
+        >
+
+          <div class="crypto-icon ton">
+            TON
           </div>
-          <span class="selected-mark">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="3">
-              <path d="m5 12 4 4L19 6"/>
+
+          <div class="crypto-info">
+
+            <strong>
+              Toncoin
+            </strong>
+
+            <span>
+              TON
+            </span>
+
+          </div>
+
+          <span class="crypto-check">
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+            >
+              <path d="m5 12 4 4L19 6"></path>
             </svg>
+
           </span>
+
         </button>
 
       </div>
+
     </section>
 
+
+    <!-- WITHDRAWAL DETAILS -->
+
     <section class="section">
-      <div class="section-head">
-        <h2>Withdrawal details</h2>
+
+      <div class="section-header">
+
+        <div class="section-title">
+          Withdrawal Details
+        </div>
+
       </div>
+
 
       <div class="form-card">
 
+        <!-- NETWORK -->
+
         <div class="form-group">
-          <label for="network">Network</label>
+
+          <label
+            class="form-label"
+            for="network"
+          >
+            Network
+          </label>
 
           <select id="network">
-            <option value="">Select network</option>
-            <option value="TRC20">TRC20</option>
-            <option value="ERC20">ERC20</option>
-            <option value="BEP20">BEP20</option>
-            <option value="SOL">Solana</option>
-            <option value="TON">TON</option>
-            <option value="BTC">Bitcoin</option>
-            <option value="ETH">Ethereum</option>
+
+            <option value="">
+              Select network
+            </option>
+
+            <option value="TRC20">
+              TRC20
+            </option>
+
+            <option value="ERC20">
+              ERC20
+            </option>
+
+            <option value="BEP20">
+              BEP20
+            </option>
+
+            <option value="SOL">
+              Solana
+            </option>
+
+            <option value="TON">
+              TON
+            </option>
+
+            <option value="BTC">
+              Bitcoin
+            </option>
+
+            <option value="ETH">
+              Ethereum
+            </option>
+
           </select>
 
           <div class="field-note">
-            Select the network that matches your receiving wallet.
+            Make sure the selected network matches your receiving wallet.
           </div>
+
         </div>
 
+
+        <!-- ADDRESS -->
+
         <div class="form-group">
-          <label for="walletAddress">Wallet address</label>
+
+          <label
+            class="form-label"
+            for="walletAddress"
+          >
+            Wallet Address
+          </label>
 
           <input
             id="walletAddress"
@@ -1043,866 +1417,1880 @@
           >
 
           <div class="field-note">
-            Double-check your address and network before submitting.
+            Carefully check the address before submitting.
           </div>
+
         </div>
 
-        <div class="form-group">
-          <label for="amount">Amount</label>
 
-          <div class="input-wrap">
+        <!-- AMOUNT -->
+
+        <div class="form-group">
+
+          <label
+            class="form-label"
+            for="amount"
+          >
+            Withdrawal Amount
+          </label>
+
+          <div class="amount-wrap">
+
             <input
               id="amount"
-              class="amount-input"
               type="number"
               min="10"
               step="0.01"
               placeholder="Enter amount"
             >
 
-            <span class="amount-currency">USD</span>
+            <span class="currency">
+              USD
+            </span>
+
           </div>
+
         </div>
+
+
+        <!-- SUMMARY -->
 
         <div class="summary">
-          <div class="summary-row">
-            <span>Withdrawal amount</span>
-            <strong id="summaryAmount">$0.00</strong>
-          </div>
 
           <div class="summary-row">
-            <span>Processing fee</span>
-            <strong id="summaryFee">$0.00</strong>
+
+            <span>
+              Withdrawal amount
+            </span>
+
+            <strong id="summaryAmount">
+              $0.00
+            </strong>
+
           </div>
 
-          <div class="summary-row total">
-            <span>You receive</span>
-            <strong id="summaryNet">$0.00</strong>
+
+          <div class="summary-row">
+
+            <span>
+              Processing fee
+            </span>
+
+            <strong id="summaryFee">
+              $0.00
+            </strong>
+
           </div>
+
+
+          <div class="summary-row summary-total">
+
+            <span>
+              You receive
+            </span>
+
+            <strong id="summaryNet">
+              $0.00
+            </strong>
+
+          </div>
+
         </div>
 
-        <button class="withdraw-btn" id="withdrawBtn" disabled>
+
+        <!-- BUTTON -->
+
+        <button
+          class="withdraw-btn"
+          id="withdrawBtn"
+          disabled
+        >
           Select a cryptocurrency
         </button>
 
-        <div class="message" id="message"></div>
+
+        <!-- NOTICE -->
+
+        <div
+          class="notice"
+          id="notice"
+        ></div>
 
       </div>
+
     </section>
 
+
+    <!-- HISTORY -->
+
     <section class="section">
-      <div class="section-head">
-        <h2>Withdrawal history</h2>
+
+      <div class="section-header">
+
+        <div class="section-title">
+          Withdrawal History
+        </div>
+
+        <a
+          href="history.html"
+          class="section-link"
+        >
+          View all
+        </a>
+
       </div>
 
-      <div class="history" id="history">
-        <div class="loading">Loading withdrawal history...</div>
+
+      <div
+        class="history-list"
+        id="historyList"
+      >
+
+        <div class="loading">
+          Loading withdrawal history...
+        </div>
+
       </div>
+
     </section>
 
   </main>
 
+
+  <!-- BOTTOM NAV -->
+
   <nav class="bottom-nav">
-    <button class="nav-btn" onclick="location.href='dashboard.html'">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <path d="M3 11.5 12 4l9 7.5"/>
-        <path d="M5 10v10h14V10"/>
+
+    <a
+      href="dashboard.html"
+      class="nav-item"
+    >
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="m3 11 9-8 9 8"></path>
+        <path d="M5 10v10h14V10"></path>
       </svg>
+
       Home
-    </button>
 
-    <button class="nav-btn" onclick="location.href='tasks.html'">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <rect x="4" y="4" width="16" height="16" rx="2"/>
-        <path d="m8 12 2.5 2.5L16 9"/>
+    </a>
+
+
+    <a
+      href="tasks.html"
+      class="nav-item"
+    >
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M4 4h16v16H4z"></path>
+        <path d="M8 8h8"></path>
+        <path d="M8 12h8"></path>
+        <path d="M8 16h5"></path>
       </svg>
+
       Earn
-    </button>
 
-    <button class="nav-btn active">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <path d="M12 2v20M17 6.5c0-1.7-2.2-3-5-3s-5 1.3-5 3 2.2 3 5 3 5 1.3 5 3-2.2 3-5 3-5-1.3-5-3"/>
-      </svg>
-      Withdraw
-    </button>
+    </a>
 
-    <button class="nav-btn" onclick="location.href='profile.html'">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <circle cx="12" cy="8" r="4"/>
-        <path d="M4 21c.8-4 3.4-6 8-6s7.2 2 8 6"/>
+
+    <a
+      href="referrals.html"
+      class="nav-item"
+    >
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <circle cx="9" cy="7" r="4"></circle>
+        <path d="M3 21v-2a6 6 0 0 1 12 0v2"></path>
+        <path d="M16 11a4 4 0 1 0 0-8"></path>
+        <path d="M21 21v-2a6 6 0 0 0-4-5.65"></path>
       </svg>
+
+      Referrals
+
+    </a>
+
+
+    <a
+      href="profile.html"
+      class="nav-item"
+    >
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <circle cx="12" cy="8" r="4"></circle>
+        <path d="M4 21a8 8 0 0 1 16 0"></path>
+      </svg>
+
       Profile
-    </button>
+
+    </a>
+
   </nav>
 
 </div>
 
-<div class="overlay" id="overlay"></div>
 
-<aside class="drawer" id="drawer">
+<!-- SIDE MENU -->
 
-  <div class="drawer-head">
-    <div class="drawer-brand">
-      <div class="brand-logo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M7 5h10M7 9h7a4 4 0 0 1 0 8H7V5Z"/>
-          <path d="M7 13h6"/>
-        </svg>
-      </div>
+<div
+  class="menu-overlay"
+  id="menuOverlay"
+></div>
+
+
+<aside
+  class="side-menu"
+  id="sideMenu"
+>
+
+  <div class="menu-header">
+
+    <strong>
       TallyBuck
-    </div>
+    </strong>
 
-    <button class="drawer-close" id="drawerClose">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <path d="M6 6l12 12M18 6 6 18"/>
+    <button
+      class="icon-btn"
+      id="closeMenu"
+    >
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <line
+          x1="6"
+          y1="6"
+          x2="18"
+          y2="18"
+        ></line>
+
+        <line
+          x1="18"
+          y1="6"
+          x2="6"
+          y2="18"
+        ></line>
+
       </svg>
-    </button>
-  </div>
 
-  <div class="menu">
-
-    <a href="dashboard.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <path d="M3 11.5 12 4l9 7.5"/>
-        <path d="M5 10v10h14V10"/>
-      </svg>
-      Dashboard
-    </a>
-
-    <a href="tasks.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <rect x="4" y="4" width="16" height="16" rx="2"/>
-        <path d="m8 12 2.5 2.5L16 9"/>
-      </svg>
-      Earn Tasks
-    </a>
-
-    <a href="referrals.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <circle cx="9" cy="8" r="3"/>
-        <circle cx="17" cy="10" r="3"/>
-        <path d="M3 19c.5-3 2.5-5 6-5s5.5 2 6 5"/>
-        <path d="M14 15c3 0 5 1.4 6 4"/>
-      </svg>
-      Referrals
-    </a>
-
-    <a href="withdraw.html" class="active">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <path d="M12 2v20M17 6.5c0-1.7-2.2-3-5-3s-5 1.3-5 3 2.2 3 5 3 5 1.3 5 3-2.2 3-5 3-5-1.3-5-3"/>
-      </svg>
-      Withdraw
-    </a>
-
-    <a href="history.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <path d="M4 5h16v15H4z"/>
-        <path d="M8 9h8M8 13h8M8 17h5"/>
-      </svg>
-      History
-    </a>
-
-    <a href="notifications.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-        <path d="M10 21h4"/>
-      </svg>
-      Notifications
-    </a>
-
-    <a href="profile.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <circle cx="12" cy="8" r="4"/>
-        <path d="M4 21c.8-4 3.4-6 8-6s7.2 2 8 6"/>
-      </svg>
-      Profile
-    </a>
-
-    <div class="menu-separator"></div>
-
-    <button id="logoutBtn">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <path d="M10 17l5-5-5-5"/>
-        <path d="M15 12H3"/>
-        <path d="M21 4v16"/>
-      </svg>
-      Log out
     </button>
 
   </div>
+
+
+  <button
+    class="menu-item"
+    onclick="location.href='dashboard.html'"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="m3 11 9-8 9 8"></path>
+      <path d="M5 10v10h14V10"></path>
+    </svg>
+
+    Dashboard
+
+  </button>
+
+
+  <button
+    class="menu-item"
+    onclick="location.href='tasks.html'"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M4 4h16v16H4z"></path>
+      <path d="M8 8h8"></path>
+      <path d="M8 12h8"></path>
+      <path d="M8 16h5"></path>
+    </svg>
+
+    Earn Tasks
+
+  </button>
+
+
+  <button
+    class="menu-item"
+    onclick="location.href='referrals.html'"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <circle cx="9" cy="7" r="4"></circle>
+      <path d="M3 21v-2a6 6 0 0 1 12 0v2"></path>
+      <path d="M16 11a4 4 0 1 0 0-8"></path>
+      <path d="M21 21v-2a6 6 0 0 0-4-5.65"></path>
+    </svg>
+
+    Referrals
+
+  </button>
+
+
+  <button
+    class="menu-item"
+    onclick="location.href='withdraw.html'"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M12 3v14"></path>
+      <path d="m7 12 5 5 5-5"></path>
+      <path d="M5 21h14"></path>
+    </svg>
+
+    Withdraw
+
+  </button>
+
+
+  <button
+    class="menu-item"
+    onclick="location.href='history.html'"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M3 12a9 9 0 1 0 3-6.7"></path>
+      <path d="M3 4v5h5"></path>
+      <path d="M12 7v5l3 2"></path>
+    </svg>
+
+    History
+
+  </button>
+
+
+  <button
+    class="menu-item"
+    onclick="location.href='notifications.html'"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+      <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+    </svg>
+
+    Notifications
+
+  </button>
+
+
+  <button
+    class="menu-item"
+    onclick="location.href='profile.html'"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <circle cx="12" cy="8" r="4"></circle>
+      <path d="M4 21a8 8 0 0 1 16 0"></path>
+    </svg>
+
+    Profile
+
+  </button>
+
+
+  <button
+    class="menu-item"
+    id="themeBtn"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2v2"></path>
+      <path d="M12 20v2"></path>
+      <path d="m4.93 4.93 1.41 1.41"></path>
+      <path d="m17.66 17.66 1.41 1.41"></path>
+      <path d="M2 12h2"></path>
+      <path d="M20 12h2"></path>
+      <path d="m6.34 17.66-1.41 1.41"></path>
+      <path d="m19.07 4.93-1.41 1.41"></path>
+    </svg>
+
+    Toggle Theme
+
+  </button>
+
+
+  <button
+    class="menu-item"
+    id="logoutBtn"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M10 17l5-5-5-5"></path>
+      <path d="M15 12H3"></path>
+      <path d="M21 19V5a2 2 0 0 0-2-2h-6"></path>
+    </svg>
+
+    Sign Out
+
+  </button>
 
 </aside>
 
-<script>
-  const SUPABASE_URL = "https://cetsxdkoauucxwsbdktl.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
 
-  const db = supabase.createClient(
+<script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+  "https://cetsxdkoauucxwsbdktl.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
+
+const db =
+  window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
   );
 
-  let currentUser = null;
-  let selectedCoin = "";
-  let selectedCoinName = "";
-  let minimumWithdrawal = 10;
-  let withdrawalsEnabled = true;
-  let withdrawalOpen = "";
-  let withdrawalClose = "";
-  const PROCESSING_FEE_RATE = 0.10;
 
-  const $ = id => document.getElementById(id);
+/* =========================================================
+   STATE
+========================================================= */
 
-  function money(value){
-    return "$" + Number(value || 0).toFixed(2);
+let currentUser = null;
+
+let selectedCoin = "";
+let selectedCoinName = "";
+
+let minimumWithdrawal = 10;
+
+let withdrawalsEnabled = true;
+
+let withdrawalOpen = "";
+let withdrawalClose = "";
+
+const PROCESSING_FEE_RATE = 0.10;
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function $(id){
+  return document.getElementById(id);
+}
+
+
+function money(value){
+
+  return "$" +
+    Number(value || 0)
+      .toFixed(2);
+
+}
+
+
+function formatDate(value){
+
+  if(!value){
+    return "";
   }
 
-  function showMessage(message, type){
-    const el = $("message");
+  const date =
+    new Date(value);
 
-    el.textContent = message;
-    el.className = "message show " + type;
+  if(Number.isNaN(
+    date.getTime()
+  )){
+    return "";
   }
 
-  function clearMessage(){
-    $("message").className = "message";
-    $("message").textContent = "";
-  }
+  return date.toLocaleDateString(
+    undefined,
+    {
+      month:"short",
+      day:"numeric",
+      year:"numeric"
+    }
+  );
 
-  function showNotice(message, type = ""){
-    const el = $("settingsNotice");
+}
 
-    el.textContent = message;
-    el.className = "notice show " + type;
-  }
 
-  function clearNotice(){
-    $("settingsNotice").className = "notice";
-    $("settingsNotice").textContent = "";
-  }
+function escapeHtml(value){
 
-  function parseBool(value){
-    return String(value).toLowerCase() === "true";
-  }
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 
-  async function loadSettings(){
+}
 
-    const { data, error } = await db
+
+/* =========================================================
+   NOTICE
+========================================================= */
+
+function showNotice(
+  message,
+  type
+){
+
+  const notice =
+    $("notice");
+
+  notice.textContent =
+    message;
+
+  notice.className =
+    "notice show " +
+    (type || "");
+
+}
+
+
+function clearNotice(){
+
+  $("notice").textContent =
+    "";
+
+  $("notice").className =
+    "notice";
+
+}
+
+
+/* =========================================================
+   LOAD SETTINGS
+========================================================= */
+
+async function loadSettings(){
+
+  const {
+    data,
+    error
+  } =
+    await db
       .from("settings")
-      .select("setting_key,setting_value")
-      .in("setting_key", [
-        "minimum_withdrawal",
-        "withdrawals_enabled",
-        "withdrawal_open",
-        "withdrawal_close"
-      ]);
-
-    if(error){
-      console.error("Settings error:", error);
-
-      showNotice(
-        "Withdrawal settings could not be loaded. Please refresh and try again.",
-        "error"
+      .select(
+        "setting_key,setting_value"
+      )
+      .in(
+        "setting_key",
+        [
+          "minimum_withdrawal",
+          "withdrawals_enabled",
+          "withdrawal_open",
+          "withdrawal_close"
+        ]
       );
 
-      return;
-    }
 
-    for(const row of data || []){
+  if(error){
 
-      if(row.setting_key === "minimum_withdrawal"){
-        const value = Number(row.setting_value);
+    console.error(
+      "Settings error:",
+      error
+    );
 
-        if(Number.isFinite(value) && value > 0){
-          minimumWithdrawal = value;
-        }
-      }
+    showNotice(
+      "Withdrawal settings could not be loaded. Please refresh the page.",
+      "error"
+    );
 
-      if(row.setting_key === "withdrawals_enabled"){
-        withdrawalsEnabled = parseBool(row.setting_value);
-      }
+    return;
 
-      if(row.setting_key === "withdrawal_open"){
-        withdrawalOpen = row.setting_value || "";
-      }
-
-      if(row.setting_key === "withdrawal_close"){
-        withdrawalClose = row.setting_value || "";
-      }
-    }
-
-    updateMinimumUI();
-    updateWithdrawalAvailability();
   }
 
-  function updateMinimumUI(){
 
-    $("minimumLabel").textContent =
-      "Minimum " + money(minimumWithdrawal);
+  for(
+    const row of data || []
+  ){
 
-    $("amount").min = minimumWithdrawal;
-    $("amount").placeholder =
-      "Minimum " + money(minimumWithdrawal);
-  }
+    if(
+      row.setting_key ===
+      "minimum_withdrawal"
+    ){
 
-  function isWithinWithdrawalSchedule(){
+      const value =
+        Number(
+          row.setting_value
+        );
 
-    if(!withdrawalOpen && !withdrawalClose){
-      return true;
-    }
+      if(
+        Number.isFinite(value) &&
+        value > 0
+      ){
 
-    const now = new Date();
+        minimumWithdrawal =
+          value;
 
-    const currentMinutes =
-      now.getHours() * 60 + now.getMinutes();
-
-    function toMinutes(value){
-      if(!value) return null;
-
-      const parts = value.split(":").map(Number);
-
-      if(parts.length !== 2) return null;
-
-      return parts[0] * 60 + parts[1];
-    }
-
-    const open = toMinutes(withdrawalOpen);
-    const close = toMinutes(withdrawalClose);
-
-    if(open === null && close === null){
-      return true;
-    }
-
-    if(open !== null && close === null){
-      return currentMinutes >= open;
-    }
-
-    if(open === null && close !== null){
-      return currentMinutes <= close;
-    }
-
-    if(open === close){
-      return true;
-    }
-
-    if(open < close){
-      return currentMinutes >= open &&
-             currentMinutes <= close;
-    }
-
-    return currentMinutes >= open ||
-           currentMinutes <= close;
-  }
-
-  function updateWithdrawalAvailability(){
-
-    if(!withdrawalsEnabled){
-
-      showNotice(
-        "Withdrawals are currently disabled.",
-        "error"
-      );
-
-      $("withdrawBtn").disabled = true;
-      $("withdrawBtn").textContent = "Withdrawals unavailable";
-
-      return;
-    }
-
-    if(!isWithinWithdrawalSchedule()){
-
-      let scheduleText = "Withdrawals are currently closed.";
-
-      if(withdrawalOpen || withdrawalClose){
-
-        if(withdrawalOpen && withdrawalClose){
-          scheduleText +=
-            " Available from " +
-            withdrawalOpen +
-            " to " +
-            withdrawalClose +
-            ".";
-        }
-        else if(withdrawalOpen){
-          scheduleText +=
-            " Available from " +
-            withdrawalOpen +
-            ".";
-        }
-        else{
-          scheduleText +=
-            " Available until " +
-            withdrawalClose +
-            ".";
-        }
       }
 
-      showNotice(scheduleText, "error");
-
-      $("withdrawBtn").disabled = true;
-      $("withdrawBtn").textContent = "Withdrawals closed";
-
-      return;
     }
 
-    clearNotice();
+
+    if(
+      row.setting_key ===
+      "withdrawals_enabled"
+    ){
+
+      withdrawalsEnabled =
+        String(
+          row.setting_value
+        ).toLowerCase() ===
+        "true";
+
+    }
+
+
+    if(
+      row.setting_key ===
+      "withdrawal_open"
+    ){
+
+      withdrawalOpen =
+        row.setting_value || "";
+
+    }
+
+
+    if(
+      row.setting_key ===
+      "withdrawal_close"
+    ){
+
+      withdrawalClose =
+        row.setting_value || "";
+
+    }
+
+  }
+
+
+  $("minimumWithdrawal")
+    .textContent =
+    money(
+      minimumWithdrawal
+    );
+
+
+  $("amount").min =
+    minimumWithdrawal;
+
+
+  $("amount").placeholder =
+    "Minimum " +
+    money(
+      minimumWithdrawal
+    );
+
+
+  updateWithdrawalStatus();
+
+}
+
+
+/* =========================================================
+   WITHDRAWAL SCHEDULE
+========================================================= */
+
+function timeToMinutes(value){
+
+  if(!value){
+    return null;
+  }
+
+  const parts =
+    value
+      .split(":")
+      .map(Number);
+
+  if(
+    parts.length !== 2 ||
+    !Number.isFinite(parts[0]) ||
+    !Number.isFinite(parts[1])
+  ){
+
+    return null;
+
+  }
+
+  return (
+    parts[0] * 60 +
+    parts[1]
+  );
+
+}
+
+
+function isWithdrawalOpen(){
+
+  if(
+    !withdrawalOpen &&
+    !withdrawalClose
+  ){
+
+    return true;
+
+  }
+
+
+  const now =
+    new Date();
+
+  const currentMinutes =
+    now.getHours() * 60 +
+    now.getMinutes();
+
+
+  const open =
+    timeToMinutes(
+      withdrawalOpen
+    );
+
+  const close =
+    timeToMinutes(
+      withdrawalClose
+    );
+
+
+  if(
+    open === null &&
+    close === null
+  ){
+
+    return true;
+
+  }
+
+
+  if(
+    open !== null &&
+    close === null
+  ){
+
+    return currentMinutes >= open;
+
+  }
+
+
+  if(
+    open === null &&
+    close !== null
+  ){
+
+    return currentMinutes <= close;
+
+  }
+
+
+  if(open === close){
+
+    return true;
+
+  }
+
+
+  if(open < close){
+
+    return (
+      currentMinutes >= open &&
+      currentMinutes <= close
+    );
+
+  }
+
+
+  return (
+    currentMinutes >= open ||
+    currentMinutes <= close
+  );
+
+}
+
+
+/* =========================================================
+   WITHDRAWAL STATUS
+========================================================= */
+
+function updateWithdrawalStatus(){
+
+  const button =
+    $("withdrawBtn");
+
+
+  if(!withdrawalsEnabled){
+
+    showNotice(
+      "Withdrawals are currently disabled.",
+      "error"
+    );
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "Withdrawals unavailable";
+
+    return;
+
+  }
+
+
+  if(!isWithdrawalOpen()){
+
+    let message =
+      "Withdrawals are currently closed.";
+
+    if(
+      withdrawalOpen &&
+      withdrawalClose
+    ){
+
+      message +=
+        " Available from " +
+        withdrawalOpen +
+        " to " +
+        withdrawalClose +
+        ".";
+
+    }
+    else if(withdrawalOpen){
+
+      message +=
+        " Available from " +
+        withdrawalOpen +
+        ".";
+
+    }
+    else if(withdrawalClose){
+
+      message +=
+        " Available until " +
+        withdrawalClose +
+        ".";
+
+    }
+
+
+    showNotice(
+      message,
+      "error"
+    );
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "Withdrawals closed";
+
+    return;
+
+  }
+
+
+  clearNotice();
+
+  updateButton();
+
+}
+
+
+/* =========================================================
+   LOAD USER
+========================================================= */
+
+async function loadUser(){
+
+  const {
+    data:{
+      user
+    },
+    error
+  } =
+    await db.auth.getUser();
+
+
+  if(
+    error ||
+    !user
+  ){
+
+    window.location.href =
+      "login.html";
+
+    return;
+
+  }
+
+
+  currentUser =
+    user;
+
+
+  await loadSettings();
+
+  await loadWallet();
+
+  await loadHistory();
+
+  await loadNotifications();
+
+}
+
+
+/* =========================================================
+   LOAD WALLET
+========================================================= */
+
+async function loadWallet(){
+
+  const {
+    data,
+    error
+  } =
+    await db
+      .from("wallets")
+      .select(
+        "balance,total_earned,total_withdrawn"
+      )
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+      .maybeSingle();
+
+
+  if(error){
+
+    console.error(
+      "Wallet error:",
+      error
+    );
+
+    return;
+
+  }
+
+
+  $("balance")
+    .textContent =
+    money(
+      data?.balance || 0
+    );
+
+}
+
+
+/* =========================================================
+   SELECT CRYPTO
+========================================================= */
+
+function selectCrypto(card){
+
+  document
+    .querySelectorAll(
+      ".crypto-card"
+    )
+    .forEach(
+      function(item){
+
+        item.classList.remove(
+          "selected"
+        );
+
+      }
+    );
+
+
+  card.classList.add(
+    "selected"
+  );
+
+
+  selectedCoin =
+    card.dataset.coin || "";
+
+
+  selectedCoinName =
+    card.dataset.name || "";
+
+
+  clearNotice();
+
+  updateButton();
+
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+function updateButton(){
+
+  const button =
+    $("withdrawBtn");
+
+
+  if(!withdrawalsEnabled){
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "Withdrawals unavailable";
+
+    return;
+
+  }
+
+
+  if(!isWithdrawalOpen()){
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "Withdrawals closed";
+
+    return;
+
+  }
+
+
+  if(!selectedCoin){
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "Select a cryptocurrency";
+
+    return;
+
+  }
+
+
+  button.disabled =
+    false;
+
+  button.textContent =
+    "Withdraw " +
+    selectedCoin;
+
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+function updateSummary(){
+
+  const amount =
+    Number(
+      $("amount").value
+    ) || 0;
+
+
+  const fee =
+    amount *
+    PROCESSING_FEE_RATE;
+
+
+  const net =
+    Math.max(
+      0,
+      amount - fee
+    );
+
+
+  $("summaryAmount")
+    .textContent =
+    money(amount);
+
+
+  $("summaryFee")
+    .textContent =
+    money(fee);
+
+
+  $("summaryNet")
+    .textContent =
+    money(net);
+
+}
+
+
+/* =========================================================
+   SUBMIT WITHDRAWAL
+========================================================= */
+
+async function submitWithdrawal(){
+
+  clearNotice();
+
+
+  if(!selectedCoin){
+
+    showNotice(
+      "Please select a cryptocurrency.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(!withdrawalsEnabled){
+
+    showNotice(
+      "Withdrawals are currently disabled.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(!isWithdrawalOpen()){
+
+    showNotice(
+      "Withdrawals are currently closed.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  const amount =
+    Number(
+      $("amount").value
+    );
+
+
+  const network =
+    $("network")
+      .value
+      .trim();
+
+
+  const walletAddress =
+    $("walletAddress")
+      .value
+      .trim();
+
+
+  if(
+    !Number.isFinite(amount) ||
+    amount <= 0
+  ){
+
+    showNotice(
+      "Please enter a valid withdrawal amount.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(
+    amount <
+    minimumWithdrawal
+  ){
+
+    showNotice(
+      "The minimum withdrawal amount is " +
+      money(
+        minimumWithdrawal
+      ) +
+      ".",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  const {
+    data:wallet
+  } =
+    await db
+      .from("wallets")
+      .select("balance")
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+      .maybeSingle();
+
+
+  const balance =
+    Number(
+      wallet?.balance || 0
+    );
+
+
+  if(amount > balance){
+
+    showNotice(
+      "Your withdrawal amount is greater than your available balance.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(!network){
+
+    showNotice(
+      "Please select a network.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(
+    walletAddress.length < 10
+  ){
+
+    showNotice(
+      "Please enter a valid wallet address.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  const button =
+    $("withdrawBtn");
+
+
+  button.disabled =
+    true;
+
+  button.textContent =
+    "Processing...";
+
+
+  /*
+    Keep using the existing secure
+    create_withdrawal RPC.
+  */
+
+  const paymentDetails = {
+
+    wallet_address:
+      walletAddress,
+
+    cryptocurrency:
+      selectedCoin,
+
+    cryptocurrency_name:
+      selectedCoinName
+
+  };
+
+
+  const {
+    data,
+    error
+  } =
+    await db.rpc(
+      "create_withdrawal",
+      {
+        p_amount:
+          amount,
+
+        p_method:
+          selectedCoin,
+
+        p_network:
+          network,
+
+        p_payment_details:
+          paymentDetails
+      }
+    );
+
+
+  if(error){
+
+    console.error(
+      "Withdrawal error:",
+      error
+    );
+
+    showNotice(
+      error.message ||
+      "Unable to create withdrawal request.",
+      "error"
+    );
 
     updateButton();
+
+    return;
+
   }
 
-  async function loadUser(){
 
-    const {
-      data: { session },
-      error
-    } = await db.auth.getSession();
+  if(
+    !data ||
+    data.success !== true
+  ){
 
-    if(error || !session){
-      location.href = "login.html";
-      return;
-    }
+    showNotice(
+      data?.message ||
+      "Withdrawal request could not be created.",
+      "error"
+    );
 
-    currentUser = session.user;
+    updateButton();
 
-    await loadSettings();
-    await loadWallet();
-    await loadHistory();
-    await loadNotificationStatus();
+    return;
+
   }
 
-  async function loadWallet(){
 
-    const { data, error } = await db
-      .from("wallets")
-      .select("balance,total_earned,total_withdrawn")
-      .eq("user_id", currentUser.id)
-      .single();
+  const netAmount =
+    Number(
+      data.net_amount ??
+      (
+        amount -
+        amount *
+        PROCESSING_FEE_RATE
+      )
+    );
 
-    if(error){
-      console.error(error);
-      return;
-    }
 
-    $("balance").textContent =
-      money(data.balance);
+  showNotice(
+    "Withdrawal request submitted successfully. You will receive " +
+    money(netAmount) +
+    " after processing fees.",
+    "success"
+  );
 
-    $("totalEarned").textContent =
-      money(data.total_earned);
 
-    $("totalWithdrawn").textContent =
-      money(data.total_withdrawn);
-  }
+  $("amount").value =
+    "";
 
-  async function loadHistory(){
+  $("walletAddress").value =
+    "";
 
-    const { data, error } = await db
+  $("network").value =
+    "";
+
+
+  updateSummary();
+
+
+  await loadWallet();
+
+  await loadHistory();
+
+  updateButton();
+
+}
+
+
+/* =========================================================
+   LOAD HISTORY
+========================================================= */
+
+async function loadHistory(){
+
+  const history =
+    $("historyList");
+
+
+  const {
+    data,
+    error
+  } =
+    await db
       .from("withdrawals")
       .select(
         "id,amount,fee,net_amount,method,network,status,created_at"
       )
-      .eq("user_id", currentUser.id)
-      .order("created_at", { ascending:false });
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      )
+      .limit(6);
 
-    const container = $("history");
 
-    if(error){
-      console.error(error);
+  if(error){
 
-      container.innerHTML =
-        '<div class="empty">Unable to load withdrawal history.</div>';
+    console.error(
+      "History error:",
+      error
+    );
 
-      return;
-    }
+    history.innerHTML = `
+      <div class="empty">
+        Unable to load withdrawal history.
+      </div>
+    `;
 
-    if(!data || data.length === 0){
+    return;
 
-      container.innerHTML =
-        '<div class="empty">No withdrawals yet.</div>';
+  }
 
-      return;
-    }
 
-    container.innerHTML = data.map(item => {
+  if(
+    !data ||
+    data.length === 0
+  ){
 
-      const coin =
-        item.network ||
-        item.method ||
-        "Crypto";
+    history.innerHTML = `
+      <div class="empty">
+        No withdrawals yet.
+      </div>
+    `;
 
-      const status =
-        String(item.status || "pending").toLowerCase();
+    return;
 
-      const date =
-        new Date(item.created_at).toLocaleString();
+  }
 
-      return `
-        <div class="history-item">
 
-          <div class="history-top">
+  history.innerHTML =
+    data
+      .map(
+        function(row){
 
-            <div class="history-coin">
+          const status =
+            String(
+              row.status ||
+              "pending"
+            ).toLowerCase();
+
+
+          const coin =
+            row.method ||
+            "Crypto";
+
+
+          return `
+
+            <div class="history-item">
 
               <div class="history-icon">
-                ${escapeHtml(String(coin).slice(0,4))}
+                ${escapeHtml(
+                  String(
+                    coin
+                  ).slice(0,4)
+                )}
               </div>
 
-              <div>
+
+              <div class="history-info">
+
                 <div class="history-name">
-                  ${escapeHtml(String(coin))}
+                  ${escapeHtml(
+                    coin
+                  )}
                 </div>
 
                 <div class="history-date">
-                  ${escapeHtml(date)}
+
+                  ${formatDate(
+                    row.created_at
+                  )}
+
+                  ${
+                    row.network
+                      ? " · " +
+                        escapeHtml(
+                          row.network
+                        )
+                      : ""
+                  }
+
                 </div>
+
+              </div>
+
+
+              <div class="history-right">
+
+                <div class="history-amount">
+
+                  -${money(
+                    Math.abs(
+                      Number(
+                        row.amount || 0
+                      )
+                    )
+                  )}
+
+                </div>
+
+                <div
+                  class="history-status ${escapeHtml(status)}"
+                >
+
+                  ${escapeHtml(
+                    status
+                      .charAt(0)
+                      .toUpperCase() +
+                    status.slice(1)
+                  )}
+
+                </div>
+
               </div>
 
             </div>
 
-            <div class="history-amount">
-              ${money(item.amount)}
-            </div>
+          `;
 
-          </div>
+        }
+      )
+      .join("");
 
-          <div class="history-bottom">
+}
 
-            <span>
-              Net: ${money(item.net_amount)}
-            </span>
 
-            <span class="status ${escapeHtml(status)}">
-              ${escapeHtml(
-                status.charAt(0).toUpperCase() + status.slice(1)
-              )}
-            </span>
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
 
-          </div>
+async function loadNotifications(){
 
-        </div>
-      `;
-    }).join("");
-  }
-
-  async function loadNotificationStatus(){
-
-    const { count, error } = await db
+  const {
+    count,
+    error
+  } =
+    await db
       .from("notifications")
-      .select("id", {
-        count:"exact",
-        head:true
-      })
-      .eq("user_id", currentUser.id)
-      .eq("is_read", false);
-
-    if(!error && count > 0){
-      $("notificationDot").style.display = "block";
-    }
-  }
-
-  function escapeHtml(value){
-
-    return String(value)
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
-  }
-
-  function selectCoin(button){
-
-    document
-      .querySelectorAll(".crypto-card")
-      .forEach(card => {
-        card.classList.remove("selected");
-      });
-
-    button.classList.add("selected");
-
-    selectedCoin =
-      button.dataset.coin || "";
-
-    selectedCoinName =
-      button.dataset.name || selectedCoin;
-
-    updateButton();
-    clearMessage();
-  }
-
-  function updateButton(){
-
-    const button = $("withdrawBtn");
-
-    if(!withdrawalsEnabled){
-      button.disabled = true;
-      button.textContent = "Withdrawals unavailable";
-      return;
-    }
-
-    if(!isWithinWithdrawalSchedule()){
-      button.disabled = true;
-      button.textContent = "Withdrawals closed";
-      return;
-    }
-
-    if(!selectedCoin){
-      button.disabled = true;
-      button.textContent = "Select a cryptocurrency";
-      return;
-    }
-
-    button.disabled = false;
-    button.textContent =
-      "Withdraw " + selectedCoin;
-  }
-
-  function updateSummary(){
-
-    const amount =
-      Number($("amount").value) || 0;
-
-    const fee =
-      amount * PROCESSING_FEE_RATE;
-
-    const net =
-      Math.max(0, amount - fee);
-
-    $("summaryAmount").textContent =
-      money(amount);
-
-    $("summaryFee").textContent =
-      money(fee);
-
-    $("summaryNet").textContent =
-      money(net);
-  }
-
-  async function submitWithdrawal(){
-
-    clearMessage();
-
-    if(!selectedCoin){
-      showMessage(
-        "Please select a cryptocurrency.",
-        "error"
-      );
-      return;
-    }
-
-    if(!withdrawalsEnabled){
-      showMessage(
-        "Withdrawals are currently disabled.",
-        "error"
-      );
-      return;
-    }
-
-    if(!isWithinWithdrawalSchedule()){
-      showMessage(
-        "Withdrawals are currently closed.",
-        "error"
-      );
-      return;
-    }
-
-    const amount =
-      Number($("amount").value);
-
-    const network =
-      $("network").value.trim();
-
-    const walletAddress =
-      $("walletAddress").value.trim();
-
-    if(!Number.isFinite(amount) || amount <= 0){
-
-      showMessage(
-        "Please enter a valid withdrawal amount.",
-        "error"
+      .select(
+        "id",
+        {
+          count:"exact",
+          head:true
+        }
+      )
+      .eq(
+        "user_id",
+        currentUser.id
+      )
+      .eq(
+        "is_read",
+        false
       );
 
-      return;
-    }
 
-    if(amount < minimumWithdrawal){
+  if(error){
 
-      showMessage(
-        "The minimum withdrawal amount is " +
-        money(minimumWithdrawal) +
-        ".",
-        "error"
-      );
-
-      return;
-    }
-
-    const currentBalance =
-      Number(
-        $("balance").textContent
-          .replace("$","")
-          .replace(/,/g,"")
-      );
-
-    if(amount > currentBalance){
-
-      showMessage(
-        "Your withdrawal amount is greater than your available balance.",
-        "error"
-      );
-
-      return;
-    }
-
-    if(!network){
-
-      showMessage(
-        "Please select a network.",
-        "error"
-      );
-
-      return;
-    }
-
-    if(walletAddress.length < 10){
-
-      showMessage(
-        "Please enter a valid wallet address.",
-        "error"
-      );
-
-      return;
-    }
-
-    const button = $("withdrawBtn");
-
-    button.disabled = true;
-    button.textContent = "Processing...";
-
-    /*
-      Keep using the existing secure RPC.
-
-      The method is the selected cryptocurrency.
-      The network identifies the blockchain network.
-      The wallet address is stored in payment_details.
-    */
-
-    const paymentDetails = {
-      wallet_address: walletAddress,
-      cryptocurrency: selectedCoin,
-      cryptocurrency_name: selectedCoinName
-    };
-
-    const { data, error } = await db.rpc(
-      "create_withdrawal",
-      {
-        p_amount: amount,
-        p_method: selectedCoin,
-        p_network: network,
-        p_payment_details: paymentDetails
-      }
+    console.error(
+      "Notification error:",
+      error
     );
 
-    if(error){
+    return;
 
-      console.error(error);
+  }
 
-      showMessage(
-        error.message ||
-        "Unable to create withdrawal request.",
-        "error"
-      );
 
-      updateButton();
-      return;
-    }
+  if(
+    count &&
+    count > 0
+  ){
 
-    if(!data || data.success !== true){
+    $("notificationDot")
+      .style
+      .display =
+      "block";
 
-      showMessage(
-        data?.message ||
-        "Withdrawal request could not be created.",
-        "error"
-      );
+  }
+  else{
 
-      updateButton();
-      return;
-    }
+    $("notificationDot")
+      .style
+      .display =
+      "none";
 
-    const netAmount =
-      Number(data.net_amount ?? (amount * .90));
+  }
 
-    showMessage(
-      "Withdrawal request submitted successfully. You will receive " +
-      money(netAmount) +
-      " after processing fees.",
-      "success"
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function applyTheme(){
+
+  const saved =
+    localStorage.getItem(
+      "tallybuck-theme"
     );
 
-    $("amount").value = "";
-    $("walletAddress").value = "";
-    $("network").value = "";
 
-    updateSummary();
+  if(saved === "dark"){
 
-    await loadWallet();
-    await loadHistory();
+    document.body.classList.add(
+      "dark"
+    );
 
-    updateButton();
+  }
+  else if(saved === "light"){
+
+    document.body.classList.remove(
+      "dark"
+    );
+
+  }
+  else{
+
+    const dark =
+      window.matchMedia &&
+      window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+
+
+    document.body.classList.toggle(
+      "dark",
+      dark
+    );
+
   }
 
-  /* MENU */
+}
 
-  function openDrawer(){
-    $("drawer").classList.add("show");
-    $("overlay").classList.add("show");
-  }
 
-  function closeDrawer(){
-    $("drawer").classList.remove("show");
-    $("overlay").classList.remove("show");
-  }
+function toggleTheme(){
 
-  $("menuBtn").addEventListener("click", openDrawer);
-  $("drawerClose").addEventListener("click", closeDrawer);
-  $("overlay").addEventListener("click", closeDrawer);
+  const isDark =
+    document.body.classList.contains(
+      "dark"
+    );
 
-  $("notificationBtn").addEventListener("click", () => {
-    location.href = "notifications.html";
-  });
 
-  $("logoutBtn").addEventListener("click", async () => {
+  document.body.classList.toggle(
+    "dark",
+    !isDark
+  );
 
-    await db.auth.signOut();
 
-    location.href = "login.html";
-  });
+  localStorage.setItem(
+    "tallybuck-theme",
+    !isDark
+      ? "dark"
+      : "light"
+  );
 
-  /* CRYPTO */
+}
 
-  document
-    .querySelectorAll(".crypto-card")
-    .forEach(card => {
 
-      card.addEventListener("click", () => {
-        selectCoin(card);
-      });
+/* =========================================================
+   MENU
+========================================================= */
 
-    });
+function openMenu(){
 
-  /* AMOUNT */
+  $("sideMenu")
+    .classList
+    .add("show");
 
-  $("amount").addEventListener("input", updateSummary);
 
-  /* WITHDRAW */
+  $("menuOverlay")
+    .classList
+    .add("show");
 
-  $("withdrawBtn").addEventListener(
+}
+
+
+function closeMenu(){
+
+  $("sideMenu")
+    .classList
+    .remove("show");
+
+
+  $("menuOverlay")
+    .classList
+    .remove("show");
+
+}
+
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+$("menuBtn")
+  .addEventListener(
+    "click",
+    openMenu
+  );
+
+
+$("closeMenu")
+  .addEventListener(
+    "click",
+    closeMenu
+  );
+
+
+$("menuOverlay")
+  .addEventListener(
+    "click",
+    closeMenu
+  );
+
+
+$("themeBtn")
+  .addEventListener(
+    "click",
+    toggleTheme
+  );
+
+
+$("logoutBtn")
+  .addEventListener(
+    "click",
+    async function(){
+
+      await db.auth.signOut();
+
+      window.location.href =
+        "login.html";
+
+    }
+  );
+
+
+document
+  .querySelectorAll(
+    ".crypto-card"
+  )
+  .forEach(
+    function(card){
+
+      card.addEventListener(
+        "click",
+        function(){
+
+          selectCrypto(
+            card
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+$("amount")
+  .addEventListener(
+    "input",
+    updateSummary
+  );
+
+
+$("withdrawBtn")
+  .addEventListener(
     "click",
     submitWithdrawal
   );
 
-  /* START */
 
-  loadUser();
+/* =========================================================
+   START
+========================================================= */
+
+applyTheme();
+
+loadUser();
 
 </script>
 
