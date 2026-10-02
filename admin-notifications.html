@@ -1,0 +1,1372 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notifications — TallyBuck Admin</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
+:root{
+  --bg:#07110d;
+  --sidebar:#08140f;
+  --panel:#0d1914;
+  --panel2:#111f19;
+  --border:#1d3328;
+  --text:#f3f7fa;
+  --muted:#8ea0ad;
+  --green:#079447;
+  --green2:#0bbf61;
+  --green-dark:#063f2d;
+  --red:#ff6474;
+  --gold:#e6b85c;
+  --shadow:0 12px 35px rgba(0,0,0,.25);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+}
+
+body{
+  font-family:Inter,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+button,
+input,
+textarea,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar{
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  width:255px;
+  background:var(--sidebar);
+  border-right:1px solid var(--border);
+  z-index:100;
+  overflow-y:auto;
+}
+
+.sidebar-brand{
+  height:76px;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:0 20px;
+  border-bottom:1px solid var(--border);
+}
+
+.brand-mark{
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  background:var(--green);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-weight:900;
+  font-size:20px;
+}
+
+.brand-name{
+  font-size:19px;
+  font-weight:850;
+}
+
+.nav-section{
+  padding:18px 12px 6px;
+  color:#61736b;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-size:10px;
+  font-weight:800;
+}
+
+.nav-link{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  margin:3px 10px;
+  padding:11px 12px;
+  border-radius:10px;
+  color:#9aac a4;
+  color:#9aac a4;
+  color:#9aac a4;
+  font-size:13px;
+  font-weight:650;
+}
+
+.nav-link svg{
+  width:19px;
+  height:19px;
+  flex:none;
+}
+
+.nav-link:hover{
+  background:var(--panel2);
+  color:var(--text);
+}
+
+.nav-link.active{
+  background:rgba(7,148,71,.16);
+  color:#52dc91;
+}
+
+.nav-link.active svg{
+  color:#52dc91;
+}
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.main{
+  margin-left:255px;
+  min-height:100vh;
+}
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:50;
+  height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 28px;
+  background:rgba(7,17,13,.94);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+}
+
+.topbar-title{
+  font-size:19px;
+  font-weight:800;
+}
+
+.topbar-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.admin-pill{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid var(--border);
+  background:var(--panel);
+  padding:8px 11px;
+  border-radius:10px;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:700;
+}
+
+.admin-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--green2);
+}
+
+.menu-btn{
+  display:none;
+  width:40px;
+  height:40px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:var(--panel);
+  color:var(--text);
+  align-items:center;
+  justify-content:center;
+}
+
+.menu-btn svg{
+  width:20px;
+  height:20px;
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content{
+  padding:28px;
+  max-width:1250px;
+  margin:0 auto;
+}
+
+.page-heading{
+  margin-bottom:24px;
+}
+
+.page-title{
+  margin:0;
+  font-size:28px;
+  font-weight:850;
+}
+
+.page-subtitle{
+  margin:7px 0 0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+  margin-bottom:22px;
+}
+
+.stat-card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:18px;
+  box-shadow:var(--shadow);
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:700;
+}
+
+.stat-value{
+  margin-top:8px;
+  font-size:25px;
+  font-weight:850;
+}
+
+.stat-note{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 360px;
+  gap:18px;
+  align-items:start;
+}
+
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:var(--shadow);
+}
+
+.card-head{
+  padding:18px 19px;
+  border-bottom:1px solid var(--border);
+}
+
+.card-title{
+  margin:0;
+  font-size:16px;
+  font-weight:800;
+}
+
+.card-subtitle{
+  margin:5px 0 0;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+}
+
+.card-body{
+  padding:19px;
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.field{
+  margin-bottom:15px;
+}
+
+.field label{
+  display:block;
+  margin-bottom:7px;
+  color:#b8c6ce;
+  font-size:12px;
+  font-weight:750;
+}
+
+.input,
+.select,
+.textarea{
+  width:100%;
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:var(--text);
+  border-radius:10px;
+  outline:none;
+  transition:.15s ease;
+}
+
+.input,
+.select{
+  height:44px;
+  padding:0 12px;
+}
+
+.textarea{
+  min-height:130px;
+  padding:12px;
+  resize:vertical;
+  line-height:1.5;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus{
+  border-color:var(--green);
+  box-shadow:0 0 0 3px rgba(7,148,71,.1);
+}
+
+.select option{
+  background:#111f19;
+  color:#fff;
+}
+
+.recipient-mode{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:15px;
+}
+
+.mode-btn{
+  height:42px;
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:var(--muted);
+  border-radius:10px;
+  font-size:12px;
+  font-weight:750;
+}
+
+.mode-btn.active{
+  border-color:var(--green);
+  background:rgba(7,148,71,.14);
+  color:#58df96;
+}
+
+.user-picker{
+  display:none;
+}
+
+.user-picker.show{
+  display:block;
+}
+
+.send-btn{
+  width:100%;
+  height:46px;
+  border:0;
+  border-radius:11px;
+  background:linear-gradient(135deg,var(--green),var(--green-dark));
+  color:#fff;
+  font-weight:800;
+  box-shadow:0 8px 20px rgba(7,148,71,.18);
+}
+
+.send-btn:hover{
+  filter:brightness(1.06);
+}
+
+.send-btn:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+.warning{
+  margin-top:12px;
+  padding:11px 12px;
+  border-radius:10px;
+  background:rgba(230,184,92,.08);
+  border:1px solid rgba(230,184,92,.22);
+  color:#d9c38d;
+  font-size:11px;
+  line-height:1.5;
+}
+
+/* =========================================================
+   RECENT
+========================================================= */
+
+.recent-list{
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
+
+.recent-item{
+  border:1px solid var(--border);
+  background:var(--panel2);
+  border-radius:12px;
+  padding:13px;
+}
+
+.recent-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.recent-title{
+  font-size:13px;
+  font-weight:800;
+}
+
+.recent-type{
+  color:#58df96;
+  font-size:10px;
+  font-weight:800;
+  text-transform:uppercase;
+}
+
+.recent-message{
+  margin-top:6px;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.45;
+}
+
+.recent-meta{
+  margin-top:9px;
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  color:#62736d;
+  font-size:10px;
+}
+
+.empty{
+  padding:25px 10px;
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* =========================================================
+   OVERLAY / MOBILE
+========================================================= */
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:90;
+  display:none;
+}
+
+.overlay.show{
+  display:block;
+}
+
+@media(max-width:1000px){
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media(max-width:800px){
+
+  .sidebar{
+    left:-270px;
+    transition:left .25s ease;
+  }
+
+  .sidebar.open{
+    left:0;
+  }
+
+  .main{
+    margin-left:0;
+  }
+
+  .menu-btn{
+    display:flex;
+  }
+
+  .topbar{
+    padding:0 17px;
+  }
+
+  .content{
+    padding:20px 16px;
+  }
+
+}
+
+@media(max-width:600px){
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .page-title{
+    font-size:24px;
+  }
+
+  .admin-pill{
+    display:none;
+  }
+
+}
+</style></head><body><!-- =======================================================
+     SIDEBAR
+======================================================= --><aside class="sidebar" id="sidebar">  <div class="sidebar-brand">
+    <div class="brand-mark">T</div>
+    <div class="brand-name">TallyBuck</div>
+  </div>  <div class="nav-section">Overview</div>  <a href="admin-dashboard.html" class="nav-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M3 10.5 12 3l9 7.5"/>
+      <path d="M5 9.5V21h14V9.5"/>
+      <path d="M9 21v-6h6v6"/>
+    </svg>
+    Dashboard
+  </a>  <a href="admin-users.html" class="nav-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="9" cy="8" r="3"/>
+      <path d="M3 20a6 6 0 0 1 12 0"/>
+      <path d="M16 11a3 3 0 1 0 0-6"/>
+      <path d="M16 14a6 6 0 0 1 5 6"/>
+    </svg>
+    Users
+  </a>  <a href="admin-admins.html" class="nav-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3z"/>
+      <path d="m9 12 2 2 4-4"/>
+    </svg>
+    Admins
+  </a>  <div class="nav-section">Platform</div>  <a href="tasks.html" class="nav-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="4" y="3" width="16" height="18" rx="2"/>
+      <path d="M8 7h8M8 11h8M8 15h5"/>
+    </svg>
+    Offers
+  </a>  <a href="admin-tasks.html" class="nav-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 5h16M4 12h16M4 19h16"/>
+      <circle cx="8" cy="5" r="2"/>
+      <circle cx="15" cy="12" r="2"/>
+      <circle cx="10" cy="19" r="2"/>
+    </svg>
+    Manual Tasks
+  </a>  <a href="admin-submissions.html" class="nav-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M5 4h14v16H5z"/>
+      <path d="m8 12 2 2 5-5"/>
+    </svg>
+    Submissions
+  </a>  <a href="admin-offers.html" class="nav-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 5h16v14H4z"/>
+      <path d="M8 9h8M8 13h5"/>
+    </svg>
+    Offer Completions
+  </a>  <a href="admin-withdrawals.html" class="nav-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="3" y="6" width="18" height="13" rx="2"/>
+      <path d="M16 13h5"/>
+      <circle cx="16" cy="13" r="1"/>
+    </svg>
+    Withdrawals
+  </a>  <a href="admin-payments.html" class="nav-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 7h16v13H4z"/>
+      <path d="M8 7V5h8v2"/>
+      <path d="M8 12h8"/>
+    </svg>
+    Payments
+  </a>  <a href="admin-categories.html" class="nav-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="4" y="4" width="6" height="6"/>
+      <rect x="14" y="4" width="6" height="6"/>
+      <rect x="4" y="14" width="6" height="6"/>
+      <rect x="14" y="14" width="6" height="6"/>
+    </svg>
+    Categories
+  </a>  <a href="admin-countries.html" class="nav-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>
+    </svg>
+    Countries
+  </a>  <a href="admin-notifications.html" class="nav-link active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+      <path d="M13.7 21a2 2 0 0 1-3.4 0"/>
+    </svg>
+    Notifications
+  </a>  <a href="admin-settings.html" class="nav-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
+      <path d="M4.9 4.9 7 7M17 7l2.1-2.1M7 17l-2.1 2.1M17 17l2.1 2.1"/>
+      <path d="M3 12h3M18 12h3M12 3v3M12 18v3"/>
+    </svg>
+    Settings
+  </a>  <a href="admin-logs.html" class="nav-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M5 4h14v16H5z"/>
+      <path d="M8 8h8M8 12h8M8 16h5"/>
+    </svg>
+    Activity Logs
+  </a></aside><div class="overlay" id="overlay"></div><!-- =======================================================
+     MAIN
+======================================================= --><div class="main">  <header class="topbar"><div class="topbar-right">
+  <button class="menu-btn" id="menuBtn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 6h16M4 12h16M4 18h16"/>
+    </svg>
+  </button>
+
+  <div class="topbar-title">
+    Notifications
+  </div>
+</div>
+
+<div class="topbar-right">
+  <div class="admin-pill">
+    <span class="admin-dot"></span>
+    Administrator
+  </div>
+</div>
+
+  </header>  <main class="content"><div class="page-heading">
+  <h1 class="page-title">Notifications</h1>
+  <p class="page-subtitle">
+    Send important updates and messages to TallyBuck users.
+  </p>
+</div>
+
+<!-- STATS -->
+
+<section class="stats">
+
+  <div class="stat-card">
+    <div class="stat-label">Total Users</div>
+    <div class="stat-value" id="totalUsers">—</div>
+    <div class="stat-note">Registered user profiles</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-label">Notifications</div>
+    <div class="stat-value" id="totalNotifications">—</div>
+    <div class="stat-note">Recent notification records</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-label">Unread</div>
+    <div class="stat-value" id="unreadNotifications">—</div>
+    <div class="stat-note">Unread notification records</div>
+  </div>
+
+</section>
+
+<section class="grid">
+
+  <!-- SEND -->
+
+  <div class="card">
+
+    <div class="card-head">
+      <h2 class="card-title">Send Notification</h2>
+      <p class="card-subtitle">
+        Send a message to one user or everyone on the platform.
+      </p>
+    </div>
+
+    <div class="card-body">
+
+      <div class="recipient-mode">
+
+        <button
+          class="mode-btn active"
+          id="singleModeBtn"
+          type="button"
+        >
+          Specific User
+        </button>
+
+        <button
+          class="mode-btn"
+          id="allModeBtn"
+          type="button"
+        >
+          All Users
+        </button>
+
+      </div>
+
+      <div class="field user-picker show" id="userPicker">
+
+        <label for="userSelect">
+          Select User
+        </label>
+
+        <select class="select" id="userSelect">
+          <option value="">Loading users...</option>
+        </select>
+
+      </div>
+
+      <div class="field">
+
+        <label for="typeSelect">
+          Notification Type
+        </label>
+
+        <select class="select" id="typeSelect">
+
+          <option value="general">
+            General
+          </option>
+
+          <option value="system">
+            System
+          </option>
+
+          <option value="task">
+            Task
+          </option>
+
+          <option value="referral">
+            Referral
+          </option>
+
+          <option value="withdrawal">
+            Withdrawal
+          </option>
+
+        </select>
+
+      </div>
+
+      <div class="field">
+
+        <label for="titleInput">
+          Title
+        </label>
+
+        <input
+          class="input"
+          id="titleInput"
+          maxlength="150"
+          placeholder="Notification title"
+          type="text"
+        >
+
+      </div>
+
+      <div class="field">
+
+        <label for="messageInput">
+          Message
+        </label>
+
+        <textarea
+          class="textarea"
+          id="messageInput"
+          maxlength="2000"
+          placeholder="Write your notification message..."
+        ></textarea>
+
+      </div>
+
+      <button
+        class="send-btn"
+        id="sendBtn"
+        type="button"
+      >
+        Send Notification
+      </button>
+
+      <div class="warning">
+        Notifications sent to all users cannot be undone from this page.
+        Review the title and message before sending.
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- RECENT -->
+
+  <div class="card">
+
+    <div class="card-head">
+      <h2 class="card-title">Recent Notifications</h2>
+      <p class="card-subtitle">
+        Latest notification records.
+      </p>
+    </div>
+
+    <div class="card-body">
+
+      <div class="recent-list" id="recentList">
+
+        <div class="empty">
+          Loading...
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+  </main></div><script>
+const SUPABASE_URL =
+  "https://cetsxdkoauucxwsbdktl.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+let currentUser = null;
+let isAllMode = false;
+let users = [];
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+const $ = id => document.getElementById(id);
+
+function escapeHtml(value){
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function formatDate(value){
+
+  if(!value) return "—";
+
+  const date = new Date(value);
+
+  if(Number.isNaN(date.getTime())){
+    return "—";
+  }
+
+  return date.toLocaleDateString(undefined,{
+    day:"numeric",
+    month:"short",
+    year:"numeric"
+  });
+}
+
+function formatTime(value){
+
+  if(!value) return "";
+
+  const date = new Date(value);
+
+  if(Number.isNaN(date.getTime())){
+    return "";
+  }
+
+  return date.toLocaleString(undefined,{
+    day:"numeric",
+    month:"short",
+    hour:"2-digit",
+    minute:"2-digit"
+  });
+}
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+async function checkAdmin(){
+
+  const {
+    data:{
+      session
+    }
+  } = await db.auth.getSession();
+
+  if(!session){
+
+    window.location.href = "login.html";
+    return false;
+  }
+
+  currentUser = session.user;
+
+  const {
+    data:profile,
+    error
+  } = await db
+    .from("profiles")
+    .select("id,role")
+    .eq("id",currentUser.id)
+    .maybeSingle();
+
+  if(error){
+
+    console.error(error);
+    alert("Unable to verify administrator access.");
+    return false;
+  }
+
+  if(!profile || profile.role !== "admin"){
+
+    window.location.href = "dashboard.html";
+    return false;
+  }
+
+  return true;
+}
+
+/* =========================================================
+   LOAD USERS
+========================================================= */
+
+async function loadUsers(){
+
+  const {
+    data,
+    error
+  } = await db
+    .from("profiles")
+    .select("id,full_name,country,role,created_at")
+    .order("full_name",{ascending:true});
+
+  if(error){
+
+    console.error(error);
+
+    $("userSelect").innerHTML =
+      `<option value="">Unable to load users</option>`;
+
+    return;
+  }
+
+  users = data || [];
+
+  $("totalUsers").textContent = users.length;
+
+  if(!users.length){
+
+    $("userSelect").innerHTML =
+      `<option value="">No users found</option>`;
+
+    return;
+  }
+
+  $("userSelect").innerHTML =
+    `<option value="">Select a user</option>` +
+    users.map(user => {
+
+      const name =
+        user.full_name?.trim() || "Unnamed User";
+
+      const country =
+        user.country?.trim() || "Unknown";
+
+      const role =
+        user.role === "admin"
+          ? " — Admin"
+          : "";
+
+      return `
+        <option value="${escapeHtml(user.id)}">
+          ${escapeHtml(name)} — ${escapeHtml(country)}${role}
+        </option>
+      `;
+
+    }).join("");
+}
+
+/* =========================================================
+   LOAD NOTIFICATION STATS
+========================================================= */
+
+async function loadNotificationStats(){
+
+  const {
+    count:total,
+    error:totalError
+  } = await db
+    .from("notifications")
+    .select("id",{count:"exact",head:true});
+
+  if(totalError){
+
+    console.error(totalError);
+
+    $("totalNotifications").textContent = "—";
+
+  }else{
+
+    $("totalNotifications").textContent =
+      total ?? 0;
+
+  }
+
+  const {
+    count:unread,
+    error:unreadError
+  } = await db
+    .from("notifications")
+    .select("id",{count:"exact",head:true})
+    .eq("is_read",false);
+
+  if(unreadError){
+
+    console.error(unreadError);
+
+    $("unreadNotifications").textContent = "—";
+
+  }else{
+
+    $("unreadNotifications").textContent =
+      unread ?? 0;
+
+  }
+}
+
+/* =========================================================
+   LOAD RECENT
+========================================================= */
+
+async function loadRecent(){
+
+  const {
+    data,
+    error
+  } = await db
+    .from("notifications")
+    .select("id,user_id,title,message,type,is_read,created_at")
+    .order("created_at",{ascending:false})
+    .limit(12);
+
+  if(error){
+
+    console.error(error);
+
+    $("recentList").innerHTML = `
+      <div class="empty">
+        Unable to load recent notifications.
+      </div>
+    `;
+
+    return;
+  }
+
+  if(!data || !data.length){
+
+    $("recentList").innerHTML = `
+      <div class="empty">
+        No notifications have been sent yet.
+      </div>
+    `;
+
+    return;
+  }
+
+  const userMap = new Map(
+    users.map(user => [
+      user.id,
+      user.full_name || "Unnamed User"
+    ])
+  );
+
+  $("recentList").innerHTML =
+    data.map(item => {
+
+      const recipient =
+        userMap.get(item.user_id) ||
+        "User";
+
+      return `
+        <div class="recent-item">
+
+          <div class="recent-top">
+
+            <div class="recent-title">
+              ${escapeHtml(item.title)}
+            </div>
+
+            <div class="recent-type">
+              ${escapeHtml(item.type || "general")}
+            </div>
+
+          </div>
+
+          <div class="recent-message">
+            ${escapeHtml(item.message)}
+          </div>
+
+          <div class="recent-meta">
+
+            <span>
+              ${escapeHtml(recipient)}
+            </span>
+
+            <span>
+              ${formatTime(item.created_at)}
+            </span>
+
+          </div>
+
+        </div>
+      `;
+
+    }).join("");
+}
+
+/* =========================================================
+   MODE
+========================================================= */
+
+function setMode(allMode){
+
+  isAllMode = allMode;
+
+  $("singleModeBtn")
+    .classList.toggle("active",!allMode);
+
+  $("allModeBtn")
+    .classList.toggle("active",allMode);
+
+  $("userPicker")
+    .classList.toggle("show",!allMode);
+}
+
+$("singleModeBtn").addEventListener(
+  "click",
+  () => setMode(false)
+);
+
+$("allModeBtn").addEventListener(
+  "click",
+  () => setMode(true)
+);
+
+/* =========================================================
+   SEND
+========================================================= */
+
+async function sendNotification(){
+
+  const title =
+    $("titleInput").value.trim();
+
+  const message =
+    $("messageInput").value.trim();
+
+  const type =
+    $("typeSelect").value;
+
+  if(!title){
+
+    alert("Enter a notification title.");
+    $("titleInput").focus();
+    return;
+  }
+
+  if(!message){
+
+    alert("Enter a notification message.");
+    $("messageInput").focus();
+    return;
+  }
+
+  if(!isAllMode && !$("userSelect").value){
+
+    alert("Select a user.");
+    $("userSelect").focus();
+    return;
+  }
+
+  if(isAllMode){
+
+    const confirmed = confirm(
+      `Send this notification to all ${users.length} users?\n\n` +
+      `Title: ${title}`
+    );
+
+    if(!confirmed){
+      return;
+    }
+
+  }
+
+  const button = $("sendBtn");
+
+  button.disabled = true;
+  button.textContent = "Sending...";
+
+  try{
+
+    if(isAllMode){
+
+      const {
+        data,
+        error
+      } = await db.rpc(
+        "admin_send_notification_all",
+        {
+          p_title:title,
+          p_message:message,
+          p_type:type
+        }
+      );
+
+      if(error){
+        throw error;
+      }
+
+      const sent =
+        data?.sent_count ?? users.length;
+
+      alert(
+        `Notification sent successfully to ${sent} users.`
+      );
+
+    }else{
+
+      const {
+        data,
+        error
+      } = await db.rpc(
+        "admin_send_notification",
+        {
+          p_user_id:$("userSelect").value,
+          p_title:title,
+          p_message:message,
+          p_type:type
+        }
+      );
+
+      if(error){
+        throw error;
+      }
+
+      alert("Notification sent successfully.");
+
+    }
+
+    $("titleInput").value = "";
+    $("messageInput").value = "";
+    $("typeSelect").value = "general";
+
+    await loadNotificationStats();
+    await loadRecent();
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      error?.message ||
+      "Unable to send notification."
+    );
+
+  }finally{
+
+    button.disabled = false;
+    button.textContent = "Send Notification";
+
+  }
+}
+
+$("sendBtn").addEventListener(
+  "click",
+  sendNotification
+);
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+$("menuBtn").addEventListener(
+  "click",
+  () => {
+
+    $("sidebar").classList.add("open");
+    $("overlay").classList.add("show");
+
+  }
+);
+
+$("overlay").addEventListener(
+  "click",
+  () => {
+
+    $("sidebar").classList.remove("open");
+    $("overlay").classList.remove("show");
+
+  }
+);
+
+/* =========================================================
+   START
+========================================================= */
+
+(async function(){
+
+  const allowed = await checkAdmin();
+
+  if(!allowed){
+    return;
+  }
+
+  await loadUsers();
+  await loadNotificationStats();
+  await loadRecent();
+
+})();
+</script></body>
+</html>
