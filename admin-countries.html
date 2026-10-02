@@ -26,29 +26,40 @@
 
 *{
   box-sizing:border-box;
-}
-
-html,body{
   margin:0;
   padding:0;
-  min-height:100%;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  min-height:100vh;
   background:var(--bg);
   color:var(--text);
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
-body{
-  overflow-x:hidden;
-}
-
 button,
-input{
+input,
+select{
   font:inherit;
 }
 
 button{
   cursor:pointer;
 }
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
 
 .sidebar{
   position:fixed;
@@ -58,237 +69,279 @@ button{
   width:255px;
   background:var(--sidebar);
   border-right:1px solid var(--border);
-  z-index:1000;
+  z-index:100;
   overflow-y:auto;
 }
 
-.brand{
+.sidebar-logo{
   height:76px;
+  padding:0 22px;
   display:flex;
   align-items:center;
-  padding:0 22px;
+  gap:11px;
   border-bottom:1px solid var(--border);
-  font-size:22px;
+  font-size:20px;
   font-weight:800;
-  letter-spacing:-.4px;
 }
 
-.brand span{
+.sidebar-logo svg{
+  width:29px;
+  height:29px;
   color:var(--green2);
 }
 
-.nav{
-  padding:16px 12px 30px;
+.sidebar-section{
+  padding:20px 12px 8px;
 }
 
-.nav-section{
-  margin:18px 12px 8px;
-  color:#5f7469;
+.sidebar-label{
+  padding:0 11px 9px;
+  color:#64776d;
   font-size:10px;
   font-weight:800;
   text-transform:uppercase;
-  letter-spacing:1px;
+  letter-spacing:.12em;
 }
 
-.nav a{
+.nav-link{
+  min-height:43px;
+  padding:0 11px;
+  margin:3px 0;
   display:flex;
   align-items:center;
   gap:12px;
-  min-height:44px;
-  padding:0 12px;
-  margin:3px 0;
-  border-radius:10px;
+  border-radius:9px;
   color:var(--muted);
-  text-decoration:none;
-  font-size:14px;
+  font-size:13px;
   font-weight:600;
   transition:.18s ease;
 }
 
-.nav a:hover{
-  background:var(--panel2);
-  color:var(--text);
-}
-
-.nav a.active{
-  background:rgba(7,148,71,.16);
-  color:#7ff0ad;
-}
-
-.nav svg{
+.nav-link svg{
   width:18px;
   height:18px;
   flex:none;
-  stroke:currentColor;
 }
 
-.overlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.58);
-  z-index:900;
-}
-
-.topbar{
-  position:fixed;
-  left:255px;
-  right:0;
-  top:0;
-  height:76px;
-  background:rgba(7,17,13,.94);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);
-  z-index:800;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 28px;
-}
-
-.top-title{
-  font-size:18px;
-  font-weight:800;
-}
-
-.top-subtitle{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:3px;
-}
-
-.menu-btn{
-  display:none;
-  width:42px;
-  height:42px;
-  border:1px solid var(--border);
-  background:var(--panel);
+.nav-link:hover{
   color:var(--text);
-  border-radius:10px;
-  align-items:center;
-  justify-content:center;
+  background:#0d2118;
 }
 
-.menu-btn svg{
-  width:20px;
-  height:20px;
-  stroke:currentColor;
+.nav-link.active{
+  color:#fff;
+  background:linear-gradient(
+    90deg,
+    rgba(7,148,71,.22),
+    rgba(7,148,71,.08)
+  );
+  border:1px solid rgba(11,191,97,.16);
 }
 
-.status{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  color:#83dca5;
-  font-size:12px;
-  font-weight:700;
+.nav-link.active svg{
+  color:var(--green2);
 }
 
-.status-dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:var(--green2);
-  box-shadow:0 0 0 4px rgba(11,191,97,.10);
-}
+
+/* =========================================================
+   MAIN
+========================================================= */
 
 .main{
   margin-left:255px;
-  padding:106px 28px 40px;
   min-height:100vh;
 }
 
-.container{
-  max-width:1200px;
-  margin:0 auto;
-}
 
-.page-head{
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar{
+  height:76px;
+  padding:0 28px;
   display:flex;
+  align-items:center;
   justify-content:space-between;
-  align-items:flex-start;
-  gap:20px;
-  margin-bottom:24px;
+  border-bottom:1px solid var(--border);
+  background:rgba(7,17,13,.88);
+  backdrop-filter:blur(14px);
+  position:sticky;
+  top:0;
+  z-index:50;
 }
 
-.page-title{
-  margin:0;
-  font-size:28px;
-  letter-spacing:-.6px;
+.topbar-left{
+  display:flex;
+  align-items:center;
+  gap:15px;
 }
 
-.page-description{
-  color:var(--muted);
-  margin:7px 0 0;
-  font-size:14px;
+.mobile-menu{
+  display:none;
+  width:39px;
+  height:39px;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--border);
+  border-radius:9px;
+  background:var(--panel);
+  color:var(--text);
 }
 
-.primary-btn{
-  border:0;
-  background:var(--green);
-  color:white;
-  border-radius:10px;
-  min-height:42px;
-  padding:0 16px;
+.mobile-menu svg{
+  width:20px;
+  height:20px;
+}
+
+.page-title h1{
+  font-size:19px;
+  line-height:1.2;
   font-weight:800;
+}
+
+.page-title p{
+  margin-top:3px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.admin-user{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.admin-avatar{
+  width:38px;
+  height:38px;
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:8px;
+  border-radius:50%;
+  background:rgba(7,148,71,.16);
+  border:1px solid rgba(11,191,97,.2);
+  color:var(--green2);
+  font-size:12px;
+  font-weight:800;
 }
 
-.primary-btn:hover{
-  background:var(--green2);
+.admin-user-info{
+  text-align:right;
 }
 
-.primary-btn svg{
-  width:17px;
-  height:17px;
-  stroke:currentColor;
+.admin-user-info strong{
+  display:block;
+  font-size:12px;
 }
+
+.admin-user-info span{
+  display:block;
+  margin-top:2px;
+  color:var(--muted);
+  font-size:10px;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content{
+  padding:28px;
+  max-width:1500px;
+  margin:auto;
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
 
 .stats{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(3,minmax(0,1fr));
   gap:16px;
   margin-bottom:20px;
 }
 
-.card{
-  background:var(--panel);
+.stat-card{
+  min-height:105px;
+  padding:19px;
   border:1px solid var(--border);
   border-radius:14px;
+  background:var(--panel);
   box-shadow:var(--shadow);
 }
 
-.stat-card{
-  padding:20px;
+.stat-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 }
 
 .stat-label{
   color:var(--muted);
-  font-size:12px;
+  font-size:11px;
   font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+
+.stat-icon{
+  width:34px;
+  height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:9px;
+  background:rgba(7,148,71,.12);
+  color:var(--green2);
+}
+
+.stat-icon svg{
+  width:17px;
+  height:17px;
 }
 
 .stat-value{
-  margin-top:8px;
-  font-size:27px;
+  margin-top:12px;
+  font-size:25px;
   font-weight:800;
-  letter-spacing:-.5px;
+}
+
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.toolbar-card{
+  padding:17px;
+  margin-bottom:16px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:var(--panel);
+  box-shadow:var(--shadow);
 }
 
 .toolbar{
-  padding:16px;
   display:flex;
   align-items:center;
+  justify-content:space-between;
   gap:12px;
-  margin-bottom:16px;
+}
+
+.toolbar-left{
+  flex:1;
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
 .search-wrap{
-  flex:1;
   position:relative;
+  flex:1;
+  max-width:460px;
 }
 
 .search-wrap svg{
@@ -299,356 +352,493 @@ button{
   width:17px;
   height:17px;
   color:var(--muted);
-  stroke:currentColor;
+  pointer-events:none;
 }
 
 .search{
   width:100%;
-  height:42px;
+  min-height:43px;
   padding:0 13px 0 40px;
   border:1px solid var(--border);
-  background:var(--panel2);
-  color:var(--text);
   border-radius:9px;
   outline:none;
-}
-
-.search:focus,
-.input:focus{
-  border-color:var(--green);
-  box-shadow:0 0 0 3px rgba(7,148,71,.10);
-}
-
-.secondary-btn{
-  height:42px;
-  padding:0 14px;
-  border:1px solid var(--border);
-  background:var(--panel2);
+  background:#09150f;
   color:var(--text);
-  border-radius:9px;
-  font-weight:700;
-}
-
-.secondary-btn:hover{
-  border-color:#315341;
-}
-
-.form-card{
-  padding:20px;
-  margin-bottom:20px;
-}
-
-.form-title{
-  margin:0 0 16px;
-  font-size:16px;
-  font-weight:800;
-}
-
-.form-grid{
-  display:grid;
-  grid-template-columns:1.5fr .7fr auto;
-  gap:12px;
-  align-items:end;
-}
-
-.field label{
-  display:block;
-  color:var(--muted);
   font-size:12px;
-  font-weight:700;
-  margin-bottom:7px;
 }
 
-.input{
-  width:100%;
-  height:42px;
-  padding:0 12px;
+.search:focus{
+  border-color:rgba(11,191,97,.55);
+}
+
+.search::placeholder{
+  color:#60736a;
+}
+
+.filter{
+  min-height:43px;
+  padding:0 35px 0 12px;
   border:1px solid var(--border);
-  background:var(--panel2);
-  color:var(--text);
   border-radius:9px;
   outline:none;
+  background:#09150f;
+  color:var(--text);
+  font-size:12px;
 }
 
-.form-actions{
-  display:flex;
-  gap:8px;
+.primary-btn{
+  min-height:43px;
+  padding:0 17px;
+  border:0;
+  border-radius:9px;
+  background:var(--green);
+  color:white;
+  font-size:12px;
+  font-weight:800;
+  transition:.18s ease;
 }
+
+.primary-btn:hover{
+  background:var(--green2);
+  transform:translateY(-1px);
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
 
 .table-card{
   overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:var(--panel);
+  box-shadow:var(--shadow);
 }
 
 .table-head{
-  padding:18px 20px;
-  border-bottom:1px solid var(--border);
+  min-height:62px;
+  padding:0 18px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
 }
 
-.table-title{
-  font-size:16px;
+.table-head h2{
+  font-size:14px;
   font-weight:800;
 }
 
-.table-count{
+.table-head span{
   color:var(--muted);
-  font-size:12px;
+  font-size:11px;
 }
 
-.table-wrap{
+.table-scroll{
   overflow-x:auto;
 }
 
 table{
   width:100%;
   border-collapse:collapse;
-  min-width:700px;
+  min-width:720px;
 }
 
-th,
-td{
-  padding:15px 18px;
-  border-bottom:1px solid var(--border);
-  text-align:left;
-  font-size:13px;
+thead{
+  background:#0a1711;
 }
 
 th{
-  color:var(--muted);
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:.7px;
+  padding:13px 17px;
+  color:#73867c;
+  font-size:10px;
   font-weight:800;
-  background:rgba(255,255,255,.015);
+  text-align:left;
+  text-transform:uppercase;
+  letter-spacing:.07em;
+  white-space:nowrap;
 }
 
 td{
-  color:#dfe8e4;
+  padding:15px 17px;
+  border-top:1px solid rgba(29,51,40,.65);
+  font-size:12px;
+  vertical-align:middle;
 }
 
 tbody tr:hover{
-  background:rgba(255,255,255,.018);
+  background:#0b1812;
 }
 
-.name-cell{
-  font-weight:750;
-  color:var(--text);
+.country-cell{
+  display:flex;
+  align-items:center;
+  gap:11px;
 }
 
-.code{
-  display:inline-flex;
-  padding:5px 8px;
-  border-radius:6px;
-  background:rgba(255,255,255,.05);
+.country-mark{
+  width:36px;
+  height:36px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:9px;
+  background:#10271b;
   border:1px solid var(--border);
-  color:#b9c9c1;
-  font-size:11px;
-  font-weight:800;
+  color:var(--green2);
+  font-size:10px;
+  font-weight:900;
 }
 
-.badge{
+.country-name{
+  font-weight:700;
+}
+
+.code-text{
+  font-weight:800;
+  letter-spacing:.06em;
+}
+
+.status{
   display:inline-flex;
   align-items:center;
-  padding:5px 9px;
+  gap:6px;
+  min-height:25px;
+  padding:0 9px;
   border-radius:999px;
-  font-size:11px;
+  font-size:10px;
   font-weight:800;
 }
 
-.badge.active{
-  color:#75e9a1;
-  background:rgba(11,191,97,.10);
-  border:1px solid rgba(11,191,97,.20);
+.status-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
 }
 
-.badge.inactive{
-  color:#ff8a97;
-  background:rgba(255,100,116,.09);
-  border:1px solid rgba(255,100,116,.18);
+.status.active{
+  color:#73dda0;
+  background:rgba(11,191,97,.09);
+  border:1px solid rgba(11,191,97,.15);
+}
+
+.status.active .status-dot{
+  background:var(--green2);
+}
+
+.status.inactive{
+  color:#ff9aa5;
+  background:rgba(255,100,116,.07);
+  border:1px solid rgba(255,100,116,.14);
+}
+
+.status.inactive .status-dot{
+  background:var(--red);
 }
 
 .actions{
   display:flex;
+  align-items:center;
   gap:7px;
-  flex-wrap:wrap;
 }
 
 .action-btn{
-  border:1px solid var(--border);
-  background:var(--panel2);
-  color:#c8d4cf;
-  border-radius:7px;
   min-height:32px;
   padding:0 9px;
-  font-size:11px;
-  font-weight:750;
+  border:1px solid var(--border);
+  border-radius:7px;
+  background:#0b1812;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:800;
 }
 
 .action-btn:hover{
-  border-color:#315341;
-  color:white;
+  color:var(--text);
+  border-color:#2b4939;
 }
 
-.action-btn.danger{
-  color:#ff8995;
+.action-btn.enable{
+  color:#73dda0;
 }
 
-.action-btn.success{
-  color:#73e5a0;
+.action-btn.disable{
+  color:#ff9aa5;
+}
+
+.action-btn.delete{
+  color:#ff9aa5;
 }
 
 .empty{
-  padding:50px 20px;
+  padding:55px 20px;
   text-align:center;
   color:var(--muted);
 }
 
-.empty-title{
+.empty svg{
+  width:38px;
+  height:38px;
+  margin-bottom:12px;
+  color:#4e6559;
+}
+
+.empty strong{
+  display:block;
   color:var(--text);
-  font-weight:800;
-  margin-bottom:6px;
+  font-size:13px;
+  margin-bottom:5px;
+}
+
+.empty span{
+  font-size:11px;
 }
 
 .loading{
   padding:45px 20px;
   text-align:center;
   color:var(--muted);
+  font-size:12px;
 }
 
-.modal-backdrop{
+
+/* =========================================================
+   MODALS
+========================================================= */
+
+.overlay{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.65);
+  z-index:300;
   display:none;
   align-items:center;
   justify-content:center;
-  padding:20px;
-  z-index:1500;
+  padding:18px;
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(8px);
 }
 
-.modal-backdrop.show{
+.overlay.show{
   display:flex;
 }
 
 .modal{
   width:100%;
-  max-width:460px;
-  background:var(--panel);
+  max-width:470px;
+  max-height:90vh;
+  overflow:auto;
+  padding:24px;
   border:1px solid var(--border);
   border-radius:16px;
-  box-shadow:0 25px 70px rgba(0,0,0,.4);
-  padding:22px;
+  background:#0d1914;
+  box-shadow:0 30px 80px rgba(0,0,0,.55);
 }
 
-.modal-title{
-  margin:0;
-  font-size:18px;
+.modal-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:21px;
+}
+
+.modal-head h3{
+  font-size:17px;
   font-weight:800;
 }
 
-.modal-subtitle{
+.close-btn{
+  width:35px;
+  height:35px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:#111f19;
   color:var(--muted);
-  font-size:13px;
-  margin:6px 0 20px;
+  font-size:18px;
+}
+
+.close-btn:hover{
+  color:var(--text);
+}
+
+.field{
+  margin-bottom:16px;
+}
+
+.field label{
+  display:block;
+  margin-bottom:7px;
+  color:var(--text);
+  font-size:11px;
+  font-weight:700;
+}
+
+.field input{
+  width:100%;
+  min-height:45px;
+  padding:0 12px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  outline:none;
+  background:#09150f;
+  color:var(--text);
+  font-size:12px;
+  text-transform:none;
+}
+
+.field input:focus{
+  border-color:rgba(11,191,97,.55);
+}
+
+.field small{
+  display:block;
+  margin-top:6px;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.5;
 }
 
 .modal-actions{
   display:flex;
   justify-content:flex-end;
-  gap:9px;
-  margin-top:20px;
+  gap:8px;
+  margin-top:22px;
 }
 
-.message{
-  position:fixed;
-  right:22px;
-  bottom:22px;
-  max-width:360px;
-  padding:13px 16px;
-  border-radius:10px;
-  background:var(--panel2);
+.secondary-btn{
+  min-height:42px;
+  padding:0 15px;
   border:1px solid var(--border);
-  box-shadow:var(--shadow);
-  color:var(--text);
-  font-size:13px;
-  font-weight:700;
-  z-index:3000;
-  display:none;
+  border-radius:8px;
+  background:#111f19;
+  color:var(--muted);
+  font-size:11px;
+  font-weight:800;
 }
 
-.message.show{
+.secondary-btn:hover{
+  color:var(--text);
+}
+
+.danger-btn{
+  min-height:42px;
+  padding:0 15px;
+  border:0;
+  border-radius:8px;
+  background:#8f2636;
+  color:white;
+  font-size:11px;
+  font-weight:800;
+}
+
+.error-box{
+  display:none;
+  margin-bottom:15px;
+  padding:11px 12px;
+  border-radius:8px;
+  border:1px solid rgba(255,100,116,.18);
+  background:rgba(255,100,116,.07);
+  color:#ff9aa5;
+  font-size:11px;
+  line-height:1.5;
+}
+
+.error-box.show{
   display:block;
 }
 
-.message.success{
-  border-color:rgba(11,191,97,.35);
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  z-index:500;
+  max-width:350px;
+  padding:13px 16px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:#12231a;
+  box-shadow:0 15px 40px rgba(0,0,0,.35);
+  color:var(--text);
+  font-size:11px;
+  opacity:0;
+  transform:translateY(12px);
+  pointer-events:none;
+  transition:.22s ease;
 }
 
-.message.error{
-  border-color:rgba(255,100,116,.35);
-  color:#ff9aa4;
+.toast.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.toast.success{
+  border-color:rgba(11,191,97,.28);
+}
+
+.toast.error{
+  border-color:rgba(255,100,116,.28);
+  color:#ff9aa5;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+.sidebar-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:90;
+  background:rgba(0,0,0,.58);
 }
 
 @media(max-width:900px){
+
   .sidebar{
     transform:translateX(-100%);
-    transition:transform .22s ease;
+    transition:.22s ease;
   }
 
   .sidebar.open{
     transform:translateX(0);
   }
 
-  .overlay.show{
+  .sidebar-overlay.show{
     display:block;
-  }
-
-  .topbar{
-    left:0;
-    padding:0 16px;
-  }
-
-  .menu-btn{
-    display:flex;
-  }
-
-  .top-left{
-    display:flex;
-    align-items:center;
-    gap:12px;
-  }
-
-  .status{
-    display:none;
   }
 
   .main{
     margin-left:0;
-    padding:96px 16px 30px;
+  }
+
+  .mobile-menu{
+    display:flex;
+  }
+
+  .topbar{
+    padding:0 17px;
+  }
+
+  .admin-user-info{
+    display:none;
+  }
+
+  .content{
+    padding:20px 15px 30px;
   }
 
   .stats{
     grid-template-columns:1fr;
-  }
-
-  .form-grid{
-    grid-template-columns:1fr;
-  }
-}
-
-@media(max-width:600px){
-  .page-head{
-    flex-direction:column;
-  }
-
-  .page-title{
-    font-size:24px;
-  }
-
-  .primary-btn{
-    width:100%;
   }
 
   .toolbar{
@@ -656,15 +846,44 @@ tbody tr:hover{
     align-items:stretch;
   }
 
-  .secondary-btn{
+  .toolbar-left{
     width:100%;
   }
 
-  .message{
-    left:16px;
-    right:16px;
-    bottom:16px;
+  .search-wrap{
     max-width:none;
+  }
+
+  .primary-btn{
+    width:100%;
+  }
+}
+
+@media(max-width:600px){
+
+  .page-title p{
+    display:none;
+  }
+
+  .page-title h1{
+    font-size:16px;
+  }
+
+  .topbar{
+    height:68px;
+  }
+
+  .toolbar-left{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .filter{
+    width:100%;
+  }
+
+  .modal{
+    padding:20px;
   }
 }
 </style>
@@ -672,875 +891,1890 @@ tbody tr:hover{
 
 <body>
 
-<div class="overlay" id="overlay"></div>
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
 
 <aside class="sidebar" id="sidebar">
-  <div class="brand">Tally<span>Buck</span></div>
 
-  <nav class="nav">
+  <div class="sidebar-logo">
 
-    <div class="nav-section">Overview</div>
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M2 18h20l-1.5-9-5 4-3.5-7-3.5 7-5-4L2 18z"/>
+    </svg>
 
-    <a href="admin-dashboard.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <rect x="3" y="3" width="7" height="7"></rect>
-        <rect x="14" y="3" width="7" height="7"></rect>
-        <rect x="3" y="14" width="7" height="7"></rect>
-        <rect x="14" y="14" width="7" height="7"></rect>
+    TallyBuck
+
+  </div>
+
+
+  <div class="sidebar-section">
+
+    <div class="sidebar-label">
+      Overview
+    </div>
+
+    <a class="nav-link" href="admin-dashboard.html">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="3" y="3" width="7" height="7" rx="1"/>
+        <rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/>
+        <rect x="14" y="14" width="7" height="7" rx="1"/>
       </svg>
+
       Dashboard
+
     </a>
 
-    <a href="admin-users.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-        <circle cx="9" cy="7" r="4"></circle>
-        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+
+    <a class="nav-link" href="admin-users.html">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M16 21v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2"/>
+        <circle cx="9.5" cy="7" r="4"/>
+        <path d="M17 11a4 4 0 100-8"/>
+        <path d="M21 21v-2a4 4 0 00-3-3.87"/>
       </svg>
+
       Users
+
     </a>
 
-    <div class="nav-section">Earning System</div>
+  </div>
 
-    <a href="tasks.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <path d="M9 11l3 3L22 4"></path>
-        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+
+  <div class="sidebar-section">
+
+    <div class="sidebar-label">
+      Earnings
+    </div>
+
+
+    <a class="nav-link" href="tasks.html">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M4 5h16v14H4z"/>
+        <path d="M8 9h8"/>
+        <path d="M8 13h5"/>
       </svg>
+
       Offers
+
     </a>
 
-    <a href="admin-tasks.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <path d="M8 6h13"></path>
-        <path d="M8 12h13"></path>
-        <path d="M8 18h13"></path>
-        <path d="M3 6h.01"></path>
-        <path d="M3 12h.01"></path>
-        <path d="M3 18h.01"></path>
+
+    <a class="nav-link" href="admin-tasks.html">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M4 5h16v14H4z"/>
+        <path d="M8 9h8"/>
+        <path d="M8 13h5"/>
       </svg>
+
       Manual Tasks
+
     </a>
 
-    <a href="admin-submissions.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-        <polyline points="14 2 14 8 20 8"></polyline>
-        <path d="M8 13h8"></path>
-        <path d="M8 17h6"></path>
+
+    <a class="nav-link" href="admin-submissions.html">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M4 4h16v16H4z"/>
+        <path d="M8 9h8"/>
+        <path d="M8 13h6"/>
       </svg>
+
       Submissions
+
     </a>
 
-    <a href="admin-offers.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"></path>
-        <path d="M2 7h20v5H2z"></path>
-        <path d="M12 7v15"></path>
-        <path d="M12 7H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7z"></path>
-        <path d="M12 7h4.5a2.5 2.5 0 1 0 0-5C13 2 12 7 12 7z"></path>
+
+    <a class="nav-link" href="admin-offers.html">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M5 4h14v16H5z"/>
+        <path d="M8 8h8"/>
+        <path d="M8 12h8"/>
+        <path d="M8 16h5"/>
       </svg>
+
       Offer Completions
+
     </a>
 
-    <div class="nav-section">Finance</div>
+  </div>
 
-    <a href="admin-withdrawals.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <rect x="2" y="5" width="20" height="14" rx="2"></rect>
-        <path d="M16 12h.01"></path>
-        <path d="M2 10h20"></path>
+
+  <div class="sidebar-section">
+
+    <div class="sidebar-label">
+      Money
+    </div>
+
+
+    <a class="nav-link" href="admin-withdrawals.html">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="3" y="5" width="18" height="14" rx="2"/>
+        <path d="M7 12h10"/>
+        <circle cx="17" cy="12" r="1"/>
       </svg>
+
       Withdrawals
+
     </a>
 
-    <a href="admin-payments.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
-        <path d="M7 9h10"></path>
-        <path d="M7 13h6"></path>
-        <path d="M7 17h3"></path>
+
+    <a class="nav-link" href="admin-payments.html">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M4 6h16v12H4z"/>
+        <path d="M4 10h16"/>
+        <path d="M8 14h4"/>
       </svg>
+
       Payments
+
     </a>
 
-    <div class="nav-section">Management</div>
+  </div>
 
-    <a href="admin-categories.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7"></path>
-        <path d="M16 2v6"></path>
-        <path d="M13 5h6"></path>
-        <path d="M8 11h8"></path>
-        <path d="M8 15h8"></path>
+
+  <div class="sidebar-section">
+
+    <div class="sidebar-label">
+      Management
+    </div>
+
+
+    <a class="nav-link" href="admin-categories.html">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M4 5h16v4H4z"/>
+        <path d="M4 11h16v4H4z"/>
+        <path d="M4 17h16v2H4z"/>
       </svg>
+
       Categories
+
     </a>
 
-    <a href="admin-countries.html" class="active">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <circle cx="12" cy="12" r="9"></circle>
-        <path d="M3 12h18"></path>
-        <path d="M12 3c2.5 2.5 3.5 5.5 3.5 9S14.5 18.5 12 21"></path>
-        <path d="M12 3c-2.5 2.5-3.5 5.5-3.5 9S9.5 18.5 12 21"></path>
+
+    <a class="nav-link active" href="admin-countries.html">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M3 12h18"/>
+        <path d="M12 3c2.2 2.4 3.3 9 0 18"/>
       </svg>
+
       Countries
+
     </a>
 
-    <a href="notifications.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
-        <path d="M10 21h4"></path>
+
+    <a class="nav-link" href="notifications.html">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+        <path d="M10 21h4"/>
       </svg>
+
       Notifications
+
     </a>
 
-    <a href="admin-settings.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <circle cx="12" cy="12" r="3"></circle>
-        <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.42 1.42-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.55V20h-2v-.09a1.7 1.7 0 0 0-1.03-1.55 1.7 1.7 0 0 0-1.88.34l-.06.06-1.42-1.42.06-.06A1.7 1.7 0 0 0 9.4 15a1.7 1.7 0 0 0-1.55-1.03H7v-2h.85A1.7 1.7 0 0 0 9.4 11a1.7 1.7 0 0 0-.34-1.88L9 9.06l1.42-1.42.06.06a1.7 1.7 0 0 0 1.88.34A1.7 1.7 0 0 0 13.4 6.5V6h2v.5a1.7 1.7 0 0 0 1.03 1.54 1.7 1.7 0 0 0 1.88-.34l.06-.06 1.42 1.42-.06.06A1.7 1.7 0 0 0 19.4 11a1.7 1.7 0 0 0 1.55 1.03H21v2h-.05A1.7 1.7 0 0 0 19.4 15z"></path>
+
+    <a class="nav-link" href="admin-settings.html">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M12 3v3"/>
+        <path d="M12 18v3"/>
+        <path d="M3 12h3"/>
+        <path d="M18 12h3"/>
+        <circle cx="12" cy="12" r="4"/>
       </svg>
+
       Settings
+
     </a>
 
-    <a href="admin-admins.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <circle cx="12" cy="8" r="4"></circle>
-        <path d="M5 21a7 7 0 0 1 14 0"></path>
-        <path d="M19 8h3"></path>
-        <path d="M20.5 6.5v3"></path>
+
+    <a class="nav-link" href="admin-admins.html">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 21c.8-4 3.5-6 8-6s7.2 2 8 6"/>
       </svg>
+
       Admins
+
     </a>
 
-    <a href="admin-logs.html">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <path d="M4 4h16v16H4z"></path>
-        <path d="M8 8h8"></path>
-        <path d="M8 12h8"></path>
-        <path d="M8 16h5"></path>
+
+    <a class="nav-link" href="admin-logs.html">
+
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M5 4h14v16H5z"/>
+        <path d="M8 8h8"/>
+        <path d="M8 12h8"/>
+        <path d="M8 16h5"/>
       </svg>
+
       Activity Logs
+
     </a>
 
-  </nav>
+  </div>
+
 </aside>
 
+
+<div
+  class="sidebar-overlay"
+  id="sidebarOverlay"
+></div>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<div class="main">
+
+
 <header class="topbar">
-  <div class="top-left">
-    <button class="menu-btn" id="menuBtn" aria-label="Open menu">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-        <path d="M4 6h16"></path>
-        <path d="M4 12h16"></path>
-        <path d="M4 18h16"></path>
+
+  <div class="topbar-left">
+
+    <button
+      class="mobile-menu"
+      id="mobileMenu"
+      aria-label="Open menu"
+    >
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+      >
+
+        <path d="M4 6h16"/>
+        <path d="M4 12h16"/>
+        <path d="M4 18h16"/>
+
       </svg>
+
     </button>
 
-    <div>
-      <div class="top-title">Countries</div>
-      <div class="top-subtitle">Manage supported countries</div>
+
+    <div class="page-title">
+
+      <h1>
+        Countries
+      </h1>
+
+      <p>
+        Manage supported countries for TallyBuck.
+      </p>
+
     </div>
+
   </div>
 
-  <div class="status">
-    <span class="status-dot"></span>
-    System Online
+
+  <div class="admin-user">
+
+    <div class="admin-user-info">
+
+      <strong id="adminName">
+        Administrator
+      </strong>
+
+      <span>
+        Admin
+      </span>
+
+    </div>
+
+    <div
+      class="admin-avatar"
+      id="adminAvatar"
+    >
+      A
+    </div>
+
   </div>
+
 </header>
 
-<main class="main">
-  <div class="container">
 
-    <div class="page-head">
-      <div>
-        <h1 class="page-title">Countries</h1>
-        <p class="page-description">
-          Manage the countries available throughout the TallyBuck platform.
-        </p>
+<main class="content">
+
+
+<!-- =====================================================
+     STATS
+===================================================== -->
+
+<section class="stats">
+
+
+  <div class="stat-card">
+
+    <div class="stat-top">
+
+      <span class="stat-label">
+        Total countries
+      </span>
+
+      <div class="stat-icon">
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+        >
+
+          <circle cx="12" cy="12" r="9"/>
+
+          <path d="M3 12h18"/>
+
+          <path d="M12 3c2.2 2.4 3.3 9 0 18"/>
+
+        </svg>
+
       </div>
 
-      <button class="primary-btn" id="openAddBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-          <path d="M12 5v14"></path>
-          <path d="M5 12h14"></path>
-        </svg>
-        Add Country
-      </button>
     </div>
 
-    <section class="stats">
-      <div class="card stat-card">
-        <div class="stat-label">Total Countries</div>
-        <div class="stat-value" id="totalCount">0</div>
+    <div
+      class="stat-value"
+      id="totalCount"
+    >
+      0
+    </div>
+
+  </div>
+
+
+  <div class="stat-card">
+
+    <div class="stat-top">
+
+      <span class="stat-label">
+        Active countries
+      </span>
+
+      <div class="stat-icon">
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+        >
+
+          <path d="M20 7L10 17l-5-5"/>
+
+        </svg>
+
       </div>
 
-      <div class="card stat-card">
-        <div class="stat-label">Active Countries</div>
-        <div class="stat-value" id="activeCount">0</div>
+    </div>
+
+    <div
+      class="stat-value"
+      id="activeCount"
+    >
+      0
+    </div>
+
+  </div>
+
+
+  <div class="stat-card">
+
+    <div class="stat-top">
+
+      <span class="stat-label">
+        Inactive countries
+      </span>
+
+      <div class="stat-icon">
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+        >
+
+          <path d="M6 6l12 12"/>
+          <path d="M18 6L6 18"/>
+
+        </svg>
+
       </div>
 
-      <div class="card stat-card">
-        <div class="stat-label">Inactive Countries</div>
-        <div class="stat-value" id="inactiveCount">0</div>
-      </div>
-    </section>
+    </div>
 
-    <section class="card form-card">
-      <h2 class="form-title">Quick Add Country</h2>
+    <div
+      class="stat-value"
+      id="inactiveCount"
+    >
+      0
+    </div>
 
-      <div class="form-grid">
-        <div class="field">
-          <label for="countryName">Country Name</label>
-          <input
-            id="countryName"
-            class="input"
-            type="text"
-            placeholder="e.g. Nigeria"
-            autocomplete="off"
-          >
-        </div>
+  </div>
 
-        <div class="field">
-          <label for="countryCode">Code</label>
-          <input
-            id="countryCode"
-            class="input"
-            type="text"
-            placeholder="NG"
-            maxlength="10"
-            autocomplete="off"
-          >
-        </div>
 
-        <div class="form-actions">
-          <button class="primary-btn" id="quickAddBtn">Add</button>
-        </div>
-      </div>
-    </section>
+</section>
 
-    <section class="card toolbar">
+
+<!-- =====================================================
+     TOOLBAR
+===================================================== -->
+
+<section class="toolbar-card">
+
+  <div class="toolbar">
+
+    <div class="toolbar-left">
+
       <div class="search-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
-          <circle cx="11" cy="11" r="7"></circle>
-          <path d="m20 20-3.5-3.5"></path>
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+        >
+
+          <circle cx="11" cy="11" r="7"/>
+
+          <path d="M20 20l-4-4"/>
+
         </svg>
 
         <input
-          id="searchInput"
           class="search"
+          id="searchInput"
           type="search"
           placeholder="Search countries or codes..."
+          autocomplete="off"
         >
+
       </div>
 
-      <button class="secondary-btn" id="refreshBtn">
-        Refresh
-      </button>
-    </section>
 
-    <section class="card table-card">
+      <select
+        class="filter"
+        id="statusFilter"
+      >
 
-      <div class="table-head">
-        <div class="table-title">Country List</div>
-        <div class="table-count" id="tableCount">0 countries</div>
-      </div>
+        <option value="all">
+          All countries
+        </option>
 
-      <div id="tableArea">
-        <div class="loading">Loading countries...</div>
-      </div>
+        <option value="active">
+          Active only
+        </option>
 
-    </section>
+        <option value="inactive">
+          Inactive only
+        </option>
+
+      </select>
+
+    </div>
+
+
+    <button
+      class="primary-btn"
+      id="addCountryBtn"
+    >
+      Add country
+    </button>
 
   </div>
+
+</section>
+
+
+<!-- =====================================================
+     TABLE
+===================================================== -->
+
+<section class="table-card">
+
+  <div class="table-head">
+
+    <h2>
+      Supported countries
+    </h2>
+
+    <span id="resultCount">
+      Loading...
+    </span>
+
+  </div>
+
+
+  <div
+    id="tableContainer"
+    class="table-scroll"
+  >
+
+    <div class="loading">
+      Loading countries...
+    </div>
+
+  </div>
+
+</section>
+
+
 </main>
 
-<div class="modal-backdrop" id="editModal">
+</div>
+
+
+<!-- =====================================================
+     ADD COUNTRY MODAL
+===================================================== -->
+
+<div
+  class="overlay"
+  id="addModal"
+>
+
   <div class="modal">
 
-    <h2 class="modal-title">Edit Country</h2>
+    <div class="modal-head">
 
-    <p class="modal-subtitle">
-      Update the country name or country code.
-    </p>
+      <h3>
+        Add country
+      </h3>
 
-    <input type="hidden" id="editId">
+      <button
+        class="close-btn"
+        onclick="closeAddModal()"
+        aria-label="Close"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div
+      class="error-box"
+      id="addError"
+    ></div>
+
 
     <div class="field">
-      <label for="editName">Country Name</label>
-      <input id="editName" class="input" type="text">
+
+      <label for="countryCode">
+        Country code
+      </label>
+
+      <input
+        id="countryCode"
+        type="text"
+        maxlength="2"
+        placeholder="NG"
+        autocomplete="off"
+      >
+
+      <small>
+        Use the standard two-letter ISO country code.
+        Example: NG for Nigeria or US for United States.
+      </small>
+
     </div>
 
-    <div class="field" style="margin-top:14px;">
-      <label for="editCode">Country Code</label>
-      <input id="editCode" class="input" type="text" maxlength="10">
+
+    <div class="field">
+
+      <label for="countryName">
+        Country name
+      </label>
+
+      <input
+        id="countryName"
+        type="text"
+        maxlength="100"
+        placeholder="Nigeria"
+        autocomplete="off"
+      >
+
     </div>
+
 
     <div class="modal-actions">
-      <button class="secondary-btn" id="cancelEditBtn">Cancel</button>
-      <button class="primary-btn" id="saveEditBtn">Save Changes</button>
+
+      <button
+        class="secondary-btn"
+        onclick="closeAddModal()"
+      >
+        Cancel
+      </button>
+
+      <button
+        class="primary-btn"
+        id="saveCountryBtn"
+      >
+        Add country
+      </button>
+
     </div>
 
   </div>
+
 </div>
 
-<div class="message" id="message"></div>
+
+<!-- =====================================================
+     DELETE MODAL
+===================================================== -->
+
+<div
+  class="overlay"
+  id="deleteModal"
+>
+
+  <div class="modal">
+
+    <div class="modal-head">
+
+      <h3>
+        Delete country
+      </h3>
+
+      <button
+        class="close-btn"
+        onclick="closeDeleteModal()"
+        aria-label="Close"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <p
+      id="deleteText"
+      style="
+        color:var(--muted);
+        font-size:12px;
+        line-height:1.7;
+      "
+    ></p>
+
+
+    <div class="modal-actions">
+
+      <button
+        class="secondary-btn"
+        onclick="closeDeleteModal()"
+      >
+        Cancel
+      </button>
+
+      <button
+        class="danger-btn"
+        id="confirmDeleteBtn"
+      >
+        Delete country
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     TOAST
+===================================================== -->
+
+<div
+  class="toast"
+  id="toast"
+></div>
+
 
 <script>
-const SUPABASE_URL = "https://cetsxdkoauucxwsbdktl.supabase.co";
-const SUPABASE_KEY = "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
 
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+  "https://cetsxdkoauucxwsbdktl.supabase.co";
+
+const SUPABASE_ANON_KEY =
+  "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
+
+const db =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+
+/* =========================================================
+   STATE
+========================================================= */
 
 let countries = [];
-let currentUser = null;
 
-const $ = id => document.getElementById(id);
+let filteredCountries = [];
 
-function showMessage(text, type = "success"){
-  const box = $("message");
+let deleteCountryId = null;
 
-  box.textContent = text;
-  box.className = "message show " + type;
 
-  clearTimeout(window.messageTimer);
+/* =========================================================
+   ELEMENTS
+========================================================= */
 
-  window.messageTimer = setTimeout(() => {
-    box.className = "message";
-  }, 3500);
+const tableContainer =
+  document.getElementById(
+    "tableContainer"
+  );
+
+const searchInput =
+  document.getElementById(
+    "searchInput"
+  );
+
+const statusFilter =
+  document.getElementById(
+    "statusFilter"
+  );
+
+const resultCount =
+  document.getElementById(
+    "resultCount"
+  );
+
+const totalCount =
+  document.getElementById(
+    "totalCount"
+  );
+
+const activeCount =
+  document.getElementById(
+    "activeCount"
+  );
+
+const inactiveCount =
+  document.getElementById(
+    "inactiveCount"
+  );
+
+const addModal =
+  document.getElementById(
+    "addModal"
+  );
+
+const deleteModal =
+  document.getElementById(
+    "deleteModal"
+  );
+
+const countryCode =
+  document.getElementById(
+    "countryCode"
+  );
+
+const countryName =
+  document.getElementById(
+    "countryName"
+  );
+
+const addError =
+  document.getElementById(
+    "addError"
+  );
+
+const saveCountryBtn =
+  document.getElementById(
+    "saveCountryBtn"
+  );
+
+const confirmDeleteBtn =
+  document.getElementById(
+    "confirmDeleteBtn"
+  );
+
+const toast =
+  document.getElementById(
+    "toast"
+  );
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer = null;
+
+function showToast(
+  message,
+  type = "success"
+){
+
+  clearTimeout(
+    toastTimer
+  );
+
+  toast.textContent =
+    message;
+
+  toast.className =
+    "toast show " +
+    type;
+
+  toastTimer =
+    setTimeout(
+      ()=>{
+        toast.className =
+          "toast";
+      },
+      3200
+    );
+
 }
 
-function escapeHtml(value){
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
 
-function formatDate(value){
-  if(!value) return "—";
-
-  const date = new Date(value);
-
-  if(Number.isNaN(date.getTime())) return "—";
-
-  return date.toLocaleDateString(undefined,{
-    year:"numeric",
-    month:"short",
-    day:"numeric"
-  });
-}
+/* =========================================================
+   ADMIN CHECK
+========================================================= */
 
 async function checkAdmin(){
 
   const {
-    data:{
-      session
-    }
-  } = await supabaseClient.auth.getSession();
+    data,
+    error
+  } =
+    await db.auth.getUser();
 
-  if(!session){
-    window.location.href = "login.html";
-    return false;
+
+  if(
+    error ||
+    !data ||
+    !data.user
+  ){
+
+    window.location.href =
+      "login.html";
+
+    return null;
+
   }
 
-  currentUser = session.user;
+
+  const user =
+    data.user;
+
 
   const {
     data:profile,
-    error
-  } = await supabaseClient
-    .from("profiles")
-    .select("role")
-    .eq("id",currentUser.id)
-    .maybeSingle();
+    error:profileError
+  } =
+    await db
+      .from("profiles")
+      .select("full_name,role")
+      .eq("id",user.id)
+      .maybeSingle();
 
-  if(error){
-    console.error(error);
-    showMessage("Unable to verify admin access.","error");
-    return false;
+
+  if(
+    profileError ||
+    !profile ||
+    profile.role !== "admin"
+  ){
+
+    window.location.href =
+      "dashboard.html";
+
+    return null;
+
   }
 
-  if(!profile || profile.role !== "admin"){
-    window.location.href = "dashboard.html";
-    return false;
-  }
 
-  return true;
+  const displayName =
+    profile.full_name ||
+    user.email ||
+    "Administrator";
+
+
+  document.getElementById(
+    "adminName"
+  ).textContent =
+    displayName;
+
+
+  document.getElementById(
+    "adminAvatar"
+  ).textContent =
+    displayName
+      .trim()
+      .charAt(0)
+      .toUpperCase();
+
+
+  return user;
+
 }
+
+
+/* =========================================================
+   LOAD COUNTRIES
+========================================================= */
 
 async function loadCountries(){
 
-  $("tableArea").innerHTML =
-    '<div class="loading">Loading countries...</div>';
+  tableContainer.innerHTML =
+    `
+      <div class="loading">
+        Loading countries...
+      </div>
+    `;
+
 
   const {
     data,
     error
-  } = await supabaseClient
-    .from("countries")
-    .select("*")
-    .order("name",{ascending:true});
+  } =
+    await db
+      .from("countries")
+      .select("id,name,code,is_active")
+      .order(
+        "name",
+        {
+          ascending:true
+        }
+      );
+
 
   if(error){
-    console.error(error);
 
-    $("tableArea").innerHTML =
-      '<div class="empty">' +
-      '<div class="empty-title">Unable to load countries</div>' +
-      '<div>Please refresh and try again.</div>' +
-      '</div>';
+    console.error(
+      "Countries load error:",
+      error
+    );
 
-    showMessage(error.message || "Unable to load countries.","error");
+
+    tableContainer.innerHTML =
+      `
+        <div class="empty">
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+          >
+
+            <circle cx="12" cy="12" r="9"/>
+
+            <path d="M12 8v4"/>
+
+            <path d="M12 16h.01"/>
+
+          </svg>
+
+          <strong>
+            Unable to load countries
+          </strong>
+
+          <span>
+            ${escapeHtml(error.message)}
+          </span>
+
+        </div>
+      `;
+
     return;
+
   }
 
-  countries = data || [];
+
+  countries =
+    data || [];
+
 
   updateStats();
-  renderCountries();
+
+  applyFilters();
+
 }
+
+
+/* =========================================================
+   UPDATE STATS
+========================================================= */
 
 function updateStats(){
 
-  const total = countries.length;
+  const total =
+    countries.length;
 
-  const active = countries.filter(
-    country => country.is_active === true
-  ).length;
 
-  const inactive = total - active;
+  const active =
+    countries.filter(
+      item =>
+        item.is_active === true
+    ).length;
 
-  $("totalCount").textContent = total;
-  $("activeCount").textContent = active;
-  $("inactiveCount").textContent = inactive;
+
+  const inactive =
+    total - active;
+
+
+  totalCount.textContent =
+    total;
+
+
+  activeCount.textContent =
+    active;
+
+
+  inactiveCount.textContent =
+    inactive;
+
 }
 
-function renderCountries(){
 
-  const query = $("searchInput").value
-    .trim()
-    .toLowerCase();
+/* =========================================================
+   FILTER
+========================================================= */
 
-  const filtered = countries.filter(country => {
+function applyFilters(){
 
-    const name = String(country.name || "").toLowerCase();
-    const code = String(country.code || "").toLowerCase();
+  const query =
+    searchInput.value
+      .trim()
+      .toLowerCase();
 
-    return name.includes(query) || code.includes(query);
-  });
 
-  $("tableCount").textContent =
-    `${filtered.length} ${filtered.length === 1 ? "country" : "countries"}`;
+  const filter =
+    statusFilter.value;
 
-  if(!filtered.length){
 
-    $("tableArea").innerHTML =
-      '<div class="empty">' +
-      '<div class="empty-title">' +
-      (countries.length ? "No countries found" : "No countries yet") +
-      '</div>' +
-      '<div>' +
-      (countries.length
-        ? "Try a different search."
-        : "Add your first country to begin.") +
-      '</div>' +
-      '</div>';
+  filteredCountries =
+    countries.filter(
+      item => {
+
+        const name =
+          String(
+            item.name || ""
+          )
+          .toLowerCase();
+
+
+        const code =
+          String(
+            item.code || ""
+          )
+          .toLowerCase();
+
+
+        const matchesSearch =
+          !query ||
+          name.includes(query) ||
+          code.includes(query);
+
+
+        const matchesStatus =
+          filter === "all" ||
+          (
+            filter === "active" &&
+            item.is_active === true
+          ) ||
+          (
+            filter === "inactive" &&
+            item.is_active !== true
+          );
+
+
+        return (
+          matchesSearch &&
+          matchesStatus
+        );
+
+      }
+    );
+
+
+  renderTable();
+
+}
+
+
+/* =========================================================
+   RENDER TABLE
+========================================================= */
+
+function renderTable(){
+
+  resultCount.textContent =
+    filteredCountries.length +
+    " shown";
+
+
+  if(!filteredCountries.length){
+
+    tableContainer.innerHTML =
+      `
+        <div class="empty">
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+          >
+
+            <circle cx="11" cy="11" r="7"/>
+
+            <path d="M20 20l-4-4"/>
+
+          </svg>
+
+          <strong>
+            No countries found
+          </strong>
+
+          <span>
+            Your countries table is currently empty.
+            Add countries or use the country import step.
+          </span>
+
+        </div>
+      `;
 
     return;
+
   }
 
-  let html = `
-    <div class="table-wrap">
+
+  const rows =
+    filteredCountries
+      .map(
+        item => {
+
+          const id =
+            item.id;
+
+
+          const code =
+            String(
+              item.code || ""
+            )
+            .toUpperCase();
+
+
+          const name =
+            item.name ||
+            "Unnamed country";
+
+
+          const active =
+            item.is_active === true;
+
+
+          return `
+            <tr>
+
+              <td>
+
+                <div class="country-cell">
+
+                  <div class="country-mark">
+                    ${escapeHtml(code || "—")}
+                  </div>
+
+                  <div class="country-name">
+                    ${escapeHtml(name)}
+                  </div>
+
+                </div>
+
+              </td>
+
+
+              <td>
+
+                <span class="code-text">
+                  ${escapeHtml(code || "—")}
+                </span>
+
+              </td>
+
+
+              <td>
+
+                <span class="status ${active ? "active" : "inactive"}">
+
+                  <span class="status-dot"></span>
+
+                  ${active ? "Active" : "Inactive"}
+
+                </span>
+
+              </td>
+
+
+              <td>
+
+                <div class="actions">
+
+                  <button
+                    class="action-btn ${active ? "disable" : "enable"}"
+                    onclick="toggleCountry(${JSON.stringify(id)},${active})"
+                  >
+                    ${active ? "Disable" : "Enable"}
+                  </button>
+
+
+                  <button
+                    class="action-btn delete"
+                    onclick="openDeleteModal(${JSON.stringify(id)})"
+                  >
+                    Delete
+                  </button>
+
+                </div>
+
+              </td>
+
+            </tr>
+          `;
+
+        }
+      )
+      .join("");
+
+
+  tableContainer.innerHTML =
+    `
       <table>
+
         <thead>
+
           <tr>
-            <th>Country</th>
-            <th>Code</th>
-            <th>Status</th>
-            <th>Created</th>
-            <th>Actions</th>
+
+            <th>
+              Country
+            </th>
+
+            <th>
+              Code
+            </th>
+
+            <th>
+              Status
+            </th>
+
+            <th>
+              Actions
+            </th>
+
           </tr>
+
         </thead>
+
         <tbody>
-  `;
-
-  filtered.forEach(country => {
-
-    const active = country.is_active === true;
-
-    html += `
-      <tr>
-        <td>
-          <div class="name-cell">
-            ${escapeHtml(country.name)}
-          </div>
-        </td>
-
-        <td>
-          <span class="code">
-            ${escapeHtml(country.code)}
-          </span>
-        </td>
-
-        <td>
-          <span class="badge ${active ? "active" : "inactive"}">
-            ${active ? "Active" : "Inactive"}
-          </span>
-        </td>
-
-        <td>
-          ${formatDate(country.created_at)}
-        </td>
-
-        <td>
-          <div class="actions">
-
-            <button
-              class="action-btn"
-              onclick="openEdit(${Number(country.id)})"
-            >
-              Edit
-            </button>
-
-            <button
-              class="action-btn ${active ? "" : "success"}"
-              onclick="toggleCountry(${Number(country.id)},${active})"
-            >
-              ${active ? "Disable" : "Enable"}
-            </button>
-
-            <button
-              class="action-btn danger"
-              onclick="deleteCountry(${Number(country.id)})"
-            >
-              Delete
-            </button>
-
-          </div>
-        </td>
-      </tr>
-    `;
-  });
-
-  html += `
+          ${rows}
         </tbody>
+
       </table>
-    </div>
-  `;
+    `;
 
-  $("tableArea").innerHTML = html;
 }
 
-async function addCountry(){
 
-  const name = $("countryName").value.trim();
-  const code = $("countryCode").value.trim().toUpperCase();
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
 
-  if(!name){
-    showMessage("Enter a country name.","error");
-    return;
-  }
+function escapeHtml(value){
 
-  if(!code){
-    showMessage("Enter a country code.","error");
-    return;
-  }
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 
-  $("quickAddBtn").disabled = true;
-
-  const {
-    error
-  } = await supabaseClient
-    .from("countries")
-    .insert({
-      name,
-      code,
-      is_active:true
-    });
-
-  $("quickAddBtn").disabled = false;
-
-  if(error){
-    console.error(error);
-
-    if(error.code === "23505"){
-      showMessage("That country name or code already exists.","error");
-    }else{
-      showMessage(
-        error.message || "Unable to add country.",
-        "error"
-      );
-    }
-
-    return;
-  }
-
-  $("countryName").value = "";
-  $("countryCode").value = "";
-
-  showMessage("Country added successfully.");
-
-  await loadCountries();
 }
 
-function openEdit(id){
 
-  const country = countries.find(
-    item => Number(item.id) === Number(id)
+/* =========================================================
+   ADD COUNTRY
+========================================================= */
+
+function openAddModal(){
+
+  countryCode.value =
+    "";
+
+  countryName.value =
+    "";
+
+  addError.classList.remove(
+    "show"
   );
 
-  if(!country) return;
+  addError.textContent =
+    "";
 
-  $("editId").value = country.id;
-  $("editName").value = country.name || "";
-  $("editCode").value = country.code || "";
+  addModal.classList.add(
+    "show"
+  );
 
-  $("editModal").classList.add("show");
+  setTimeout(
+    ()=>{
+      countryCode.focus();
+    },
+    50
+  );
+
 }
 
-function closeEdit(){
-  $("editModal").classList.remove("show");
+
+function closeAddModal(){
+
+  addModal.classList.remove(
+    "show"
+  );
+
 }
 
-async function saveEdit(){
 
-  const id = $("editId").value;
-  const name = $("editName").value.trim();
-  const code = $("editCode").value.trim().toUpperCase();
+document
+  .getElementById("addCountryBtn")
+  .addEventListener(
+    "click",
+    openAddModal
+  );
 
-  if(!name){
-    showMessage("Enter a country name.","error");
-    return;
-  }
 
-  if(!code){
-    showMessage("Enter a country code.","error");
-    return;
-  }
+/* =========================================================
+   SAVE COUNTRY
+========================================================= */
 
-  $("saveEditBtn").disabled = true;
+saveCountryBtn.addEventListener(
+  "click",
+  async()=>{
 
-  const {
-    error
-  } = await supabaseClient
-    .from("countries")
-    .update({
-      name,
-      code
-    })
-    .eq("id",id);
+    const code =
+      countryCode.value
+        .trim()
+        .toUpperCase();
 
-  $("saveEditBtn").disabled = false;
 
-  if(error){
-    console.error(error);
+    const name =
+      countryName.value
+        .trim();
 
-    if(error.code === "23505"){
-      showMessage("That country name or code already exists.","error");
-    }else{
-      showMessage(
-        error.message || "Unable to update country.",
-        "error"
+
+    addError.classList.remove(
+      "show"
+    );
+
+
+    if(
+      !/^[A-Z]{2}$/.test(code)
+    ){
+
+      addError.textContent =
+        "Country code must contain exactly two letters, for example NG.";
+
+      addError.classList.add(
+        "show"
       );
+
+      countryCode.focus();
+
+      return;
+
     }
 
-    return;
+
+    if(
+      name.length < 2
+    ){
+
+      addError.textContent =
+        "Please enter a valid country name.";
+
+      addError.classList.add(
+        "show"
+      );
+
+      countryName.focus();
+
+      return;
+
+    }
+
+
+    const duplicate =
+      countries.some(
+        item =>
+          String(
+            item.code || ""
+          ).toUpperCase() ===
+          code
+      );
+
+
+    if(duplicate){
+
+      addError.textContent =
+        "A country with this code already exists.";
+
+      addError.classList.add(
+        "show"
+      );
+
+      countryCode.focus();
+
+      return;
+
+    }
+
+
+    saveCountryBtn.disabled =
+      true;
+
+    saveCountryBtn.textContent =
+      "Adding...";
+
+
+    try{
+
+      const {
+        error
+      } =
+        await db
+          .from("countries")
+          .insert({
+            name:name,
+            code:code,
+            is_active:true
+          });
+
+
+      if(error){
+        throw error;
+      }
+
+
+      closeAddModal();
+
+
+      showToast(
+        name +
+        " was added successfully."
+      );
+
+
+      await loadCountries();
+
+
+    }catch(error){
+
+      console.error(
+        "Add country error:",
+        error
+      );
+
+
+      addError.textContent =
+        error.message ||
+        "Unable to add country.";
+
+      addError.classList.add(
+        "show"
+      );
+
+
+    }finally{
+
+      saveCountryBtn.disabled =
+        false;
+
+      saveCountryBtn.textContent =
+        "Add country";
+
+    }
+
   }
+);
 
-  closeEdit();
 
-  showMessage("Country updated successfully.");
+/* =========================================================
+   TOGGLE COUNTRY
+========================================================= */
 
-  await loadCountries();
-}
+async function toggleCountry(
+  id,
+  currentlyActive
+){
 
-async function toggleCountry(id,currentStatus){
+  const nextStatus =
+    !currentlyActive;
 
-  const newStatus = !currentStatus;
 
   const {
     error
-  } = await supabaseClient
-    .from("countries")
-    .update({
-      is_active:newStatus
-    })
-    .eq("id",id);
+  } =
+    await db
+      .from("countries")
+      .update({
+        is_active:
+          nextStatus
+      })
+      .eq(
+        "id",
+        id
+      );
+
 
   if(error){
-    console.error(error);
 
-    showMessage(
-      error.message || "Unable to update country status.",
+    console.error(
+      "Country status error:",
+      error
+    );
+
+
+    showToast(
+      error.message ||
+      "Unable to update country.",
       "error"
     );
 
     return;
+
   }
 
-  showMessage(
-    newStatus
-      ? "Country enabled successfully."
-      : "Country disabled successfully."
+
+  showToast(
+    nextStatus
+      ? "Country enabled."
+      : "Country disabled."
   );
+
 
   await loadCountries();
+
 }
 
-async function deleteCountry(id){
 
-  const country = countries.find(
-    item => Number(item.id) === Number(id)
-  );
+/* =========================================================
+   DELETE
+========================================================= */
 
-  if(!country) return;
+function openDeleteModal(id){
 
-  const confirmed = window.confirm(
-    `Delete "${country.name}"? This action cannot be undone.`
-  );
-
-  if(!confirmed) return;
-
-  const {
-    error
-  } = await supabaseClient
-    .from("countries")
-    .delete()
-    .eq("id",id);
-
-  if(error){
-    console.error(error);
-
-    showMessage(
-      error.message || "Unable to delete country.",
-      "error"
+  const item =
+    countries.find(
+      country =>
+        String(country.id) ===
+        String(id)
     );
 
+
+  if(!item){
     return;
   }
 
-  showMessage("Country deleted successfully.");
+
+  deleteCountryId =
+    id;
+
+
+  document.getElementById(
+    "deleteText"
+  ).textContent =
+    "Are you sure you want to delete " +
+    item.name +
+    "? This removes it from the supported countries table.";
+
+
+  deleteModal.classList.add(
+    "show"
+  );
+
+}
+
+
+function closeDeleteModal(){
+
+  deleteCountryId =
+    null;
+
+  deleteModal.classList.remove(
+    "show"
+  );
+
+}
+
+
+confirmDeleteBtn.addEventListener(
+  "click",
+  async()=>{
+
+    if(
+      deleteCountryId === null
+    ){
+      return;
+    }
+
+
+    confirmDeleteBtn.disabled =
+      true;
+
+    confirmDeleteBtn.textContent =
+      "Deleting...";
+
+
+    try{
+
+      const {
+        error
+      } =
+        await db
+          .from("countries")
+          .delete()
+          .eq(
+            "id",
+            deleteCountryId
+          );
+
+
+      if(error){
+        throw error;
+      }
+
+
+      closeDeleteModal();
+
+
+      showToast(
+        "Country deleted successfully."
+      );
+
+
+      await loadCountries();
+
+
+    }catch(error){
+
+      console.error(
+        "Delete country error:",
+        error
+      );
+
+
+      showToast(
+        error.message ||
+        "Unable to delete country.",
+        "error"
+      );
+
+
+    }finally{
+
+      confirmDeleteBtn.disabled =
+        false;
+
+      confirmDeleteBtn.textContent =
+        "Delete country";
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+searchInput.addEventListener(
+  "input",
+  applyFilters
+);
+
+
+statusFilter.addEventListener(
+  "change",
+  applyFilters
+);
+
+
+/* =========================================================
+   MODAL BACKDROP
+========================================================= */
+
+addModal.addEventListener(
+  "click",
+  event=>{
+
+    if(
+      event.target === addModal
+    ){
+
+      closeAddModal();
+
+    }
+
+  }
+);
+
+
+deleteModal.addEventListener(
+  "click",
+  event=>{
+
+    if(
+      event.target === deleteModal
+    ){
+
+      closeDeleteModal();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  event=>{
+
+    if(
+      event.key === "Escape"
+    ){
+
+      closeAddModal();
+
+      closeDeleteModal();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   MOBILE SIDEBAR
+========================================================= */
+
+const sidebar =
+  document.getElementById(
+    "sidebar"
+  );
+
+const sidebarOverlay =
+  document.getElementById(
+    "sidebarOverlay"
+  );
+
+const mobileMenu =
+  document.getElementById(
+    "mobileMenu"
+  );
+
+
+function openSidebar(){
+
+  sidebar.classList.add(
+    "open"
+  );
+
+  sidebarOverlay.classList.add(
+    "show"
+  );
+
+}
+
+
+function closeSidebar(){
+
+  sidebar.classList.remove(
+    "open"
+  );
+
+  sidebarOverlay.classList.remove(
+    "show"
+  );
+
+}
+
+
+mobileMenu.addEventListener(
+  "click",
+  openSidebar
+);
+
+
+sidebarOverlay.addEventListener(
+  "click",
+  closeSidebar
+);
+
+
+document
+  .querySelectorAll(".nav-link")
+  .forEach(
+    link=>{
+
+      link.addEventListener(
+        "click",
+        closeSidebar
+      );
+
+    }
+  );
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+(async function(){
+
+  const user =
+    await checkAdmin();
+
+
+  if(!user){
+    return;
+  }
+
 
   await loadCountries();
-}
 
-function setupMenu(){
+})();
 
-  $("menuBtn").addEventListener("click",() => {
-    $("sidebar").classList.add("open");
-    $("overlay").classList.add("show");
-  });
-
-  $("overlay").addEventListener("click",() => {
-    $("sidebar").classList.remove("open");
-    $("overlay").classList.remove("show");
-  });
-
-  document.querySelectorAll(".nav a").forEach(link => {
-    link.addEventListener("click",() => {
-      $("sidebar").classList.remove("open");
-      $("overlay").classList.remove("show");
-    });
-  });
-}
-
-function setupEvents(){
-
-  $("quickAddBtn").addEventListener(
-    "click",
-    addCountry
-  );
-
-  $("refreshBtn").addEventListener(
-    "click",
-    loadCountries
-  );
-
-  $("searchInput").addEventListener(
-    "input",
-    renderCountries
-  );
-
-  $("openAddBtn").addEventListener(
-    "click",
-    () => {
-      $("countryName").focus();
-    }
-  );
-
-  $("cancelEditBtn").addEventListener(
-    "click",
-    closeEdit
-  );
-
-  $("saveEditBtn").addEventListener(
-    "click",
-    saveEdit
-  );
-
-  $("editModal").addEventListener(
-    "click",
-    event => {
-      if(event.target === $("editModal")){
-        closeEdit();
-      }
-    }
-  );
-
-  $("countryCode").addEventListener(
-    "input",
-    event => {
-      event.target.value =
-        event.target.value.toUpperCase();
-    }
-  );
-
-  $("editCode").addEventListener(
-    "input",
-    event => {
-      event.target.value =
-        event.target.value.toUpperCase();
-    }
-  );
-
-  $("countryName").addEventListener(
-    "keydown",
-    event => {
-      if(event.key === "Enter"){
-        addCountry();
-      }
-    }
-  );
-
-  $("countryCode").addEventListener(
-    "keydown",
-    event => {
-      if(event.key === "Enter"){
-        addCountry();
-      }
-    }
-  );
-}
-
-async function init(){
-
-  setupMenu();
-  setupEvents();
-
-  const isAdmin = await checkAdmin();
-
-  if(!isAdmin) return;
-
-  await loadCountries();
-}
-
-init();
 </script>
 
 </body>
