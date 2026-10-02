@@ -302,10 +302,15 @@
       font-size:12px;
       font-weight:800;
       cursor:pointer;
+      transition:.15s ease;
     }
 
     .start-btn:active{
       transform:scale(.98);
+    }
+
+    .start-btn:disabled{
+      cursor:wait;
     }
 
     .state-card{
@@ -549,6 +554,7 @@
       .start-btn{
         padding:8px 12px;
       }
+
     }
   </style>
 </head>
@@ -855,6 +861,7 @@
     class="menu-item"
     onclick="location.href='dashboard.html'"
   >
+
     <svg
       viewBox="0 0 24 24"
       fill="none"
@@ -864,13 +871,16 @@
       <path d="m3 11 9-8 9 8"></path>
       <path d="M5 10v10h14V10"></path>
     </svg>
+
     Dashboard
+
   </button>
 
   <button
     class="menu-item"
     onclick="location.href='tasks.html'"
   >
+
     <svg
       viewBox="0 0 24 24"
       fill="none"
@@ -882,13 +892,16 @@
       <path d="M8 12h8"></path>
       <path d="M8 16h5"></path>
     </svg>
+
     Earn Tasks
+
   </button>
 
   <button
     class="menu-item"
     onclick="location.href='referrals.html'"
   >
+
     <svg
       viewBox="0 0 24 24"
       fill="none"
@@ -900,13 +913,16 @@
       <path d="M16 11a4 4 0 1 0 0-8"></path>
       <path d="M21 21v-2a6 6 0 0 0-4-5.65"></path>
     </svg>
+
     Referrals
+
   </button>
 
   <button
     class="menu-item"
     onclick="location.href='withdraw.html'"
   >
+
     <svg
       viewBox="0 0 24 24"
       fill="none"
@@ -917,13 +933,16 @@
       <path d="m7 12 5 5 5-5"></path>
       <path d="M5 21h14"></path>
     </svg>
+
     Withdraw
+
   </button>
 
   <button
     class="menu-item"
     onclick="location.href='history.html'"
   >
+
     <svg
       viewBox="0 0 24 24"
       fill="none"
@@ -934,13 +953,16 @@
       <path d="M3 4v5h5"></path>
       <path d="M12 7v5l3 2"></path>
     </svg>
+
     History
+
   </button>
 
   <button
     class="menu-item"
     onclick="location.href='notifications.html'"
   >
+
     <svg
       viewBox="0 0 24 24"
       fill="none"
@@ -950,13 +972,16 @@
       <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
       <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
     </svg>
+
     Notifications
+
   </button>
 
   <button
     class="menu-item"
     onclick="location.href='profile.html'"
   >
+
     <svg
       viewBox="0 0 24 24"
       fill="none"
@@ -966,13 +991,16 @@
       <circle cx="12" cy="8" r="4"></circle>
       <path d="M4 21a8 8 0 0 1 16 0"></path>
     </svg>
+
     Profile
+
   </button>
 
   <button
     class="menu-item"
     id="themeBtn"
   >
+
     <svg
       viewBox="0 0 24 24"
       fill="none"
@@ -989,13 +1017,16 @@
       <path d="m6.34 17.66-1.41 1.41"></path>
       <path d="m19.07 4.93-1.41 1.41"></path>
     </svg>
+
     Toggle Theme
+
   </button>
 
   <button
     class="menu-item"
     id="logoutBtn"
   >
+
     <svg
       viewBox="0 0 24 24"
       fill="none"
@@ -1006,7 +1037,9 @@
       <path d="M15 12H3"></path>
       <path d="M21 19V5a2 2 0 0 0-2-2h-6"></path>
     </svg>
+
     Sign Out
+
   </button>
 
 </aside>
@@ -1064,12 +1097,12 @@ function cleanProviderText(value, fallback){
 
   text =
     text
-      .replace(/CPA\s*Grip/gi,"Available Offer")
       .replace(/CPA\s*Grip\s*Offers/gi,"Available Offers")
-      .replace(/AdBlueMedia/gi,"Available Offer")
-      .replace(/AdBlue\s*Media/gi,"Available Offer")
+      .replace(/CPA\s*Grip/gi,"Available Offer")
       .replace(/AdBlueMedia\s*Offers/gi,"Available Offers")
-      .replace(/AdBlue\s*Media\s*Offers/gi,"Available Offers");
+      .replace(/AdBlue\s*Media\s*Offers/gi,"Available Offers")
+      .replace(/AdBlueMedia/gi,"Available Offer")
+      .replace(/AdBlue\s*Media/gi,"Available Offer");
 
   return text.trim() || fallback;
 }
@@ -1133,7 +1166,6 @@ function categoryIcon(category){
 
   }
 
-
   if(category === "app"){
 
     return `
@@ -1156,7 +1188,6 @@ function categoryIcon(category){
 
   }
 
-
   return `
     <svg
       viewBox="0 0 24 24"
@@ -1174,9 +1205,7 @@ function categoryIcon(category){
 
 
 let currentUser = null;
-
 let allOffers = [];
-
 let currentFilter = "all";
 
 
@@ -1354,29 +1383,51 @@ async function loadOffers(){
     $("taskList");
 
   taskList.innerHTML = `
+
     <div class="skeleton-card">
+
       <div class="skeleton-row">
+
         <div class="skeleton skeleton-image"></div>
+
         <div class="skeleton-content">
+
           <div class="skeleton skeleton-title"></div>
+
           <div class="skeleton skeleton-text"></div>
+
           <div class="skeleton skeleton-text small"></div>
+
         </div>
+
       </div>
+
       <div class="skeleton skeleton-button"></div>
+
     </div>
 
     <div class="skeleton-card">
+
       <div class="skeleton-row">
+
         <div class="skeleton skeleton-image"></div>
+
         <div class="skeleton-content">
+
           <div class="skeleton skeleton-title"></div>
+
           <div class="skeleton skeleton-text"></div>
+
           <div class="skeleton skeleton-text small"></div>
+
         </div>
+
       </div>
+
       <div class="skeleton skeleton-button"></div>
+
     </div>
+
   `;
 
   $("taskCount").textContent =
@@ -1400,6 +1451,7 @@ async function loadOffers(){
         "login.html";
 
       return;
+
     }
 
     const requestUrl =
@@ -1697,9 +1749,9 @@ function renderOffers(){
 
 /* =========================================================
    OPEN OFFER THROUGH TALLYBUCK EDGE FUNCTION
-========================================================= */
+   ========================================================= */
 
-function openOffer(encodedId){
+async function openOffer(encodedId){
 
   const id =
     decodeURIComponent(
@@ -1713,26 +1765,175 @@ function openOffer(encodedId){
       }
     );
 
-  if(!offer){
-    return;
-  }
+  if(!offer || !offer.url){
 
-  if(!offer.url){
-    return;
-  }
-
-  const redirectUrl =
-    OPEN_OFFER_FUNCTION +
-    "?url=" +
-    encodeURIComponent(
-      offer.url
+    alert(
+      "This opportunity is unavailable."
     );
 
-  window.open(
-    redirectUrl,
-    "_blank",
-    "noopener,noreferrer"
+    return;
+
+  }
+
+  const buttons =
+    document.querySelectorAll(
+      ".start-btn"
+    );
+
+  let clickedButton = null;
+
+  buttons.forEach(
+    function(button){
+
+      const onclickValue =
+        button.getAttribute(
+          "onclick"
+        ) || "";
+
+      if(
+        onclickValue.includes(
+          encodedId
+        )
+      ){
+
+        clickedButton =
+          button;
+
+      }
+
+    }
   );
+
+  const originalText =
+    clickedButton
+      ? clickedButton.textContent
+      : "Start";
+
+  try{
+
+    if(clickedButton){
+
+      clickedButton.disabled =
+        true;
+
+      clickedButton.textContent =
+        "Opening...";
+
+      clickedButton.style.opacity =
+        "0.7";
+
+    }
+
+    const {
+      data:{
+        session
+      }
+    } =
+      await db.auth.getSession();
+
+    if(!session){
+
+      window.location.href =
+        "login.html";
+
+      return;
+
+    }
+
+    const response =
+      await fetch(
+        OPEN_OFFER_FUNCTION,
+        {
+          method:"POST",
+
+          headers:{
+            "Authorization":
+              "Bearer " +
+              session.access_token,
+
+            "apikey":
+              SUPABASE_KEY,
+
+            "Content-Type":
+              "application/json"
+          },
+
+          body:JSON.stringify({
+
+            offer_id:
+              offer.id,
+
+            url:
+              offer.url
+
+          })
+
+        }
+      );
+
+    const data =
+      await response
+        .json()
+        .catch(
+          function(){
+            return {};
+          }
+        );
+
+    if(!response.ok){
+
+      throw new Error(
+
+        data.error ||
+        data.message ||
+        "Unable to open this opportunity."
+
+      );
+
+    }
+
+    if(!data.url){
+
+      throw new Error(
+        "No offer destination was returned."
+      );
+
+    }
+
+    window.open(
+      data.url,
+      "_blank",
+      "noopener,noreferrer"
+    );
+
+  }catch(error){
+
+    console.error(
+      "Open offer error:",
+      error
+    );
+
+    alert(
+      error.message ||
+      "Unable to open this opportunity. Please try again."
+    );
+
+  }finally{
+
+    if(clickedButton){
+
+      clickedButton.disabled =
+        false;
+
+      clickedButton.textContent =
+        originalText;
+
+      clickedButton.style.opacity =
+        "1";
+
+    }
+
+  }
 
 }
 
@@ -1747,7 +1948,9 @@ document
         function(){
 
           document
-            .querySelectorAll(".filter-btn")
+            .querySelectorAll(
+              ".filter-btn"
+            )
             .forEach(
               function(item){
 
