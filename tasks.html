@@ -1022,6 +1022,9 @@ const SUPABASE_KEY =
 const OFFERS_FUNCTION =
   "https://cetsxdkoauucxwsbdktl.supabase.co/functions/v1/get-offers";
 
+const OPEN_OFFER_FUNCTION =
+  "https://cetsxdkoauucxwsbdktl.supabase.co/functions/v1/open-offer";
+
 const db =
   window.supabase.createClient(
     SUPABASE_URL,
@@ -1046,11 +1049,9 @@ function escapeHtml(value){
 }
 
 
-/*
-=========================================================
-USER-FACING PROVIDER NAME CLEANUP
-=========================================================
-*/
+/* =========================================================
+   USER-FACING PROVIDER NAME CLEANUP
+========================================================= */
 
 function cleanProviderText(value, fallback){
 
@@ -1694,6 +1695,10 @@ function renderOffers(){
 }
 
 
+/* =========================================================
+   OPEN OFFER THROUGH TALLYBUCK EDGE FUNCTION
+========================================================= */
+
 function openOffer(encodedId){
 
   const id =
@@ -1716,8 +1721,15 @@ function openOffer(encodedId){
     return;
   }
 
+  const redirectUrl =
+    OPEN_OFFER_FUNCTION +
+    "?url=" +
+    encodeURIComponent(
+      offer.url
+    );
+
   window.open(
-    offer.url,
+    redirectUrl,
     "_blank",
     "noopener,noreferrer"
   );
