@@ -62,10 +62,6 @@
       padding-bottom:90px;
     }
 
-    /* =========================================================
-       HEADER
-    ========================================================= */
-
     .topbar{
       position:sticky;
       top:0;
@@ -136,10 +132,6 @@
       border:2px solid var(--card);
     }
 
-    /* =========================================================
-       CONTENT
-    ========================================================= */
-
     .content{
       padding:18px;
     }
@@ -158,10 +150,6 @@
       font-size:14px;
       line-height:1.5;
     }
-
-    /* =========================================================
-       FILTERS
-    ========================================================= */
 
     .filters{
       display:flex;
@@ -194,10 +182,6 @@
       color:#fff;
     }
 
-    /* =========================================================
-       SECTION HEADER
-    ========================================================= */
-
     .section-header{
       display:flex;
       align-items:center;
@@ -214,10 +198,6 @@
       color:var(--muted);
       font-size:12px;
     }
-
-    /* =========================================================
-       TASK CARD
-    ========================================================= */
 
     .task-list{
       display:flex;
@@ -328,10 +308,6 @@
       transform:scale(.98);
     }
 
-    /* =========================================================
-       STATES
-    ========================================================= */
-
     .state-card{
       background:var(--card);
       border:1px solid var(--border);
@@ -381,10 +357,6 @@
       font-weight:800;
       cursor:pointer;
     }
-
-    /* =========================================================
-       SKELETON
-    ========================================================= */
 
     .skeleton-card{
       background:var(--card);
@@ -448,14 +420,11 @@
       0%{
         background-position:200% 0;
       }
+
       100%{
         background-position:-200% 0;
       }
     }
-
-    /* =========================================================
-       BOTTOM NAV
-    ========================================================= */
 
     .bottom-nav{
       position:fixed;
@@ -492,10 +461,6 @@
     .nav-item.active{
       color:var(--green);
     }
-
-    /* =========================================================
-       SIDE MENU
-    ========================================================= */
 
     .menu-overlay{
       display:none;
@@ -592,7 +557,6 @@
 
 <div class="app">
 
-  <!-- HEADER -->
   <header class="topbar">
 
     <a href="dashboard.html" class="brand">
@@ -652,8 +616,6 @@
 
   </header>
 
-
-  <!-- CONTENT -->
   <main class="content">
 
     <section class="page-header">
@@ -666,8 +628,6 @@
 
     </section>
 
-
-    <!-- FILTERS -->
     <div class="filters">
 
       <button
@@ -700,8 +660,6 @@
 
     </div>
 
-
-    <!-- TASK SECTION -->
     <section>
 
       <div class="section-header">
@@ -719,13 +677,11 @@
 
       </div>
 
-
       <div
         class="task-list"
         id="taskList"
       >
 
-        <!-- SKELETON -->
         <div class="skeleton-card">
 
           <div class="skeleton-row">
@@ -747,7 +703,6 @@
           <div class="skeleton skeleton-button"></div>
 
         </div>
-
 
         <div class="skeleton-card">
 
@@ -777,8 +732,6 @@
 
   </main>
 
-
-  <!-- BOTTOM NAV -->
   <nav class="bottom-nav">
 
     <a
@@ -799,7 +752,6 @@
       Home
 
     </a>
-
 
     <a
       href="tasks.html"
@@ -822,7 +774,6 @@
 
     </a>
 
-
     <a
       href="referrals.html"
       class="nav-item"
@@ -843,7 +794,6 @@
       Referrals
 
     </a>
-
 
     <a
       href="profile.html"
@@ -868,13 +818,10 @@
 
 </div>
 
-
-<!-- SIDE MENU -->
 <div
   class="menu-overlay"
   id="menuOverlay"
 ></div>
-
 
 <aside
   class="side-menu"
@@ -904,12 +851,10 @@
 
   </div>
 
-
   <button
     class="menu-item"
     onclick="location.href='dashboard.html'"
   >
-
     <svg
       viewBox="0 0 24 24"
       fill="none"
@@ -919,17 +864,13 @@
       <path d="m3 11 9-8 9 8"></path>
       <path d="M5 10v10h14V10"></path>
     </svg>
-
     Dashboard
-
   </button>
-
 
   <button
     class="menu-item"
     onclick="location.href='tasks.html'"
   >
-
     <svg
       viewBox="0 0 24 24"
       fill="none"
@@ -941,17 +882,13 @@
       <path d="M8 12h8"></path>
       <path d="M8 16h5"></path>
     </svg>
-
     Earn Tasks
-
   </button>
-
 
   <button
     class="menu-item"
     onclick="location.href='referrals.html'"
   >
-
     <svg
       viewBox="0 0 24 24"
       fill="none"
@@ -963,17 +900,13 @@
       <path d="M16 11a4 4 0 1 0 0-8"></path>
       <path d="M21 21v-2a6 6 0 0 0-4-5.65"></path>
     </svg>
-
     Referrals
-
   </button>
-
 
   <button
     class="menu-item"
     onclick="location.href='withdraw.html'"
   >
-
     <svg
       viewBox="0 0 24 24"
       fill="none"
@@ -984,17 +917,13 @@
       <path d="m7 12 5 5 5-5"></path>
       <path d="M5 21h14"></path>
     </svg>
-
     Withdraw
-
   </button>
-
 
   <button
     class="menu-item"
     onclick="location.href='history.html'"
   >
-
     <svg
       viewBox="0 0 24 24"
       fill="none"
@@ -1005,17 +934,13 @@
       <path d="M3 4v5h5"></path>
       <path d="M12 7v5l3 2"></path>
     </svg>
-
     History
-
   </button>
-
 
   <button
     class="menu-item"
     onclick="location.href='notifications.html'"
   >
-
     <svg
       viewBox="0 0 24 24"
       fill="none"
@@ -1025,17 +950,13 @@
       <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
       <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
     </svg>
-
     Notifications
-
   </button>
-
 
   <button
     class="menu-item"
     onclick="location.href='profile.html'"
   >
-
     <svg
       viewBox="0 0 24 24"
       fill="none"
@@ -1045,17 +966,13 @@
       <circle cx="12" cy="8" r="4"></circle>
       <path d="M4 21a8 8 0 0 1 16 0"></path>
     </svg>
-
     Profile
-
   </button>
-
 
   <button
     class="menu-item"
     id="themeBtn"
   >
-
     <svg
       viewBox="0 0 24 24"
       fill="none"
@@ -1072,17 +989,13 @@
       <path d="m6.34 17.66-1.41 1.41"></path>
       <path d="m19.07 4.93-1.41 1.41"></path>
     </svg>
-
     Toggle Theme
-
   </button>
-
 
   <button
     class="menu-item"
     id="logoutBtn"
   >
-
     <svg
       viewBox="0 0 24 24"
       fill="none"
@@ -1093,19 +1006,12 @@
       <path d="M15 12H3"></path>
       <path d="M21 19V5a2 2 0 0 0-2-2h-6"></path>
     </svg>
-
     Sign Out
-
   </button>
 
 </aside>
 
-
 <script>
-
-/* =========================================================
-   SUPABASE
-========================================================= */
 
 const SUPABASE_URL =
   "https://cetsxdkoauucxwsbdktl.supabase.co";
@@ -1116,17 +1022,12 @@ const SUPABASE_KEY =
 const OFFERS_FUNCTION =
   "https://cetsxdkoauucxwsbdktl.supabase.co/functions/v1/get-offers";
 
-
 const db =
   window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
   );
 
-
-/* =========================================================
-   HELPERS
-========================================================= */
 
 function $(id){
   return document.getElementById(id);
@@ -1141,6 +1042,35 @@ function escapeHtml(value){
     .replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;")
     .replace(/'/g,"&#039;");
+
+}
+
+
+/*
+=========================================================
+USER-FACING PROVIDER NAME CLEANUP
+=========================================================
+*/
+
+function cleanProviderText(value, fallback){
+
+  let text =
+    String(value || "").trim();
+
+  if(!text){
+    return fallback;
+  }
+
+  text =
+    text
+      .replace(/CPA\s*Grip/gi,"Available Offer")
+      .replace(/CPA\s*Grip\s*Offers/gi,"Available Offers")
+      .replace(/AdBlueMedia/gi,"Available Offer")
+      .replace(/AdBlue\s*Media/gi,"Available Offer")
+      .replace(/AdBlueMedia\s*Offers/gi,"Available Offers")
+      .replace(/AdBlue\s*Media\s*Offers/gi,"Available Offers");
+
+  return text.trim() || fallback;
 }
 
 
@@ -1199,6 +1129,7 @@ function categoryIcon(category){
         <path d="M8 16h4"></path>
       </svg>
     `;
+
   }
 
 
@@ -1221,6 +1152,7 @@ function categoryIcon(category){
         <path d="M10 18h4"></path>
       </svg>
     `;
+
   }
 
 
@@ -1236,28 +1168,16 @@ function categoryIcon(category){
       <path d="M12 8v8"></path>
     </svg>
   `;
+
 }
 
 
-/* =========================================================
-   AUTH
-========================================================= */
-
 let currentUser = null;
-
-
-/* =========================================================
-   OFFERS
-========================================================= */
 
 let allOffers = [];
 
 let currentFilter = "all";
 
-
-/* =========================================================
-   COUNTRY
-========================================================= */
 
 async function detectCountry(){
 
@@ -1289,13 +1209,11 @@ async function detectCountry(){
     );
 
     return "";
+
   }
+
 }
 
-
-/* =========================================================
-   NORMALIZE OFFER
-========================================================= */
 
 function normalizeOffer(raw){
 
@@ -1303,28 +1221,36 @@ function normalizeOffer(raw){
     return null;
   }
 
-
   const id =
     raw.id ??
     raw.offer_id ??
     raw.offerId ??
     raw.external_id;
 
-
-  const title =
+  const rawTitle =
     raw.title ??
     raw.name ??
     raw.offer_title ??
     raw.offer_name ??
     "Available Opportunity";
 
+  const title =
+    cleanProviderText(
+      rawTitle,
+      "Available Opportunity"
+    );
 
-  const description =
+  const rawDescription =
     raw.description ??
     raw.short_description ??
     raw.desc ??
     "Complete this opportunity to earn a verified reward.";
 
+  const description =
+    cleanProviderText(
+      rawDescription,
+      "Complete this opportunity to earn a verified reward."
+    );
 
   const url =
     raw.url ??
@@ -1332,7 +1258,6 @@ function normalizeOffer(raw){
     raw.offer_url ??
     raw.link ??
     raw.tracking_url;
-
 
   const reward =
     Number(
@@ -1343,14 +1268,12 @@ function normalizeOffer(raw){
       0
     );
 
-
   const image =
     raw.image ??
     raw.image_url ??
     raw.icon ??
     raw.thumbnail ??
     "";
-
 
   const category =
     normalizeCategory(
@@ -1360,7 +1283,6 @@ function normalizeOffer(raw){
       raw.vertical
     );
 
-
   if(
     !id ||
     !url ||
@@ -1369,7 +1291,6 @@ function normalizeOffer(raw){
   ){
     return null;
   }
-
 
   return {
 
@@ -1388,12 +1309,9 @@ function normalizeOffer(raw){
     category:category
 
   };
+
 }
 
-
-/* =========================================================
-   EXTRACT OFFERS
-========================================================= */
 
 function extractOffers(data){
 
@@ -1401,21 +1319,17 @@ function extractOffers(data){
     return data;
   }
 
-
   if(!data || typeof data !== "object"){
     return [];
   }
-
 
   if(Array.isArray(data.offers)){
     return data.offers;
   }
 
-
   if(Array.isArray(data.data)){
     return data.data;
   }
-
 
   if(
     data.data &&
@@ -1424,82 +1338,53 @@ function extractOffers(data){
     return data.data.offers;
   }
 
-
   if(Array.isArray(data.results)){
     return data.results;
   }
 
-
   return [];
+
 }
 
-
-/* =========================================================
-   LOAD OFFERS
-========================================================= */
 
 async function loadOffers(){
 
   const taskList =
     $("taskList");
 
-
   taskList.innerHTML = `
     <div class="skeleton-card">
-
       <div class="skeleton-row">
-
         <div class="skeleton skeleton-image"></div>
-
         <div class="skeleton-content">
-
           <div class="skeleton skeleton-title"></div>
-
           <div class="skeleton skeleton-text"></div>
-
           <div class="skeleton skeleton-text small"></div>
-
         </div>
-
       </div>
-
       <div class="skeleton skeleton-button"></div>
-
     </div>
 
     <div class="skeleton-card">
-
       <div class="skeleton-row">
-
         <div class="skeleton skeleton-image"></div>
-
         <div class="skeleton-content">
-
           <div class="skeleton skeleton-title"></div>
-
           <div class="skeleton skeleton-text"></div>
-
           <div class="skeleton skeleton-text small"></div>
-
         </div>
-
       </div>
-
       <div class="skeleton skeleton-button"></div>
-
     </div>
   `;
 
-
   $("taskCount").textContent =
     "Loading...";
-
 
   try{
 
     const country =
       await detectCountry();
-
 
     const {
       data:{
@@ -1507,7 +1392,6 @@ async function loadOffers(){
       }
     } =
       await db.auth.getSession();
-
 
     if(!session){
 
@@ -1517,12 +1401,10 @@ async function loadOffers(){
       return;
     }
 
-
     const requestUrl =
       new URL(
         OFFERS_FUNCTION
       );
-
 
     if(country){
 
@@ -1532,7 +1414,6 @@ async function loadOffers(){
       );
 
     }
-
 
     const response =
       await fetch(
@@ -1554,7 +1435,6 @@ async function loadOffers(){
         }
       );
 
-
     if(!response.ok){
 
       throw new Error(
@@ -1563,23 +1443,18 @@ async function loadOffers(){
 
     }
 
-
     const data =
       await response.json();
 
-
     const rawOffers =
       extractOffers(data);
-
 
     allOffers =
       rawOffers
         .map(normalizeOffer)
         .filter(Boolean);
 
-
     renderOffers();
-
 
   }catch(error){
 
@@ -1588,10 +1463,8 @@ async function loadOffers(){
       error
     );
 
-
     $("taskCount").textContent =
       "Unable to load";
-
 
     taskList.innerHTML = `
 
@@ -1636,19 +1509,13 @@ async function loadOffers(){
 }
 
 
-/* =========================================================
-   RENDER OFFERS
-========================================================= */
-
 function renderOffers(){
 
   const taskList =
     $("taskList");
 
-
   let offers =
     allOffers;
-
 
   if(currentFilter !== "all"){
 
@@ -1666,45 +1533,41 @@ function renderOffers(){
 
   }
 
-
   $("taskCount").textContent =
     offers.length +
-    (
-      offers.length === 1
-        ? " available"
-        : " available"
-    );
-
+    " available";
 
   if(offers.length === 0){
 
     let message =
       "There are no opportunities available right now.";
 
-
     if(
       currentFilter === "survey"
     ){
+
       message =
         "There are no surveys available right now.";
-    }
 
+    }
 
     if(
       currentFilter === "offer"
     ){
+
       message =
         "There are no offers available right now.";
-    }
 
+    }
 
     if(
       currentFilter === "app"
     ){
+
       message =
         "There are no app install opportunities available right now.";
-    }
 
+    }
 
     taskList.innerHTML = `
 
@@ -1739,8 +1602,8 @@ function renderOffers(){
     `;
 
     return;
-  }
 
+  }
 
   taskList.innerHTML =
     offers.map(
@@ -1764,7 +1627,6 @@ function renderOffers(){
                 offer.category
               );
 
-
         return `
 
           <article
@@ -1779,7 +1641,6 @@ function renderOffers(){
 
               </div>
 
-
               <div class="task-info">
 
                 <div class="task-title">
@@ -1792,13 +1653,11 @@ function renderOffers(){
 
               </div>
 
-
               <div class="task-reward">
                 +$${offer.reward.toFixed(2)}
               </div>
 
             </div>
-
 
             <div class="task-bottom">
 
@@ -1813,7 +1672,6 @@ function renderOffers(){
                 )}
 
               </div>
-
 
               <button
                 class="start-btn"
@@ -1836,17 +1694,12 @@ function renderOffers(){
 }
 
 
-/* =========================================================
-   OPEN OFFER
-========================================================= */
-
 function openOffer(encodedId){
 
   const id =
     decodeURIComponent(
       encodedId
     );
-
 
   const offer =
     allOffers.find(
@@ -1855,16 +1708,13 @@ function openOffer(encodedId){
       }
     );
 
-
   if(!offer){
     return;
   }
 
-
   if(!offer.url){
     return;
   }
-
 
   window.open(
     offer.url,
@@ -1874,10 +1724,6 @@ function openOffer(encodedId){
 
 }
 
-
-/* =========================================================
-   FILTERS
-========================================================= */
 
 document
   .querySelectorAll(".filter-btn")
@@ -1900,16 +1746,13 @@ document
               }
             );
 
-
           button.classList.add(
             "active"
           );
 
-
           currentFilter =
             button.dataset.filter ||
             "all";
-
 
           renderOffers();
 
@@ -1920,16 +1763,11 @@ document
   );
 
 
-/* =========================================================
-   NOTIFICATION BADGE
-========================================================= */
-
 async function loadNotificationBadge(){
 
   if(!currentUser){
     return;
   }
-
 
   const {
     count,
@@ -1953,7 +1791,6 @@ async function loadNotificationBadge(){
         false
       );
 
-
   if(error){
 
     console.error(
@@ -1962,8 +1799,8 @@ async function loadNotificationBadge(){
     );
 
     return;
-  }
 
+  }
 
   if(
     count &&
@@ -1983,17 +1820,12 @@ async function loadNotificationBadge(){
 }
 
 
-/* =========================================================
-   THEME
-========================================================= */
-
 function applyTheme(){
 
   const saved =
     localStorage.getItem(
       "tallybuck-theme"
     );
-
 
   if(saved === "dark"){
 
@@ -2015,7 +1847,6 @@ function applyTheme(){
         "(prefers-color-scheme: dark)"
       ).matches;
 
-
     document.body.classList.toggle(
       "dark",
       dark
@@ -2033,12 +1864,10 @@ function toggleTheme(){
       "dark"
     );
 
-
   document.body.classList.toggle(
     "dark",
     !isDark
   );
-
 
   localStorage.setItem(
     "tallybuck-theme",
@@ -2050,16 +1879,11 @@ function toggleTheme(){
 }
 
 
-/* =========================================================
-   MENU
-========================================================= */
-
 function openMenu(){
 
   $("sideMenu")
     .classList
     .add("show");
-
 
   $("menuOverlay")
     .classList
@@ -2074,17 +1898,12 @@ function closeMenu(){
     .classList
     .remove("show");
 
-
   $("menuOverlay")
     .classList
     .remove("show");
 
 }
 
-
-/* =========================================================
-   MENU EVENTS
-========================================================= */
 
 $("menuBtn")
   .addEventListener(
@@ -2132,14 +1951,9 @@ $("logoutBtn")
   );
 
 
-/* =========================================================
-   AUTH CHECK + START
-========================================================= */
-
 async function startPage(){
 
   applyTheme();
-
 
   const {
     data:{
@@ -2149,22 +1963,19 @@ async function startPage(){
   } =
     await db.auth.getUser();
 
-
   if(error || !user){
 
     window.location.href =
       "login.html";
 
     return;
-  }
 
+  }
 
   currentUser =
     user;
 
-
   await loadNotificationBadge();
-
 
   await loadOffers();
 
