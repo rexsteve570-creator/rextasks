@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TallyBuck — Admins</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root{
+      --bg:#07110d;
+      --sidebar:#08140f;
+      --panel:#0d1914;
+      --panel2:#111f19;
+      --border:#1d3328;
+      --text:#f3f7fa;
+      --muted:#8ea0ad;
+      --green:#079447;
+      --green2:#0bbf61;
+      --green-dark:#063f2d;
+      --red:#ff6474;
+      --gold:#e6b85c;
+      --shadow:0 12px 35px rgba(0,0,0,.25);
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      font-family:Inter,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
+    }
+
+    button,
+    input{
+      font:inherit;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    .overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.55);
+      z-index:90;
+    }
+
+    .sidebar{
+      position:fixed;
+      top:0;
+      left:0;
+      bottom:0;
+      width:255px;
+      background:var(--sidebar);
+      border-right:1px solid var(--border);
+      z-index:100;
+      overflow-y:auto;
+      transition:.25s ease;
+    }
+
+    .brand{
+      height:76px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:0 20px;
+      border-bottom:1px solid var(--border);
+      font-weight:800;
+      font-size:20px;
+    }
+
+    .brand-mark{
+      width:38px;
+      height:38px;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--green2),var(--green-dark));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+      font-weight:900;
+      color:#fff;
+    }
+
+    .nav{
+      padding:14px 10px 30px;
+    }
+
+    .nav-section{
+      color:var(--muted);
+      font-size:11px;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      padding:14px 12px 8px;
+    }
+
+    .nav a{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      text-decoration:none;
+      color:var(--muted);
+      padding:11px 12px;
+      border-radius:10px;
+      margin:3px 0;
+      font-size:14px;
+      transition:.2s;
+    }
+
+    .nav a:hover{
+      background:var(--panel2);
+      color:var(--text);
+    }
+
+    .nav a.active{
+      background:rgba(7,148,71,.16);
+      color:#fff;
+    }
+
+    .nav svg{
+      width:18px;
+      height:18px;
+      flex:none;
+      stroke:currentColor;
+    }
+
+    .main{
+      margin-left:255px;
+      min-height:100vh;
+    }
+
+    .topbar{
+      height:76px;
+      position:sticky;
+      top:0;
+      z-index:50;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 25px;
+      background:rgba(7,17,13,.94);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--border);
+    }
+
+    .topbar-left{
+      display:flex;
+      align-items:center;
+      gap:13px;
+    }
+
+    .menu-btn{
+      display:none;
+      width:40px;
+      height:40px;
+      border:1px solid var(--border);
+      background:var(--panel);
+      color:var(--text);
+      border-radius:10px;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .menu-btn svg{
+      width:20px;
+      height:20px;
+      stroke:currentColor;
+    }
+
+    .page-title{
+      font-size:20px;
+      font-weight:800;
+    }
+
+    .page-subtitle{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:3px;
+    }
+
+    .admin-chip{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:#dce8e2;
+      font-size:13px;
+    }
+
+    .admin-dot{
+      width:9px;
+      height:9px;
+      border-radius:50%;
+      background:var(--green2);
+      box-shadow:0 0 0 4px rgba(11,191,97,.10);
+    }
+
+    .content{
+      padding:25px;
+      max-width:1300px;
+      margin:auto;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+      margin-bottom:20px;
+    }
+
+    .stat-card{
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:15px;
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .stat-label{
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:9px;
+    }
+
+    .stat-value{
+      font-size:25px;
+      font-weight:800;
+    }
+
+    .stat-value.green{
+      color:var(--green2);
+    }
+
+    .stat-value.gold{
+      color:var(--gold);
+    }
+
+    .card{
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:16px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .card-head{
+      padding:18px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .card-title{
+      font-size:16px;
+      font-weight:800;
+    }
+
+    .card-description{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:4px;
+    }
+
+    .search-wrap{
+      padding:16px 20px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .search{
+      width:100%;
+      height:44px;
+      border:1px solid var(--border);
+      background:var(--panel2);
+      color:var(--text);
+      border-radius:10px;
+      padding:0 14px;
+      outline:none;
+    }
+
+    .search:focus{
+      border-color:var(--green);
+      box-shadow:0 0 0 3px rgba(7,148,71,.12);
+    }
+
+    .table-wrap{
+      width:100%;
+      overflow-x:auto;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:850px;
+    }
+
+    th,
+    td{
+      padding:15px 20px;
+      text-align:left;
+      border-bottom:1px solid var(--border);
+      font-size:13px;
+      vertical-align:middle;
+    }
+
+    th{
+      color:var(--muted);
+      font-size:11px;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+      background:rgba(255,255,255,.015);
+    }
+
+    tbody tr:hover{
+      background:rgba(255,255,255,.018);
+    }
+
+    tbody tr:last-child td{
+      border-bottom:0;
+    }
+
+    .user-name{
+      font-weight:700;
+      color:var(--text);
+    }
+
+    .user-email{
+      color:var(--muted);
+      margin-top:3px;
+      font-size:12px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      padding:5px 9px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:800;
+    }
+
+    .badge-admin{
+      background:rgba(230,184,92,.12);
+      color:var(--gold);
+      border:1px solid rgba(230,184,92,.25);
+    }
+
+    .badge-user{
+      background:rgba(142,160,173,.10);
+      color:#b9c5cc;
+      border:1px solid rgba(142,160,173,.18);
+    }
+
+    .badge-you{
+      margin-left:6px;
+      background:rgba(7,148,71,.14);
+      color:var(--green2);
+      border:1px solid rgba(7,148,71,.25);
+    }
+
+    .action-btn{
+      border:1px solid var(--border);
+      background:var(--panel2);
+      color:var(--text);
+      border-radius:8px;
+      padding:8px 11px;
+      font-size:12px;
+      font-weight:700;
+      transition:.2s;
+    }
+
+    .action-btn:hover{
+      border-color:var(--green);
+    }
+
+    .action-btn.make-admin{
+      color:var(--green2);
+    }
+
+    .action-btn.remove-admin{
+      color:var(--red);
+    }
+
+    .action-btn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+    }
+
+    .empty{
+      text-align:center;
+      padding:50px 20px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .loading{
+      text-align:center;
+      padding:50px 20px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .toast{
+      position:fixed;
+      right:22px;
+      bottom:22px;
+      max-width:360px;
+      padding:13px 16px;
+      border-radius:11px;
+      background:var(--panel2);
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      color:var(--text);
+      font-size:13px;
+      z-index:300;
+      transform:translateY(20px);
+      opacity:0;
+      pointer-events:none;
+      transition:.25s;
+    }
+
+    .toast.show{
+      transform:translateY(0);
+      opacity:1;
+    }
+
+    .toast.success{
+      border-color:rgba(11,191,97,.4);
+    }
+
+    .toast.error{
+      border-color:rgba(255,100,116,.4);
+    }
+
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:250;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      background:rgba(0,0,0,.65);
+    }
+
+    .modal.show{
+      display:flex;
+    }
+
+    .modal-card{
+      width:100%;
+      max-width:430px;
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:17px;
+      box-shadow:0 25px 70px rgba(0,0,0,.4);
+      padding:22px;
+    }
+
+    .modal-icon{
+      width:45px;
+      height:45px;
+      border-radius:13px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(7,148,71,.12);
+      color:var(--green2);
+      margin-bottom:15px;
+    }
+
+    .modal-icon svg{
+      width:23px;
+      height:23px;
+      stroke:currentColor;
+    }
+
+    .modal-title{
+      font-size:18px;
+      font-weight:800;
+    }
+
+    .modal-text{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.6;
+      margin-top:8px;
+    }
+
+    .modal-actions{
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      margin-top:22px;
+    }
+
+    .modal-btn{
+      border:0;
+      border-radius:9px;
+      padding:10px 15px;
+      font-weight:700;
+      font-size:13px;
+    }
+
+    .modal-cancel{
+      background:var(--panel2);
+      color:var(--text);
+      border:1px solid var(--border);
+    }
+
+    .modal-confirm{
+      background:var(--green);
+      color:#fff;
+    }
+
+    .modal-confirm.danger{
+      background:#b83243;
+    }
+
+    .footer-note{
+      color:var(--muted);
+      font-size:11px;
+      padding:16px 20px;
+      border-top:1px solid var(--border);
+    }
+
+    @media(max-width:900px){
+      .stats{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:760px){
+      .sidebar{
+        transform:translateX(-100%);
+      }
+
+      .sidebar.open{
+        transform:translateX(0);
+      }
+
+      .overlay.show{
+        display:block;
+      }
+
+      .main{
+        margin-left:0;
+      }
+
+      .topbar{
+        padding:0 16px;
+      }
+
+      .menu-btn{
+        display:flex;
+      }
+
+      .content{
+        padding:17px;
+      }
+
+      .admin-chip{
+        display:none;
+      }
+
+      .card-head{
+        align-items:flex-start;
+      }
+
+      .toast{
+        left:16px;
+        right:16px;
+        bottom:16px;
+        max-width:none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="overlay" id="overlay"></div>
+
+  <!-- =====================================================
+       SIDEBAR
+  ====================================================== -->
+
+  <aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+      <div class="brand-mark">T</div>
+      <div>TallyBuck</div>
+    </div>
+
+    <nav class="nav">
+
+      <div class="nav-section">Overview</div>
+
+      <a href="admin-dashboard.html">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+          <path d="M3 12l9-9 9 9"></path>
+          <path d="M5 10v10h14V10"></path>
+        </svg>
+        Dashboard
+      </a>
+
+      <div class="nav-section">Users</div>
+
+      <a href="admin-users.html">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+        Users
+      </a>
+
+      <a href="admin-admins.html" class="active">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+          <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06-1.42 1.42-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21h-2v-.08a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06-1.42-1.42.06-.06A1.65 1.65 0 0 0 9.6 15a1.65 1.65 0 0 0-1.51-1H8v-2h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06 1.42-1.42.06.06a1.65 1.65 0 0 0 1.82.33 1.65 1.65 0 0 0 1-1.51V6h2v.08a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06 1.42 1.42-.06.06a1.65 1.65 0 0 0-.33 1.82 1.65 1.65 0 0 0 1.51 1H22v2h-.09a1.65 1.65 0 0 0-1.51 1Z"></path>
+        </svg>
+        Admins
+      </a>
+
+      <div class="nav-section">Platform</div>
+
+      <a href="tasks.html">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+          <path d="M4 5h16v14H4z"></path>
+          <path d="M8 9h8"></path>
+          <path d="M8 13h5"></path>
+        </svg>
+        Offers
+      </a>
+
+      <a href="admin-tasks.html">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+          <path d="M4 5h16v14H4z"></path>
+          <path d="M8 9h8"></path>
+          <path d="M8 13h8"></path>
+        </svg>
+        Manual Tasks
+      </a>
+
+      <a href="admin-submissions.html">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+          <path d="M5 4h14v16H5z"></path>
+          <path d="M8 8h8"></path>
+          <path d="M8 12h8"></path>
+          <path d="M8 16h5"></path>
+        </svg>
+        Submissions
+      </a>
+
+      <a href="admin-offers.html">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M12 7v10"></path>
+          <path d="M15 9.5c-.6-1-1.6-1.5-3-1.5-1.7 0-3 1-3 2.3 0 3.2 6 1.4 6 4.4 0 1.3-1.2 2.3-3 2.3-1.4 0-2.5-.5-3.1-1.5"></path>
+        </svg>
+        Offer Completions
+      </a>
+
+      <a href="admin-withdrawals.html">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+          <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+          <path d="M3 10h18"></path>
+          <path d="M7 15h3"></path>
+        </svg>
+        Withdrawals
+      </a>
+
+      <a href="admin-payments.html">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+          <path d="M4 6h16v12H4z"></path>
+          <path d="M4 10h16"></path>
+          <path d="M8 15h4"></path>
+        </svg>
+        Payments
+      </a>
+
+      <a href="admin-categories.html">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+          <path d="M4 5h6v6H4z"></path>
+          <path d="M14 5h6v6h-6z"></path>
+          <path d="M4 15h6v6H4z"></path>
+          <path d="M14 15h6v6h-6z"></path>
+        </svg>
+        Categories
+      </a>
+
+      <a href="admin-countries.html">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M3 12h18"></path>
+          <path d="M12 3c2.5 2.4 3.7 5.4 3.7 9s-1.2 6.6-3.7 9c-2.5-2.4-3.7-5.4-3.7-9S9.5 5.4 12 3Z"></path>
+        </svg>
+        Countries
+      </a>
+
+      <a href="notifications.html">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+          <path d="M10 21h4"></path>
+        </svg>
+        Notifications
+      </a>
+
+      <a href="admin-settings.html">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5v.1h-2.6v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H6v-2.6h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1L9 5.6l.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.5v-.1h2.6v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.5 1h.1V13h-.1a1.7 1.7 0 0 0-1.5 1Z"></path>
+        </svg>
+        Settings
+      </a>
+
+      <a href="admin-logs.html">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+          <path d="M5 4h14v16H5z"></path>
+          <path d="M8 8h8"></path>
+          <path d="M8 12h8"></path>
+          <path d="M8 16h5"></path>
+        </svg>
+        Activity Logs
+      </a>
+
+    </nav>
+  </aside>
+
+
+  <!-- =====================================================
+       MAIN
+  ====================================================== -->
+
+  <main class="main">
+
+    <header class="topbar">
+
+      <div class="topbar-left">
+
+        <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2">
+            <path d="M4 6h16"></path>
+            <path d="M4 12h16"></path>
+            <path d="M4 18h16"></path>
+          </svg>
+        </button>
+
+        <div>
+          <div class="page-title">Administrators</div>
+          <div class="page-subtitle">Manage TallyBuck administrator access</div>
+        </div>
+
+      </div>
+
+      <div class="admin-chip">
+        <span class="admin-dot"></span>
+        Administrator
+      </div>
+
+    </header>
+
+
+    <section class="content">
+
+      <!-- ===================================================
+           STATS
+      ==================================================== -->
+
+      <div class="stats">
+
+        <div class="stat-card">
+          <div class="stat-label">Total Users</div>
+          <div class="stat-value" id="totalUsers">—</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Administrators</div>
+          <div class="stat-value green" id="totalAdmins">—</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Your Access</div>
+          <div class="stat-value gold">Admin</div>
+        </div>
+
+      </div>
+
+
+      <!-- ===================================================
+           ADMIN MANAGEMENT
+      ==================================================== -->
+
+      <div class="card">
+
+        <div class="card-head">
+
+          <div>
+            <div class="card-title">User Access</div>
+            <div class="card-description">
+              Grant or remove administrator access securely.
+            </div>
+          </div>
+
+        </div>
+
+        <div class="search-wrap">
+
+          <input
+            type="search"
+            id="searchInput"
+            class="search"
+            placeholder="Search by name, email or country..."
+            autocomplete="off"
+          >
+
+        </div>
+
+        <div id="tableArea">
+
+          <div class="loading">
+            Loading users...
+          </div>
+
+        </div>
+
+        <div class="footer-note">
+          Administrator changes are protected by the database security function.
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =====================================================
+       CONFIRMATION MODAL
+  ====================================================== -->
+
+  <div class="modal" id="confirmModal">
+
+    <div class="modal-card">
+
+      <div class="modal-icon" id="modalIcon">
+
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8">
+          <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06-1.42 1.42-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21h-2v-.08a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06-1.42-1.42.06-.06A1.65 1.65 0 0 0 9.6 15a1.65 1.65 0 0 0-1.51-1H8v-2h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06 1.42-1.42.06.06a1.65 1.65 0 0 0 1.82.33 1.65 1.65 0 0 0 1-1.51V6h2v.08a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06 1.42 1.42-.06.06a1.65 1.65 0 0 0-.33 1.82 1.65 0 0 0 1.51 1H22v2h-.09a1.65 1.65 0 0 0-1.51 1Z"></path>
+        </svg>
+
+      </div>
+
+      <div class="modal-title" id="modalTitle">
+        Confirm change
+      </div>
+
+      <div class="modal-text" id="modalText">
+        Are you sure you want to change this user's role?
+      </div>
+
+      <div class="modal-actions">
+
+        <button
+          class="modal-btn modal-cancel"
+          id="modalCancel"
+        >
+          Cancel
+        </button>
+
+        <button
+          class="modal-btn modal-confirm"
+          id="modalConfirm"
+        >
+          Confirm
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       TOAST
+  ====================================================== -->
+
+  <div class="toast" id="toast"></div>
+
+
+  <script>
+
+    /* =====================================================
+       SUPABASE
+    ===================================================== */
+
+    const SUPABASE_URL =
+      "https://cetsxdkoauucxwsbdktl.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
+
+    const db =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+    const sidebar =
+      document.getElementById("sidebar");
+
+    const overlay =
+      document.getElementById("overlay");
+
+    const menuBtn =
+      document.getElementById("menuBtn");
+
+    const tableArea =
+      document.getElementById("tableArea");
+
+    const searchInput =
+      document.getElementById("searchInput");
+
+    const totalUsers =
+      document.getElementById("totalUsers");
+
+    const totalAdmins =
+      document.getElementById("totalAdmins");
+
+    const confirmModal =
+      document.getElementById("confirmModal");
+
+    const modalTitle =
+      document.getElementById("modalTitle");
+
+    const modalText =
+      document.getElementById("modalText");
+
+    const modalConfirm =
+      document.getElementById("modalConfirm");
+
+    const modalCancel =
+      document.getElementById("modalCancel");
+
+    const toast =
+      document.getElementById("toast");
+
+
+    /* =====================================================
+       STATE
+    ===================================================== */
+
+    let currentUser = null;
+    let users = [];
+    let pendingUser = null;
+    let pendingRole = null;
+
+
+    /* =====================================================
+       MOBILE MENU
+    ===================================================== */
+
+    function openMenu(){
+
+      sidebar.classList.add("open");
+      overlay.classList.add("show");
+
+    }
+
+    function closeMenu(){
+
+      sidebar.classList.remove("open");
+      overlay.classList.remove("show");
+
+    }
+
+    menuBtn.addEventListener("click", openMenu);
+    overlay.addEventListener("click", closeMenu);
+
+
+    document
+      .querySelectorAll(".nav a")
+      .forEach(link => {
+
+        link.addEventListener("click", closeMenu);
+
+      });
+
+
+    /* =====================================================
+       TOAST
+    ===================================================== */
+
+    let toastTimer = null;
+
+    function showToast(message, type = "success"){
+
+      clearTimeout(toastTimer);
+
+      toast.textContent = message;
+
+      toast.className =
+        "toast show " + type;
+
+      toastTimer =
+        setTimeout(() => {
+
+          toast.className = "toast";
+
+        }, 3500);
+
+    }
+
+
+    /* =====================================================
+       AUTH + ADMIN CHECK
+    ===================================================== */
+
+    async function requireAdmin(){
+
+      const {
+        data: {
+          user
+        }
+      } = await db.auth.getUser();
+
+      if(!user){
+
+        window.location.href =
+          "login.html";
+
+        return false;
+
+      }
+
+      currentUser = user;
+
+      const {
+        data: profile,
+        error
+      } = await db
+        .from("profiles")
+        .select("id,full_name,role")
+        .eq("id", user.id)
+        .maybeSingle();
+
+      if(error){
+
+        console.error(error);
+
+        tableArea.innerHTML = `
+          <div class="empty">
+            Unable to verify administrator access.
+          </div>
+        `;
+
+        return false;
+
+      }
+
+      if(!profile || profile.role !== "admin"){
+
+        window.location.href =
+          "dashboard.html";
+
+        return false;
+
+      }
+
+      return true;
+
+    }
+
+
+    /* =====================================================
+       LOAD USERS
+    ===================================================== */
+
+    async function loadUsers(){
+
+      tableArea.innerHTML = `
+        <div class="loading">
+          Loading users...
+        </div>
+      `;
+
+      const {
+        data,
+        error
+      } = await db
+        .from("profiles")
+        .select(
+          "id,full_name,role,country,created_at"
+        )
+        .order(
+          "created_at",
+          {
+            ascending:false
+          }
+        );
+
+      if(error){
+
+        console.error(error);
+
+        tableArea.innerHTML = `
+          <div class="empty">
+            Unable to load users.
+          </div>
+        `;
+
+        showToast(
+          error.message ||
+          "Unable to load users.",
+          "error"
+        );
+
+        return;
+
+      }
+
+      users = data || [];
+
+      totalUsers.textContent =
+        users.length;
+
+      totalAdmins.textContent =
+        users.filter(
+          user =>
+            String(user.role || "").toLowerCase() === "admin"
+        ).length;
+
+      renderUsers();
+
+    }
+
+
+    /* =====================================================
+       RENDER USERS
+    ===================================================== */
+
+    function renderUsers(){
+
+      const search =
+        searchInput.value
+          .trim()
+          .toLowerCase();
+
+      const filtered =
+        users.filter(user => {
+
+          const name =
+            String(user.full_name || "")
+              .toLowerCase();
+
+          const country =
+            String(user.country || "")
+              .toLowerCase();
+
+          /*
+            Email is not stored in profiles.
+            We therefore search the fields available here.
+          */
+
+          return (
+            name.includes(search) ||
+            country.includes(search)
+          );
+
+        });
+
+
+      if(!filtered.length){
+
+        tableArea.innerHTML = `
+          <div class="empty">
+            No matching users found.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      let html = `
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+
+              <tr>
+                <th>User</th>
+                <th>Country</th>
+                <th>Role</th>
+                <th>Joined</th>
+                <th>Action</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+      `;
+
+
+      filtered.forEach(user => {
+
+        const role =
+          String(user.role || "user")
+            .toLowerCase();
+
+        const isAdmin =
+          role === "admin";
+
+        const isCurrentUser =
+          user.id === currentUser.id;
+
+        const joined =
+          user.created_at
+            ? new Date(
+                user.created_at
+              ).toLocaleDateString(
+                undefined,
+                {
+                  year:"numeric",
+                  month:"short",
+                  day:"numeric"
+                }
+              )
+            : "—";
+
+
+        html += `
+
+          <tr>
+
+            <td>
+
+              <div class="user-name">
+                ${escapeHtml(
+                  user.full_name ||
+                  "Unnamed user"
+                )}
+
+                ${
+                  isCurrentUser
+                    ? `<span class="badge badge-you">You</span>`
+                    : ""
+                }
+
+              </div>
+
+              <div class="user-email">
+                ${escapeHtml(
+                  user.id
+                )}
+              </div>
+
+            </td>
+
+
+            <td>
+              ${escapeHtml(
+                user.country ||
+                "—"
+              )}
+            </td>
+
+
+            <td>
+
+              ${
+                isAdmin
+
+                  ? `
+                    <span class="badge badge-admin">
+                      Administrator
+                    </span>
+                  `
+
+                  : `
+                    <span class="badge badge-user">
+                      User
+                    </span>
+                  `
+              }
+
+            </td>
+
+
+            <td>
+              ${joined}
+            </td>
+
+
+            <td>
+
+              ${
+                isAdmin
+
+                  ? `
+                    <button
+                      class="action-btn remove-admin"
+                      ${
+                        isCurrentUser
+                          ? "disabled"
+                          : ""
+                      }
+                      onclick="openRoleModal(
+                        '${user.id}',
+                        'user'
+                      )"
+                    >
+                      Remove Admin
+                    </button>
+                  `
+
+                  : `
+                    <button
+                      class="action-btn make-admin"
+                      onclick="openRoleModal(
+                        '${user.id}',
+                        'admin'
+                      )"
+                    >
+                      Make Admin
+                    </button>
+                  `
+              }
+
+            </td>
+
+          </tr>
+
+        `;
+
+      });
+
+
+      html += `
+            </tbody>
+
+          </table>
+
+        </div>
+      `;
+
+      tableArea.innerHTML = html;
+
+    }
+
+
+    /* =====================================================
+       ROLE MODAL
+    ===================================================== */
+
+    window.openRoleModal =
+      function(userId, role){
+
+        const user =
+          users.find(
+            item =>
+              item.id === userId
+          );
+
+        if(!user){
+
+          showToast(
+            "User not found.",
+            "error"
+          );
+
+          return;
+
+        }
+
+        pendingUser = user;
+        pendingRole = role;
+
+        const targetName =
+          user.full_name ||
+          "this user";
+
+
+        if(role === "admin"){
+
+          modalTitle.textContent =
+            "Grant administrator access";
+
+          modalText.textContent =
+            `Are you sure you want to make ${targetName} an administrator? This will give the account access to the admin panel.`;
+
+          modalConfirm.textContent =
+            "Make Admin";
+
+          modalConfirm.classList.remove(
+            "danger"
+          );
+
+        }else{
+
+          modalTitle.textContent =
+            "Remove administrator access";
+
+          modalText.textContent =
+            `Are you sure you want to remove administrator access from ${targetName}?`;
+
+          modalConfirm.textContent =
+            "Remove Admin";
+
+          modalConfirm.classList.add(
+            "danger"
+          );
+
+        }
+
+        confirmModal.classList.add(
+          "show"
+        );
+
+      };
+
+
+    function closeModal(){
+
+      confirmModal.classList.remove(
+        "show"
+      );
+
+      pendingUser = null;
+      pendingRole = null;
+
+    }
+
+    modalCancel.addEventListener(
+      "click",
+      closeModal
+    );
+
+
+    confirmModal.addEventListener(
+      "click",
+      event => {
+
+        if(
+          event.target === confirmModal
+        ){
+
+          closeModal();
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       UPDATE ROLE
+    ===================================================== */
+
+    modalConfirm.addEventListener(
+      "click",
+      async () => {
+
+        if(
+          !pendingUser ||
+          !pendingRole
+        ){
+
+          return;
+
+        }
+
+        const userId =
+          pendingUser.id;
+
+        const role =
+          pendingRole;
+
+        modalConfirm.disabled =
+          true;
+
+        modalConfirm.textContent =
+          "Updating...";
+
+
+        const {
+          data,
+          error
+        } = await db.rpc(
+          "admin_update_user_role",
+          {
+            p_user_id:userId,
+            p_role:role
+          }
+        );
+
+
+        modalConfirm.disabled =
+          false;
+
+
+        if(error){
+
+          console.error(error);
+
+          modalConfirm.textContent =
+            role === "admin"
+              ? "Make Admin"
+              : "Remove Admin";
+
+          showToast(
+            error.message ||
+            "Unable to update role.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        closeModal();
+
+        showToast(
+          role === "admin"
+            ? "Administrator access granted."
+            : "Administrator access removed."
+        );
+
+        await loadUsers();
+
+      }
+    );
+
+
+    /* =====================================================
+       SEARCH
+    ===================================================== */
+
+    searchInput.addEventListener(
+      "input",
+      renderUsers
+    );
+
+
+    /* =====================================================
+       HTML ESCAPE
+    ===================================================== */
+
+    function escapeHtml(value){
+
+      return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+    }
+
+
+    /* =====================================================
+       INIT
+    ===================================================== */
+
+    async function init(){
+
+      const allowed =
+        await requireAdmin();
+
+      if(!allowed){
+
+        return;
+
+      }
+
+      await loadUsers();
+
+    }
+
+    init();
+
+  </script>
+
+</body>
+</html>
