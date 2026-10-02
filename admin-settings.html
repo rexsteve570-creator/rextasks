@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>TallyBuck — Admin Settings</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root{
+      --bg:#07110d;
+      --sidebar:#08140f;
+      --panel:#0d1914;
+      --panel2:#111f19;
+      --border:#1d3328;
+      --text:#f3f7fa;
+      --muted:#8ea0ad;
+      --green:#079447;
+      --green2:#0bbf61;
+      --green-dark:#063f2d;
+      --red:#ff6474;
+      --gold:#e6b85c;
+      --shadow:0 12px 35px rgba(0,0,0,.25);
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      min-height:100vh;
+      background:var(--bg);
+      color:var(--text);
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
+
+    button,
+    input,
+    select{
+      font:inherit;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    .sidebar{
+      position:fixed;
+      left:0;
+      top:0;
+      bottom:0;
+      width:255px;
+      background:var(--sidebar);
+      border-right:1px solid var(--border);
+      z-index:100;
+      overflow-y:auto;
+      transition:.25s ease;
+    }
+
+    .brand{
+      height:76px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:0 20px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .brand-icon{
+      width:38px;
+      height:38px;
+      border-radius:11px;
+      background:linear-gradient(135deg,var(--green),var(--green2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex:none;
+    }
+
+    .brand-icon svg{
+      width:21px;
+      height:21px;
+      stroke:#fff;
+      fill:none;
+      stroke-width:2;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .brand-text{
+      font-weight:800;
+      font-size:17px;
+      letter-spacing:-.2px;
+    }
+
+    .brand-sub{
+      color:var(--muted);
+      font-size:10px;
+      margin-top:2px;
+      font-weight:500;
+    }
+
+    .nav{
+      padding:14px 10px 25px;
+    }
+
+    .nav-label{
+      color:#63766d;
+      font-size:10px;
+      font-weight:800;
+      letter-spacing:1px;
+      padding:13px 12px 7px;
+      text-transform:uppercase;
+    }
+
+    .nav a{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      min-height:43px;
+      padding:0 12px;
+      margin:2px 0;
+      border-radius:10px;
+      color:#9eaea7;
+      text-decoration:none;
+      font-size:13px;
+      font-weight:600;
+      transition:.18s;
+    }
+
+    .nav a:hover{
+      background:rgba(255,255,255,.035);
+      color:var(--text);
+    }
+
+    .nav a.active{
+      background:rgba(7,148,71,.14);
+      color:#62df9d;
+    }
+
+    .nav svg{
+      width:18px;
+      height:18px;
+      stroke:currentColor;
+      fill:none;
+      stroke-width:1.8;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+      flex:none;
+    }
+
+    .main{
+      margin-left:255px;
+      min-height:100vh;
+    }
+
+    .topbar{
+      height:76px;
+      border-bottom:1px solid var(--border);
+      background:rgba(7,17,13,.88);
+      backdrop-filter:blur(12px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 28px;
+      position:sticky;
+      top:0;
+      z-index:80;
+    }
+
+    .top-left{
+      display:flex;
+      align-items:center;
+      gap:13px;
+    }
+
+    .menu-btn{
+      display:none;
+      width:40px;
+      height:40px;
+      border:1px solid var(--border);
+      background:var(--panel2);
+      color:var(--text);
+      border-radius:10px;
+    }
+
+    .menu-btn svg{
+      width:19px;
+      height:19px;
+      stroke:currentColor;
+      fill:none;
+      stroke-width:2;
+      stroke-linecap:round;
+    }
+
+    .page-title{
+      font-size:18px;
+      font-weight:800;
+    }
+
+    .page-subtitle{
+      color:var(--muted);
+      font-size:11px;
+      margin-top:3px;
+    }
+
+    .admin-pill{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid var(--border);
+      background:var(--panel);
+      border-radius:20px;
+      padding:7px 11px;
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    .admin-dot{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:var(--green2);
+      box-shadow:0 0 0 4px rgba(11,191,97,.08);
+    }
+
+    .content{
+      padding:28px;
+      max-width:1050px;
+    }
+
+    .notice{
+      display:none;
+      padding:13px 15px;
+      border-radius:11px;
+      margin-bottom:20px;
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .notice.show{
+      display:block;
+    }
+
+    .notice.success{
+      color:#8ff0ba;
+      background:rgba(11,191,97,.08);
+      border:1px solid rgba(11,191,97,.2);
+    }
+
+    .notice.error{
+      color:#ffb3bc;
+      background:rgba(255,100,116,.08);
+      border:1px solid rgba(255,100,116,.2);
+    }
+
+    .settings-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .card{
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:16px;
+      box-shadow:var(--shadow);
+      padding:20px;
+    }
+
+    .card.full{
+      grid-column:1 / -1;
+    }
+
+    .card-head{
+      display:flex;
+      align-items:flex-start;
+      gap:13px;
+      margin-bottom:20px;
+    }
+
+    .card-icon{
+      width:40px;
+      height:40px;
+      border-radius:11px;
+      background:rgba(7,148,71,.11);
+      border:1px solid rgba(7,148,71,.16);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex:none;
+    }
+
+    .card-icon svg{
+      width:20px;
+      height:20px;
+      stroke:#4fd58e;
+      fill:none;
+      stroke-width:1.8;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .card-title{
+      font-size:15px;
+      font-weight:800;
+    }
+
+    .card-description{
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.5;
+      margin-top:4px;
+    }
+
+    .field{
+      margin-bottom:17px;
+    }
+
+    .field:last-child{
+      margin-bottom:0;
+    }
+
+    .field label{
+      display:block;
+      font-size:12px;
+      font-weight:700;
+      margin-bottom:8px;
+    }
+
+    .field-help{
+      color:#71827b;
+      font-size:10px;
+      margin-top:6px;
+      line-height:1.45;
+    }
+
+    input{
+      width:100%;
+      height:45px;
+      background:var(--panel2);
+      border:1px solid var(--border);
+      border-radius:10px;
+      color:var(--text);
+      outline:none;
+      padding:0 13px;
+      font-size:13px;
+    }
+
+    input:focus{
+      border-color:var(--green);
+      box-shadow:0 0 0 3px rgba(7,148,71,.1);
+    }
+
+    .money-wrap{
+      position:relative;
+    }
+
+    .money-symbol{
+      position:absolute;
+      left:13px;
+      top:50%;
+      transform:translateY(-50%);
+      color:var(--muted);
+      font-weight:700;
+      font-size:13px;
+    }
+
+    .money-wrap input{
+      padding-left:29px;
+    }
+
+    .toggle-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      padding:13px 14px;
+      background:var(--panel2);
+      border:1px solid var(--border);
+      border-radius:11px;
+    }
+
+    .toggle-title{
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .toggle-help{
+      color:var(--muted);
+      font-size:10px;
+      margin-top:4px;
+      line-height:1.4;
+    }
+
+    .switch{
+      position:relative;
+      width:48px;
+      height:27px;
+      flex:none;
+    }
+
+    .switch input{
+      opacity:0;
+      width:0;
+      height:0;
+      position:absolute;
+    }
+
+    .slider{
+      position:absolute;
+      inset:0;
+      background:#26352f;
+      border:1px solid #34473e;
+      border-radius:30px;
+      transition:.2s;
+      cursor:pointer;
+    }
+
+    .slider:before{
+      content:"";
+      position:absolute;
+      width:19px;
+      height:19px;
+      left:3px;
+      top:3px;
+      background:#a8b4b0;
+      border-radius:50%;
+      transition:.2s;
+    }
+
+    .switch input:checked + .slider{
+      background:var(--green);
+      border-color:var(--green);
+    }
+
+    .switch input:checked + .slider:before{
+      transform:translateX(21px);
+      background:#fff;
+    }
+
+    .time-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:13px;
+    }
+
+    .time-status{
+      margin-top:13px;
+      padding:11px 13px;
+      border-radius:10px;
+      background:rgba(230,184,92,.07);
+      border:1px solid rgba(230,184,92,.14);
+      color:#d7bd80;
+      font-size:11px;
+      line-height:1.5;
+    }
+
+    .time-status.disabled{
+      background:rgba(255,255,255,.025);
+      border-color:var(--border);
+      color:var(--muted);
+    }
+
+    .save-bar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+      margin-top:20px;
+      padding:15px 17px;
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:14px;
+    }
+
+    .save-note{
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.45;
+    }
+
+    .save-btn{
+      min-width:145px;
+      height:43px;
+      border:0;
+      border-radius:10px;
+      background:linear-gradient(135deg,var(--green),var(--green2));
+      color:#fff;
+      font-size:12px;
+      font-weight:800;
+      padding:0 18px;
+      box-shadow:0 8px 20px rgba(7,148,71,.16);
+    }
+
+    .save-btn:disabled{
+      opacity:.55;
+      cursor:not-allowed;
+      box-shadow:none;
+    }
+
+    .danger-note{
+      padding:12px 13px;
+      border-radius:10px;
+      border:1px solid rgba(255,100,116,.15);
+      background:rgba(255,100,116,.055);
+      color:#c9979e;
+      font-size:11px;
+      line-height:1.55;
+    }
+
+    .overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.55);
+      z-index:90;
+    }
+
+    .overlay.show{
+      display:block;
+    }
+
+    @media(max-width:900px){
+      .settings-grid{
+        grid-template-columns:1fr;
+      }
+
+      .card.full{
+        grid-column:auto;
+      }
+    }
+
+    @media(max-width:760px){
+      .sidebar{
+        transform:translateX(-100%);
+      }
+
+      .sidebar.open{
+        transform:translateX(0);
+      }
+
+      .main{
+        margin-left:0;
+      }
+
+      .menu-btn{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+      }
+
+      .topbar{
+        padding:0 16px;
+      }
+
+      .content{
+        padding:20px 15px;
+      }
+
+      .admin-pill{
+        display:none;
+      }
+    }
+
+    @media(max-width:520px){
+      .time-grid{
+        grid-template-columns:1fr;
+      }
+
+      .save-bar{
+        align-items:stretch;
+        flex-direction:column;
+      }
+
+      .save-btn{
+        width:100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 3v18"></path>
+          <path d="M17 7.5c0-1.7-2.1-3-5-3s-5 1.3-5 3 2.1 3 5 3 5 1.3 5 3-2.1 3-5 3-5-1.3-5-3"></path>
+        </svg>
+      </div>
+
+      <div>
+        <div class="brand-text">TallyBuck</div>
+        <div class="brand-sub">ADMIN PANEL</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+
+      <div class="nav-label">Overview</div>
+
+      <a href="admin-dashboard.html">
+        <svg viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+        </svg>
+        Dashboard
+      </a>
+
+      <a href="admin-users.html">
+        <svg viewBox="0 0 24 24">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+        Users
+      </a>
+
+      <div class="nav-label">Earning</div>
+
+      <a href="tasks.html">
+        <svg viewBox="0 0 24 24">
+          <path d="M4 5h16v14H4z"></path>
+          <path d="M8 9h8"></path>
+          <path d="M8 13h5"></path>
+        </svg>
+        Offers
+      </a>
+
+      <a href="admin-tasks.html">
+        <svg viewBox="0 0 24 24">
+          <path d="M4 5h16v14H4z"></path>
+          <path d="M8 9h8"></path>
+          <path d="M8 13h6"></path>
+        </svg>
+        Manual Tasks
+      </a>
+
+      <a href="admin-submissions.html">
+        <svg viewBox="0 0 24 24">
+          <path d="M6 3h12v18H6z"></path>
+          <path d="M9 8h6"></path>
+          <path d="M9 12h6"></path>
+          <path d="M9 16h4"></path>
+        </svg>
+        Submissions
+      </a>
+
+      <a href="admin-offers.html">
+        <svg viewBox="0 0 24 24">
+          <path d="M4 4h16v16H4z"></path>
+          <path d="M8 12l2.5 2.5L16 9"></path>
+        </svg>
+        Offer Completions
+      </a>
+
+      <div class="nav-label">Finance</div>
+
+      <a href="admin-withdrawals.html">
+        <svg viewBox="0 0 24 24">
+          <rect x="3" y="6" width="18" height="13" rx="2"></rect>
+          <path d="M3 10h18"></path>
+          <circle cx="12" cy="14" r="2"></circle>
+        </svg>
+        Withdrawals
+      </a>
+
+      <a href="admin-payments.html">
+        <svg viewBox="0 0 24 24">
+          <path d="M3 6h18v12H3z"></path>
+          <path d="M7 10h10"></path>
+          <path d="M7 14h5"></path>
+        </svg>
+        Payments
+      </a>
+
+      <div class="nav-label">Management</div>
+
+      <a href="admin-categories.html">
+        <svg viewBox="0 0 24 24">
+          <path d="M4 5h6v6H4z"></path>
+          <path d="M14 5h6v6h-6z"></path>
+          <path d="M4 15h6v4H4z"></path>
+          <path d="M14 15h6v4h-6z"></path>
+        </svg>
+        Categories
+      </a>
+
+      <a href="admin-countries.html">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M3 12h18"></path>
+          <path d="M12 3c3 3 4 6 4 9s-1 6-4 9"></path>
+          <path d="M12 3c-3 3-4 6-4 9s1 6 4 9"></path>
+        </svg>
+        Countries
+      </a>
+
+      <a href="notifications.html">
+        <svg viewBox="0 0 24 24">
+          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+          <path d="M10 21h4"></path>
+        </svg>
+        Notifications
+      </a>
+
+      <a href="admin-settings.html" class="active">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path>
+          <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.9 1.9-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V20h-2.7v-.08a1.7 1.7 0 0 0-1.03-1.56 1.7 1.7 0 0 0-1.88.34l-.06.06-1.9-1.9.06-.06A1.7 1.7 0 0 0 7.6 15a1.7 1.7 0 0 0-1.56-1.03H6v-2.7h.08A1.7 1.7 0 0 0 7.64 10a1.7 1.7 0 0 0-.34-1.88l-.06-.06 1.9-1.9.06.06a1.7 1.7 0 0 0 1.88.34 1.7 1.7 0 0 0 1.03-1.56V5h2.7v.08a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.06 1.9 1.9-.06.06A1.7 1.7 0 0 0 19.4 10c.24.62.84 1.03 1.5 1.03H21v2.7h-.08c-.66 0-1.26.41-1.52 1.03z"></path>
+        </svg>
+        Settings
+      </a>
+
+      <a href="admin-admins.html">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"></path>
+          <path d="M4 21a8 8 0 0 1 16 0"></path>
+          <path d="M18 8h4"></path>
+          <path d="M20 6v4"></path>
+        </svg>
+        Admins
+      </a>
+
+      <a href="admin-logs.html">
+        <svg viewBox="0 0 24 24">
+          <path d="M5 4h14v16H5z"></path>
+          <path d="M8 8h8"></path>
+          <path d="M8 12h8"></path>
+          <path d="M8 16h5"></path>
+        </svg>
+        Activity Logs
+      </a>
+
+    </nav>
+  </aside>
+
+  <div class="overlay" id="overlay"></div>
+
+  <main class="main">
+
+    <header class="topbar">
+
+      <div class="top-left">
+
+        <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 6h16"></path>
+            <path d="M4 12h16"></path>
+            <path d="M4 18h16"></path>
+          </svg>
+        </button>
+
+        <div>
+          <div class="page-title">Settings</div>
+          <div class="page-subtitle">Manage platform-wide configuration</div>
+        </div>
+
+      </div>
+
+      <div class="admin-pill">
+        <span class="admin-dot"></span>
+        Administrator
+      </div>
+
+    </header>
+
+    <section class="content">
+
+      <div class="notice" id="notice"></div>
+
+      <div class="settings-grid">
+
+        <!-- GENERAL -->
+        <div class="card">
+
+          <div class="card-head">
+
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 5h16v14H4z"></path>
+                <path d="M8 9h8"></path>
+                <path d="M8 13h5"></path>
+              </svg>
+            </div>
+
+            <div>
+              <div class="card-title">General</div>
+              <div class="card-description">
+                Basic platform configuration.
+              </div>
+            </div>
+
+          </div>
+
+          <div class="field">
+            <label for="platformName">Platform name</label>
+
+            <input
+              id="platformName"
+              type="text"
+              maxlength="100"
+              placeholder="TallyBuck"
+            >
+
+            <div class="field-help">
+              The name used throughout the platform.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- WITHDRAWAL LIMIT -->
+        <div class="card">
+
+          <div class="card-head">
+
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 3v18"></path>
+                <path d="M17 7.5c0-1.7-2.1-3-5-3s-5 1.3-5 3 2.1 3 5 3 5 1.3 5 3-2.1 3-5 3-5-1.3-5-3"></path>
+              </svg>
+            </div>
+
+            <div>
+              <div class="card-title">Withdrawal limit</div>
+              <div class="card-description">
+                Set the minimum amount users can request.
+              </div>
+            </div>
+
+          </div>
+
+          <div class="field">
+            <label for="minimumWithdrawal">Minimum withdrawal</label>
+
+            <div class="money-wrap">
+              <span class="money-symbol">$</span>
+
+              <input
+                id="minimumWithdrawal"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="10"
+              >
+            </div>
+
+            <div class="field-help">
+              Current platform minimum is $10. You can change it here later.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- WITHDRAWAL ACCESS -->
+        <div class="card">
+
+          <div class="card-head">
+
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24">
+                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                <path d="M7 10h10"></path>
+                <path d="M7 14h5"></path>
+              </svg>
+            </div>
+
+            <div>
+              <div class="card-title">Withdrawal access</div>
+              <div class="card-description">
+                Control whether users can submit withdrawals.
+              </div>
+            </div>
+
+          </div>
+
+          <div class="toggle-row">
+
+            <div>
+              <div class="toggle-title">Withdrawals enabled</div>
+
+              <div class="toggle-help">
+                When disabled, users should not be able to submit new withdrawal requests.
+              </div>
+            </div>
+
+            <label class="switch">
+              <input id="withdrawalsEnabled" type="checkbox">
+              <span class="slider"></span>
+            </label>
+
+          </div>
+
+        </div>
+
+        <!-- WITHDRAWAL SCHEDULE -->
+        <div class="card">
+
+          <div class="card-head">
+
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 7v5l3 2"></path>
+              </svg>
+            </div>
+
+            <div>
+              <div class="card-title">Withdrawal schedule</div>
+              <div class="card-description">
+                Define when withdrawal requests can be submitted.
+              </div>
+            </div>
+
+          </div>
+
+          <div class="time-grid">
+
+            <div class="field">
+              <label for="withdrawalOpen">Opening time</label>
+
+              <input
+                id="withdrawalOpen"
+                type="time"
+              >
+            </div>
+
+            <div class="field">
+              <label for="withdrawalClose">Closing time</label>
+
+              <input
+                id="withdrawalClose"
+                type="time"
+              >
+            </div>
+
+          </div>
+
+          <div class="time-status disabled" id="scheduleStatus">
+            No withdrawal schedule configured. Withdrawals can be controlled by the enabled switch.
+          </div>
+
+        </div>
+
+        <!-- SAFETY -->
+        <div class="card full">
+
+          <div class="card-head">
+
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 3l8 3v5c0 5.2-3.4 8.7-8 10-4.6-1.3-8-4.8-8-10V6l8-3z"></path>
+                <path d="M9 12l2 2 4-4"></path>
+              </svg>
+            </div>
+
+            <div>
+              <div class="card-title">Configuration notice</div>
+              <div class="card-description">
+                Important information about these controls.
+              </div>
+            </div>
+
+          </div>
+
+          <div class="danger-note">
+            Changing platform settings affects how the user-facing platform behaves.
+            Make sure values are correct before saving. Withdrawal opening and closing
+            times use the platform's local configured time and will later be enforced
+            by the withdrawal system.
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="save-bar">
+
+        <div class="save-note">
+          Settings are saved securely to the TallyBuck Supabase database.
+          Only administrators can modify them.
+        </div>
+
+        <button class="save-btn" id="saveBtn">
+          Save settings
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+<script>
+  const SUPABASE_URL = "https://cetsxdkoauucxwsbdktl.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
+
+  const { createClient } = supabase;
+  const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+  const menuBtn = document.getElementById("menuBtn");
+
+  const notice = document.getElementById("notice");
+  const saveBtn = document.getElementById("saveBtn");
+
+  const platformName = document.getElementById("platformName");
+  const minimumWithdrawal = document.getElementById("minimumWithdrawal");
+  const withdrawalsEnabled = document.getElementById("withdrawalsEnabled");
+  const withdrawalOpen = document.getElementById("withdrawalOpen");
+  const withdrawalClose = document.getElementById("withdrawalClose");
+  const scheduleStatus = document.getElementById("scheduleStatus");
+
+  function showNotice(text, type) {
+    notice.textContent = text;
+    notice.className = "notice show " + type;
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+
+  function clearNotice() {
+    notice.textContent = "";
+    notice.className = "notice";
+  }
+
+  function openMenu() {
+    sidebar.classList.add("open");
+    overlay.classList.add("show");
+  }
+
+  function closeMenu() {
+    sidebar.classList.remove("open");
+    overlay.classList.remove("show");
+  }
+
+  menuBtn.addEventListener("click", openMenu);
+  overlay.addEventListener("click", closeMenu);
+
+  document.querySelectorAll(".nav a").forEach(link => {
+    link.addEventListener("click", closeMenu);
+  });
+
+  /*
+    ADMIN CHECK
+  */
+  async function checkAdmin() {
+
+    const {
+      data: { session },
+      error: sessionError
+    } = await db.auth.getSession();
+
+    if (sessionError || !session) {
+      window.location.href = "login.html";
+      return false;
+    }
+
+    const {
+      data: profile,
+      error
+    } = await db
+      .from("profiles")
+      .select("role")
+      .eq("id", session.user.id)
+      .single();
+
+    if (error || !profile || profile.role !== "admin") {
+      document.body.innerHTML = `
+        <div style="
+          min-height:100vh;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          background:#07110d;
+          color:#f3f7fa;
+          font-family:system-ui,sans-serif;
+          padding:20px;
+          text-align:center;
+        ">
+          <div>
+            <h2 style="margin-bottom:8px;">Access denied</h2>
+            <p style="color:#8ea0ad;margin-bottom:18px;">
+              Administrator access is required.
+            </p>
+            <a
+              href="login.html"
+              style="
+                color:#62df9d;
+                text-decoration:none;
+                font-weight:700;
+              "
+            >
+              Return to login
+            </a>
+          </div>
+        </div>
+      `;
+
+      return false;
+    }
+
+    return true;
+  }
+
+  /*
+    LOAD SETTINGS
+  */
+  async function loadSettings() {
+
+    clearNotice();
+
+    const { data, error } = await db
+      .from("settings")
+      .select("setting_key,setting_value")
+      .order("setting_key");
+
+    if (error) {
+      console.error(error);
+
+      showNotice(
+        "Unable to load settings: " + error.message,
+        "error"
+      );
+
+      return;
+    }
+
+    const settings = {};
+
+    (data || []).forEach(row => {
+      settings[row.setting_key] = row.setting_value ?? "";
+    });
+
+    platformName.value =
+      settings.platform_name || "TallyBuck";
+
+    minimumWithdrawal.value =
+      settings.minimum_withdrawal || "10";
+
+    withdrawalsEnabled.checked =
+      String(settings.withdrawals_enabled).toLowerCase() === "true";
+
+    withdrawalOpen.value =
+      settings.withdrawal_open || "";
+
+    withdrawalClose.value =
+      settings.withdrawal_close || "";
+
+    updateScheduleStatus();
+  }
+
+  /*
+    SCHEDULE STATUS
+  */
+  function updateScheduleStatus() {
+
+    const open = withdrawalOpen.value;
+    const close = withdrawalClose.value;
+
+    if (!open && !close) {
+      scheduleStatus.textContent =
+        "No withdrawal schedule configured. The enabled switch controls withdrawal availability.";
+
+      scheduleStatus.className =
+        "time-status disabled";
+
+      return;
+    }
+
+    if (!open || !close) {
+      scheduleStatus.textContent =
+        "Please provide both an opening time and a closing time.";
+
+      scheduleStatus.className =
+        "time-status";
+
+      return;
+    }
+
+    scheduleStatus.textContent =
+      "Withdrawal requests are configured to open at " +
+      open +
+      " and close at " +
+      close +
+      ".";
+
+    scheduleStatus.className =
+      "time-status";
+  }
+
+  withdrawalOpen.addEventListener("change", updateScheduleStatus);
+  withdrawalClose.addEventListener("change", updateScheduleStatus);
+
+  /*
+    SAVE SETTINGS
+  */
+  async function saveSetting(key, value, description) {
+
+    const { error } = await db
+      .from("settings")
+      .upsert(
+        {
+          setting_key: key,
+          setting_value: value,
+          description: description,
+          updated_at: new Date().toISOString()
+        },
+        {
+          onConflict: "setting_key"
+        }
+      );
+
+    if (error) {
+      throw error;
+    }
+  }
+
+  saveBtn.addEventListener("click", async function () {
+
+    clearNotice();
+
+    const name =
+      platformName.value.trim();
+
+    const minimum =
+      Number(minimumWithdrawal.value);
+
+    const enabled =
+      withdrawalsEnabled.checked;
+
+    const open =
+      withdrawalOpen.value;
+
+    const close =
+      withdrawalClose.value;
+
+    if (!name) {
+      showNotice(
+        "Platform name cannot be empty.",
+        "error"
+      );
+      return;
+    }
+
+    if (!Number.isFinite(minimum) || minimum < 0) {
+      showNotice(
+        "Enter a valid minimum withdrawal amount.",
+        "error"
+      );
+      return;
+    }
+
+    if ((open && !close) || (!open && close)) {
+      showNotice(
+        "Enter both withdrawal opening and closing times, or leave both empty.",
+        "error"
+      );
+      return;
+    }
+
+    saveBtn.disabled = true;
+    saveBtn.textContent = "Saving...";
+
+    try {
+
+      await saveSetting(
+        "platform_name",
+        name,
+        "Platform display name"
+      );
+
+      await saveSetting(
+        "minimum_withdrawal",
+        minimum.toFixed(2).replace(/\.00$/, ""),
+        "Minimum withdrawal amount in USD"
+      );
+
+      await saveSetting(
+        "withdrawals_enabled",
+        enabled ? "true" : "false",
+        "Whether users can submit withdrawal requests"
+      );
+
+      await saveSetting(
+        "withdrawal_open",
+        open,
+        "Withdrawal opening time"
+      );
+
+      await saveSetting(
+        "withdrawal_close",
+        close,
+        "Withdrawal closing time"
+      );
+
+      showNotice(
+        "Settings saved successfully.",
+        "success"
+      );
+
+      updateScheduleStatus();
+
+    } catch (error) {
+
+      console.error(error);
+
+      showNotice(
+        "Unable to save settings: " + error.message,
+        "error"
+      );
+
+    } finally {
+
+      saveBtn.disabled = false;
+      saveBtn.textContent = "Save settings";
+
+    }
+  });
+
+  /*
+    INITIALIZE
+  */
+  async function init() {
+
+    const isAdmin = await checkAdmin();
+
+    if (!isAdmin) {
+      return;
+    }
+
+    await loadSettings();
+  }
+
+  init();
+</script>
+
+</body>
+</html>
