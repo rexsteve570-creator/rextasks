@@ -1,854 +1,758 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TallyBuck — Earn Tasks</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-:root{
-  --green:#079447;
-  --green2:#0bbf61;
-  --green-dark:#063f2d;
-
-  --bg:#f5f8f6;
-  --card:#ffffff;
-  --card2:#f8fbf9;
-
-  --text:#102019;
-  --muted:#718078;
-
-  --border:#e1e9e4;
-  --danger:#d9304f;
-  --warning:#b7791f;
-  --warning-bg:#fff8e7;
-
-  --shadow:0 8px 25px rgba(0,0,0,.06);
-}
-
-html[data-theme="dark"]{
-  --bg:#07110d;
-  --card:#0d1914;
-  --card2:#111f19;
-
-  --text:#f3f7f4;
-  --muted:#8ea0ad;
-
-  --border:#1d3328;
-  --warning:#e6b85c;
-  --warning-bg:#211b0c;
-
-  --shadow:0 10px 30px rgba(0,0,0,.25);
-}
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-body{
-  font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
-
-  background:var(--bg);
-  color:var(--text);
-
-  min-height:100vh;
-}
-
-button,
-input,
-select{
-  font:inherit;
-}
-
-button{
-  border:0;
-}
-
-a{
-  color:inherit;
-  text-decoration:none;
-}
-
-.app{
-  width:100%;
-  max-width:760px;
-  margin:auto;
-  min-height:100vh;
-  padding-bottom:86px;
-}
-
-/* =========================================================
-   HEADER
-========================================================= */
-
-.header{
-  height:72px;
-  padding:0 18px;
-
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-
-  background:var(--card);
-  border-bottom:1px solid var(--border);
-
-  position:sticky;
-  top:0;
-  z-index:20;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.brand-mark{
-  width:38px;
-  height:38px;
-  border-radius:12px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  background:var(--green);
-  color:white;
-  font-weight:800;
-  font-size:18px;
-}
-
-.brand-name{
-  font-size:18px;
-  font-weight:800;
-  letter-spacing:-.3px;
-}
-
-.header-actions{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.icon-btn{
-  width:40px;
-  height:40px;
-
-  border-radius:12px;
-  background:transparent;
-
-  color:var(--text);
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  cursor:pointer;
-  position:relative;
-}
-
-.icon-btn:hover{
-  background:var(--card2);
-}
-
-.icon-btn svg{
-  width:21px;
-  height:21px;
-  stroke:currentColor;
-}
-
-.notification-dot{
-  position:absolute;
-
-  width:8px;
-  height:8px;
-
-  border-radius:50%;
-
-  background:var(--danger);
-
-  top:8px;
-  right:8px;
-
-  display:none;
-}
-
-/* =========================================================
-   MAIN
-========================================================= */
-
-.main{
-  padding:18px;
-}
-
-.page-title{
-  margin-bottom:4px;
-
-  font-size:25px;
-  font-weight:800;
-
-  letter-spacing:-.5px;
-}
-
-.page-subtitle{
-  color:var(--muted);
-  font-size:14px;
-  margin-bottom:18px;
-}
-
-/* =========================================================
-   TASK WARNING
-========================================================= */
-
-.task-warning{
-  display:flex;
-  align-items:flex-start;
-  gap:12px;
-
-  padding:15px;
-
-  margin-bottom:18px;
-
-  background:var(--warning-bg);
-
-  border:1px solid rgba(183,121,31,.25);
-
-  border-radius:16px;
-}
-
-.warning-icon{
-  width:36px;
-  height:36px;
-
-  min-width:36px;
-
-  border-radius:11px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  background:rgba(183,121,31,.12);
-
-  color:var(--warning);
-}
-
-.warning-icon svg{
-  width:20px;
-  height:20px;
-  stroke:currentColor;
-}
-
-.warning-title{
-  font-size:14px;
-  font-weight:800;
-  margin-bottom:4px;
-}
-
-.warning-text{
-  font-size:12px;
-  line-height:1.55;
-  color:var(--muted);
-}
-
-/* =========================================================
-   FILTERS
-========================================================= */
-
-.filters{
-  display:flex;
-  gap:8px;
-
-  overflow-x:auto;
-
-  padding-bottom:4px;
-  margin-bottom:18px;
-
-  scrollbar-width:none;
-}
-
-.filters::-webkit-scrollbar{
-  display:none;
-}
-
-.filter-btn{
-  flex:0 0 auto;
-
-  padding:10px 14px;
-
-  border-radius:12px;
-
-  background:var(--card);
-
-  border:1px solid var(--border);
-
-  color:var(--muted);
-
-  font-size:13px;
-  font-weight:700;
-
-  cursor:pointer;
-}
-
-.filter-btn.active{
-  background:var(--green);
-  color:white;
-  border-color:var(--green);
-}
-
-/* =========================================================
-   TASK LIST
-========================================================= */
-
-.task-list{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-.task-card{
-  background:var(--card);
-
-  border:1px solid var(--border);
-
-  border-radius:18px;
-
-  padding:15px;
-
-  box-shadow:var(--shadow);
-
-  display:flex;
-  gap:13px;
-}
-
-.task-image{
-  width:58px;
-  height:58px;
-
-  min-width:58px;
-
-  border-radius:15px;
-
-  background:var(--card2);
-
-  border:1px solid var(--border);
-
-  overflow:hidden;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.task-image img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.task-image svg{
-  width:25px;
-  height:25px;
-  stroke:var(--green);
-}
-
-.task-content{
-  flex:1;
-  min-width:0;
-}
-
-.task-title{
-  font-size:15px;
-  font-weight:800;
-
-  line-height:1.3;
-
-  margin-bottom:4px;
-}
-
-.task-description{
-  color:var(--muted);
-
-  font-size:12px;
-
-  line-height:1.45;
-
-  margin-bottom:9px;
-
-  display:-webkit-box;
-  -webkit-line-clamp:2;
-  -webkit-box-orient:vertical;
-
-  overflow:hidden;
-}
-
-.task-meta{
-  display:flex;
-  align-items:center;
-  gap:7px;
-
-  flex-wrap:wrap;
-}
-
-.task-category{
-  padding:5px 8px;
-
-  border-radius:8px;
-
-  background:var(--card2);
-
-  border:1px solid var(--border);
-
-  color:var(--muted);
-
-  font-size:10px;
-
-  font-weight:700;
-}
-
-.task-reward{
-  color:var(--green);
-
-  font-size:13px;
-  font-weight:800;
-}
-
-.task-action{
-  display:flex;
-  align-items:center;
-}
-
-.start-btn{
-  padding:10px 14px;
-
-  border-radius:11px;
-
-  background:var(--green);
-
-  color:white;
-
-  font-size:12px;
-  font-weight:800;
-
-  cursor:pointer;
-
-  white-space:nowrap;
-}
-
-.start-btn:hover{
-  background:var(--green2);
-}
-
-.start-btn:disabled{
-  cursor:wait;
-  opacity:.7;
-}
-
-/* =========================================================
-   STATES
-========================================================= */
-
-.state{
-  background:var(--card);
-
-  border:1px solid var(--border);
-
-  border-radius:18px;
-
-  padding:30px 20px;
-
-  text-align:center;
-}
-
-.state-icon{
-  width:48px;
-  height:48px;
-
-  margin:0 auto 12px;
-
-  border-radius:15px;
-
-  background:var(--card2);
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  color:var(--green);
-}
-
-.state-icon svg{
-  width:24px;
-  height:24px;
-  stroke:currentColor;
-}
-
-.state-title{
-  font-size:15px;
-  font-weight:800;
-  margin-bottom:5px;
-}
-
-.state-text{
-  font-size:12px;
-  color:var(--muted);
-  line-height:1.5;
-}
-
-.retry-btn{
-  margin-top:14px;
-
-  padding:10px 15px;
-
-  border-radius:10px;
-
-  background:var(--green);
-
-  color:white;
-
-  font-size:12px;
-  font-weight:800;
-
-  cursor:pointer;
-}
-
-/* =========================================================
-   LOADING
-========================================================= */
-
-.loader{
-  width:28px;
-  height:28px;
-
-  border:3px solid var(--border);
-  border-top-color:var(--green);
-
-  border-radius:50%;
-
-  animation:spin .8s linear infinite;
-
-  margin:0 auto 12px;
-}
-
-@keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
-}
-
-/* =========================================================
-   SIDE MENU
-========================================================= */
-
-.overlay{
-  position:fixed;
-  inset:0;
-
-  background:rgba(0,0,0,.5);
-
-  z-index:90;
-
-  display:none;
-}
-
-.overlay.show{
-  display:block;
-}
-
-.side-menu{
-  position:fixed;
-
-  top:0;
-  right:0;
-
-  width:min(310px,88vw);
-  height:100vh;
-
-  background:var(--card);
-
-  border-left:1px solid var(--border);
-
-  z-index:100;
-
-  transform:translateX(100%);
-
-  transition:transform .25s ease;
-
-  overflow-y:auto;
-}
-
-.side-menu.show{
-  transform:translateX(0);
-}
-
-.menu-header{
-  padding:20px;
-
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-
-  border-bottom:1px solid var(--border);
-}
-
-.menu-title{
-  font-weight:800;
-  font-size:17px;
-}
-
-.menu-close{
-  width:38px;
-  height:38px;
-
-  border-radius:11px;
-
-  background:var(--card2);
-
-  color:var(--text);
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  cursor:pointer;
-}
-
-.menu-close svg{
-  width:20px;
-  height:20px;
-  stroke:currentColor;
-}
-
-.menu-items{
-  padding:12px;
-}
-
-.menu-link{
-  width:100%;
-
-  padding:13px 12px;
-
-  border-radius:12px;
-
-  display:flex;
-  align-items:center;
-  gap:12px;
-
-  color:var(--muted);
-
-  font-size:13px;
-  font-weight:700;
-
-  margin-bottom:3px;
-
-  cursor:pointer;
-}
-
-.menu-link:hover{
-  background:var(--card2);
-  color:var(--text);
-}
-
-.menu-link.active{
-  background:rgba(7,148,71,.1);
-  color:var(--green);
-}
-
-.menu-link svg{
-  width:19px;
-  height:19px;
-  stroke:currentColor;
-}
-
-/* =========================================================
-   NOTIFICATION DROPDOWN
-========================================================= */
-
-.notification-panel{
-  position:fixed;
-
-  top:62px;
-  right:12px;
-
-  width:min(340px,calc(100vw - 24px));
-
-  background:var(--card);
-
-  border:1px solid var(--border);
-
-  border-radius:16px;
-
-  box-shadow:0 15px 40px rgba(0,0,0,.15);
-
-  z-index:80;
-
-  display:none;
-
-  overflow:hidden;
-}
-
-.notification-panel.show{
-  display:block;
-}
-
-.notification-head{
-  padding:14px 15px;
-
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-
-  border-bottom:1px solid var(--border);
-}
-
-.notification-head strong{
-  font-size:14px;
-}
-
-.notification-view{
-  font-size:11px;
-  color:var(--green);
-  font-weight:700;
-}
-
-.notification-empty{
-  padding:24px 15px;
-
-  color:var(--muted);
-
-  font-size:12px;
-
-  text-align:center;
-}
-
-/* =========================================================
-   BOTTOM NAV
-========================================================= */
-
-.bottom-nav{
-  position:fixed;
-
-  left:50%;
-  bottom:0;
-
-  transform:translateX(-50%);
-
-  width:100%;
-  max-width:760px;
-
-  height:70px;
-
-  background:var(--card);
-
-  border-top:1px solid var(--border);
-
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-
-  z-index:40;
-}
-
-.bottom-link{
-  display:flex;
-  flex-direction:column;
-
-  align-items:center;
-  justify-content:center;
-
-  gap:4px;
-
-  color:var(--muted);
-
-  font-size:10px;
-  font-weight:700;
-}
-
-.bottom-link.active{
-  color:var(--green);
-}
-
-.bottom-link svg{
-  width:20px;
-  height:20px;
-  stroke:currentColor;
-}
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
-@media(max-width:520px){
-
-  .main{
-    padding:16px 14px;
-  }
-
-  .header{
-    padding:0 14px;
-  }
-
-  .task-card{
-    padding:13px;
-  }
-
-  .task-action{
-    align-items:flex-start;
-  }
-
-  .start-btn{
-    padding:9px 11px;
-  }
-
-}
-
-@media(min-width:761px){
-
-  .bottom-nav{
-    border-left:1px solid var(--border);
-    border-right:1px solid var(--border);
-  }
-
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>TallyBuck — Earn Tasks</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root{
+      --green:#079447;
+      --green-dark:#063f2d;
+      --green-soft:#eaf8f1;
+      --bg:#f5f7f6;
+      --card:#ffffff;
+      --text:#15231d;
+      --muted:#718078;
+      --border:#e5ebe8;
+      --danger:#dc3545;
+      --warning:#d97706;
+      --warning-soft:#fff7ed;
+      --shadow:0 8px 25px rgba(6,63,45,.06);
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      font-family:Inter,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
+    }
+
+    body.dark{
+      --bg:#0c1210;
+      --card:#121a17;
+      --text:#f1f6f3;
+      --muted:#94a39b;
+      --border:#24332d;
+      --green-soft:#142d22;
+      --warning-soft:#2b2114;
+      --shadow:0 8px 25px rgba(0,0,0,.2);
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    button{
+      font-family:inherit;
+    }
+
+    .app{
+      max-width:760px;
+      margin:0 auto;
+      min-height:100vh;
+      padding-bottom:90px;
+    }
+
+    /* =========================================================
+       HEADER
+    ========================================================= */
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:100;
+      height:68px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 18px;
+      background:var(--card);
+      border-bottom:1px solid var(--border);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:20px;
+      font-weight:800;
+      color:var(--green);
+    }
+
+    .brand-mark{
+      width:34px;
+      height:34px;
+      border-radius:10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:var(--green);
+      color:#fff;
+      font-weight:900;
+    }
+
+    .header-actions{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .icon-btn{
+      width:40px;
+      height:40px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      background:var(--card);
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      position:relative;
+    }
+
+    .icon-btn svg{
+      width:20px;
+      height:20px;
+    }
+
+    .notification-dot{
+      position:absolute;
+      top:7px;
+      right:7px;
+      width:7px;
+      height:7px;
+      background:#ef4444;
+      border-radius:50%;
+      border:2px solid var(--card);
+    }
+
+    /* =========================================================
+       CONTENT
+    ========================================================= */
+
+    .content{
+      padding:18px;
+    }
+
+    .welcome{
+      margin-bottom:16px;
+    }
+
+    .welcome h1{
+      font-size:24px;
+      margin-bottom:5px;
+    }
+
+    .welcome p{
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    /* =========================================================
+       SECURITY WARNING
+    ========================================================= */
+
+    .security-warning{
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      background:var(--warning-soft);
+      border:1px solid rgba(217,119,6,.25);
+      border-radius:17px;
+      padding:15px;
+      margin-bottom:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .security-warning-icon{
+      width:40px;
+      height:40px;
+      min-width:40px;
+      border-radius:12px;
+      background:rgba(217,119,6,.12);
+      color:var(--warning);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .security-warning-icon svg{
+      width:20px;
+      height:20px;
+    }
+
+    .security-warning-content{
+      flex:1;
+    }
+
+    .security-warning-title{
+      font-size:14px;
+      font-weight:800;
+      margin-bottom:5px;
+      color:var(--text);
+    }
+
+    .security-warning-text{
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.6;
+    }
+
+    .security-warning-text strong{
+      color:var(--warning);
+    }
+
+    /* =========================================================
+       TASK SUMMARY
+    ========================================================= */
+
+    .task-summary{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:17px;
+      padding:16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .summary-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .summary-icon{
+      width:42px;
+      height:42px;
+      min-width:42px;
+      border-radius:12px;
+      background:var(--green-soft);
+      color:var(--green);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .summary-icon svg{
+      width:20px;
+      height:20px;
+    }
+
+    .summary-info strong{
+      display:block;
+      font-size:14px;
+      margin-bottom:3px;
+    }
+
+    .summary-info span{
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .task-count{
+      color:var(--green);
+      font-size:20px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    /* =========================================================
+       FILTERS
+    ========================================================= */
+
+    .filters{
+      display:flex;
+      gap:8px;
+      overflow-x:auto;
+      padding-bottom:3px;
+      margin-bottom:18px;
+      scrollbar-width:none;
+    }
+
+    .filters::-webkit-scrollbar{
+      display:none;
+    }
+
+    .filter-btn{
+      border:1px solid var(--border);
+      background:var(--card);
+      color:var(--muted);
+      border-radius:10px;
+      padding:9px 13px;
+      white-space:nowrap;
+      cursor:pointer;
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .filter-btn.active{
+      background:var(--green);
+      color:#fff;
+      border-color:var(--green);
+    }
+
+    /* =========================================================
+       SECTION
+    ========================================================= */
+
+    .section{
+      margin-top:20px;
+    }
+
+    .section-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:11px;
+    }
+
+    .section-title{
+      font-size:17px;
+      font-weight:800;
+    }
+
+    .section-link{
+      color:var(--green);
+      font-size:13px;
+      font-weight:700;
+    }
+
+    /* =========================================================
+       TASK CARD
+    ========================================================= */
+
+    .task-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .task-card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:17px;
+      padding:16px;
+      box-shadow:var(--shadow);
+    }
+
+    .task-top{
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+    }
+
+    .task-icon{
+      width:46px;
+      height:46px;
+      min-width:46px;
+      border-radius:13px;
+      background:var(--green-soft);
+      color:var(--green);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .task-icon svg{
+      width:22px;
+      height:22px;
+    }
+
+    .task-info{
+      flex:1;
+      min-width:0;
+    }
+
+    .task-title{
+      font-size:14px;
+      font-weight:800;
+      line-height:1.4;
+      margin-bottom:4px;
+    }
+
+    .task-description{
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.55;
+    }
+
+    .task-reward{
+      color:var(--green);
+      font-size:14px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .task-meta{
+      display:flex;
+      align-items:center;
+      gap:7px;
+      flex-wrap:wrap;
+      margin-top:13px;
+      margin-bottom:13px;
+    }
+
+    .task-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:5px;
+      padding:6px 8px;
+      border-radius:8px;
+      background:var(--green-soft);
+      color:var(--green);
+      font-size:10px;
+      font-weight:700;
+    }
+
+    .task-badge svg{
+      width:12px;
+      height:12px;
+    }
+
+    .verification-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:5px;
+      padding:6px 8px;
+      border-radius:8px;
+      background:var(--warning-soft);
+      color:var(--warning);
+      font-size:10px;
+      font-weight:700;
+    }
+
+    .verification-badge svg{
+      width:12px;
+      height:12px;
+    }
+
+    .task-action{
+      display:flex;
+      align-items:center;
+      gap:9px;
+    }
+
+    .start-btn{
+      flex:1;
+      border:0;
+      background:var(--green);
+      color:#fff;
+      border-radius:11px;
+      padding:11px 14px;
+      font-size:12px;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .start-btn:hover{
+      background:var(--green-dark);
+    }
+
+    .start-btn:disabled{
+      opacity:.65;
+      cursor:wait;
+    }
+
+    .task-info-btn{
+      width:42px;
+      height:42px;
+      border:1px solid var(--border);
+      background:var(--card);
+      color:var(--muted);
+      border-radius:11px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+    }
+
+    .task-info-btn svg{
+      width:18px;
+      height:18px;
+    }
+
+    /* =========================================================
+       EMPTY / LOADING
+    ========================================================= */
+
+    .loading{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:17px;
+      color:var(--muted);
+      text-align:center;
+      padding:30px 18px;
+      font-size:13px;
+      box-shadow:var(--shadow);
+    }
+
+    .empty{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:17px;
+      padding:32px 18px;
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+      box-shadow:var(--shadow);
+    }
+
+    .empty-icon{
+      width:48px;
+      height:48px;
+      border-radius:14px;
+      background:var(--green-soft);
+      color:var(--green);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:0 auto 12px;
+    }
+
+    .empty-icon svg{
+      width:23px;
+      height:23px;
+    }
+
+    .empty strong{
+      display:block;
+      color:var(--text);
+      font-size:14px;
+      margin-bottom:5px;
+    }
+
+    /* =========================================================
+       BOTTOM NAV
+    ========================================================= */
+
+    .bottom-nav{
+      position:fixed;
+      z-index:90;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:0;
+      width:100%;
+      max-width:760px;
+      height:72px;
+      background:var(--card);
+      border-top:1px solid var(--border);
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      padding:7px 8px;
+    }
+
+    .nav-item{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+      color:var(--muted);
+      font-size:10px;
+      font-weight:600;
+    }
+
+    .nav-item svg{
+      width:20px;
+      height:20px;
+    }
+
+    .nav-item.active{
+      color:var(--green);
+    }
+
+    /* =========================================================
+       MENU
+    ========================================================= */
+
+    .menu-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.4);
+      z-index:200;
+    }
+
+    .menu-overlay.show{
+      display:block;
+    }
+
+    .side-menu{
+      position:fixed;
+      z-index:201;
+      top:0;
+      right:-310px;
+      width:290px;
+      max-width:85%;
+      height:100vh;
+      background:var(--card);
+      transition:right .25s ease;
+      padding:20px;
+      overflow-y:auto;
+    }
+
+    .side-menu.show{
+      right:0;
+    }
+
+    .menu-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:22px;
+    }
+
+    .menu-header strong{
+      font-size:18px;
+    }
+
+    .menu-item{
+      width:100%;
+      border:0;
+      background:none;
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:13px 8px;
+      border-radius:10px;
+      cursor:pointer;
+      text-align:left;
+      font-size:14px;
+    }
+
+    .menu-item:hover{
+      background:var(--green-soft);
+    }
+
+    .menu-item svg{
+      width:19px;
+      height:19px;
+      color:var(--green);
+    }
+
+    /* =========================================================
+       TASK RULE MODAL
+    ========================================================= */
+
+    .modal-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:300;
+      background:rgba(0,0,0,.5);
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+    }
+
+    .modal-overlay.show{
+      display:flex;
+    }
+
+    .modal{
+      width:100%;
+      max-width:430px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:20px;
+      box-shadow:0 20px 50px rgba(0,0,0,.2);
+    }
+
+    .modal-icon{
+      width:46px;
+      height:46px;
+      border-radius:13px;
+      background:var(--warning-soft);
+      color:var(--warning);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-bottom:13px;
+    }
+
+    .modal-icon svg{
+      width:23px;
+      height:23px;
+    }
+
+    .modal h2{
+      font-size:18px;
+      margin-bottom:7px;
+    }
+
+    .modal p{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.65;
+      margin-bottom:17px;
+    }
+
+    .modal-close{
+      width:100%;
+      border:0;
+      background:var(--green);
+      color:#fff;
+      border-radius:11px;
+      padding:12px;
+      font-size:13px;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    @media(max-width:420px){
+
+      .content{
+        padding:15px;
+      }
+
+      .task-reward{
+        font-size:13px;
+      }
+
+      .security-warning{
+        padding:13px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
 <div class="app">
 
-  <!-- =====================================================
-       HEADER
-  ====================================================== -->
-
-  <header class="header">
+  <!-- HEADER -->
+  <header class="topbar">
 
     <a href="dashboard.html" class="brand">
-
-      <div class="brand-mark">
-        T
-      </div>
-
-      <div class="brand-name">
-        TallyBuck
-      </div>
-
+      <span class="brand-mark">T</span>
+      <span>TallyBuck</span>
     </a>
 
     <div class="header-actions">
 
-      <button
+      <a
+        href="notifications.html"
         class="icon-btn"
-        type="button"
-        onclick="toggleNotifications()"
         aria-label="Notifications"
       >
 
@@ -857,24 +761,22 @@ a{
           fill="none"
           stroke="currentColor"
           stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
         >
-          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
         </svg>
 
         <span
           id="notificationDot"
           class="notification-dot"
+          style="display:none;"
         ></span>
 
-      </button>
+      </a>
 
       <button
         class="icon-btn"
-        type="button"
-        onclick="openMenu()"
+        id="menuBtn"
         aria-label="Menu"
       >
 
@@ -883,11 +785,10 @@ a{
           fill="none"
           stroke="currentColor"
           stroke-width="2"
-          stroke-linecap="round"
         >
-          <path d="M4 6h16"/>
-          <path d="M4 12h16"/>
-          <path d="M4 18h16"/>
+          <line x1="4" y1="6" x2="20" y2="6"></line>
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <line x1="4" y1="18" x2="20" y2="18"></line>
         </svg>
 
       </button>
@@ -897,90 +798,52 @@ a{
   </header>
 
 
-  <!-- =====================================================
-       NOTIFICATIONS
-  ====================================================== -->
+  <main class="content">
 
-  <div
-    id="notificationPanel"
-    class="notification-panel"
-  >
+    <!-- WELCOME -->
+    <section class="welcome">
 
-    <div class="notification-head">
+      <h1>
+        Earn Tasks
+      </h1>
 
-      <strong>
-        Notifications
-      </strong>
+      <p>
+        Complete verified opportunities and earn rewards.
+      </p>
 
-      <a
-        href="notifications.html"
-        class="notification-view"
-      >
-        View all
-      </a>
-
-    </div>
-
-    <div
-      id="notificationPreview"
-      class="notification-empty"
-    >
-      No new notifications.
-    </div>
-
-  </div>
+    </section>
 
 
-  <!-- =====================================================
-       MAIN
-  ====================================================== -->
+    <!-- SECURITY WARNING -->
+    <section class="security-warning">
 
-  <main class="main">
-
-    <h1 class="page-title">
-      Earn Tasks
-    </h1>
-
-    <p class="page-subtitle">
-      Complete available opportunities and earn rewards.
-    </p>
-
-
-    <!-- ===================================================
-         TASK WARNING
-    ==================================================== -->
-
-    <section class="task-warning">
-
-      <div class="warning-icon">
+      <div class="security-warning-icon">
 
         <svg
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
           stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
         >
-          <path d="M10.3 3.8 2.7 17a2 2 0 0 0 1.7 3h15.2a2 2 0 0 0 1.7-3L13.7 3.8a2 2 0 0 0-3.4 0Z"/>
-          <path d="M12 9v4"/>
-          <path d="M12 17h.01"/>
+          <path d="M12 3 4 6v5c0 5.2 3.4 8.8 8 10 4.6-1.2 8-4.8 8-10V6l-8-3z"></path>
+          <path d="M12 8v4"></path>
+          <path d="M12 16h.01"></path>
         </svg>
 
       </div>
 
-      <div>
+      <div class="security-warning-content">
 
-        <div class="warning-title">
-          Important task & reward notice
+        <div class="security-warning-title">
+          Task & Connection Verification
         </div>
 
-        <div class="warning-text">
-          Complete each task fully and follow all requirements.
-          Incorrect, incomplete, or invalid task activity will not
-          be credited. Rewards are credited automatically only after
-          a valid completion is confirmed. Starting a task does not
-          mean that the reward has been earned.
+        <div class="security-warning-text">
+          Rewards are credited only after a task is
+          <strong>fully completed and successfully verified</strong>.
+          Tasks completed with a detected VPN, proxy, Tor connection,
+          incorrect location, invalid activity, or unfinished requirements
+          may not be credited.
         </div>
 
       </div>
@@ -988,44 +851,78 @@ a{
     </section>
 
 
-    <!-- ===================================================
-         FILTERS
-    ==================================================== -->
+    <!-- TASK SUMMARY -->
+    <section class="task-summary">
 
+      <div class="summary-left">
+
+        <div class="summary-icon">
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M4 4h16v16H4z"></path>
+            <path d="M8 8h8"></path>
+            <path d="M8 12h8"></path>
+            <path d="M8 16h5"></path>
+          </svg>
+
+        </div>
+
+        <div class="summary-info">
+
+          <strong>
+            Available Opportunities
+          </strong>
+
+          <span>
+            Complete tasks to earn verified rewards.
+          </span>
+
+        </div>
+
+      </div>
+
+      <div
+        class="task-count"
+        id="taskCount"
+      >
+        0
+      </div>
+
+    </section>
+
+
+    <!-- FILTERS -->
     <div class="filters">
 
       <button
         class="filter-btn active"
-        type="button"
         data-filter="all"
-        onclick="setFilter('all')"
       >
         All
       </button>
 
       <button
         class="filter-btn"
-        type="button"
-        data-filter="surveys"
-        onclick="setFilter('surveys')"
+        data-filter="survey"
       >
         Surveys
       </button>
 
       <button
         class="filter-btn"
-        type="button"
-        data-filter="offers"
-        onclick="setFilter('offers')"
+        data-filter="offer"
       >
         Offers
       </button>
 
       <button
         class="filter-btn"
-        type="button"
-        data-filter="app_installs"
-        onclick="setFilter('app_installs')"
+        data-filter="install"
       >
         App Installs
       </button>
@@ -1033,58 +930,146 @@ a{
     </div>
 
 
-    <!-- ===================================================
-         TASK AREA
-    ==================================================== -->
+    <!-- TASK SECTION -->
+    <section class="section">
 
-    <div id="taskArea">
+      <div class="section-header">
 
-      <div class="state">
-
-        <div class="loader"></div>
-
-        <div class="state-title">
-          Loading opportunities
-        </div>
-
-        <div class="state-text">
-          Finding available tasks for your account.
+        <div class="section-title">
+          Available Tasks
         </div>
 
       </div>
 
-    </div>
+      <div
+        class="task-list"
+        id="taskList"
+      >
+
+        <div class="loading">
+          Loading available tasks...
+        </div>
+
+      </div>
+
+    </section>
 
   </main>
+
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+
+    <a
+      href="dashboard.html"
+      class="nav-item"
+    >
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="m3 11 9-8 9 8"></path>
+        <path d="M5 10v10h14V10"></path>
+      </svg>
+
+      Home
+
+    </a>
+
+
+    <a
+      href="tasks.html"
+      class="nav-item active"
+    >
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M4 4h16v16H4z"></path>
+        <path d="M8 8h8"></path>
+        <path d="M8 12h8"></path>
+        <path d="M8 16h5"></path>
+      </svg>
+
+      Earn
+
+    </a>
+
+
+    <a
+      href="referrals.html"
+      class="nav-item"
+    >
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <circle cx="9" cy="7" r="4"></circle>
+        <path d="M3 21v-2a6 6 0 0 1 12 0v2"></path>
+        <path d="M16 11a4 4 0 1 0 0-8"></path>
+        <path d="M21 21v-2a6 6 0 0 0-4-5.65"></path>
+      </svg>
+
+      Referrals
+
+    </a>
+
+
+    <a
+      href="profile.html"
+      class="nav-item"
+    >
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <circle cx="12" cy="8" r="4"></circle>
+        <path d="M4 21a8 8 0 0 1 16 0"></path>
+      </svg>
+
+      Profile
+
+    </a>
+
+  </nav>
 
 </div>
 
 
-<!-- =======================================================
-     SIDE MENU
-======================================================== -->
+<!-- SIDE MENU -->
 
 <div
-  id="overlay"
-  class="overlay"
-  onclick="closeMenu()"
+  class="menu-overlay"
+  id="menuOverlay"
 ></div>
 
+
 <aside
-  id="sideMenu"
   class="side-menu"
+  id="sideMenu"
 >
 
   <div class="menu-header">
 
-    <div class="menu-title">
+    <strong>
       TallyBuck
-    </div>
+    </strong>
 
     <button
-      class="menu-close"
-      type="button"
-      onclick="closeMenu()"
+      class="icon-btn"
+      id="closeMenu"
       aria-label="Close menu"
     >
 
@@ -1093,10 +1078,9 @@ a{
         fill="none"
         stroke="currentColor"
         stroke-width="2"
-        stroke-linecap="round"
       >
-        <path d="M18 6 6 18"/>
-        <path d="m6 6 12 12"/>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+        <line x1="18" y1="6" x2="6" y2="18"></line>
       </svg>
 
     </button>
@@ -1104,216 +1088,9 @@ a{
   </div>
 
 
-  <div class="menu-items">
-
-    <a
-      href="dashboard.html"
-      class="menu-link"
-    >
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <rect x="3" y="3" width="7" height="7"/>
-        <rect x="14" y="3" width="7" height="7"/>
-        <rect x="3" y="14" width="7" height="7"/>
-        <rect x="14" y="14" width="7" height="7"/>
-      </svg>
-      Dashboard
-    </a>
-
-
-    <a
-      href="tasks.html"
-      class="menu-link active"
-    >
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M9 11l3 3L22 4"/>
-        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-      </svg>
-      Earn Tasks
-    </a>
-
-
-    <a
-      href="referrals.html"
-      class="menu-link"
-    >
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-        <circle cx="9" cy="7" r="4"/>
-        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-      </svg>
-      Referrals
-    </a>
-
-
-    <a
-      href="withdraw.html"
-      class="menu-link"
-    >
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <rect x="2" y="5" width="20" height="14" rx="2"/>
-        <path d="M16 12h.01"/>
-        <path d="M6 12h4"/>
-      </svg>
-      Withdraw
-    </a>
-
-
-    <a
-      href="history.html"
-      class="menu-link"
-    >
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M3 12a9 9 0 1 0 3-6.7"/>
-        <path d="M3 4v5h5"/>
-        <path d="M12 7v5l3 2"/>
-      </svg>
-      History
-    </a>
-
-
-    <a
-      href="notifications.html"
-      class="menu-link"
-    >
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-      </svg>
-      Notifications
-    </a>
-
-
-    <a
-      href="profile.html"
-      class="menu-link"
-    >
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <circle cx="12" cy="8" r="4"/>
-        <path d="M4 21a8 8 0 0 1 16 0"/>
-      </svg>
-      Profile
-    </a>
-
-
-    <button
-      type="button"
-      class="menu-link"
-      onclick="toggleTheme()"
-      style="background:none;border:0;text-align:left;"
-    >
-
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <circle cx="12" cy="12" r="4"/>
-        <path d="M12 2v2"/>
-        <path d="M12 20v2"/>
-        <path d="m4.93 4.93 1.41 1.41"/>
-        <path d="m17.66 17.66 1.41 1.41"/>
-        <path d="M2 12h2"/>
-        <path d="M20 12h2"/>
-        <path d="m6.34 17.66-1.41 1.41"/>
-        <path d="m19.07 4.93-1.41 1.41"/>
-      </svg>
-
-      Toggle Theme
-
-    </button>
-
-
-    <button
-      type="button"
-      class="menu-link"
-      onclick="signOut()"
-      style="background:none;border:0;text-align:left;"
-    >
-
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-        <path d="m16 17 5-5-5-5"/>
-        <path d="M21 12H9"/>
-      </svg>
-
-      Sign Out
-
-    </button>
-
-  </div>
-
-</aside>
-
-
-<!-- =======================================================
-     BOTTOM NAV
-======================================================== -->
-
-<nav class="bottom-nav">
-
-  <a
-    href="dashboard.html"
-    class="bottom-link"
+  <button
+    class="menu-item"
+    onclick="location.href='dashboard.html'"
   >
 
     <svg
@@ -1321,22 +1098,19 @@ a{
       fill="none"
       stroke="currentColor"
       stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
     >
-      <path d="m3 10 9-7 9 7"/>
-      <path d="M5 9v11h14V9"/>
-      <path d="M9 20v-6h6v6"/>
+      <path d="m3 11 9-8 9 8"></path>
+      <path d="M5 10v10h14V10"></path>
     </svg>
 
-    Home
+    Dashboard
 
-  </a>
+  </button>
 
 
-  <a
-    href="tasks.html"
-    class="bottom-link active"
+  <button
+    class="menu-item"
+    onclick="location.href='tasks.html'"
   >
 
     <svg
@@ -1344,21 +1118,21 @@ a{
       fill="none"
       stroke="currentColor"
       stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
     >
-      <path d="M9 11l3 3L22 4"/>
-      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+      <path d="M4 4h16v16H4z"></path>
+      <path d="M8 8h8"></path>
+      <path d="M8 12h8"></path>
+      <path d="M8 16h5"></path>
     </svg>
 
-    Earn
+    Earn Tasks
 
-  </a>
+  </button>
 
 
-  <a
-    href="referrals.html"
-    class="bottom-link"
+  <button
+    class="menu-item"
+    onclick="location.href='referrals.html'"
   >
 
     <svg
@@ -1366,23 +1140,21 @@ a{
       fill="none"
       stroke="currentColor"
       stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
     >
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-      <circle cx="9" cy="7" r="4"/>
-      <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      <circle cx="9" cy="7" r="4"></circle>
+      <path d="M3 21v-2a6 6 0 0 1 12 0v2"></path>
+      <path d="M16 11a4 4 0 1 0 0-8"></path>
+      <path d="M21 21v-2a6 6 0 0 0-4-5.65"></path>
     </svg>
 
     Referrals
 
-  </a>
+  </button>
 
 
-  <a
-    href="profile.html"
-    class="bottom-link"
+  <button
+    class="menu-item"
+    onclick="location.href='withdraw.html'"
   >
 
     <svg
@@ -1390,18 +1162,175 @@ a{
       fill="none"
       stroke="currentColor"
       stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
     >
-      <circle cx="12" cy="8" r="4"/>
-      <path d="M4 21a8 8 0 0 1 16 0"/>
+      <path d="M12 3v14"></path>
+      <path d="m7 12 5 5 5-5"></path>
+      <path d="M5 21h14"></path>
+    </svg>
+
+    Withdraw
+
+  </button>
+
+
+  <button
+    class="menu-item"
+    onclick="location.href='history.html'"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M3 12a9 9 0 1 0 3-6.7"></path>
+      <path d="M3 4v5h5"></path>
+      <path d="M12 7v5l3 2"></path>
+    </svg>
+
+    History
+
+  </button>
+
+
+  <button
+    class="menu-item"
+    onclick="location.href='notifications.html'"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+      <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+    </svg>
+
+    Notifications
+
+  </button>
+
+
+  <button
+    class="menu-item"
+    onclick="location.href='profile.html'"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <circle cx="12" cy="8" r="4"></circle>
+      <path d="M4 21a8 8 0 0 1 16 0"></path>
     </svg>
 
     Profile
 
-  </a>
+  </button>
 
-</nav>
+
+  <button
+    class="menu-item"
+    id="themeBtn"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2v2"></path>
+      <path d="M12 20v2"></path>
+      <path d="m4.93 4.93 1.41 1.41"></path>
+      <path d="m17.66 17.66 1.41 1.41"></path>
+      <path d="M2 12h2"></path>
+      <path d="M20 12h2"></path>
+      <path d="m6.34 17.66-1.41 1.41"></path>
+      <path d="m19.07 4.93-1.41 1.41"></path>
+    </svg>
+
+    Toggle Theme
+
+  </button>
+
+
+  <button
+    class="menu-item"
+    id="logoutBtn"
+  >
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M10 17l5-5-5-5"></path>
+      <path d="M15 12H3"></path>
+      <path d="M21 19V5a2 2 0 0 0-2-2h-6"></path>
+    </svg>
+
+    Sign Out
+
+  </button>
+
+</aside>
+
+
+<!-- TASK RULE MODAL -->
+
+<div
+  class="modal-overlay"
+  id="taskRuleModal"
+>
+
+  <div class="modal">
+
+    <div class="modal-icon">
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M12 3 4 6v5c0 5.2 3.4 8.8 8 10 4.6-1.2 8-4.8 8-10V6l-8-3z"></path>
+        <path d="M12 8v4"></path>
+        <path d="M12 16h.01"></path>
+      </svg>
+
+    </div>
+
+    <h2>
+      Before You Start
+    </h2>
+
+    <p>
+      Complete the opportunity exactly as instructed.
+      A reward is credited only after the required activity
+      is fully completed and verified.
+      VPN, proxy, Tor, incorrect location, incomplete activity,
+      invalid traffic, or other verification failures may result
+      in the reward not being credited.
+    </p>
+
+    <button
+      class="modal-close"
+      id="modalClose"
+    >
+      I Understand
+    </button>
+
+  </div>
+
+</div>
 
 
 <script>
@@ -1417,215 +1346,63 @@ const SUPABASE_KEY =
   "sb_publishable_crwxMSen3GDl9BQZfy_QLg_o_uicRCD";
 
 const OFFERS_FUNCTION =
-  SUPABASE_URL +
-  "/functions/v1/get-offers";
+  "https://cetsxdkoauucxwsbdktl.supabase.co/functions/v1/get-offers";
 
 const OPEN_OFFER_FUNCTION =
-  SUPABASE_URL +
-  "/functions/v1/open-offer";
+  "https://cetsxdkoauucxwsbdktl.supabase.co/functions/v1/open-offer";
+
 
 const db =
-  supabase.createClient(
+  window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
   );
 
 
 /* =========================================================
-   STATE
+   HELPERS
+========================================================= */
+
+function $(id){
+
+  return document.getElementById(id);
+
+}
+
+
+function money(value){
+
+  return "$" +
+    Number(value || 0)
+      .toFixed(2);
+
+}
+
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   OFFER DATA
 ========================================================= */
 
 let allOffers = [];
 
-let activeFilter = "all";
+let currentFilter =
+  "all";
 
 
 /* =========================================================
-   ELEMENT HELPERS
-========================================================= */
-
-function $(id){
-  return document.getElementById(id);
-}
-
-
-/* =========================================================
-   THEME
-========================================================= */
-
-function applyTheme(){
-
-  const saved =
-    localStorage.getItem(
-      "tallybuck-theme"
-    );
-
-  if(saved === "dark"){
-
-    document.documentElement
-      .setAttribute(
-        "data-theme",
-        "dark"
-      );
-
-    return;
-
-  }
-
-  if(saved === "light"){
-
-    document.documentElement
-      .setAttribute(
-        "data-theme",
-        "light"
-      );
-
-    return;
-
-  }
-
-  document.documentElement
-    .removeAttribute(
-      "data-theme"
-    );
-
-}
-
-
-function toggleTheme(){
-
-  const current =
-    document.documentElement
-      .getAttribute(
-        "data-theme"
-      );
-
-  if(current === "dark"){
-
-    localStorage.setItem(
-      "tallybuck-theme",
-      "light"
-    );
-
-  }else{
-
-    localStorage.setItem(
-      "tallybuck-theme",
-      "dark"
-    );
-
-  }
-
-  applyTheme();
-
-}
-
-
-applyTheme();
-
-
-/* =========================================================
-   MENU
-========================================================= */
-
-function openMenu(){
-
-  $("sideMenu")
-    .classList
-    .add("show");
-
-  $("overlay")
-    .classList
-    .add("show");
-
-}
-
-
-function closeMenu(){
-
-  $("sideMenu")
-    .classList
-    .remove("show");
-
-  $("overlay")
-    .classList
-    .remove("show");
-
-}
-
-
-/* =========================================================
-   NOTIFICATIONS
-========================================================= */
-
-function toggleNotifications(){
-
-  $("notificationPanel")
-    .classList
-    .toggle("show");
-
-}
-
-
-document.addEventListener(
-  "click",
-  function(event){
-
-    const panel =
-      $("notificationPanel");
-
-    const button =
-      event.target.closest(
-        ".icon-btn"
-      );
-
-    if(
-      panel.classList.contains(
-        "show"
-      ) &&
-      !panel.contains(event.target) &&
-      !button
-    ){
-
-      panel.classList.remove(
-        "show"
-      );
-
-    }
-
-  }
-);
-
-
-/* =========================================================
-   AUTH
-========================================================= */
-
-async function requireUser(){
-
-  const {
-    data:{
-      session
-    }
-  } =
-    await db.auth.getSession();
-
-  if(!session){
-
-    window.location.href =
-      "login.html";
-
-    return null;
-
-  }
-
-  return session;
-
-}
-
-
-/* =========================================================
-   COUNTRY DETECTION
+   COUNTRY
 ========================================================= */
 
 async function detectCountry(){
@@ -1649,19 +1426,17 @@ async function detectCountry(){
     const data =
       await response.json();
 
-    return (
+    return String(
       data.country_code ||
-      data.country ||
       ""
     )
-      .toString()
       .trim()
       .toUpperCase();
 
   }catch(error){
 
-    console.warn(
-      "Country detection failed:",
+    console.error(
+      "Country detection error:",
       error
     );
 
@@ -1673,25 +1448,21 @@ async function detectCountry(){
 
 
 /* =========================================================
-   CATEGORY NORMALIZATION
+   CATEGORY
 ========================================================= */
 
-function normalizeCategory(
-  value
-){
+function normalizeCategory(value){
 
   const category =
-    String(
-      value || ""
-    )
-      .trim()
-      .toLowerCase();
+    String(value || "")
+      .toLowerCase()
+      .trim();
 
   if(
     category.includes("survey")
   ){
 
-    return "surveys";
+    return "survey";
 
   }
 
@@ -1700,51 +1471,48 @@ function normalizeCategory(
     category.includes("app")
   ){
 
-    return "app_installs";
+    return "install";
 
   }
 
-  return "offers";
+  if(
+    category.includes("offer")
+  ){
+
+    return "offer";
+
+  }
+
+  return "offer";
 
 }
 
 
 /* =========================================================
-   PROVIDER TEXT CLEANUP
+   PROVIDER TEXT CLEANING
 ========================================================= */
 
-function cleanProviderText(
-  value
-){
-
-  if(
-    value === null ||
-    value === undefined
-  ){
-
-    return "";
-
-  }
+function cleanProviderText(value){
 
   let text =
-    String(value);
+    String(value || "");
 
   text =
     text.replace(
       /CPA\s*Grip/gi,
-      "Available Offer"
+      "Available Opportunity"
     );
 
   text =
     text.replace(
       /AdBlueMedia/gi,
-      "Available Offer"
+      "Available Opportunity"
     );
 
   text =
     text.replace(
-      /AdBlue\s*Media/gi,
-      "Available Offer"
+      /Ad\s*Blue\s*Media/gi,
+      "Available Opportunity"
     );
 
   return text.trim();
@@ -1753,60 +1521,49 @@ function cleanProviderText(
 
 
 /* =========================================================
-   OFFER NORMALIZATION
+   NORMALIZE OFFER
 ========================================================= */
 
-function normalizeOffer(
-  offer
-){
+function normalizeOffer(raw){
 
-  const category =
-    normalizeCategory(
-      offer.category ||
-      offer.type ||
-      offer.offer_type
-    );
+  const item =
+    raw || {};
 
   const title =
     cleanProviderText(
-      offer.title ||
-      offer.name ||
+      item.title ||
+      item.name ||
+      item.offer_name ||
       "Available Opportunity"
     );
 
   const description =
     cleanProviderText(
-      offer.description ||
-      offer.desc ||
-      "Complete this opportunity according to the instructions to receive your reward."
+      item.description ||
+      item.desc ||
+      "Complete this opportunity according to the instructions to receive a verified reward."
     );
 
-  const rewardValue =
+  const reward =
     Number(
-      offer.reward ||
-      offer.payout ||
-      offer.amount ||
+      item.reward ??
+      item.payout ??
+      item.amount ??
       0
     );
 
-  const image =
-    offer.image ||
-    offer.image_url ||
-    offer.icon ||
-    "";
-
-  const url =
-    offer.url ||
-    offer.click_url ||
-    offer.offer_url ||
-    "";
+  const category =
+    normalizeCategory(
+      item.category ||
+      item.type
+    );
 
   return {
 
     id:
       String(
-        offer.id ??
-        offer.offer_id ??
+        item.id ??
+        item.offer_id ??
         ""
       ),
 
@@ -1814,18 +1571,21 @@ function normalizeOffer(
 
     description,
 
-    reward:
-      Number.isFinite(
-        rewardValue
-      )
-        ? rewardValue
-        : 0,
+    reward,
 
     category,
 
-    image,
+    url:
+      item.url ||
+      item.click_url ||
+      item.offer_url ||
+      item.tracking_url ||
+      "",
 
-    url
+    image:
+      item.image ||
+      item.image_url ||
+      ""
 
   };
 
@@ -1838,62 +1598,70 @@ function normalizeOffer(
 
 async function loadOffers(){
 
-  const area =
-    $("taskArea");
+  const taskList =
+    $("taskList");
 
-  area.innerHTML = `
-    <div class="state">
-      <div class="loader"></div>
-      <div class="state-title">
-        Loading opportunities
-      </div>
-      <div class="state-text">
-        Finding available tasks for your account.
-      </div>
+  taskList.innerHTML = `
+    <div class="loading">
+      Loading available tasks...
     </div>
   `;
 
+  const {
+    data:{
+      user
+    },
+    error:authError
+  } =
+    await db.auth.getUser();
+
+
+  if(
+    authError ||
+    !user
+  ){
+
+    window.location.href =
+      "login.html";
+
+    return;
+
+  }
+
+
   try{
-
-    const session =
-      await requireUser();
-
-    if(!session){
-
-      return;
-
-    }
 
     const country =
       await detectCountry();
 
     const response =
       await fetch(
-        OFFERS_FUNCTION,
+        OFFERS_FUNCTION +
+        "?country=" +
+        encodeURIComponent(
+          country
+        ),
         {
-          method:"POST",
+          method:"GET",
 
           headers:{
             "Authorization":
               "Bearer " +
-              session.access_token,
+              (
+                (
+                  await db.auth.getSession()
+                ).data.session?.access_token ||
+                ""
+              ),
 
             "apikey":
-              SUPABASE_KEY,
-
-            "Content-Type":
-              "application/json"
+              SUPABASE_KEY
           },
 
-          body:JSON.stringify({
-
-            country:
-              country || null
-
-          })
-
+          cache:"no-store"
         }
       );
+
 
     const data =
       await response
@@ -1904,44 +1672,66 @@ async function loadOffers(){
           }
         );
 
+
     if(!response.ok){
 
       throw new Error(
         data.error ||
         data.message ||
-        "Unable to load opportunities."
+        "Unable to load tasks."
       );
 
     }
 
-    const rawOffers =
+
+    let offers = [];
+
+
+    if(Array.isArray(data)){
+
+      offers =
+        data;
+
+    }else if(
       Array.isArray(
         data.offers
       )
-        ? data.offers
-        : Array.isArray(
-            data.data
-          )
-          ? data.data
-          : [];
+    ){
+
+      offers =
+        data.offers;
+
+    }else if(
+      Array.isArray(
+        data.data
+      )
+    ){
+
+      offers =
+        data.data;
+
+    }
+
 
     allOffers =
-      rawOffers
+      offers
         .map(
           normalizeOffer
         )
         .filter(
-          function(offer){
+          function(item){
 
             return (
-              offer.id &&
-              offer.url
+              item.id &&
+              item.url
             );
 
           }
         );
 
+
     renderOffers();
+
 
   }catch(error){
 
@@ -1950,49 +1740,136 @@ async function loadOffers(){
       error
     );
 
-    area.innerHTML = `
-      <div class="state">
+    taskList.innerHTML = `
+      <div class="empty">
 
-        <div class="state-icon">
+        <div class="empty-icon">
 
           <svg
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
           >
-            <circle cx="12" cy="12" r="9"/>
-            <path d="M12 8v4"/>
-            <path d="M12 16h.01"/>
+            <path d="M12 9v4"></path>
+            <path d="M12 17h.01"></path>
+            <path d="M10.3 3.5 2.7 17a2 2 0 0 0 1.75 3h15.1a2 2 0 0 0 1.75-3L13.7 3.5a2 2 0 0 0-3.4 0z"></path>
           </svg>
 
         </div>
 
-        <div class="state-title">
-          Unable to load tasks
-        </div>
+        <strong>
+          Tasks unavailable
+        </strong>
 
-        <div class="state-text">
-          ${escapeHtml(
-            error.message ||
-            "Please try again."
-          )}
-        </div>
-
-        <button
-          class="retry-btn"
-          type="button"
-          onclick="loadOffers()"
-        >
-          Try Again
-        </button>
+        Please try again later.
 
       </div>
     `;
 
+    $("taskCount").textContent =
+      "0";
+
   }
+
+}
+
+
+/* =========================================================
+   TASK ICON
+========================================================= */
+
+function taskIcon(category){
+
+  if(
+    category === "survey"
+  ){
+
+    return `
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M4 4h16v16H4z"></path>
+        <path d="M8 8h8"></path>
+        <path d="M8 12h8"></path>
+        <path d="M8 16h5"></path>
+      </svg>
+    `;
+
+  }
+
+
+  if(
+    category === "install"
+  ){
+
+    return `
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <rect
+          x="6"
+          y="2"
+          width="12"
+          height="20"
+          rx="2"
+        ></rect>
+        <path d="M10 18h4"></path>
+      </svg>
+    `;
+
+  }
+
+
+  return `
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <circle
+        cx="12"
+        cy="12"
+        r="9"
+      ></circle>
+      <path d="M12 8v8"></path>
+      <path d="M8 12h8"></path>
+    </svg>
+  `;
+
+}
+
+
+/* =========================================================
+   CATEGORY NAME
+========================================================= */
+
+function categoryName(category){
+
+  if(
+    category === "survey"
+  ){
+
+    return "Survey";
+
+  }
+
+  if(
+    category === "install"
+  ){
+
+    return "App Install";
+
+  }
+
+  return "Offer";
 
 }
 
@@ -2003,53 +1880,59 @@ async function loadOffers(){
 
 function renderOffers(){
 
-  const area =
-    $("taskArea");
+  const taskList =
+    $("taskList");
+
 
   const filtered =
-    activeFilter === "all"
-      ? allOffers
-      : allOffers.filter(
-          function(offer){
+    allOffers.filter(
+      function(offer){
 
-            return (
-              offer.category ===
-              activeFilter
-            );
-
-          }
+        return (
+          currentFilter ===
+          "all" ||
+          offer.category ===
+          currentFilter
         );
 
-  if(!filtered.length){
+      }
+    );
 
-    area.innerHTML = `
-      <div class="state">
 
-        <div class="state-icon">
+  $("taskCount").textContent =
+    String(
+      filtered.length
+    );
+
+
+  if(
+    filtered.length === 0
+  ){
+
+    taskList.innerHTML = `
+      <div class="empty">
+
+        <div class="empty-icon">
 
           <svg
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
           >
-            <path d="M4 5h16"/>
-            <path d="M4 12h16"/>
-            <path d="M4 19h16"/>
+            <path d="M4 4h16v16H4z"></path>
+            <path d="M8 8h8"></path>
+            <path d="M8 12h8"></path>
+            <path d="M8 16h5"></path>
           </svg>
 
         </div>
 
-        <div class="state-title">
+        <strong>
           No tasks available
-        </div>
+        </strong>
 
-        <div class="state-text">
-          There are currently no opportunities in this category.
-          Please check again later.
-        </div>
+        There are currently no opportunities in this category.
 
       </div>
     `;
@@ -2058,171 +1941,136 @@ function renderOffers(){
 
   }
 
-  area.innerHTML =
-    `
-      <div class="task-list">
-        ${
-          filtered
-            .map(
-              renderOfferCard
-            )
-            .join("")
+
+  taskList.innerHTML =
+    filtered
+      .map(
+        function(offer){
+
+          const encodedId =
+            encodeURIComponent(
+              offer.id
+            );
+
+
+          return `
+
+            <article class="task-card">
+
+              <div class="task-top">
+
+                <div class="task-icon">
+                  ${taskIcon(
+                    offer.category
+                  )}
+                </div>
+
+                <div class="task-info">
+
+                  <div class="task-title">
+                    ${escapeHtml(
+                      offer.title
+                    )}
+                  </div>
+
+                  <div class="task-description">
+                    ${escapeHtml(
+                      offer.description
+                    )}
+                  </div>
+
+                </div>
+
+                <div class="task-reward">
+                  ${money(
+                    offer.reward
+                  )}
+                </div>
+
+              </div>
+
+
+              <div class="task-meta">
+
+                <span class="task-badge">
+
+                  ${taskIcon(
+                    offer.category
+                  )}
+
+                  ${categoryName(
+                    offer.category
+                  )}
+
+                </span>
+
+
+                <span class="verification-badge">
+
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M12 3 4 6v5c0 5.2 3.4 8.8 8 10 4.6-1.2 8-4.8 8-10V6l-8-3z"></path>
+                    <path d="m9 12 2 2 4-4"></path>
+                  </svg>
+
+                  Verified completion
+
+                </span>
+
+              </div>
+
+
+              <div class="task-action">
+
+                <button
+                  class="start-btn"
+                  type="button"
+                  data-offer-id="${escapeHtml(
+                    encodedId
+                  )}"
+                  onclick="openOffer(this.dataset.offerId)"
+                >
+                  Start Task
+                </button>
+
+
+                <button
+                  class="task-info-btn"
+                  type="button"
+                  aria-label="Task rules"
+                  onclick="showTaskRules()"
+                >
+
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="9"
+                    ></circle>
+                    <path d="M12 10v6"></path>
+                    <path d="M12 7h.01"></path>
+                  </svg>
+
+                </button>
+
+              </div>
+
+            </article>
+
+          `;
+
         }
-      </div>
-    `;
-
-}
-
-
-/* =========================================================
-   RENDER SINGLE OFFER
-========================================================= */
-
-function renderOfferCard(
-  offer
-){
-
-  const safeId =
-    encodeURIComponent(
-      offer.id
-    );
-
-  const title =
-    escapeHtml(
-      offer.title
-    );
-
-  const description =
-    escapeHtml(
-      offer.description
-    );
-
-  const categoryLabel =
-    offer.category ===
-    "app_installs"
-      ? "App Install"
-      : offer.category ===
-        "surveys"
-        ? "Survey"
-        : "Offer";
-
-  const reward =
-    Number(
-      offer.reward
-    );
-
-  const rewardText =
-    Number.isFinite(
-      reward
-    )
-      ? "$" +
-        reward.toFixed(2)
-      : "$0.00";
-
-  const image =
-    offer.image
-      ? `
-        <img
-          src="${escapeAttribute(
-            offer.image
-          )}"
-          alt=""
-          loading="lazy"
-          onerror="this.style.display='none'"
-        >
-      `
-      : `
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M4 5h16"/>
-          <path d="M4 12h16"/>
-          <path d="M4 19h16"/>
-        </svg>
-      `;
-
-  return `
-    <article class="task-card">
-
-      <div class="task-image">
-        ${image}
-      </div>
-
-      <div class="task-content">
-
-        <div class="task-title">
-          ${title}
-        </div>
-
-        <div class="task-description">
-          ${description}
-        </div>
-
-        <div class="task-meta">
-
-          <span class="task-reward">
-            ${rewardText}
-          </span>
-
-          <span class="task-category">
-            ${categoryLabel}
-          </span>
-
-        </div>
-
-      </div>
-
-      <div class="task-action">
-
-        <button
-          class="start-btn"
-          type="button"
-          onclick="openOffer('${safeId}')"
-        >
-          Start
-        </button>
-
-      </div>
-
-    </article>
-  `;
-
-}
-
-
-/* =========================================================
-   FILTER
-========================================================= */
-
-function setFilter(
-  filter
-){
-
-  activeFilter =
-    filter;
-
-  document
-    .querySelectorAll(
-      ".filter-btn"
-    )
-    .forEach(
-      function(button){
-
-        button.classList.toggle(
-          "active",
-          button.dataset.filter ===
-          filter
-        );
-
-      }
-    );
-
-  renderOffers();
+      )
+      .join("");
 
 }
 
@@ -2240,16 +2088,16 @@ async function openOffer(
       encodedId
     );
 
+
   const offer =
     allOffers.find(
       function(item){
 
-        return (
-          item.id === id
-        );
+        return item.id === id;
 
       }
     );
+
 
   if(
     !offer ||
@@ -2264,55 +2112,35 @@ async function openOffer(
 
   }
 
-  const buttons =
-    document.querySelectorAll(
-      ".start-btn"
+
+  const button =
+    document.querySelector(
+      '.start-btn[data-offer-id="' +
+      CSS.escape(
+        encodedId
+      ) +
+      '"]'
     );
 
-  let clickedButton =
-    null;
-
-  buttons.forEach(
-    function(button){
-
-      const onclickValue =
-        button.getAttribute(
-          "onclick"
-        ) || "";
-
-      if(
-        onclickValue.includes(
-          encodedId
-        )
-      ){
-
-        clickedButton =
-          button;
-
-      }
-
-    }
-  );
 
   const originalText =
-    clickedButton
-      ? clickedButton.textContent
-      : "Start";
+    button
+      ? button.textContent
+      : "Start Task";
+
 
   try{
 
-    if(clickedButton){
+    if(button){
 
-      clickedButton.disabled =
+      button.disabled =
         true;
 
-      clickedButton.textContent =
+      button.textContent =
         "Opening...";
 
-      clickedButton.style.opacity =
-        "0.7";
-
     }
+
 
     const {
       data:{
@@ -2320,6 +2148,7 @@ async function openOffer(
       }
     } =
       await db.auth.getSession();
+
 
     if(!session){
 
@@ -2329,6 +2158,7 @@ async function openOffer(
       return;
 
     }
+
 
     const response =
       await fetch(
@@ -2361,6 +2191,7 @@ async function openOffer(
         }
       );
 
+
     const data =
       await response
         .json()
@@ -2369,6 +2200,7 @@ async function openOffer(
             return {};
           }
         );
+
 
     if(!response.ok){
 
@@ -2380,19 +2212,22 @@ async function openOffer(
 
     }
 
+
     if(!data.url){
 
       throw new Error(
-        "No offer destination was returned."
+        "No task destination was returned."
       );
 
     }
+
 
     window.open(
       data.url,
       "_blank",
       "noopener,noreferrer"
     );
+
 
   }catch(error){
 
@@ -2406,19 +2241,17 @@ async function openOffer(
       "Unable to open this opportunity. Please try again."
     );
 
+
   }finally{
 
-    if(clickedButton){
+    if(button){
 
-      clickedButton.disabled =
+      button.disabled =
         false;
 
-      clickedButton.textContent =
+      button.textContent =
         originalText;
 
-      clickedButton.style.opacity =
-        "1";
-
     }
 
   }
@@ -2427,75 +2260,141 @@ async function openOffer(
 
 
 /* =========================================================
-   NOTIFICATION STATUS
+   FILTERS
 ========================================================= */
 
-async function loadNotificationStatus(){
+document
+  .querySelectorAll(
+    ".filter-btn"
+  )
+  .forEach(
+    function(button){
 
-  try{
+      button.addEventListener(
+        "click",
+        function(){
 
-    const session =
-      await requireUser();
+          document
+            .querySelectorAll(
+              ".filter-btn"
+            )
+            .forEach(
+              function(item){
 
-    if(!session){
+                item.classList.remove(
+                  "active"
+                );
 
-      return;
+              }
+            );
 
-    }
 
-    const {
-      data,
-      error
-    } =
-      await db
-        .from("notifications")
-        .select(
-          "id,is_read"
-        )
-        .eq(
-          "user_id",
-          session.user.id
-        )
-        .eq(
-          "is_read",
-          false
-        )
-        .limit(1);
+          button.classList.add(
+            "active"
+          );
 
-    if(error){
 
-      console.warn(
-        "Notification status error:",
-        error
+          currentFilter =
+            button.dataset.filter ||
+            "all";
+
+
+          renderOffers();
+
+        }
       );
 
-      return;
+    }
+  );
+
+
+/* =========================================================
+   TASK RULE MODAL
+========================================================= */
+
+function showTaskRules(){
+
+  $("taskRuleModal")
+    .classList
+    .add("show");
+
+}
+
+
+function closeTaskRules(){
+
+  $("taskRuleModal")
+    .classList
+    .remove("show");
+
+}
+
+
+$("modalClose")
+  .addEventListener(
+    "click",
+    closeTaskRules
+  );
+
+
+$("taskRuleModal")
+  .addEventListener(
+    "click",
+    function(event){
+
+      if(
+        event.target ===
+        $("taskRuleModal")
+      ){
+
+        closeTaskRules();
+
+      }
 
     }
+  );
 
-    const dot =
-      $("notificationDot");
 
-    if(
-      Array.isArray(data) &&
-      data.length
-    ){
+/* =========================================================
+   THEME
+========================================================= */
 
-      dot.style.display =
-        "block";
+function applyTheme(){
 
-    }else{
+  const saved =
+    localStorage.getItem(
+      "tallybuck-theme"
+    );
 
-      dot.style.display =
-        "none";
 
-    }
+  if(
+    saved === "dark"
+  ){
 
-  }catch(error){
+    document.body.classList.add(
+      "dark"
+    );
 
-    console.warn(
-      "Notification check failed:",
-      error
+  }else if(
+    saved === "light"
+  ){
+
+    document.body.classList.remove(
+      "dark"
+    );
+
+  }else{
+
+    const dark =
+      window.matchMedia &&
+      window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+
+
+    document.body.classList.toggle(
+      "dark",
+      dark
     );
 
   }
@@ -2503,91 +2402,229 @@ async function loadNotificationStatus(){
 }
 
 
-/* =========================================================
-   SIGN OUT
-========================================================= */
+function toggleTheme(){
 
-async function signOut(){
-
-  try{
-
-    await db.auth.signOut();
-
-  }finally{
-
-    window.location.href =
-      "login.html";
-
-  }
-
-}
-
-
-/* =========================================================
-   ESCAPE HELPERS
-========================================================= */
-
-function escapeHtml(
-  value
-){
-
-  return String(
-    value ?? ""
-  )
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
+  const isDark =
+    document.body.classList.contains(
+      "dark"
     );
 
-}
+
+  document.body.classList.toggle(
+    "dark",
+    !isDark
+  );
 
 
-function escapeAttribute(
-  value
-){
-
-  return escapeHtml(
-    value
+  localStorage.setItem(
+    "tallybuck-theme",
+    !isDark
+      ? "dark"
+      : "light"
   );
 
 }
 
 
 /* =========================================================
-   INITIALIZE
+   MENU
 ========================================================= */
 
-(async function(){
+function openMenu(){
 
-  const session =
-    await requireUser();
+  $("sideMenu")
+    .classList
+    .add("show");
 
-  if(!session){
+
+  $("menuOverlay")
+    .classList
+    .add("show");
+
+}
+
+
+function closeMenu(){
+
+  $("sideMenu")
+    .classList
+    .remove("show");
+
+
+  $("menuOverlay")
+    .classList
+    .remove("show");
+
+}
+
+
+$("menuBtn")
+  .addEventListener(
+    "click",
+    openMenu
+  );
+
+
+$("closeMenu")
+  .addEventListener(
+    "click",
+    closeMenu
+  );
+
+
+$("menuOverlay")
+  .addEventListener(
+    "click",
+    closeMenu
+  );
+
+
+$("themeBtn")
+  .addEventListener(
+    "click",
+    function(){
+
+      toggleTheme();
+
+    }
+  );
+
+
+$("logoutBtn")
+  .addEventListener(
+    "click",
+    async function(){
+
+      await db.auth.signOut();
+
+      window.location.href =
+        "login.html";
+
+    }
+  );
+
+
+/* =========================================================
+   NOTIFICATION BADGE
+========================================================= */
+
+async function loadNotificationBadge(){
+
+  const {
+    data:{
+      user
+    }
+  } =
+    await db.auth.getUser();
+
+
+  if(!user){
 
     return;
 
   }
 
-  await Promise.all([
-    loadOffers(),
-    loadNotificationStatus()
-  ]);
+
+  const {
+    count,
+    error
+  } =
+    await db
+      .from("notifications")
+      .select(
+        "id",
+        {
+          count:"exact",
+          head:true
+        }
+      )
+      .eq(
+        "user_id",
+        user.id
+      )
+      .eq(
+        "is_read",
+        false
+      );
+
+
+  if(error){
+
+    console.error(
+      "Notification badge error:",
+      error
+    );
+
+    return;
+
+  }
+
+
+  if(
+    count &&
+    count > 0
+  ){
+
+    $("notificationDot")
+      .style
+      .display =
+      "block";
+
+  }else{
+
+    $("notificationDot")
+      .style
+      .display =
+      "none";
+
+  }
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+applyTheme();
+
+loadOffers();
+
+loadNotificationBadge();
+
+
+/*
+  The warning is shown directly on the page.
+  We also open the rules modal once per browser
+  session so the user sees the verification rules
+  before starting tasks.
+*/
+
+(function(){
+
+  const shown =
+    sessionStorage.getItem(
+      "tallybuck-task-warning-shown"
+    );
+
+
+  if(!shown){
+
+    setTimeout(
+      function(){
+
+        showTaskRules();
+
+        sessionStorage.setItem(
+          "tallybuck-task-warning-shown",
+          "true"
+        );
+
+      },
+      350
+    );
+
+  }
 
 })();
 
